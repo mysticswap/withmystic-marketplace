@@ -5,15 +5,19 @@ import {
   RiTwitterXLine,
 } from "react-icons/ri";
 import SolidButton from "../SolidButton/SolidButton";
+import { Link } from "react-router-dom";
 
-type Props = { logo: string };
-
-const Navbar = ({ logo }: Props) => {
+const Navbar = () => {
   return (
     <nav className="ms_mp_navbar">
       <section className="ms_mp_nav_left">
         <div className="ms_mp_logo_holder">
-          <img src={logo} alt="collection_logo" />
+          <Link to="/">
+            <img
+              src="https://mysticswap.io/static/media/mystWizGuild2.824b89cd.png"
+              alt="collection_logo"
+            />
+          </Link>
         </div>
 
         <div className="ms_mp_nav_links">

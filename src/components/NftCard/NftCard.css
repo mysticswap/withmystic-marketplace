@@ -3,6 +3,12 @@
   border-radius: 16px;
   overflow: hidden;
   box-sizing: border-box;
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+}
+
+.ms_mp_nft_card:hover {
+  transform: scale(105%);
 }
 
 .ms_mp_nft_card img {
@@ -22,6 +28,14 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
+}
+
+.ms_mp_card_name a {
+  text-decoration: none;
+  color: unset;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ms_mp_card_name p {

@@ -14,9 +14,11 @@
 
 * {
   font-family: var(--ms-mp-poppins);
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   padding: 0;
+  transition: var(--ms-mp-transition);
 }

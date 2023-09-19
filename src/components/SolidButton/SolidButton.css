@@ -5,4 +5,5 @@
   cursor: pointer;
   color: white;
   background: var(--ms-mp-gradient-blue);
+  font-weight: 700;
 }
