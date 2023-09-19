@@ -1,5 +1,4 @@
-import React from 'react';
-import './SolidButton.css';
+import "./SolidButton.css";
 
 type Props = { text: string };
 

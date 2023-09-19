@@ -1,7 +1,6 @@
-import React from 'react';
-import './FiltersSidebar.css';
-import StatusFilters from '../StatusFilters/StatusFilters';
-import NumericFilters from '../NumericFilters/NumericFilters';
+import "./FiltersSidebar.css";
+import StatusFilters from "../StatusFilters/StatusFilters";
+import NumericFilters from "../NumericFilters/NumericFilters";
 
 const FiltersSidebar = () => {
   return (

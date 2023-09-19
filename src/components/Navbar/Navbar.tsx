@@ -1,11 +1,10 @@
-import React from 'react';
-import './Navbar.css';
+import "./Navbar.css";
 import {
   RiArrowDownSLine,
   RiDiscordFill,
   RiTwitterXLine,
-} from 'react-icons/ri';
-import SolidButton from '../SolidButton/SolidButton';
+} from "react-icons/ri";
+import SolidButton from "../SolidButton/SolidButton";
 
 type Props = { logo: string };
 

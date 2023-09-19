@@ -1,17 +1,12 @@
-import React from 'react';
-import { IoOptionsOutline, IoSearchSharp } from 'react-icons/io5';
-import { RiArrowDownSLine, RiArrowLeftSLine } from 'react-icons/ri';
-import { BsFillGridFill, BsFillGrid3X3GapFill } from 'react-icons/bs';
-import './ControlBar.css';
-import { useGlobalContext } from '../../context/GlobalContext';
+import { IoOptionsOutline, IoSearchSharp } from "react-icons/io5";
+import { RiArrowDownSLine, RiArrowLeftSLine } from "react-icons/ri";
+import { BsFillGridFill, BsFillGrid3X3GapFill } from "react-icons/bs";
+import "./ControlBar.css";
+import { useHomeContext } from "../../context/HomeContext";
 
 const ControlBar = () => {
-  const {
-    setShowFilters,
-    showFilters,
-    setMinimalCards,
-    minimalCards,
-  } = useGlobalContext()!;
+  const { setShowFilters, showFilters, setMinimalCards, minimalCards } =
+    useHomeContext()!;
   return (
     <div className="ms_mp_control_bar">
       <button
@@ -22,7 +17,7 @@ const ControlBar = () => {
           <RiArrowLeftSLine size={20} />
         ) : (
           <IoOptionsOutline size={20} />
-        )}{' '}
+        )}{" "}
         Filters
       </button>
 
