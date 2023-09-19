@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import Checkbox from '../Checkbox/Checkbox';
-import './StatusListItem.css';
+import { useState } from "react";
+import Checkbox from "../Checkbox/Checkbox";
+import "./StatusListItem.css";
 
 type Props = { text: string };
 

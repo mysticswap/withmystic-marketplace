@@ -1,5 +1,5 @@
 import { Tooltip, createTheme, ThemeProvider } from "@mui/material";
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 type Props = {
   text: string;
   children: ReactElement;

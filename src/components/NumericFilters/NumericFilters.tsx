@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import './NumericFilters.css';
-import { RiArrowUpSLine } from 'react-icons/ri';
+import { useState } from "react";
+import "./NumericFilters.css";
+import { RiArrowUpSLine } from "react-icons/ri";
 
 type Props = {
   title: string;
@@ -15,7 +15,7 @@ const NumericFilters = ({ title }: Props) => {
         className="ms_mp_filter_trigger"
         onClick={() => setShowlist(!showList)}
       >
-        {title}{' '}
+        {title}{" "}
         <RiArrowUpSLine
           className="ms_mp_status_down_arrow"
           aria-expanded={showList}

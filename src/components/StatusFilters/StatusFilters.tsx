@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import './StatusFilters.css';
-import { RiArrowUpSLine } from 'react-icons/ri';
-import StatusListItem from '../StatusListItem/StatusListItem';
+import { useState } from "react";
+import "./StatusFilters.css";
+import { RiArrowUpSLine } from "react-icons/ri";
+import StatusListItem from "../StatusListItem/StatusListItem";
 
 const StatusFilters = () => {
   const [showList, setShowlist] = useState(false);
@@ -11,7 +11,7 @@ const StatusFilters = () => {
         className="ms_mp_filter_trigger"
         onClick={() => setShowlist(!showList)}
       >
-        Status{' '}
+        Status{" "}
         <RiArrowUpSLine
           className="ms_mp_status_down_arrow"
           aria-expanded={showList}
