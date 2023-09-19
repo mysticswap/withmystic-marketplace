@@ -1,0 +1,100 @@
+.ms_mp_control_bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+  margin: 1rem auto;
+}
+
+.ms_mp_filter_button {
+  width: 10%;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 64px;
+  border: none;
+  background-color: var(--ms-mp-gray-light);
+  transition: var(--ms-mp-transition);
+  cursor: pointer;
+}
+
+.ms_mp_control_bar_search {
+  width: 55%;
+  background-color: var(--ms-mp-gray-light);
+  padding: 0.75rem;
+  border-radius: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  transition: var(--ms-mp-transition);
+}
+
+.ms_mp_control_bar_search:hover {
+  border: 1px solid black;
+}
+
+.ms_mp_control_bar_search:focus-within {
+  border: 2px solid var(--ms-mp-blue);
+}
+
+.ms_mp_control_bar_search input {
+  width: 95%;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.ms_mp_control_dropdown_parent {
+  width: 15%;
+}
+
+.ms_mp_control_dropdown_trigger {
+  background-color: var(--ms-mp-gray-light);
+  padding: 0.75rem;
+  border-radius: 64px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: none;
+  transition: var(--ms-mp-transition);
+  cursor: pointer;
+}
+
+.ms_mp_control_dropdown_trigger:hover {
+  background-color: var(--ms-mp-gray);
+}
+
+.ms_mp_grid_buttons {
+  width: 10%;
+  background-color: var(--ms-mp-gray-light);
+  border-radius: 64px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.ms_mp_grid_buttons button {
+  width: 50%;
+  background-color: transparent;
+  border: none;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+}
+
+.ms_mp_grid_buttons button:first-of-type {
+  border-right: 1px solid var(--ms-mp-gray);
+}
+
+.ms_mp_filter_button:hover,
+.ms_mp_grid_buttons button:hover {
+  background-color: var(--ms-mp-gray);
+}

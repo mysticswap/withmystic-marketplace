@@ -1,0 +1,8 @@
+.ms_mp_solid_button {
+  padding: 0.75rem 1rem;
+  border-radius: 32px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  background: var(--ms-mp-gradient-blue);
+}

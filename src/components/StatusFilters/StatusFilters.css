@@ -1,0 +1,51 @@
+.ms_mp_status_container {
+  padding-right: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--ms-mp-gray);
+}
+
+.ms_mp_filter_trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  border: none;
+  background-color: transparent;
+  transition: all 0.25s ease-in-out;
+  padding: 0.75rem;
+  border-radius: 64px;
+  cursor: pointer;
+}
+
+.ms_mp_filter_trigger:hover {
+  background-color: var(--ms-mp-gray-light);
+}
+
+.ms_mp_status_list {
+  list-style-type: none;
+  list-style-position: inside;
+  padding: 0;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0;
+  margin-bottom: 0;
+  overflow: hidden;
+  max-height: 1000px;
+  transition: max-height 1s ease-in-out;
+}
+
+.ms_mp_status_list[aria-expanded='true'] {
+  max-height: 0px;
+  transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+  padding: 0;
+}
+
+.ms_mp_status_down_arrow {
+  transition: var(--ms-mp-smooth-transform-transition);
+}
+.ms_mp_status_down_arrow[aria-expanded='true'] {
+  transform: rotateZ(180deg);
+}

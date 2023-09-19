@@ -1,0 +1,28 @@
+.ms_mp_cards_holder {
+  padding: 0.75rem;
+  display: grid;
+  /* grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); */
+  gap: 1rem;
+  max-height: calc(100vh - 48px - 64px);
+  overflow-y: auto;
+}
+
+.ms_mp_cards_holder::-webkit-scrollbar {
+  display: none;
+}
+
+.ms_mp_small_cards_holder {
+  width: 80%;
+}
+
+.ms_mp_large_cards_holder {
+  width: 100%;
+}
+
+.ms_mp_small_cards_holder_minmax_v1 {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.ms_mp_small_cards_holder_minmax_v2 {
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+}

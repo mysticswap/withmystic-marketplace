@@ -1,0 +1,6 @@
+.ms_mp_items_screen {
+  width: 95%;
+  margin: auto;
+  display: flex;
+  align-items: start;
+}
