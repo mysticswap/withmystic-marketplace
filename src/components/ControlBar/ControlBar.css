@@ -1,4 +1,4 @@
-.ms_mp_control_bar {
+.control_bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -6,7 +6,7 @@
   margin: 1rem auto;
 }
 
-.ms_mp_filter_button {
+.filter_button {
   width: 10%;
   font-size: 16px;
   display: flex;
@@ -21,7 +21,7 @@
   cursor: pointer;
 }
 
-.ms_mp_control_bar_search {
+.control_bar_search {
   width: 55%;
   background-color: var(--ms-mp-gray-light);
   padding: 0.75rem;
@@ -33,26 +33,26 @@
   transition: var(--ms-mp-transition);
 }
 
-.ms_mp_control_bar_search:hover {
+.control_bar_search:hover {
   border: 1px solid black;
 }
 
-.ms_mp_control_bar_search:focus-within {
+.control_bar_search:focus-within {
   border: 2px solid var(--ms-mp-blue);
 }
 
-.ms_mp_control_bar_search input {
+.control_bar_search input {
   width: 95%;
   background-color: transparent;
   outline: none;
   border: none;
 }
 
-.ms_mp_control_dropdown_parent {
+.control_dropdown_parent {
   width: 15%;
 }
 
-.ms_mp_control_dropdown_trigger {
+.control_dropdown_trigger {
   background-color: var(--ms-mp-gray-light);
   padding: 0.75rem;
   border-radius: 64px;
@@ -65,11 +65,11 @@
   cursor: pointer;
 }
 
-.ms_mp_control_dropdown_trigger:hover {
+.control_dropdown_trigger:hover {
   background-color: var(--ms-mp-gray);
 }
 
-.ms_mp_grid_buttons {
+.grid_buttons {
   width: 10%;
   background-color: var(--ms-mp-gray-light);
   border-radius: 64px;
@@ -78,7 +78,7 @@
   overflow: hidden;
 }
 
-.ms_mp_grid_buttons button {
+.grid_buttons button {
   width: 50%;
   background-color: transparent;
   border: none;
@@ -90,11 +90,11 @@
   transition: var(--ms-mp-transition);
 }
 
-.ms_mp_grid_buttons button:first-of-type {
+.grid_buttons button:first-of-type {
   border-right: 1px solid var(--ms-mp-gray);
 }
 
-.ms_mp_filter_button:hover,
-.ms_mp_grid_buttons button:hover {
+.filter_button:hover,
+.grid_buttons button:hover {
   background-color: var(--ms-mp-gray);
 }

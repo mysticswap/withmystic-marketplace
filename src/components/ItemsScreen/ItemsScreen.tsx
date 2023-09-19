@@ -6,7 +6,7 @@ import { useHomeContext } from "../../context/HomeContext";
 const ItemsScreen = () => {
   const { showFilters } = useHomeContext()!;
   return (
-    <div className="ms_mp_items_screen">
+    <div className="items_screen">
       {showFilters && <FiltersSidebar />}
       <CardsHolder />
     </div>

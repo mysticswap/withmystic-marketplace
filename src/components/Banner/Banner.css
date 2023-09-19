@@ -1,16 +1,16 @@
-.ms_mp_banner {
+.banner {
   position: relative;
   height: 60vh;
 }
 
-.ms_mp_banner img {
+.banner img {
   width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;
 }
 
-.ms_mp_banner_details {
+.banner_details {
   position: absolute;
   inset: 0;
   display: flex;
@@ -20,12 +20,12 @@
   background-color: rgba(0, 0, 0, 0.35);
 }
 
-.ms_mp_banner_details h1 {
+.banner_details h1 {
   font-weight: 500;
   color: white;
 }
 
-.ms_mp_collection_pill {
+.collection_pill {
   background-color: white;
   padding: 1rem;
   border-radius: 64px;
@@ -36,27 +36,27 @@
   gap: 2rem;
 }
 
-.ms_mp_pill_item p {
+.pill_item p {
   margin: 0;
   font-size: 18px;
 }
 
-.ms_mp_pill_item p:first-of-type {
+.pill_item p:first-of-type {
   font-weight: bold;
 }
 
-.ms_mp_pill_item p:last-of-type {
+.pill_item p:last-of-type {
   color: rgba(0, 0, 0, 0.5);
 }
 
-.ms_mp_tabs {
+.tabs {
   width: fit-content;
   margin: 0 auto;
   position: absolute;
   inset: auto 0 0 0;
 }
 
-.ms_mp_tabs button {
+.tabs button {
   background-color: transparent;
   border: none;
   padding: 1rem;
@@ -67,7 +67,7 @@
   font-size: 18px;
 }
 
-.ms_mp_tabs > .ms_mp_active_tab {
+.tabs > .active_tab {
   border-color: yellow;
   color: white;
 }

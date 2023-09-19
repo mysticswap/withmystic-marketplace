@@ -9,9 +9,9 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <nav className="ms_mp_navbar">
-      <section className="ms_mp_nav_left">
-        <div className="ms_mp_logo_holder">
+    <nav className="navbar">
+      <section className="nav_left">
+        <div className="logo_holder">
           <Link to="/">
             <img
               src="https://mysticswap.io/static/media/mystWizGuild2.824b89cd.png"
@@ -20,7 +20,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <div className="ms_mp_nav_links">
+        <div className="nav_links">
           <a href="">
             <RiDiscordFill size={25} />
           </a>
@@ -29,7 +29,7 @@ const Navbar = () => {
           </a>
         </div>
 
-        <div className="ms_mp_collections_dropdown">
+        <div className="collections_dropdown">
           Collections <RiArrowDownSLine />
         </div>
       </section>

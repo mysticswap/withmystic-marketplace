@@ -15,14 +15,14 @@ const Banner = ({ bannerImage }: Props) => {
     { title: "Floor price", value: 19 },
   ];
   return (
-    <div className="ms_mp_banner">
+    <div className="banner">
       <img src={bannerImage} alt="" />
-      <div className="ms_mp_banner_details">
+      <div className="banner_details">
         <h1>{collectionMetadata?.name}</h1>
-        <div className="ms_mp_collection_pill">
+        <div className="collection_pill">
           {pillData.map((item) => {
             return (
-              <div className="ms_mp_pill_item" key={item.title}>
+              <div className="pill_item" key={item.title}>
                 <p>{millify(Number(item.value))}</p>
                 <p>{item.title}</p>
               </div>
@@ -30,12 +30,12 @@ const Banner = ({ bannerImage }: Props) => {
           })}
         </div>
       </div>
-      <div className="ms_mp_tabs">
+      <div className="tabs">
         {tabOptions.map((item) => {
           return (
             <button
               key={item}
-              className={item == currentTab ? "ms_mp_active_tab" : ""}
+              className={item == currentTab ? "active_tab" : ""}
               onClick={() => {
                 setCurrentTab(item);
               }}

@@ -8,9 +8,9 @@ const ControlBar = () => {
   const { setShowFilters, showFilters, setMinimalCards, minimalCards } =
     useHomeContext()!;
   return (
-    <div className="ms_mp_control_bar">
+    <div className="control_bar">
       <button
-        className="ms_mp_filter_button"
+        className="filter_button"
         onClick={() => setShowFilters(!showFilters)}
       >
         {showFilters ? (
@@ -21,18 +21,18 @@ const ControlBar = () => {
         Filters
       </button>
 
-      <div className="ms_mp_control_bar_search">
+      <div className="control_bar_search">
         <input type="text" placeholder="Search" />
         <IoSearchSharp size={20} />
       </div>
 
-      <div className="ms_mp_control_dropdown_parent">
-        <button className="ms_mp_control_dropdown_trigger">
+      <div className="control_dropdown_parent">
+        <button className="control_dropdown_trigger">
           Newest <RiArrowDownSLine size={20} />
         </button>
       </div>
 
-      <div className="ms_mp_grid_buttons">
+      <div className="grid_buttons">
         <button
           onClick={() => {
             setMinimalCards(true);

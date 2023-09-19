@@ -13,12 +13,12 @@ const CardsHolder = () => {
 
   return (
     <div
-      className={`ms_mp_cards_holder ${
-        showFilters ? "ms_mp_small_cards_holder" : "ms_mp_large_cards_holder"
+      className={`cards_holder ${
+        showFilters ? "small_cards_holder" : "large_cards_holder"
       } ${
         minimalCards
-          ? "ms_mp_small_cards_holder_minmax_v1"
-          : "ms_mp_small_cards_holder_minmax_v2"
+          ? "small_cards_holder_minmax_v1"
+          : "small_cards_holder_minmax_v2"
       }`}
     >
       {nftsList}

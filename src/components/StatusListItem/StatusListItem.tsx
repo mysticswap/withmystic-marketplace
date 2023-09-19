@@ -7,10 +7,7 @@ type Props = { text: string };
 const StatusListItem = ({ text }: Props) => {
   const [isClicked, setIsClicked] = useState(false);
   return (
-    <li
-      className="ms_mp_status_list_item"
-      onClick={() => setIsClicked(!isClicked)}
-    >
+    <li className="status_list_item" onClick={() => setIsClicked(!isClicked)}>
       {text} <Checkbox isClicked={isClicked} />
     </li>
   );

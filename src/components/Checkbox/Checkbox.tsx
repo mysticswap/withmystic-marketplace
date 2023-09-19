@@ -7,7 +7,7 @@ const Checkbox = ({ isClicked }: Prop) => {
   return (
     <div
       role="button"
-      className={`ms_mp_checkbox ${isClicked ? "ms_mp_clicked_check" : ""}`}
+      className={`checkbox ${isClicked ? "clicked_check" : ""}`}
     >
       {isClicked && <BsCheck size={15} color="white" />}
     </div>

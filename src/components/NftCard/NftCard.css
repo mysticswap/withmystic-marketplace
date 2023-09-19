@@ -1,4 +1,4 @@
-.ms_mp_nft_card {
+.nft_card {
   border: 1px solid var(--ms-mp-gray);
   border-radius: 16px;
   overflow: hidden;
@@ -7,30 +7,30 @@
   transition: var(--ms-mp-transition);
 }
 
-.ms_mp_nft_card:hover {
-  transform: scale(105%);
+.nft_card:hover {
+  transform: scale(103%);
 }
 
-.ms_mp_nft_card img {
+.nft_card img {
   width: 100%;
   display: block;
 }
 
-.ms_mp_nft_card_details {
+.nft_card_details {
   padding: 1rem;
 }
 
-.ms_mp_nft_card_details p {
+.nft_card_details p {
   margin: 0;
 }
 
-.ms_mp_card_name {
+.card_name {
   display: flex;
   align-items: center;
   gap: 0.25rem;
 }
 
-.ms_mp_card_name a {
+.card_name a {
   text-decoration: none;
   color: unset;
   white-space: nowrap;
@@ -38,7 +38,7 @@
   text-overflow: ellipsis;
 }
 
-.ms_mp_card_name p {
+.card_name p {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

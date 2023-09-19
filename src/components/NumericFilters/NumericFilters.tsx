@@ -10,19 +10,16 @@ const NumericFilters = ({ title }: Props) => {
   const [showList, setShowlist] = useState(false);
 
   return (
-    <div className="ms_mp_numeric_filter">
-      <button
-        className="ms_mp_filter_trigger"
-        onClick={() => setShowlist(!showList)}
-      >
+    <div className="numeric_filter">
+      <button className="filter_trigger" onClick={() => setShowlist(!showList)}>
         {title}{" "}
         <RiArrowUpSLine
-          className="ms_mp_status_down_arrow"
+          className="status_down_arrow"
           aria-expanded={showList}
           size={20}
         />
       </button>
-      <div className="ms_mp_minmax" aria-expanded={showList}>
+      <div className="minmax" aria-expanded={showList}>
         <input type="text" placeholder="Min" /> to
         <input type="text" placeholder="Max" />
       </div>

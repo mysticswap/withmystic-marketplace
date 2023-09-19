@@ -1,4 +1,4 @@
-.ms_mp_status_list_item {
+.status_list_item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -8,6 +8,6 @@
   transition: var(--ms-mp-transition);
 }
 
-.ms_mp_status_list_item:hover {
+.status_list_item:hover {
   background-color: var(--ms-mp-gray-light);
 }

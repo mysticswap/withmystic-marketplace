@@ -1,11 +1,11 @@
-.ms_mp_numeric_filter {
+.numeric_filter {
   padding-right: 0.75rem;
   padding-top: 0.75rem;
   border-bottom: 1px solid var(--ms-mp-gray);
   padding-bottom: 0.75rem;
 }
 
-.ms_mp_minmax {
+.minmax {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -15,7 +15,7 @@
   transition: max-height 1s ease-in-out;
 }
 
-.ms_mp_minmax input {
+.minmax input {
   width: 40%;
   outline: none;
   border: 1px solid transparent;
@@ -26,15 +26,15 @@
   border-radius: 64px;
 }
 
-.ms_mp_minmax input:hover {
+.minmax input:hover {
   border: 1px solid black;
 }
 
-.ms_mp_minmax input:focus {
+.minmax input:focus {
   border: 1px solid var(--ms-mp-blue);
 }
 
-.ms_mp_minmax[aria-expanded='true'] {
+.minmax[aria-expanded="true"] {
   max-height: 0px;
   transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
   padding: 0;
