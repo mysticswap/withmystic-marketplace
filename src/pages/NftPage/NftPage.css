@@ -1,0 +1,17 @@
+.nft_page {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  padding: 3rem 0;
+}
+
+.nft_page_section {
+  width: 45%;
+}
+
+.nft_image {
+  width: 100%;
+  border-radius: 6px;
+}

@@ -10,11 +10,19 @@
   --ms-mp-transition: all 0.25s ease-in-out;
   --ms-mp-smooth-transform-transition: transform 0.25s ease-in-out;
   --ms-mp-super-smooth-transition: all 0.5s cubic-bezier(0, 1, 0, 1);
+  --ms-mp-trait-title-color: rgba(38, 57, 237, 1);
+  --ms-mp-trait-background-color: rgba(38, 57, 237, 0.1);
+  --ms-mp-trait-border-color: rgba(38, 57, 237, 0.5);
+  --ms-mp-trait-hover-color: rgba(38, 57, 237, 0.25);
 }
 
 * {
   font-family: var(--ms-mp-poppins);
   scroll-behavior: smooth;
+}
+
+img {
+  display: block;
 }
 
 body {

@@ -1,0 +1,40 @@
+.traits_holder {
+  margin-top: 1rem;
+}
+
+.holder_title {
+  font-size: 36px;
+  margin-bottom: 1rem;
+}
+
+.traits_parent {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(calc(100% / 4), 1fr));
+  gap: 1rem;
+}
+
+.trait {
+  background-color: var(--ms-mp-trait-background-color);
+  border: 1px solid var(--ms-mp-trait-border-color);
+  border-radius: 6px;
+  padding: 1rem;
+  transition: var(--ms-mp-transition);
+}
+
+.trait:hover {
+  background-color: var(--ms-mp-trait-hover-color);
+}
+
+.trait p {
+  margin: 0;
+}
+
+.trait p:first-of-type {
+  color: var(--ms-mp-trait-title-color);
+  font-size: 14px;
+}
+
+.trait p:last-of-type {
+  font-size: 12px;
+  color: gray;
+}
