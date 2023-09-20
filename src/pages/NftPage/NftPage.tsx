@@ -7,6 +7,8 @@ import "./NftPage.css";
 import { SingleNftData } from "../../types/alchemy.types";
 import TraitsHolder from "./Components/TraitsHolder/TraitsHolder";
 import DescriptionHolder from "./Components/DescriptionHolder/DescriptionHolder";
+import NftHeader from "./Components/NftHeader/NftHeader";
+import CurrentPrice from "./Components/CurrentPrice/CurrentPrice";
 
 const NftPage = () => {
   const { collectionMetadata } = useGlobalContext()!;
@@ -31,7 +33,10 @@ const NftPage = () => {
           <TraitsHolder attributes={attributes} />
           <DescriptionHolder description={description} />
         </section>
-        <section className="nft_page_section"></section>
+        <section className="nft_page_section">
+          <NftHeader nftData={nftData} />
+          <CurrentPrice />
+        </section>
       </div>
     </>
   );

@@ -1,0 +1,29 @@
+.current_price {
+  border: 1px solid var(--ms-mp-gray);
+  border-radius: 1rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+}
+
+.current_price p {
+  margin: 0;
+}
+
+.current_price p:first-of-type {
+  color: gray;
+}
+
+.current_price p:nth-of-type(2) {
+  font-size: 40px;
+}
+
+.current_price p:nth-of-type(2) span {
+  font-size: 16px;
+  color: gray;
+}
+
+.current_price p:last-of-type {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

@@ -4,5 +4,13 @@ export const getQueryString = (params: { [x: string]: any }) => {
       ([key, value]) =>
         `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
     )
-    .join('&');
+    .join("&");
+};
+
+export const truncateAddress = (
+  address: string,
+  amount: number,
+  ellipsis: string
+) => {
+  return `${address?.slice(0, amount)}${ellipsis}${address?.slice(-amount)}`;
 };
