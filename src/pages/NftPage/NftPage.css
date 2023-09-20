@@ -7,8 +7,12 @@
   padding: 3rem 0;
 }
 
-.nft_page_section {
-  width: 45%;
+.nft_page_section:first-of-type {
+  width: 40%;
+}
+
+.nft_page_section:last-of-type {
+  width: 52%;
 }
 
 .nft_image {

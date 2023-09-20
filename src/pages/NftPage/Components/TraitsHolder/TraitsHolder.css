@@ -27,6 +27,9 @@
 
 .trait p {
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .trait p:first-of-type {

@@ -1,0 +1,31 @@
+.details {
+  padding: 1rem 2rem;
+  border: 1px solid var(--ms-mp-gray);
+  border-radius: 1rem;
+  margin-top: 1.5rem;
+}
+
+.details_title {
+  font-size: 36px;
+  margin: 0;
+}
+
+.details_table {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.details_table {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.details_table p:first-of-type {
+  color: gray;
+  /* margin: 0; */
+}
