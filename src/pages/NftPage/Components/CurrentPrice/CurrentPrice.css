@@ -2,7 +2,7 @@
   border: 1px solid var(--ms-mp-gray);
   border-radius: 1rem;
   margin-top: 1.5rem;
-  padding: 1rem;
+  padding: 1rem 2rem;
 }
 
 .current_price p {
@@ -14,7 +14,7 @@
 }
 
 .current_price p:nth-of-type(2) {
-  font-size: 40px;
+  font-size: 36px;
 }
 
 .current_price p:nth-of-type(2) span {

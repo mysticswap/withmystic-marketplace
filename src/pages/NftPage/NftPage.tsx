@@ -9,6 +9,7 @@ import TraitsHolder from "./Components/TraitsHolder/TraitsHolder";
 import DescriptionHolder from "./Components/DescriptionHolder/DescriptionHolder";
 import NftHeader from "./Components/NftHeader/NftHeader";
 import CurrentPrice from "./Components/CurrentPrice/CurrentPrice";
+import Offers from "./Components/Offers/Offers";
 
 const NftPage = () => {
   const { collectionMetadata } = useGlobalContext()!;
@@ -36,6 +37,7 @@ const NftPage = () => {
         <section className="nft_page_section">
           <NftHeader nftData={nftData} />
           <CurrentPrice />
+          <Offers />
         </section>
       </div>
     </>
