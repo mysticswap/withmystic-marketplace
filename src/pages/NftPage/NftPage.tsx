@@ -11,25 +11,36 @@ import NftHeader from "./Components/NftHeader/NftHeader";
 import CurrentPrice from "./Components/CurrentPrice/CurrentPrice";
 import Offers from "./Components/Offers/Offers";
 import Details from "./Components/Details/Details";
+import History from "./Components/History/History";
+import Loading from "../../components/Loading/Loading";
 
 const NftPage = () => {
   const { collectionMetadata } = useGlobalContext()!;
   const { id } = useParams();
   const contractAddress = collectionMetadata?.address;
   const [nftData, setNftData] = useState<SingleNftData>({} as SingleNftData);
+  const [isLoading, setIsLoading] = useState(true);
   const nftImage = nftData?.media?.[0]?.gateway;
   const attributes = nftData?.rawMetadata?.attributes;
   const description = nftData?.description;
 
   useEffect(() => {
-    getSingleNft(contractAddress!, id!, 1, apiKey).then((result) => {
-      setNftData(result);
+    Promise.all([
+      getSingleNft(contractAddress!, id!, 1, apiKey).then((result) => {
+        setNftData(result);
+      }),
+    ]).then(() => {
+      setIsLoading(false);
     });
   }, [collectionMetadata]);
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <>
-      <div className="nft_page">
+      <div className="nft_page_top">
         <section className="nft_page_section">
           <img className="nft_image" src={nftImage} alt="" />
           <TraitsHolder attributes={attributes} />
@@ -42,6 +53,7 @@ const NftPage = () => {
           <Details nftData={nftData} />
         </section>
       </div>
+      <History />
     </>
   );
 };

@@ -14,6 +14,7 @@
   --ms-mp-trait-background-color: rgba(38, 57, 237, 0.1);
   --ms-mp-trait-border-color: rgba(38, 57, 237, 0.5);
   --ms-mp-trait-hover-color: rgba(38, 57, 237, 0.25);
+  --ms-mp-grey-border: 1px solid #d9e0ec;
 }
 
 * {

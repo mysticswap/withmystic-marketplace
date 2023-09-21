@@ -1,0 +1,21 @@
+.loading_screen {
+  width: 100%;
+  min-height: calc(100vh - 15vh);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader {
+  color: var(--ms-mp-blue);
+  animation: rotate 2s infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

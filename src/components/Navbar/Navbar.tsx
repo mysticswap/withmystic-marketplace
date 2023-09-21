@@ -5,9 +5,17 @@ import {
   RiTwitterXLine,
 } from "react-icons/ri";
 import SolidButton from "../SolidButton/SolidButton";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { scrollToTop } from "../../utils";
 
 const Navbar = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    scrollToTop();
+  }, [location.pathname]);
+
   return (
     <nav className="navbar">
       <section className="nav_left">

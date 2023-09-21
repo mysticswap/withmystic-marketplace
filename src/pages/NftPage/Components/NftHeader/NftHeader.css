@@ -29,6 +29,10 @@
   gap: 0.5rem;
 }
 
+.nft_header_owner > div > svg {
+  cursor: pointer;
+}
+
 .nft_header_button_holder {
   display: flex;
   align-items: start;

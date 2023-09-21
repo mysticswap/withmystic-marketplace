@@ -14,3 +14,7 @@ export const truncateAddress = (
 ) => {
   return `${address?.slice(0, amount)}${ellipsis}${address?.slice(-amount)}`;
 };
+
+export const scrollToTop = () => {
+  window.scrollTo(0, 0);
+};
