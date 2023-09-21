@@ -1,0 +1,18 @@
+.selected_filter {
+  background-color: var(--ms-mp-gray-light);
+  padding: 0.25rem 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 6px;
+}
+
+.selected_filter svg {
+  cursor: pointer;
+  color: gray;
+  transition: var(--ms-mp-transition);
+}
+
+.selected_filter svg:hover {
+  color: black;
+}

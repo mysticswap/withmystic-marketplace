@@ -2,6 +2,7 @@
   padding: 0.75rem;
   display: grid;
   gap: 1rem;
+  min-height: calc(100vh - 48px - 48px);
   max-height: calc(100vh - 48px - 48px);
   overflow-y: auto;
   border-left: var(--ms-mp-gray-border);
@@ -26,4 +27,27 @@
 
 .small_cards_holder_minmax_v2 {
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+
+.selected_traits_holder {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.clear_filters {
+  background-color: none;
+  border: none;
+  background-color: var(--ms-mp-gray);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+}
+
+.clear_filters:hover {
+  background-color: var(--ms-mp-gray-light);
 }

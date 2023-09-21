@@ -4,6 +4,7 @@ import { useState } from "react";
 import { TraitData } from "../FiltersSidebar/mocktraits";
 import { IoSearchSharp } from "react-icons/io5";
 import StatusListItem from "../StatusListItem/StatusListItem";
+import { useHomeContext } from "../../context/HomeContext";
 
 type Props = {
   traits: TraitData;
@@ -11,9 +12,21 @@ type Props = {
 };
 
 const TraitFilter = ({ traits, traitType }: Props) => {
+  const { selectedTraits, setSelectedTraits } = useHomeContext()!;
   const [showList, setShowlist] = useState(false);
   const traitValues = Object.keys(traits.summary[traitType]);
   const traitCount = Object.values(traits.summary[traitType]);
+
+  const selectTrait = (isClicked: boolean, trait: string) => {
+    if (!isClicked) {
+      setSelectedTraits([...selectedTraits, trait]);
+    } else {
+      const updatedSelection = selectedTraits.filter((item) => {
+        return item !== trait;
+      });
+      setSelectedTraits(updatedSelection);
+    }
+  };
   return (
     <div className="trait_filter">
       <button className="filter_trigger" onClick={() => setShowlist(!showList)}>
@@ -32,7 +45,15 @@ const TraitFilter = ({ traits, traitType }: Props) => {
         </div>
         <div>
           {traitValues.map((value, index) => {
-            return <StatusListItem text={value} subtext={traitCount[index]} />;
+            return (
+              <StatusListItem
+                key={value}
+                text={value}
+                subtext={traitCount[index]}
+                handleClick={selectTrait}
+                isForTraits={true}
+              />
+            );
           })}
         </div>
       </div>

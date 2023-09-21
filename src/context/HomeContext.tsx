@@ -8,6 +8,8 @@ type ContextType = {
   setShowFilters: React.Dispatch<React.SetStateAction<boolean>>;
   minimalCards: boolean;
   setMinimalCards: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedTraits: string[];
+  setSelectedTraits: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 const HomeContext = createContext<ContextType | null>(null);
@@ -19,6 +21,7 @@ export const HomeContextProvider = ({ children }: Props) => {
   const [currentTab, setCurrentTab] = useState(tabOptions[0]);
   const [minimalCards, setMinimalCards] = useState(true);
   const [showFilters, setShowFilters] = useState(true);
+  const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
 
   return (
     <HomeContext.Provider
@@ -30,6 +33,8 @@ export const HomeContextProvider = ({ children }: Props) => {
         setMinimalCards,
         showFilters,
         setShowFilters,
+        selectedTraits,
+        setSelectedTraits,
       }}
     >
       {children}
