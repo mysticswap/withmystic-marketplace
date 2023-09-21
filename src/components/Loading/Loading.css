@@ -1,6 +1,6 @@
 .loading_screen {
   width: 100%;
-  min-height: calc(100vh - 15vh);
+  min-height: calc(100vh - 10vh);
   display: flex;
   align-items: center;
   justify-content: center;
