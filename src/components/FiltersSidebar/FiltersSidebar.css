@@ -1,4 +1,9 @@
 .filters_sidebar {
   width: 20%;
-  border-right: 1px solid var(--ms-mp-gray);
+  max-height: calc(100vh - 48px - 48px + 1.5rem);
+  overflow-y: auto;
+}
+
+.filters_sidebar::-webkit-scrollbar {
+  display: none;
 }

@@ -24,7 +24,7 @@
 .control_bar_search {
   width: 55%;
   background-color: var(--ms-mp-gray-light);
-  padding: 0.75rem;
+  padding: calc(0.75rem - 1px);
   border-radius: 64px;
   display: flex;
   align-items: center;
@@ -38,7 +38,7 @@
 }
 
 .control_bar_search:focus-within {
-  border: 2px solid var(--ms-mp-blue);
+  border: 1px solid var(--ms-mp-blue);
 }
 
 .control_bar_search input {
