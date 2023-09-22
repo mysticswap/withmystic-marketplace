@@ -1,21 +1,21 @@
 import { RiArrowUpSLine } from "react-icons/ri";
 import "./TraitFilter.css";
 import { useState } from "react";
-import { TraitData } from "../FiltersSidebar/mocktraits";
 import { IoSearchSharp } from "react-icons/io5";
 import StatusListItem from "../StatusListItem/StatusListItem";
 import { useHomeContext } from "../../context/HomeContext";
+import { CollectionTraits } from "../../types/alchemy.types";
 
 type Props = {
-  traits: TraitData;
+  traits: CollectionTraits;
   traitType: string;
 };
 
 const TraitFilter = ({ traits, traitType }: Props) => {
   const { selectedTraits, setSelectedTraits } = useHomeContext()!;
   const [showList, setShowlist] = useState(false);
-  const traitValues = Object.keys(traits.summary[traitType]);
-  const traitCount = Object.values(traits.summary[traitType]);
+  const traitValues = Object.keys(traits[traitType]);
+  const traitCount = Object.values(traits[traitType]);
   const [traitValuesTemp, setTraitValuesTemp] = useState(traitValues);
   const [traitCountTemp, setTraitCountTemp] = useState(traitCount);
 
@@ -36,7 +36,7 @@ const TraitFilter = ({ traits, traitType }: Props) => {
       return value.toLowerCase().includes(query);
     });
 
-    const traitTypes = traits.summary[traitType];
+    const traitTypes = traits[traitType];
     const updatedCounts = searchResults.map((item) => {
       return traitTypes[item];
     });

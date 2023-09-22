@@ -1,13 +1,12 @@
 import "./FiltersSidebar.css";
 import StatusFilters from "../StatusFilters/StatusFilters";
 import NumericFilters from "../NumericFilters/NumericFilters";
-import { mockTraits } from "./mocktraits";
-import { useState } from "react";
 import TraitFilter from "../TraitFilter/TraitFilter";
+import { useGlobalContext } from "../../context/GlobalContext";
 
 const FiltersSidebar = () => {
-  const [traits] = useState(mockTraits);
-  const traitTypes = Object.keys(traits.summary);
+  const { collectionTraits } = useGlobalContext()!;
+  const traitTypes = Object.keys(collectionTraits);
 
   return (
     <div className="filters_sidebar">
@@ -15,7 +14,9 @@ const FiltersSidebar = () => {
       <NumericFilters title="Price" />
       <NumericFilters title="Rarity Rank" />
       {traitTypes.map((type) => {
-        return <TraitFilter key={type} traits={traits} traitType={type} />;
+        return (
+          <TraitFilter key={type} traits={collectionTraits} traitType={type} />
+        );
       })}
     </div>
   );

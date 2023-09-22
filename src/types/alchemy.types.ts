@@ -68,3 +68,7 @@ export interface TokenURI {
   gateway: string;
   raw: string;
 }
+
+export interface CollectionTraits {
+  [key: string]: { [key: string]: number };
+}
