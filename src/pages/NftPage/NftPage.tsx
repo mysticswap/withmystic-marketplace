@@ -32,7 +32,7 @@ const NftPage = () => {
       }),
 
       getNftOwner(contractAddress!, id!, 1, apiKey).then((result) => {
-        setOwner(result.owners[0]);
+        setOwner(result?.owners[0]);
       }),
     ]).then(() => {
       setIsLoading(false);

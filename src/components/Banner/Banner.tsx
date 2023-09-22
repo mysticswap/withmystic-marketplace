@@ -6,11 +6,11 @@ import { useHomeContext } from "../../context/HomeContext";
 type Props = { bannerImage: string };
 
 const Banner = ({ bannerImage }: Props) => {
-  const { collectionMetadata } = useGlobalContext()!;
+  const { collectionMetadata, totalOwners } = useGlobalContext()!;
   const { currentTab, setCurrentTab, tabOptions } = useHomeContext()!;
   const pillData = [
     { title: "Items", value: collectionMetadata?.totalSupply },
-    { title: "Owners", value: 3300 },
+    { title: "Owners", value: totalOwners },
     { title: "Total vol.", value: 1900 },
     { title: "Floor price", value: collectionMetadata?.openSea?.floorPrice },
   ];

@@ -15,6 +15,7 @@ import {
 import {
   getCollection,
   getCollectionNfts,
+  getCollectionOwners,
   getCollectionTraits,
 } from "../services/marketplace-api";
 import { apiKey, collectionContract } from "../config";
@@ -26,6 +27,8 @@ type ContextType = {
   setCollectionNfts: React.Dispatch<React.SetStateAction<SingleNftData[]>>;
   collectionTraits: CollectionTraits;
   setCollectionTraits: React.Dispatch<React.SetStateAction<CollectionTraits>>;
+  totalOwners: number;
+  setTotalOwners: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const GlobalContext = createContext<ContextType | null>(null);
@@ -41,6 +44,7 @@ export const GlobalContextProvider = ({ children }: Props) => {
     {} as CollectionTraits
   );
   const [collectionNfts, setCollectionNfts] = useState<SingleNftData[]>([]);
+  const [totalOwners, setTotalOwners] = useState(0);
 
   useEffect(() => {
     getCollection(collectionContract, 1, apiKey).then((result) => {
@@ -54,6 +58,10 @@ export const GlobalContextProvider = ({ children }: Props) => {
     getCollectionNfts(collectionContract, 1, 1, apiKey).then((result) => {
       setCollectionNfts(result.nfts);
     });
+
+    getCollectionOwners(collectionContract, 1, apiKey).then((result) => {
+      setTotalOwners(result.totalOwners);
+    });
   }, []);
 
   return (
@@ -65,6 +73,8 @@ export const GlobalContextProvider = ({ children }: Props) => {
         setCollectionNfts,
         collectionTraits,
         setCollectionTraits,
+        totalOwners,
+        setTotalOwners,
       }}
     >
       {children}
