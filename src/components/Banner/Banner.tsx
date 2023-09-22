@@ -12,7 +12,7 @@ const Banner = ({ bannerImage }: Props) => {
     { title: "Items", value: collectionMetadata?.totalSupply },
     { title: "Owners", value: 3300 },
     { title: "Total vol.", value: 1900 },
-    { title: "Floor price", value: 19 },
+    { title: "Floor price", value: collectionMetadata?.openSea?.floorPrice },
   ];
   return (
     <div className="banner">
@@ -23,7 +23,11 @@ const Banner = ({ bannerImage }: Props) => {
           {pillData.map((item) => {
             return (
               <div className="pill_item" key={item.title}>
-                <p>{millify(Number(item.value))}</p>
+                <p>
+                  {Number(item.value) < 1
+                    ? Number(item.value)
+                    : millify(Number(item.value))}
+                </p>
                 <p>{item.title}</p>
               </div>
             );
