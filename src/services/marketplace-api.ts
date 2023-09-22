@@ -70,3 +70,21 @@ export const getCollectionTraits = async (
   const response = await request.json();
   return response;
 };
+
+export const getNftOwner = async (
+  contractAddress: string,
+  tokenId: string,
+  chainId: number,
+  bearerToken: string
+) => {
+  const queryParams = { contractAddress, tokenId, chainId };
+  const queryString = getQueryString(queryParams);
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${bearerToken}`,
+  };
+  const url = `${BASE_API}/marketplace-api/get-nft-owners?${queryString}`;
+  const request = await fetch(url, { headers });
+  const response = await request.json();
+  return response;
+};

@@ -8,19 +8,19 @@ import { LuRefreshCw } from "react-icons/lu";
 
 type Props = {
   nftData: SingleNftData;
+  owner: string;
 };
 
-const NftHeader = ({ nftData }: Props) => {
+const NftHeader = ({ nftData, owner }: Props) => {
   const collectionName = nftData?.contract?.name;
   const nftName = nftData?.rawMetadata?.name;
-  const address = nftData?.contract?.address;
   return (
     <div className="nft_header">
       <p>{collectionName}</p>
       <p>{nftName}</p>
       <div className="nft_header_owner">
         <p>
-          Owned by <span>{truncateAddress(address, 5, "...")}</span>
+          Owned by <span>{truncateAddress(owner, 5, "...")}</span>
         </p>
         <div>
           <IoShareSocial />

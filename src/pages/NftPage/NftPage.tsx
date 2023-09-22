@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
 import { useEffect, useState } from "react";
-import { getSingleNft } from "../../services/marketplace-api";
+import { getNftOwner, getSingleNft } from "../../services/marketplace-api";
 import { apiKey } from "../../config";
 import "./NftPage.css";
 import { SingleNftData } from "../../types/alchemy.types";
@@ -19,6 +19,7 @@ const NftPage = () => {
   const { id } = useParams();
   const contractAddress = collectionMetadata?.address;
   const [nftData, setNftData] = useState<SingleNftData>({} as SingleNftData);
+  const [owner, setOwner] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const nftImage = nftData?.media?.[0]?.gateway;
   const attributes = nftData?.rawMetadata?.attributes;
@@ -28,6 +29,10 @@ const NftPage = () => {
     Promise.all([
       getSingleNft(contractAddress!, id!, 1, apiKey).then((result) => {
         setNftData(result);
+      }),
+
+      getNftOwner(contractAddress!, id!, 1, apiKey).then((result) => {
+        setOwner(result.owners[0]);
       }),
     ]).then(() => {
       setIsLoading(false);
@@ -47,7 +52,7 @@ const NftPage = () => {
           <DescriptionHolder description={description} />
         </section>
         <section className="nft_page_section">
-          <NftHeader nftData={nftData} />
+          <NftHeader nftData={nftData} owner={owner} />
           <CurrentPrice />
           <Offers />
           <Details nftData={nftData} />
