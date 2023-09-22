@@ -19,9 +19,10 @@ const StatusListItem = ({ text, subtext, handleClick, isForTraits }: Props) => {
       const isSelected = selectedTraits.some((trait) => {
         return trait == text;
       });
-      !isSelected && setIsClicked(false);
+      setIsClicked(isSelected);
     }
   }, [selectedTraits]);
+
   return (
     <li
       className="status_list_item"

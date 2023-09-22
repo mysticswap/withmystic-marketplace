@@ -16,6 +16,8 @@ const TraitFilter = ({ traits, traitType }: Props) => {
   const [showList, setShowlist] = useState(false);
   const traitValues = Object.keys(traits.summary[traitType]);
   const traitCount = Object.values(traits.summary[traitType]);
+  const [traitValuesTemp, setTraitValuesTemp] = useState(traitValues);
+  const [traitCountTemp, setTraitCountTemp] = useState(traitCount);
 
   const selectTrait = (isClicked: boolean, trait: string) => {
     if (!isClicked) {
@@ -27,6 +29,22 @@ const TraitFilter = ({ traits, traitType }: Props) => {
       setSelectedTraits(updatedSelection);
     }
   };
+
+  const onSearch = (text: string) => {
+    const query = text.toLowerCase();
+    const searchResults = traitValues.filter((value) => {
+      return value.toLowerCase().includes(query);
+    });
+
+    const traitTypes = traits.summary[traitType];
+    const updatedCounts = searchResults.map((item) => {
+      return traitTypes[item];
+    });
+
+    setTraitValuesTemp(searchResults);
+    setTraitCountTemp(updatedCounts);
+  };
+
   return (
     <div className="trait_filter">
       <button className="filter_trigger" onClick={() => setShowlist(!showList)}>
@@ -40,16 +58,20 @@ const TraitFilter = ({ traits, traitType }: Props) => {
 
       <div className="trait_container" aria-expanded={showList}>
         <div className="trait_search">
-          <input type="text" placeholder="Search" />
+          <input
+            type="text"
+            placeholder="Search"
+            onChange={(e) => onSearch(e.target.value)}
+          />
           <IoSearchSharp size={20} color="gray" />
         </div>
         <div>
-          {traitValues.map((value, index) => {
+          {traitValuesTemp.map((value, index) => {
             return (
               <StatusListItem
                 key={value}
                 text={value}
-                subtext={traitCount[index]}
+                subtext={traitCountTemp[index]}
                 handleClick={selectTrait}
                 isForTraits={true}
               />
