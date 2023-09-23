@@ -31,3 +31,7 @@ body {
   padding: 0;
   transition: var(--ms-mp-transition);
 }
+
+.hide {
+  display: none;
+}

@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/GlobalContext";
 import "./ActivityScreen.css";
+import ActivityRow from "../ActivityRow/ActivityRow";
 
 const ActivityScreen = () => {
   const { collectionHistory } = useGlobalContext()!;
   const [sales, setSales] = useState(collectionHistory.nftSales);
+
+  useEffect(() => {
+    setSales(collectionHistory.nftSales);
+  }, [collectionHistory]);
 
   return (
     <div>
@@ -16,6 +21,9 @@ const ActivityScreen = () => {
         <div>To</div>
         <div>Time</div>
       </div>
+      {sales.map((sale, index) => {
+        return <ActivityRow key={sale.blockNumber * index} activity={sale} />;
+      })}
     </div>
   );
 };

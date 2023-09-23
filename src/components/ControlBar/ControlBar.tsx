@@ -4,11 +4,15 @@ import { BsFillGridFill, BsFillGrid3X3GapFill } from "react-icons/bs";
 import "./ControlBar.css";
 import { useHomeContext } from "../../context/HomeContext";
 
-const ControlBar = () => {
+type Props = {
+  isInItemsSection: boolean;
+};
+
+const ControlBar = ({ isInItemsSection }: Props) => {
   const { setShowFilters, showFilters, setMinimalCards, minimalCards } =
     useHomeContext()!;
   return (
-    <div className="control_bar">
+    <div className={`control_bar ${isInItemsSection ? "" : "hide"}`}>
       <button
         className="filter_button"
         onClick={() => setShowFilters(!showFilters)}

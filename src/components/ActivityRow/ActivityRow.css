@@ -1,0 +1,56 @@
+.activity_row {
+  width: 90%;
+  margin: auto;
+  border-top: var(--ms-mp-gray-border);
+  padding: 1rem 0;
+  display: flex;
+  align-items: center;
+  transition: var(--ms-mp-transition);
+  cursor: pointer;
+}
+
+.activity_row:hover {
+  background-color: var(--ms-mp-gray-light);
+}
+
+.activity_row_item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.activity_row_image {
+  width: 65px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.activity_row > div:first-of-type {
+  width: 10%;
+  padding-left: 1rem;
+  box-sizing: border-box;
+}
+
+.activity_row > div:nth-of-type(2) {
+  width: 25%;
+}
+
+.activity_row > div:not(:nth-of-type(2), :first-of-type) {
+  width: calc(65% / 4);
+}
+
+.activity_row > div:last-of-type > p {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.activity_row > div:is(:nth-of-type(4), :nth-of-type(5), :last-of-type) {
+  color: var(--ms-mp-blue);
+  transition: var(--ms-mp-transition);
+}
+
+.activity_row > div:is(:nth-of-type(4), :nth-of-type(5), :last-of-type):hover {
+  color: var(--ms-mp-blue-2);
+}

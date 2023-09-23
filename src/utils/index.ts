@@ -18,3 +18,10 @@ export const truncateAddress = (
 export const scrollToTop = () => {
   window.scrollTo(0, 0);
 };
+
+export const convertDecimalsToReadableNumbers = (
+  amount: string,
+  decimal: number
+) => {
+  return Math.pow(10, decimal) * Number(amount);
+};
