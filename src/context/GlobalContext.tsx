@@ -8,12 +8,14 @@ import React, {
   useState,
 } from "react";
 import {
+  CollectionHistory,
   CollectionMetaData,
   CollectionTraits,
   SingleNftData,
 } from "../types/alchemy.types";
 import {
   getCollection,
+  getCollectionHistory,
   getCollectionNfts,
   getCollectionOwners,
   getCollectionTraits,
@@ -29,6 +31,8 @@ type ContextType = {
   setCollectionTraits: React.Dispatch<React.SetStateAction<CollectionTraits>>;
   totalOwners: number;
   setTotalOwners: React.Dispatch<React.SetStateAction<number>>;
+  collectionHistory: CollectionHistory;
+  setCollectionHistory: React.Dispatch<React.SetStateAction<CollectionHistory>>;
 };
 
 const GlobalContext = createContext<ContextType | null>(null);
@@ -45,6 +49,9 @@ export const GlobalContextProvider = ({ children }: Props) => {
   );
   const [collectionNfts, setCollectionNfts] = useState<SingleNftData[]>([]);
   const [totalOwners, setTotalOwners] = useState(0);
+  const [collectionHistory, setCollectionHistory] = useState<CollectionHistory>(
+    {} as CollectionHistory
+  );
 
   useEffect(() => {
     getCollection(collectionContract, 1, apiKey).then((result) => {
@@ -62,6 +69,10 @@ export const GlobalContextProvider = ({ children }: Props) => {
     getCollectionOwners(collectionContract, 1, apiKey).then((result) => {
       setTotalOwners(result.totalOwners);
     });
+
+    getCollectionHistory(collectionContract, 1, apiKey).then((result) => {
+      setCollectionHistory(result);
+    });
   }, []);
 
   return (
@@ -75,6 +86,8 @@ export const GlobalContextProvider = ({ children }: Props) => {
         setCollectionTraits,
         totalOwners,
         setTotalOwners,
+        collectionHistory,
+        setCollectionHistory,
       }}
     >
       {children}

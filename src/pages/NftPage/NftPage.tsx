@@ -1,7 +1,11 @@
 import { useParams } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
 import { useEffect, useState } from "react";
-import { getNftOwner, getSingleNft } from "../../services/marketplace-api";
+import {
+  getNftHistory,
+  getNftOwner,
+  getSingleNft,
+} from "../../services/marketplace-api";
 import { apiKey } from "../../config";
 import "./NftPage.css";
 import { SingleNftData } from "../../types/alchemy.types";
@@ -34,6 +38,8 @@ const NftPage = () => {
       getNftOwner(contractAddress!, id!, 1, apiKey).then((result) => {
         setOwner(result?.owners[0]);
       }),
+
+      getNftHistory(contractAddress!, id!, 1, apiKey),
     ]).then(() => {
       setIsLoading(false);
     });

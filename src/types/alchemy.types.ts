@@ -72,3 +72,42 @@ export interface TokenURI {
 export interface CollectionTraits {
   [key: string]: { [key: string]: number };
 }
+
+export interface NftSale {
+  marketplace: string;
+  contractAddress: string;
+  tokenId: string;
+  quantity: string;
+  buyerAddress: string;
+  sellerAddress: string;
+  taker: string;
+  sellerFee: Fee;
+  marketplaceFee: Fee;
+  protocolFee: Fee;
+  royaltyFee: RoyaltyFee;
+  blockNumber: number;
+  logIndex: number;
+  bundleIndex: number;
+  transactionHash: string;
+}
+
+export interface Fee {
+  amount: string;
+  tokenAddress: string;
+  symbol: string;
+  decimals: number;
+}
+
+export interface RoyaltyFee {}
+
+export interface ValidAt {
+  blockNumber: number;
+  blockHash: string;
+  blockTimestamp: Date;
+}
+
+export interface CollectionHistory {
+  nftSales: NftSale[];
+  pageKey: string;
+  validAt: ValidAt;
+}

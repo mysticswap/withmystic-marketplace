@@ -101,3 +101,30 @@ export const getCollectionOwners = async (
     bearerToken
   );
 };
+
+export const getCollectionHistory = async (
+  contractAddress: string,
+  chainId: number,
+  bearerToken: string
+) => {
+  const queryParams = { contractAddress, chainId };
+  return makeApiRequest(
+    "/marketplace-api/get-collection-history",
+    queryParams,
+    bearerToken
+  );
+};
+
+export const getNftHistory = async (
+  contractAddress: string,
+  tokenId: string,
+  chainId: number,
+  bearerToken: string
+) => {
+  const queryParams = { contractAddress, chainId, tokenId };
+  return makeApiRequest(
+    "/marketplace-api/get-nft-history",
+    queryParams,
+    bearerToken
+  );
+};
