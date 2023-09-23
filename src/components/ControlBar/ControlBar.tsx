@@ -9,8 +9,13 @@ type Props = {
 };
 
 const ControlBar = ({ isInItemsSection }: Props) => {
-  const { setShowFilters, showFilters, setMinimalCards, minimalCards } =
-    useHomeContext()!;
+  const {
+    setShowFilters,
+    showFilters,
+    setMinimalCards,
+    minimalCards,
+    selectedTraits,
+  } = useHomeContext()!;
   return (
     <div className={`control_bar ${isInItemsSection ? "" : "hide"}`}>
       <button
@@ -22,7 +27,10 @@ const ControlBar = ({ isInItemsSection }: Props) => {
         ) : (
           <IoOptionsOutline size={20} />
         )}{" "}
-        Filters
+        Filters{" "}
+        {selectedTraits.length > 0 && (
+          <div className="filter_counter">{selectedTraits.length}</div>
+        )}
       </button>
 
       <div className="control_bar_search">

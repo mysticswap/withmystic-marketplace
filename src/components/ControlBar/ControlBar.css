@@ -19,6 +19,22 @@
   background-color: var(--ms-mp-gray-light);
   transition: var(--ms-mp-transition);
   cursor: pointer;
+  position: relative;
+}
+
+.filter_counter {
+  position: absolute;
+  background-color: var(--ms-mp-blue);
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: -8px;
+  right: 0;
+  font-size: 12px;
 }
 
 .control_bar_search {
