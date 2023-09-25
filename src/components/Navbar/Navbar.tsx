@@ -8,9 +8,17 @@ import SolidButton from "../SolidButton/SolidButton";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { scrollToTop } from "../../utils";
+import { connectWallets } from "../../services/web3Onboard";
+import { useGlobalContext } from "../../context/GlobalContext";
+import ConnectedWalletButton from "../ConnectedWalletButton/ConnectedWalletButton";
 
 const Navbar = () => {
+  const { setProvider, user } = useGlobalContext()!;
   const location = useLocation();
+
+  const connectWallet = () => {
+    connectWallets(setProvider);
+  };
 
   useEffect(() => {
     scrollToTop();
@@ -42,7 +50,11 @@ const Navbar = () => {
         </div>
       </section>
       <section>
-        <SolidButton text="Connect Wallet" />
+        {!user ? (
+          <SolidButton text="Connect Wallet" onClick={connectWallet} />
+        ) : (
+          <ConnectedWalletButton />
+        )}
       </section>
     </nav>
   );

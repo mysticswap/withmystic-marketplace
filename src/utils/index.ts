@@ -26,3 +26,8 @@ export const convertDecimalsToReadableNumbers = (
   const result = Number(amount) / Math.pow(10, decimal);
   return result || 0;
 };
+
+export const metamaskPresent = () => {
+  var ethereum = window.ethereum;
+  return typeof ethereum !== "undefined" && window.ethereum.isMetaMask;
+};

@@ -1,6 +1,10 @@
 import "./SolidButton.css";
 
-type Props = { text: string; className?: string; onClick?: () => any };
+type Props = {
+  text: string;
+  className?: string;
+  onClick?: (...args: any[]) => void;
+};
 
 const SolidButton = ({ text, className, onClick }: Props) => {
   return (
