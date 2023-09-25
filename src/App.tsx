@@ -5,6 +5,7 @@ import { HomeContextProvider } from "./context/HomeContext";
 import NftPage from "./pages/NftPage/NftPage";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
               element={<HomeContextProvider children={<Home />} />}
             />
             <Route path="/nft/:id" element={<NftPage />} />
+            <Route path="*" element={<ErrorPage />} />
           </Routes>
           <Footer />
         </Router>
