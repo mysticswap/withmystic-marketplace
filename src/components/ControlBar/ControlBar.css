@@ -66,6 +66,7 @@
 
 .control_dropdown_parent {
   width: 15%;
+  position: relative;
 }
 
 .control_dropdown_trigger {
@@ -83,6 +84,33 @@
 
 .control_dropdown_trigger:hover {
   background-color: var(--ms-mp-gray);
+}
+
+.control_dropdown_list {
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 1rem;
+  margin-top: 0.5rem;
+  background-color: white;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+  padding: 0.5rem;
+  z-index: 1;
+}
+
+.control_dropdown_list button {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  text-align: left;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+  border-radius: 8px;
+}
+
+.control_dropdown_list button:hover {
+  background-color: var(--ms-mp-gray-light);
 }
 
 .grid_buttons {

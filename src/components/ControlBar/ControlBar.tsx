@@ -3,6 +3,8 @@ import { RiArrowDownSLine, RiArrowLeftSLine } from "react-icons/ri";
 import { BsFillGridFill, BsFillGrid3X3GapFill } from "react-icons/bs";
 import "./ControlBar.css";
 import { useHomeContext } from "../../context/HomeContext";
+import { useRef, useState } from "react";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
 
 type Props = {
   isInItemsSection: boolean;
@@ -15,7 +17,15 @@ const ControlBar = ({ isInItemsSection }: Props) => {
     setMinimalCards,
     minimalCards,
     selectedTraits,
+    dropdownOptions,
+    selectedDropdownOption,
+    setSelectedDropdownOption,
   } = useHomeContext()!;
+  const dropdownRef = useRef(null);
+  const [showDropdownOptions, setShowDropdownOptions] = useState(false);
+
+  useOutsideClick(dropdownRef, setShowDropdownOptions);
+
   return (
     <div className={`control_bar ${isInItemsSection ? "" : "hide"}`}>
       <button
@@ -39,9 +49,30 @@ const ControlBar = ({ isInItemsSection }: Props) => {
       </div>
 
       <div className="control_dropdown_parent">
-        <button className="control_dropdown_trigger">
-          Newest <RiArrowDownSLine size={20} />
+        <button
+          className="control_dropdown_trigger"
+          onClick={() => setShowDropdownOptions(!showDropdownOptions)}
+        >
+          {selectedDropdownOption} <RiArrowDownSLine size={20} />
         </button>
+
+        {showDropdownOptions && (
+          <div className="control_dropdown_list" ref={dropdownRef}>
+            {dropdownOptions.map((option) => {
+              return (
+                <button
+                  key={option}
+                  onClick={() => {
+                    setSelectedDropdownOption(option);
+                    setShowDropdownOptions(false);
+                  }}
+                >
+                  {option}
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       <div className="grid_buttons">
