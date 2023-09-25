@@ -10,6 +10,15 @@ const ActivityRow = ({ activity }: Props) => {
   const { collectionMetadata } = useGlobalContext()!;
   const collectionImage = collectionMetadata?.openSea?.imageUrl;
   const collectionName = collectionMetadata?.name;
+  const price = convertDecimalsToReadableNumbers(
+    String(
+      Number(activity?.sellerFee?.amount) +
+        Number(activity?.marketplaceFee?.amount) +
+        Number(activity?.protocolFee?.amount)
+    ),
+    activity.sellerFee.decimals
+  );
+
   return (
     <div className="activity_row">
       <div>Sale</div>
@@ -20,11 +29,7 @@ const ActivityRow = ({ activity }: Props) => {
         </p>
       </div>
       <div>
-        {convertDecimalsToReadableNumbers(
-          activity.sellerFee.amount,
-          activity.sellerFee.decimals
-        )}{" "}
-        {activity.sellerFee.symbol}
+        {price} {activity.sellerFee.symbol}
       </div>
       <div>{truncateAddress(activity.sellerAddress, 5, "...")}</div>
       <div>{truncateAddress(activity.buyerAddress, 5, "...")}</div>

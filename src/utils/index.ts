@@ -23,5 +23,6 @@ export const convertDecimalsToReadableNumbers = (
   amount: string,
   decimal: number
 ) => {
-  return Math.pow(10, decimal) * Number(amount);
+  const result = Number(amount) / Math.pow(10, decimal);
+  return result || 0;
 };
