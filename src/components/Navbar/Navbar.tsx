@@ -38,10 +38,10 @@ const Navbar = () => {
 
         <div className="nav_links">
           <a href="">
-            <RiDiscordFill size={25} />
+            <RiDiscordFill size={25} display="block" />
           </a>
           <a href="">
-            <RiTwitterXLine size={20} />
+            <RiTwitterXLine size={20} display="block" />
           </a>
         </div>
 

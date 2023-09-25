@@ -20,8 +20,8 @@ const Footer = () => {
       </section>
 
       <section className="socials">
-        <RiDiscordFill size={25} />
-        <RiTwitterXLine size={25} />
+        <RiDiscordFill size={30} display="block" />
+        <RiTwitterXLine size={25} display="block" />
       </section>
     </footer>
   );
