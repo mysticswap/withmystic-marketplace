@@ -1,7 +1,7 @@
 import "./ItemsScreen.css";
 import FiltersSidebar from "../FiltersSidebar/FiltersSidebar";
 import CardsHolder from "../CardsHolder/CardsHolder";
-import { useHomeContext } from "../../context/HomeContext";
+import { useHomeContext } from "../../context/HomeContext/HomeContext";
 
 const ItemsScreen = () => {
   const { showFilters } = useHomeContext()!;

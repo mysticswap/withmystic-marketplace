@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Checkbox from "../Checkbox/Checkbox";
 import "./StatusListItem.css";
-import { useHomeContext } from "../../context/HomeContext";
+import { useHomeContext } from "../../context/HomeContext/HomeContext";
 
 type Props = {
   text: string;

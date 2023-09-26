@@ -2,7 +2,7 @@ import { IoOptionsOutline, IoSearchSharp } from "react-icons/io5";
 import { RiArrowDownSLine, RiArrowLeftSLine } from "react-icons/ri";
 import { BsFillGridFill, BsFillGrid3X3GapFill, BsCheck } from "react-icons/bs";
 import "./ControlBar.css";
-import { useHomeContext } from "../../context/HomeContext";
+import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import { useRef, useState } from "react";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 

@@ -1,7 +1,7 @@
 import "./CardsHolder.css";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import NftCard from "../NftCard/NftCard";
-import { useHomeContext } from "../../context/HomeContext";
+import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import SelectedFilter from "../SelectedFilter/SelectedFilter";
 
 const CardsHolder = () => {

@@ -1,7 +1,7 @@
 import "./Banner.css";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import millify from "millify";
-import { useHomeContext } from "../../context/HomeContext";
+import { useHomeContext } from "../../context/HomeContext/HomeContext";
 
 type Props = { bannerImage: string };
 

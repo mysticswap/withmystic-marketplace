@@ -3,7 +3,7 @@ import "./TraitFilter.css";
 import { useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
 import StatusListItem from "../StatusListItem/StatusListItem";
-import { useHomeContext } from "../../context/HomeContext";
+import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import { CollectionTraits } from "../../types/alchemy.types";
 
 type Props = {

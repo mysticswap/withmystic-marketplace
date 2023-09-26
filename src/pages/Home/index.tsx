@@ -2,7 +2,7 @@ import "./index.css";
 import Banner from "../../components/Banner/Banner";
 import ControlBar from "../../components/ControlBar/ControlBar";
 import ItemsScreen from "../../components/ItemsScreen/ItemsScreen";
-import { useHomeContext } from "../../context/HomeContext";
+import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import ActivityScreen from "../../components/ActivityScreen/ActivityScreen";
 
 const Home = () => {

@@ -1,21 +1,7 @@
 import { ReactNode, createContext, useContext, useState } from "react";
+import { HomeContextType } from "./types";
 
-type ContextType = {
-  tabOptions: string[];
-  currentTab: string;
-  setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
-  showFilters: boolean;
-  setShowFilters: React.Dispatch<React.SetStateAction<boolean>>;
-  minimalCards: boolean;
-  setMinimalCards: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedTraits: string[];
-  setSelectedTraits: React.Dispatch<React.SetStateAction<string[]>>;
-  dropdownOptions: string[];
-  selectedDropdownOption: string;
-  setSelectedDropdownOption: React.Dispatch<React.SetStateAction<string>>;
-};
-
-const HomeContext = createContext<ContextType | null>(null);
+const HomeContext = createContext<HomeContextType | null>(null);
 
 type Props = { children: ReactNode };
 
