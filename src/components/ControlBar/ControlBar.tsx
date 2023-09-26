@@ -1,6 +1,6 @@
 import { IoOptionsOutline, IoSearchSharp } from "react-icons/io5";
 import { RiArrowDownSLine, RiArrowLeftSLine } from "react-icons/ri";
-import { BsFillGridFill, BsFillGrid3X3GapFill } from "react-icons/bs";
+import { BsFillGridFill, BsFillGrid3X3GapFill, BsCheck } from "react-icons/bs";
 import "./ControlBar.css";
 import { useHomeContext } from "../../context/HomeContext";
 import { useRef, useState } from "react";
@@ -59,6 +59,7 @@ const ControlBar = ({ isInItemsSection }: Props) => {
         {showDropdownOptions && (
           <div className="control_dropdown_list" ref={dropdownRef}>
             {dropdownOptions.map((option) => {
+              const isSelected = selectedDropdownOption == option;
               return (
                 <button
                   key={option}
@@ -68,6 +69,7 @@ const ControlBar = ({ isInItemsSection }: Props) => {
                   }}
                 >
                   {option}
+                  {isSelected && <BsCheck size={15} display="block" />}
                 </button>
               );
             })}

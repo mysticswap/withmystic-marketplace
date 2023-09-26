@@ -107,6 +107,9 @@
   cursor: pointer;
   transition: var(--ms-mp-transition);
   border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .control_dropdown_list button:hover {
