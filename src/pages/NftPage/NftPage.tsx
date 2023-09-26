@@ -17,6 +17,7 @@ import Offers from "./Components/Offers/Offers";
 import Details from "./Components/Details/Details";
 import History from "./Components/History/History";
 import Loading from "../../components/Loading/Loading";
+import ConfirmPurchaseModal from "../../components/ConfirmPurchaseModal/ConfirmPurchaseModal";
 
 const NftPage = () => {
   const { collectionMetadata } = useGlobalContext()!;
@@ -25,6 +26,8 @@ const NftPage = () => {
   const [nftData, setNftData] = useState<SingleNftData>({} as SingleNftData);
   const [owner, setOwner] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [showConfirmationModal, setConfirmationModal] = useState(false);
+
   const nftImage = nftData?.media?.[0]?.gateway;
   const attributes = nftData?.rawMetadata?.attributes;
   const description = nftData?.description;
@@ -58,13 +61,25 @@ const NftPage = () => {
           <DescriptionHolder description={description} />
         </section>
         <section className="nft_page_section">
-          <NftHeader nftData={nftData} owner={owner} />
+          <NftHeader
+            nftData={nftData}
+            owner={owner}
+            setConfirmationModal={setConfirmationModal}
+          />
           <CurrentPrice />
           <Offers />
           <Details nftData={nftData} />
         </section>
       </div>
+
       <History />
+
+      {showConfirmationModal && (
+        <ConfirmPurchaseModal
+          nft={nftData}
+          setConfirmationModal={setConfirmationModal}
+        />
+      )}
     </>
   );
 };

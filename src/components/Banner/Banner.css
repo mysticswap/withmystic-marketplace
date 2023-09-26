@@ -20,7 +20,7 @@
   background: linear-gradient(
     transparent,
     rgba(0, 0, 0, 0.35),
-    rgba(0, 0, 0, 0.5)
+    var(--ms-mp-transparent-black)
   );
   /* background-color: rgba(0, 0, 0, 0.35); */
 }
@@ -51,7 +51,7 @@
 }
 
 .pill_item p:last-of-type {
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--ms-mp-transparent-black);
 }
 
 .tabs {

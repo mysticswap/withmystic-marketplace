@@ -30,7 +30,7 @@
   z-index: 1;
   border: none;
   cursor: pointer;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 3px 10px var(--ms-mp-transparent-black);
   transition: var(--ms-mp-transition);
   border-radius: 6px;
   font-size: 14px;

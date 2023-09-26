@@ -9,9 +9,10 @@ import { LuRefreshCw } from "react-icons/lu";
 type Props = {
   nftData: SingleNftData;
   owner: string;
+  setConfirmationModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const NftHeader = ({ nftData, owner }: Props) => {
+const NftHeader = ({ nftData, owner, setConfirmationModal }: Props) => {
   const collectionName = nftData?.contract?.name;
   const nftName = nftData?.rawMetadata?.name;
   return (
@@ -28,7 +29,10 @@ const NftHeader = ({ nftData, owner }: Props) => {
         </div>
       </div>
       <div className="nft_header_button_holder">
-        <SolidButton text="Buy Now" />
+        <SolidButton
+          text="Buy Now"
+          onClick={() => setConfirmationModal(true)}
+        />
         <OutlineButton text="Make Offer" />
       </div>
     </div>

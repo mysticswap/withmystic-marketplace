@@ -15,6 +15,7 @@
   --ms-mp-trait-border-color: rgba(38, 57, 237, 0.5);
   --ms-mp-trait-hover-color: rgba(38, 57, 237, 0.25);
   --ms-mp-gray-border: 1px solid #d9e0ec;
+  --ms-mp-transparent-black: rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -34,4 +35,42 @@ body {
 
 .hide {
   display: none;
+}
+
+.modal_parent {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  inset: 0;
+  background-color: var(--ms-mp-transparent-black);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal_content {
+  width: 45%;
+  background-color: white;
+  border-radius: 11px;
+  position: relative;
+}
+
+.modal_closer {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: var(--ms-mp-transparent-black);
+  transition: var(--ms-mp-transition);
+  cursor: pointer;
+}
+
+.modal_closer:hover {
+  color: black;
+}
+
+.modal_header {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 500;
 }

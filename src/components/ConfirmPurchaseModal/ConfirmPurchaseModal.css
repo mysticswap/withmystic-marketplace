@@ -1,0 +1,22 @@
+.modal_nft_holder {
+  padding: 1rem 2rem;
+}
+
+.confirm_purchase_modal_buttom {
+  border-top: var(--ms-mp-gray-border);
+  padding: 1rem 2rem 2rem 2rem;
+}
+
+.confirm_purchase_modal_buttom p {
+  margin: 0;
+}
+
+.confirm_purchase_modal_buttom p:first-of-type {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.confirm_purchase_modal_buttom p:last-of-type {
+  font-size: 15.5px;
+}
