@@ -1,7 +1,5 @@
-import React, {
-  Dispatch,
+import {
   ReactNode,
-  SetStateAction,
   createContext,
   useCallback,
   useContext,
@@ -13,17 +11,19 @@ import {
   CollectionMetaData,
   CollectionTraits,
   SingleNftData,
-} from "../types/alchemy.types";
+} from "../../types/alchemy.types";
 import {
   getCollection,
   getCollectionHistory,
   getCollectionNfts,
   getCollectionOwners,
   getCollectionTraits,
-} from "../services/marketplace-api";
-import { apiKey, collectionContract } from "../config";
+  getUserBalance,
+} from "../../services/marketplace-api";
+import { apiKey, collectionContract } from "../../config";
 import { ethers } from "ethers";
-import { metamaskPresent } from "../utils";
+import { metamaskPresent } from "../../utils";
+import { GlobalContextType } from "./types";
 
 declare global {
   interface Window {
@@ -31,28 +31,7 @@ declare global {
   }
 }
 
-type ContextType = {
-  collectionMetadata: CollectionMetaData | null;
-  setCollectionMetadata: Dispatch<SetStateAction<CollectionMetaData | null>>;
-  collectionNfts: SingleNftData[];
-  setCollectionNfts: React.Dispatch<React.SetStateAction<SingleNftData[]>>;
-  collectionTraits: CollectionTraits;
-  setCollectionTraits: React.Dispatch<React.SetStateAction<CollectionTraits>>;
-  totalOwners: number;
-  setTotalOwners: React.Dispatch<React.SetStateAction<number>>;
-  collectionHistory: CollectionHistory;
-  setCollectionHistory: React.Dispatch<React.SetStateAction<CollectionHistory>>;
-  user: string | null;
-  setUser: React.Dispatch<React.SetStateAction<string | null>>;
-  provider: ethers.providers.Web3Provider | null;
-  setProvider: React.Dispatch<
-    React.SetStateAction<ethers.providers.Web3Provider | null>
-  >;
-  chainId: number;
-  setChainId: React.Dispatch<React.SetStateAction<number>>;
-};
-
-const GlobalContext = createContext<ContextType | null>(null);
+const GlobalContext = createContext<GlobalContextType | null>(null);
 
 type Props = {
   children: ReactNode;
@@ -73,6 +52,7 @@ export const GlobalContextProvider = ({ children }: Props) => {
   const [collectionHistory, setCollectionHistory] = useState<CollectionHistory>(
     {} as CollectionHistory
   );
+  const [userBalance, setUserBalance] = useState(0);
 
   useEffect(() => {
     getCollection(collectionContract, 1, apiKey).then((result) => {
@@ -163,6 +143,12 @@ export const GlobalContextProvider = ({ children }: Props) => {
     }
   }, [provider, addUser, attachListeners]);
 
+  useEffect(() => {
+    getUserBalance(user!, chainId, apiKey).then((result) => {
+      setUserBalance(Number(result));
+    });
+  }, [user, chainId]);
+
   return (
     <GlobalContext.Provider
       value={{
@@ -182,6 +168,8 @@ export const GlobalContextProvider = ({ children }: Props) => {
         setProvider,
         chainId,
         setChainId,
+        userBalance,
+        setUserBalance,
       }}
     >
       {children}

@@ -128,3 +128,16 @@ export const getNftHistory = async (
     bearerToken
   );
 };
+
+export const getUserBalance = async (
+  address: string,
+  chainId: number,
+  bearerToken: string
+) => {
+  const queryParams = { address, chainId };
+  return makeApiRequest(
+    "/marketplace-api/get-balance",
+    queryParams,
+    bearerToken
+  );
+};

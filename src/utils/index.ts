@@ -1,3 +1,5 @@
+import { SingleNftData } from "../types/alchemy.types";
+
 export const getQueryString = (params: { [x: string]: any }) => {
   return Object.entries(params)
     .map(
@@ -30,4 +32,15 @@ export const convertDecimalsToReadableNumbers = (
 export const metamaskPresent = () => {
   var ethereum = window.ethereum;
   return typeof ethereum !== "undefined" && window.ethereum.isMetaMask;
+};
+
+export const extractMetadata = (nft: SingleNftData) => {
+  return {
+    collectionName: nft?.contract?.name,
+    nftName: nft?.rawMetadata?.name,
+    nftImage: nft?.media[0]?.gateway,
+    ethAmount: 4,
+    price: 123,
+    floorPrice: nft?.contract?.openSea?.floorPrice,
+  };
 };

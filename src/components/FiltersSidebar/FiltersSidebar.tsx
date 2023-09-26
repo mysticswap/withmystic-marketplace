@@ -2,7 +2,7 @@ import "./FiltersSidebar.css";
 import StatusFilters from "../StatusFilters/StatusFilters";
 import NumericFilters from "../NumericFilters/NumericFilters";
 import TraitFilter from "../TraitFilter/TraitFilter";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
 const FiltersSidebar = () => {
   const { collectionTraits } = useGlobalContext()!;

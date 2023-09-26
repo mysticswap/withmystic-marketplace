@@ -1,5 +1,5 @@
 import "./Banner.css";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import millify from "millify";
 import { useHomeContext } from "../../context/HomeContext";
 

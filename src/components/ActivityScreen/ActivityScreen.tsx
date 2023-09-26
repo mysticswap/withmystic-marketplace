@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import "./ActivityScreen.css";
 import ActivityRow from "../ActivityRow/ActivityRow";
 

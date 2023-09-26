@@ -9,7 +9,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { scrollToTop } from "../../utils";
 import { connectWallets } from "../../services/web3Onboard";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import ConnectedWalletButton from "../ConnectedWalletButton/ConnectedWalletButton";
 
 const Navbar = () => {

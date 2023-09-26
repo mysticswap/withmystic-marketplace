@@ -14,7 +14,7 @@
   background-color: transparent;
   transition: all 0.25s ease-in-out;
   padding: 0.75rem;
-  border-radius: 64px;
+  border-radius: var(--ms-mp-large-border-radius);
   cursor: pointer;
 }
 

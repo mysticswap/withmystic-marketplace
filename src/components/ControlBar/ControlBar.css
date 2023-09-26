@@ -14,7 +14,7 @@
   justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem;
-  border-radius: 64px;
+  border-radius: var(--ms-mp-large-border-radius);
   border: none;
   background-color: var(--ms-mp-gray-light);
   transition: var(--ms-mp-transition);
@@ -41,7 +41,7 @@
   width: 55%;
   background-color: var(--ms-mp-gray-light);
   padding: calc(0.75rem - 2px);
-  border-radius: 64px;
+  border-radius: var(--ms-mp-large-border-radius);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -72,7 +72,7 @@
 .control_dropdown_trigger {
   background-color: var(--ms-mp-gray-light);
   padding: 0.75rem;
-  border-radius: 64px;
+  border-radius: var(--ms-mp-large-border-radius);
   width: 100%;
   display: flex;
   align-items: center;
@@ -119,7 +119,7 @@
 .grid_buttons {
   width: 10%;
   background-color: var(--ms-mp-gray-light);
-  border-radius: 64px;
+  border-radius: var(--ms-mp-large-border-radius);
   display: flex;
   align-items: center;
   overflow: hidden;

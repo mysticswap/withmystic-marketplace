@@ -11,7 +11,7 @@
 .trait_search {
   margin: 0.5rem 0;
   padding: 0.5rem;
-  border-radius: 64px;
+  border-radius: var(--ms-mp-large-border-radius);
   background-color: var(--ms-mp-gray-light);
   display: flex;
   align-items: center;

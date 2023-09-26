@@ -1,0 +1,115 @@
+.listing_or_offer_modal_bottom {
+  padding: 0 2rem 2rem 2rem;
+}
+
+.listing_or_offer_modal_bottom > .input_area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: var(--ms-mp-gray-border);
+  padding: 0.5rem 1rem;
+  border-radius: var(--ms-mp-large-border-radius);
+  transition: var(--ms-mp-transition);
+}
+
+.listing_or_offer_modal_bottom > .input_area > p {
+  margin: 0;
+  font-weight: bold;
+}
+
+.listing_or_offer_modal_bottom > .input_area > input {
+  outline: none;
+  border: none;
+  width: 90%;
+  box-sizing: border-box;
+}
+
+.listing_or_offer_modal_bottom > .input_area:hover {
+  border: 1px solid black;
+}
+
+.listing_or_offer_modal_bottom > .input_area:focus-within {
+  border: 1px solid var(--ms-mp-blue);
+}
+
+.duration_area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.duration_container {
+  width: 85%;
+  position: relative;
+}
+
+.duration_trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: calc(0.5rem + 2px) 1rem;
+  background-color: transparent;
+  border: var(--ms-mp-gray-border);
+  border-radius: var(--ms-mp-large-border-radius);
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+}
+
+.duration_trigger:hover {
+  background-color: var(--ms-mp-gray);
+}
+
+.bottom_details {
+  margin-top: 0.5rem;
+}
+
+.bottom_details > p {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+}
+
+.bottom_details > p > span:last-of-type {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.listing_or_offer_modal_bottom > .solid_button {
+  width: 25%;
+  display: block;
+  margin: auto;
+  margin-top: 1rem;
+}
+
+.duration_list {
+  position: absolute;
+  background-color: white;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 3px 10px var(--ms-mp-transparent-black);
+}
+
+.duration_list > button {
+  display: block;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  transition: var(--ms-mp-transition);
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.duration_list > button:hover {
+  background-color: var(--ms-mp-gray-light);
+}
+
+.duration_list > button:not(:last-of-type) {
+  margin-bottom: 0.5rem;
+}

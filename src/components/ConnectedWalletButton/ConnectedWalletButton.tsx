@@ -1,6 +1,6 @@
 import { RiArrowDownSLine } from "react-icons/ri";
 import "./ConnectedWalletButton.css";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { truncateAddress } from "../../utils";
 import { useRef, useState } from "react";
 import { useOutsideClick } from "../../hooks/useOutsideClick";

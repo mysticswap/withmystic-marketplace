@@ -1,5 +1,5 @@
 import { TbExternalLink } from "react-icons/tb";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { NftSale } from "../../types/alchemy.types";
 import { convertDecimalsToReadableNumbers, truncateAddress } from "../../utils";
 import "./ActivityRow.css";

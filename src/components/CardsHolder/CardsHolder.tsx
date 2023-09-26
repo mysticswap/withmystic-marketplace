@@ -1,5 +1,5 @@
 import "./CardsHolder.css";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import NftCard from "../NftCard/NftCard";
 import { useHomeContext } from "../../context/HomeContext";
 import SelectedFilter from "../SelectedFilter/SelectedFilter";

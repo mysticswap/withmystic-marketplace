@@ -33,7 +33,7 @@
 .collection_pill {
   background-color: white;
   padding: 1rem;
-  border-radius: 64px;
+  border-radius: var(--ms-mp-large-border-radius);
   display: flex;
   align-items: center;
   justify-content: center;

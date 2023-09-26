@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { GlobalContextProvider } from "./context/GlobalContext";
+import { GlobalContextProvider } from "./context/GlobalContext/GlobalContext";
 import Home from "./pages/Home";
 import { HomeContextProvider } from "./context/HomeContext";
 import NftPage from "./pages/NftPage/NftPage";

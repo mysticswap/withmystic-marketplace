@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { useEffect, useState } from "react";
 import {
   getNftHistory,
@@ -18,6 +18,7 @@ import Details from "./Components/Details/Details";
 import History from "./Components/History/History";
 import Loading from "../../components/Loading/Loading";
 import ConfirmPurchaseModal from "../../components/ConfirmPurchaseModal/ConfirmPurchaseModal";
+import OfferOrListingModal from "../../components/OfferOrListingModal/OfferOrListingModal";
 
 const NftPage = () => {
   const { collectionMetadata } = useGlobalContext()!;
@@ -26,7 +27,8 @@ const NftPage = () => {
   const [nftData, setNftData] = useState<SingleNftData>({} as SingleNftData);
   const [owner, setOwner] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const [showConfirmationModal, setConfirmationModal] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showOfferOrListingModal, setShowOfferOrListingModal] = useState(false);
 
   const nftImage = nftData?.media?.[0]?.gateway;
   const attributes = nftData?.rawMetadata?.attributes;
@@ -64,7 +66,8 @@ const NftPage = () => {
           <NftHeader
             nftData={nftData}
             owner={owner}
-            setConfirmationModal={setConfirmationModal}
+            setShowConfirmationModal={setShowConfirmationModal}
+            setShowOfferOrListingModal={setShowOfferOrListingModal}
           />
           <CurrentPrice />
           <Offers />
@@ -77,7 +80,15 @@ const NftPage = () => {
       {showConfirmationModal && (
         <ConfirmPurchaseModal
           nft={nftData}
-          setConfirmationModal={setConfirmationModal}
+          setShowConfirmationModal={setShowConfirmationModal}
+        />
+      )}
+
+      {showOfferOrListingModal && (
+        <OfferOrListingModal
+          isOffer={true}
+          nft={nftData}
+          setShowOfferOrListingModal={setShowOfferOrListingModal}
         />
       )}
     </>

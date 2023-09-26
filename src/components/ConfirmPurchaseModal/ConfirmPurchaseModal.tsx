@@ -2,20 +2,15 @@ import { IoClose } from "react-icons/io5";
 import "./ConfirmPurchaseModal.css";
 import { SingleNftData } from "../../types/alchemy.types";
 import ModalNft from "../ModalNft/ModalNft";
+import { extractMetadata } from "../../utils";
 
 type Props = {
   nft: SingleNftData;
-  setConfirmationModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowConfirmationModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const ConfirmPurchaseModal = ({ nft, setConfirmationModal }: Props) => {
-  const nftData = {
-    collectionName: nft?.contract?.name,
-    nftName: nft?.rawMetadata?.name,
-    nftImage: nft?.media[0]?.gateway,
-    ethAmount: 4,
-    price: 123,
-  };
+const ConfirmPurchaseModal = ({ nft, setShowConfirmationModal }: Props) => {
+  const nftData = extractMetadata(nft);
 
   return (
     <div className="modal_parent">
@@ -25,7 +20,7 @@ const ConfirmPurchaseModal = ({ nft, setConfirmationModal }: Props) => {
           className="modal_closer"
           display="block"
           size={25}
-          onClick={() => setConfirmationModal(false)}
+          onClick={() => setShowConfirmationModal(false)}
         />
         <div className="confirm_purchase_modal">
           <div className="modal_nft_holder">
