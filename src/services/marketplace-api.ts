@@ -41,7 +41,7 @@ export const getCollection = async (
 export const getCollectionNfts = async (
   contractAddress: string,
   chainId: number,
-  page: number,
+  page: string,
   bearerToken: string
 ) => {
   const queryParams = { contractAddress, chainId, page };

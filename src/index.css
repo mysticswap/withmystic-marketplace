@@ -17,6 +17,7 @@
   --ms-mp-gray-border: 1px solid #d9e0ec;
   --ms-mp-transparent-black: rgba(0, 0, 0, 0.5);
   --ms-mp-large-border-radius: 64px;
+  --ms-mp-card-border-radius: 16px;
 }
 
 * {

@@ -7,7 +7,7 @@ type Props = { nft: SingleNftData };
 const NftCard = ({ nft }: Props) => {
   return (
     <div className="nft_card">
-      <img src={nft.media[0].gateway} alt="" />
+      <img src={nft?.media[0]?.gateway} alt="" />
       <div className="nft_card_details">
         <div className="card_name">
           <Link to={`/nft/${nft.tokenId}`}>

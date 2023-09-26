@@ -48,6 +48,7 @@ export const GlobalContextProvider = ({ children }: Props) => {
     {} as CollectionTraits
   );
   const [collectionNfts, setCollectionNfts] = useState<SingleNftData[]>([]);
+  const [nftsPageKey, setNftsPageKey] = useState("");
   const [totalOwners, setTotalOwners] = useState(0);
   const [collectionHistory, setCollectionHistory] = useState<CollectionHistory>(
     {} as CollectionHistory
@@ -63,8 +64,9 @@ export const GlobalContextProvider = ({ children }: Props) => {
       setCollectionTraits(result.traits);
     });
 
-    getCollectionNfts(collectionContract, 1, 1, apiKey).then((result) => {
+    getCollectionNfts(collectionContract, 1, "1", apiKey).then((result) => {
       setCollectionNfts(result.nfts);
+      setNftsPageKey(result.pageKey);
     });
 
     getCollectionOwners(collectionContract, 1, apiKey).then((result) => {
@@ -170,6 +172,8 @@ export const GlobalContextProvider = ({ children }: Props) => {
         setChainId,
         userBalance,
         setUserBalance,
+        nftsPageKey,
+        setNftsPageKey,
       }}
     >
       {children}

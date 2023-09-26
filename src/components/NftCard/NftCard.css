@@ -1,6 +1,6 @@
 .nft_card {
   border: 1px solid var(--ms-mp-gray);
-  border-radius: 16px;
+  border-radius: var(--ms-mp-card-border-radius);
   overflow: hidden;
   box-sizing: border-box;
   cursor: pointer;

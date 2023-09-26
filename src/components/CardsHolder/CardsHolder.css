@@ -6,6 +6,7 @@
   max-height: calc(100vh - 48px - 48px);
   overflow-y: auto;
   border-left: var(--ms-mp-gray-border);
+  /* grid-template-rows: minmax(auto, 282.2px); */
 }
 
 .cards_holder::-webkit-scrollbar {
@@ -50,4 +51,17 @@
 
 .clear_filters:hover {
   background-color: var(--ms-mp-gray-light);
+}
+
+.loader_holder {
+  border: var(--ms-mp-gray-border);
+  border-radius: var(--ms-mp-card-border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.cards_holder .loader {
+  margin: auto;
 }

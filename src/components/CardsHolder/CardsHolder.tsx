@@ -3,11 +3,25 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import NftCard from "../NftCard/NftCard";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import SelectedFilter from "../SelectedFilter/SelectedFilter";
+import { useRef, useState } from "react";
+import { getCollectionNfts } from "../../services/marketplace-api";
+import { apiKey, collectionContract } from "../../config";
+import { BiLoaderCircle } from "react-icons/bi";
 
 const CardsHolder = () => {
-  const { collectionNfts } = useGlobalContext()!;
+  const {
+    collectionNfts,
+    nftsPageKey,
+    setNftsPageKey,
+    chainId,
+    setCollectionNfts,
+  } = useGlobalContext()!;
   const { showFilters, minimalCards, selectedTraits, setSelectedTraits } =
     useHomeContext()!;
+
+  const [isFetching, setIsFetching] = useState(false);
+
+  const cardsHolderRef = useRef(null);
 
   const removeSelectedFilter = (trait: string) => {
     const selectedTraitsUpdate = selectedTraits.filter((item) => {
@@ -34,8 +48,29 @@ const CardsHolder = () => {
     );
   });
 
+  const onScroll = () => {
+    const { scrollTop, scrollHeight, clientHeight } = cardsHolderRef.current!;
+    // const isAtBottom = scrollTop + clientHeight == scrollHeight;
+    // const isAtBottom = (scrollTop + clientHeight) % scrollHeight < 1;
+    const isAtBottom = scrollTop + clientHeight - scrollHeight >= -1;
+
+    if (isAtBottom) {
+      setIsFetching(true);
+      getCollectionNfts(collectionContract, chainId, nftsPageKey, apiKey)
+        .then((result) => {
+          setCollectionNfts([...collectionNfts, ...result.nfts]);
+          setNftsPageKey(result.pageKey);
+        })
+        .finally(() => {
+          setIsFetching(false);
+        });
+    }
+  };
+
   return (
     <div
+      ref={cardsHolderRef}
+      onScroll={onScroll}
       className={`cards_holder ${
         showFilters ? "small_cards_holder" : "large_cards_holder"
       } ${
@@ -53,6 +88,11 @@ const CardsHolder = () => {
         </div>
       )}
       {nftsList}
+      {isFetching && (
+        <div className="loader_holder">
+          <BiLoaderCircle className="loader" size={50} />
+        </div>
+      )}
     </div>
   );
 };
