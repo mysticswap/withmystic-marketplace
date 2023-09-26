@@ -24,7 +24,11 @@ const ControlBar = ({ isInItemsSection }: Props) => {
   const dropdownRef = useRef(null);
   const [showDropdownOptions, setShowDropdownOptions] = useState(false);
 
-  useOutsideClick(dropdownRef, setShowDropdownOptions);
+  useOutsideClick(
+    dropdownRef,
+    setShowDropdownOptions,
+    "control_dropdown_trigger"
+  );
 
   return (
     <div className={`control_bar ${isInItemsSection ? "" : "hide"}`}>

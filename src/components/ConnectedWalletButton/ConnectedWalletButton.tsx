@@ -13,7 +13,7 @@ const ConnectedWalletButton = () => {
     setUser(null);
   };
 
-  useOutsideClick(logoutRef, setLogout);
+  useOutsideClick(logoutRef, setLogout, "connected_wallet_button");
 
   return (
     <div className="connected_button_container">

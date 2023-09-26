@@ -38,7 +38,7 @@ const OfferOrListingModal = ({
   const [selectedDuration, setSelectedDuration] = useState(durationOptions[6]);
   const [showDropdown, setShowDropdown] = useState(false);
 
-  useOutsideClick(dropdownRef, setShowDropdown);
+  useOutsideClick(dropdownRef, setShowDropdown, "duration_trigger");
 
   return (
     <div className="modal_parent">
