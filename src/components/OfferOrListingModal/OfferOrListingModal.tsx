@@ -60,7 +60,7 @@ const OfferOrListingModal = ({
 
           <div className="listing_or_offer_modal_bottom">
             <div className="input_area">
-              <input type="text" placeholder={inputPlaceholder} />
+              <input type="number" placeholder={inputPlaceholder} />
               <p>wETH</p>
             </div>
 
