@@ -1,5 +1,7 @@
 import OutlineButton from "../../../../components/OutlineButton/OutlineButton";
 import SolidButton from "../../../../components/SolidButton/SolidButton";
+import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
+import { connectWallets } from "../../../../services/web3Onboard";
 import { SingleNftData } from "../../../../types/alchemy.types";
 import { truncateAddress } from "../../../../utils";
 import "./NftHeader.css";
@@ -19,8 +21,15 @@ const NftHeader = ({
   setShowConfirmationModal,
   setShowOfferOrListingModal,
 }: Props) => {
+  const { user, setProvider } = useGlobalContext()!;
   const collectionName = nftData?.contract?.name;
   const nftName = nftData?.rawMetadata?.name;
+
+  const triggerModal = (
+    setter: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
+    !user ? connectWallets(setProvider) : setter(true);
+  };
   return (
     <div className="nft_header">
       <p>{collectionName}</p>
@@ -37,11 +46,11 @@ const NftHeader = ({
       <div className="nft_header_button_holder">
         <SolidButton
           text="Buy Now"
-          onClick={() => setShowConfirmationModal(true)}
+          onClick={() => triggerModal(setShowConfirmationModal)}
         />
         <OutlineButton
           text="Make Offer"
-          onClick={() => setShowOfferOrListingModal(true)}
+          onClick={() => triggerModal(setShowOfferOrListingModal)}
         />
       </div>
     </div>
