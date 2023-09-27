@@ -35,7 +35,7 @@ const CardsHolder = () => {
   };
 
   const nftsList = collectionNfts.map((nft) => {
-    return <NftCard key={nft.tokenId} nft={nft} />;
+    return <NftCard key={nft?.tokenId} nft={nft} />;
   });
 
   const selectedTraitList = selectedTraits.map((trait) => {

@@ -1,7 +1,9 @@
 .filters_sidebar {
   width: 20%;
+  min-height: calc(100vh - 48px - 48px + 1.5rem);
   max-height: calc(100vh - 48px - 48px + 1.5rem);
   overflow-y: auto;
+  border-right: var(--ms-mp-gray-border);
 }
 
 .filters_sidebar::-webkit-scrollbar {
