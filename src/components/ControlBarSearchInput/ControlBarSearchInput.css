@@ -1,0 +1,26 @@
+.control_bar_search {
+  width: 55%;
+  background-color: var(--ms-mp-gray-light);
+  padding: calc(0.75rem - 2px);
+  border-radius: var(--ms-mp-large-border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  transition: var(--ms-mp-transition);
+}
+
+.control_bar_search:hover {
+  border: 2px solid black;
+}
+
+.control_bar_search:focus-within {
+  border: 2px solid var(--ms-mp-blue);
+}
+
+.control_bar_search input {
+  width: 95%;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
