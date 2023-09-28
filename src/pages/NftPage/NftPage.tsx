@@ -8,7 +8,7 @@ import {
 } from "../../services/marketplace-api";
 import { apiKey } from "../../config";
 import "./NftPage.css";
-import { SingleNftData } from "../../types/alchemy.types";
+import { SingleNftData, SingleNftHistory } from "../../types/alchemy.types";
 import TraitsHolder from "./Components/TraitsHolder/TraitsHolder";
 import DescriptionHolder from "./Components/DescriptionHolder/DescriptionHolder";
 import NftHeader from "./Components/NftHeader/NftHeader";
@@ -29,6 +29,9 @@ const NftPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [showOfferOrListingModal, setShowOfferOrListingModal] = useState(false);
+  const [nftHistory, setNftHistory] = useState<SingleNftHistory>(
+    {} as SingleNftHistory
+  );
 
   const nftImage = nftData?.media?.[0]?.gateway;
   const attributes = nftData?.rawMetadata?.attributes;
@@ -44,7 +47,9 @@ const NftPage = () => {
         setOwner(result?.owners[0]);
       }),
 
-      getNftHistory(contractAddress!, id!, 1, apiKey),
+      getNftHistory(contractAddress!, id!, 1, apiKey).then((result) => {
+        setNftHistory(result);
+      }),
     ]).then(() => {
       setIsLoading(false);
     });
@@ -75,7 +80,7 @@ const NftPage = () => {
         </section>
       </div>
 
-      <History />
+      <History nftHistory={nftHistory} />
 
       {showConfirmationModal && (
         <ConfirmPurchaseModal

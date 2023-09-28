@@ -112,3 +112,8 @@ export interface CollectionHistory {
   nftSales: NftSale[];
   pageKey: string;
 }
+
+export interface SingleNftHistory {
+  tokenMetada: SingleNftData;
+  transactions: NftSale[];
+}

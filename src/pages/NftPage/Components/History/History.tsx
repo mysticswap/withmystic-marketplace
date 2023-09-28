@@ -1,8 +1,21 @@
+import dayjs from "dayjs";
+import { SingleNftHistory } from "../../../../types/alchemy.types";
+import {
+  convertDecimalsToReadableNumbers,
+  redirectToMSWalletPage,
+  truncateAddress,
+} from "../../../../utils";
 import "./History.css";
-import { historyData } from "./history.data";
 import { TbExternalLink } from "react-icons/tb";
+import CustomTooltip from "../../../../components/CustomTooltip/CustomTooltip";
 
-const History = () => {
+type Props = {
+  nftHistory: SingleNftHistory;
+};
+
+const History = ({ nftHistory }: Props) => {
+  const historyData = nftHistory.transactions;
+
   return (
     <div className="history">
       <div className="history_table">
@@ -15,15 +28,31 @@ const History = () => {
         </div>
         <div>
           {historyData.map((item) => {
+            const price = convertDecimalsToReadableNumbers(
+              String(
+                Number(item?.sellerFee?.amount) +
+                  Number(item?.marketplaceFee?.amount) +
+                  Number(item?.protocolFee?.amount)
+              ),
+              item?.sellerFee?.decimals
+            );
+            const timeStamp = dayjs(item?.timestamp * 1000).fromNow();
+            const fullTime = dayjs(item?.timestamp * 1000).toString();
             return (
-              <div key={item.id} className="history_row">
-                <p>{item.activity}</p>
-                <p>{item.price}</p>
-                <p>{item.from}</p>
-                <p>{item.to}</p>
-                <p>
-                  {item.time} <TbExternalLink display="block" />
+              <div key={item.timestamp} className="history_row">
+                <p>Sale</p>
+                <p>{price} ETH</p>
+                <p onClick={() => redirectToMSWalletPage(item.sellerAddress)}>
+                  {truncateAddress(item.sellerAddress, 5, "...")}
                 </p>
+                <p onClick={() => redirectToMSWalletPage(item.buyerAddress)}>
+                  {truncateAddress(item.buyerAddress, 5, "...")}
+                </p>
+                <CustomTooltip text={fullTime}>
+                  <p>
+                    {timeStamp} <TbExternalLink display="block" />
+                  </p>
+                </CustomTooltip>
               </div>
             );
           })}
