@@ -17,7 +17,7 @@ const StatusListItem = ({ text, subtext, handleClick, isForTraits }: Props) => {
   useEffect(() => {
     if (isForTraits) {
       const isSelected = selectedTraits.some((trait) => {
-        return trait == text;
+        return trait.value == text;
       });
       setIsClicked(isSelected);
     }

@@ -3,9 +3,11 @@ export type HomeContextType = {
   setShowFilters: React.Dispatch<React.SetStateAction<boolean>>;
   minimalCards: boolean;
   setMinimalCards: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedTraits: string[];
-  setSelectedTraits: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedTraits: SelectedTrait[];
+  setSelectedTraits: React.Dispatch<React.SetStateAction<SelectedTrait[]>>;
   dropdownOptions: string[];
   selectedDropdownOption: string;
   setSelectedDropdownOption: React.Dispatch<React.SetStateAction<string>>;
 };
+
+export type SelectedTrait = { type: string; value: string };

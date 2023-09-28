@@ -3,7 +3,7 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import NftCard from "../NftCard/NftCard";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import SelectedFilter from "../SelectedFilter/SelectedFilter";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getCollectionNfts } from "../../services/marketplace-api";
 import { apiKey, collectionContract } from "../../config";
 import { BiLoaderCircle } from "react-icons/bi";
@@ -20,12 +20,13 @@ const CardsHolder = () => {
     useHomeContext()!;
 
   const [isFetching, setIsFetching] = useState(false);
+  const [nftsTemp, setNftsTemp] = useState(collectionNfts);
 
   const cardsHolderRef = useRef(null);
 
   const removeSelectedFilter = (trait: string) => {
     const selectedTraitsUpdate = selectedTraits.filter((item) => {
-      return item !== trait;
+      return item.value !== trait;
     });
     setSelectedTraits(selectedTraitsUpdate);
   };
@@ -34,15 +35,19 @@ const CardsHolder = () => {
     setSelectedTraits([]);
   };
 
-  const nftsList = collectionNfts.map((nft) => {
+  useEffect(() => {
+    setNftsTemp(collectionNfts);
+  }, [collectionNfts]);
+
+  const nftsList = nftsTemp.map((nft) => {
     return <NftCard key={nft?.tokenId} nft={nft} />;
   });
 
-  const selectedTraitList = selectedTraits.map((trait) => {
+  const selectedTraitList = selectedTraits.map((trait, index) => {
     return (
       <SelectedFilter
-        key={trait}
-        trait={trait}
+        key={index}
+        trait={trait.value}
         handleClick={removeSelectedFilter}
       />
     );
@@ -66,6 +71,23 @@ const CardsHolder = () => {
         });
     }
   };
+
+  useEffect(() => {
+    const filteredNfts = collectionNfts.filter((item) => {
+      const attributes = item?.rawMetadata?.attributes;
+      return selectedTraits.some((trait) => {
+        return attributes.some((attr) => {
+          return trait.value == attr.value && trait.type == attr.trait_type;
+        });
+      });
+    });
+
+    setNftsTemp(filteredNfts);
+
+    if (selectedTraitList.length < 1) {
+      setNftsTemp(collectionNfts);
+    }
+  }, [selectedTraits, collectionNfts]);
 
   return (
     <div

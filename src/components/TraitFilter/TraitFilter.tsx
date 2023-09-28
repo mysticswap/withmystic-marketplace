@@ -21,10 +21,10 @@ const TraitFilter = ({ traits, traitType }: Props) => {
 
   const selectTrait = (isClicked: boolean, trait: string) => {
     if (!isClicked) {
-      setSelectedTraits([...selectedTraits, trait]);
+      setSelectedTraits([...selectedTraits, { type: traitType, value: trait }]);
     } else {
       const updatedSelection = selectedTraits.filter((item) => {
-        return item !== trait;
+        return !(item.type == traitType && item.value == trait);
       });
       setSelectedTraits(updatedSelection);
     }

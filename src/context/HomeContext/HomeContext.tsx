@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useContext, useState } from "react";
-import { HomeContextType } from "./types";
+import { HomeContextType, SelectedTrait } from "./types";
 
 const HomeContext = createContext<HomeContextType | null>(null);
 
@@ -15,7 +15,7 @@ export const HomeContextProvider = ({ children }: Props) => {
   ];
   const [minimalCards, setMinimalCards] = useState(true);
   const [showFilters, setShowFilters] = useState(true);
-  const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
+  const [selectedTraits, setSelectedTraits] = useState<SelectedTrait[]>([]);
   const [selectedDropdownOption, setSelectedDropdownOption] = useState(
     dropdownOptions[0]
   );
