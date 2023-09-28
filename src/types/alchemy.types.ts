@@ -89,6 +89,8 @@ export interface NftSale {
   logIndex: number;
   bundleIndex: number;
   transactionHash: string;
+  tokenMetadata: SingleNftData;
+  timestamp: number;
 }
 
 export interface Fee {
@@ -109,5 +111,4 @@ export interface ValidAt {
 export interface CollectionHistory {
   nftSales: NftSale[];
   pageKey: string;
-  validAt: ValidAt;
 }

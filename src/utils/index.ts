@@ -44,3 +44,11 @@ export const extractMetadata = (nft: SingleNftData) => {
     floorPrice: nft?.contract?.openSea?.floorPrice,
   };
 };
+
+export const formatOnlyDecimals = (x: number) => {
+  return (x * 1.5).toFixed(2).replace(/[.,]00$/, "");
+};
+
+export const redirectToMSWalletPage = (address: string) => {
+  window.open(`https://mysticswap.io/wallet-view/${address}`);
+};

@@ -105,9 +105,14 @@ export const getCollectionOwners = async (
 export const getCollectionHistory = async (
   contractAddress: string,
   chainId: number,
-  bearerToken: string
+  bearerToken: string,
+  pageKey?: string
 ) => {
-  const queryParams = { contractAddress, chainId };
+  const queryParams = {
+    contractAddress,
+    chainId,
+    ...(pageKey && { pageKey }),
+  };
   return makeApiRequest(
     "/marketplace-api/get-collection-history",
     queryParams,

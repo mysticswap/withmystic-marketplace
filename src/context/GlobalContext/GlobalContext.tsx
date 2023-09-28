@@ -74,7 +74,10 @@ export const GlobalContextProvider = ({ children }: Props) => {
     });
 
     getCollectionHistory(collectionContract, 1, apiKey).then((result) => {
-      setCollectionHistory(result);
+      setCollectionHistory({
+        nftSales: result.nftSales,
+        pageKey: result.pageKey,
+      });
     });
   }, []);
 
