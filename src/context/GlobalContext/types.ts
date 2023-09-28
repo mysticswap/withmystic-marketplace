@@ -30,4 +30,7 @@ export type GlobalContextType = {
   setUserBalance: React.Dispatch<React.SetStateAction<number>>;
   nftsPageKey: string;
   setNftsPageKey: React.Dispatch<React.SetStateAction<string>>;
+  tabOptions: string[];
+  currentTab: string;
+  setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
 };

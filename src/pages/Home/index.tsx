@@ -2,11 +2,11 @@ import "./index.css";
 import Banner from "../../components/Banner/Banner";
 import ControlBar from "../../components/ControlBar/ControlBar";
 import ItemsScreen from "../../components/ItemsScreen/ItemsScreen";
-import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import ActivityScreen from "../../components/ActivityScreen/ActivityScreen";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
 const Home = () => {
-  const { currentTab, tabOptions } = useHomeContext()!;
+  const { currentTab, tabOptions } = useGlobalContext()!;
   const isInItemsSection = currentTab == tabOptions[0];
   return (
     <div>

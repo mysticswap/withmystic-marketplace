@@ -1,7 +1,4 @@
 export type HomeContextType = {
-  tabOptions: string[];
-  currentTab: string;
-  setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
   showFilters: boolean;
   setShowFilters: React.Dispatch<React.SetStateAction<boolean>>;
   minimalCards: boolean;

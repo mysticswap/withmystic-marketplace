@@ -42,6 +42,8 @@ export const GlobalContextProvider = ({ children }: Props) => {
   const [provider, setProvider] =
     useState<ethers.providers.Web3Provider | null>(null);
   const [chainId, setChainId] = useState(0);
+  const tabOptions = ["Items", "Activity"];
+  const [currentTab, setCurrentTab] = useState(tabOptions[0]);
   const [collectionMetadata, setCollectionMetadata] =
     useState<CollectionMetaData | null>(null);
   const [collectionTraits, setCollectionTraits] = useState<CollectionTraits>(
@@ -177,6 +179,9 @@ export const GlobalContextProvider = ({ children }: Props) => {
         setUserBalance,
         nftsPageKey,
         setNftsPageKey,
+        currentTab,
+        setCurrentTab,
+        tabOptions,
       }}
     >
       {children}
