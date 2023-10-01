@@ -20,7 +20,7 @@ import {
   getCollectionTraits,
   getUserBalance,
 } from "../../services/marketplace-api";
-import { apiKey, collectionContract } from "../../config";
+import { API_KEY, collectionContract } from "../../config";
 import { ethers } from "ethers";
 import { metamaskPresent } from "../../utils";
 import { GlobalContextType } from "./types";
@@ -58,24 +58,24 @@ export const GlobalContextProvider = ({ children }: Props) => {
   const [userBalance, setUserBalance] = useState(0);
 
   useEffect(() => {
-    getCollection(collectionContract, 1, apiKey).then((result) => {
+    getCollection(collectionContract, 1, API_KEY).then((result) => {
       setCollectionMetadata(result);
     });
 
-    getCollectionTraits(collectionContract, 1, apiKey).then((result) => {
+    getCollectionTraits(collectionContract, 1, API_KEY).then((result) => {
       setCollectionTraits(result.traits);
     });
 
-    getCollectionNfts(collectionContract, 1, "1", apiKey).then((result) => {
+    getCollectionNfts(collectionContract, 1, "1", API_KEY).then((result) => {
       setCollectionNfts(result.nfts);
       setNftsPageKey(result.pageKey);
     });
 
-    getCollectionOwners(collectionContract, 1, apiKey).then((result) => {
+    getCollectionOwners(collectionContract, 1, API_KEY).then((result) => {
       setTotalOwners(result.totalOwners);
     });
 
-    getCollectionHistory(collectionContract, 1, apiKey).then((result) => {
+    getCollectionHistory(collectionContract, 1, API_KEY).then((result) => {
       setCollectionHistory({
         nftSales: result.nftSales,
         pageKey: result.pageKey,
@@ -151,7 +151,7 @@ export const GlobalContextProvider = ({ children }: Props) => {
   }, [provider, addUser, attachListeners]);
 
   useEffect(() => {
-    getUserBalance(user!, chainId, apiKey).then((result) => {
+    getUserBalance(user!, chainId, API_KEY).then((result) => {
       setUserBalance(Number(result));
     });
   }, [user, chainId]);

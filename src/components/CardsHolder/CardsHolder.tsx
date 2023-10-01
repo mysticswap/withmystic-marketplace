@@ -5,7 +5,7 @@ import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import SelectedFilter from "../SelectedFilter/SelectedFilter";
 import { useEffect, useRef, useState } from "react";
 import { getCollectionNfts } from "../../services/marketplace-api";
-import { apiKey, collectionContract } from "../../config";
+import { API_KEY, collectionContract } from "../../config";
 import { BiLoaderCircle } from "react-icons/bi";
 
 const CardsHolder = () => {
@@ -61,7 +61,7 @@ const CardsHolder = () => {
 
     if (isAtBottom) {
       setIsFetching(true);
-      getCollectionNfts(collectionContract, chainId, nftsPageKey, apiKey)
+      getCollectionNfts(collectionContract, chainId, nftsPageKey, API_KEY)
         .then((result) => {
           setCollectionNfts([...collectionNfts, ...result.nfts]);
           setNftsPageKey(result.pageKey);

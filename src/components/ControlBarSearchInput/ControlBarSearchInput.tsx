@@ -5,19 +5,19 @@ import {
   getCollectionNfts,
   getSingleNft,
 } from "../../services/marketplace-api";
-import { apiKey } from "../../config";
+import { API_KEY } from "../../config";
 
 const ControlBarSearchInput = () => {
   const { collectionMetadata, chainId, setCollectionNfts, setNftsPageKey } =
     useGlobalContext()!;
   const contractAddress = collectionMetadata?.address;
   const onSearch = (id: string) => {
-    getSingleNft(contractAddress!, id!, chainId, apiKey).then((result) => {
+    getSingleNft(contractAddress!, id!, chainId, API_KEY).then((result) => {
       setCollectionNfts([result]);
     });
 
     if (!id) {
-      getCollectionNfts(contractAddress!, chainId, "1", apiKey).then(
+      getCollectionNfts(contractAddress!, chainId, "1", API_KEY).then(
         (result) => {
           setCollectionNfts(result.nfts);
           setNftsPageKey(result.pageKey);

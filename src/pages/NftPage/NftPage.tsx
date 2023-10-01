@@ -6,7 +6,7 @@ import {
   getNftOwner,
   getSingleNft,
 } from "../../services/marketplace-api";
-import { apiKey } from "../../config";
+import { API_KEY } from "../../config";
 import "./NftPage.css";
 import { SingleNftData, SingleNftHistory } from "../../types/alchemy.types";
 import TraitsHolder from "./Components/TraitsHolder/TraitsHolder";
@@ -39,15 +39,15 @@ const NftPage = () => {
 
   useEffect(() => {
     Promise.all([
-      getSingleNft(contractAddress!, id!, 1, apiKey).then((result) => {
+      getSingleNft(contractAddress!, id!, 1, API_KEY).then((result) => {
         setNftData(result);
       }),
 
-      getNftOwner(contractAddress!, id!, 1, apiKey).then((result) => {
+      getNftOwner(contractAddress!, id!, 1, API_KEY).then((result) => {
         setOwner(result?.owners[0]);
       }),
 
-      getNftHistory(contractAddress!, id!, 1, apiKey).then((result) => {
+      getNftHistory(contractAddress!, id!, 1, API_KEY).then((result) => {
         setNftHistory(result);
       }),
     ]).then(() => {

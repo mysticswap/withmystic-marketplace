@@ -4,7 +4,7 @@ import "./ActivityScreen.css";
 import ActivityRow from "../ActivityRow/ActivityRow";
 import SolidButton from "../SolidButton/SolidButton";
 import { getCollectionHistory } from "../../services/marketplace-api";
-import { apiKey } from "../../config";
+import { API_KEY } from "../../config";
 import { BiLoaderCircle } from "react-icons/bi";
 
 const ActivityScreen = () => {
@@ -27,7 +27,12 @@ const ActivityScreen = () => {
   const loadMoreHistory = () => {
     setCanFetch(false);
     setIsFetching(true);
-    getCollectionHistory(collectionMetadata?.address!, chainId, apiKey, pageKey)
+    getCollectionHistory(
+      collectionMetadata?.address!,
+      chainId,
+      API_KEY,
+      pageKey
+    )
       .then((result) => {
         setCollectionHistory({
           nftSales: [...collectionHistory.nftSales, ...result?.nftSales],
