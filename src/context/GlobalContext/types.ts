@@ -1,20 +1,11 @@
-import { Dispatch, SetStateAction } from "react";
-import {
-  CollectionHistory,
-  CollectionMetaData,
-  CollectionTraits,
-  SingleNftData,
-} from "../../types/alchemy.types";
+import { CollectionHistory, CollectionTraits } from "../../types/alchemy.types";
 import { ethers } from "ethers";
 import { CollectionMetadataV2 } from "../../types/reservoir-types/collection-metadata.types";
+import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.types";
 
 export type GlobalContextType = {
-  collectionNfts: SingleNftData[];
-  setCollectionNfts: React.Dispatch<React.SetStateAction<SingleNftData[]>>;
   collectionTraits: CollectionTraits;
   setCollectionTraits: React.Dispatch<React.SetStateAction<CollectionTraits>>;
-  totalOwners: number;
-  setTotalOwners: React.Dispatch<React.SetStateAction<number>>;
   collectionHistory: CollectionHistory;
   setCollectionHistory: React.Dispatch<React.SetStateAction<CollectionHistory>>;
   user: string | null;
@@ -27,8 +18,6 @@ export type GlobalContextType = {
   setChainId: React.Dispatch<React.SetStateAction<number>>;
   userBalance: number;
   setUserBalance: React.Dispatch<React.SetStateAction<number>>;
-  nftsPageKey: string;
-  setNftsPageKey: React.Dispatch<React.SetStateAction<string>>;
   tabOptions: string[];
   currentTab: string;
   setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
@@ -39,4 +28,6 @@ export type GlobalContextType = {
   setCollectionMetadata: React.Dispatch<
     React.SetStateAction<CollectionMetadataV2 | null>
   >;
+  collectionNfts: GetNftsReservoir;
+  setCollectionNfts: React.Dispatch<React.SetStateAction<GetNftsReservoir>>;
 };

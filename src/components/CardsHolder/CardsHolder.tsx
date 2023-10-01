@@ -4,23 +4,17 @@ import NftCard from "../NftCard/NftCard";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import SelectedFilter from "../SelectedFilter/SelectedFilter";
 import { useEffect, useRef, useState } from "react";
-import { getCollectionNfts } from "../../services/marketplace-api";
-import { API_KEY, collectionContract } from "../../config";
+import { collectionContract } from "../../config";
 import { BiLoaderCircle } from "react-icons/bi";
+import { getCollectionNftsV2 } from "../../services/marketplace-reservoir-api";
 
 const CardsHolder = () => {
-  const {
-    collectionNfts,
-    nftsPageKey,
-    setNftsPageKey,
-    chainId,
-    setCollectionNfts,
-  } = useGlobalContext()!;
+  const { chainId, collectionNfts, setCollectionNfts } = useGlobalContext()!;
   const { showFilters, minimalCards, selectedTraits, setSelectedTraits } =
     useHomeContext()!;
 
   const [isFetching, setIsFetching] = useState(false);
-  const [nftsTemp, setNftsTemp] = useState(collectionNfts);
+  const [nftsTemp, setNftsTemp] = useState(collectionNfts.tokens);
 
   const cardsHolderRef = useRef(null);
 
@@ -36,11 +30,11 @@ const CardsHolder = () => {
   };
 
   useEffect(() => {
-    setNftsTemp(collectionNfts);
+    setNftsTemp(collectionNfts.tokens);
   }, [collectionNfts]);
 
-  const nftsList = nftsTemp.map((nft) => {
-    return <NftCard key={nft?.tokenId} nft={nft} />;
+  const nftsList = nftsTemp?.map((nft) => {
+    return <NftCard key={nft?.token?.tokenId} nft={nft} />;
   });
 
   const selectedTraitList = selectedTraits.map((trait, index) => {
@@ -61,10 +55,16 @@ const CardsHolder = () => {
 
     if (isAtBottom) {
       setIsFetching(true);
-      getCollectionNfts(collectionContract, chainId, nftsPageKey, API_KEY)
+      getCollectionNftsV2(
+        chainId,
+        collectionContract,
+        collectionNfts.continuation
+      )
         .then((result) => {
-          setCollectionNfts([...collectionNfts, ...result.nfts]);
-          setNftsPageKey(result.pageKey);
+          setCollectionNfts({
+            tokens: [...collectionNfts.tokens, ...result.tokens],
+            continuation: result.continuation,
+          });
         })
         .finally(() => {
           setIsFetching(false);
@@ -72,22 +72,22 @@ const CardsHolder = () => {
     }
   };
 
-  useEffect(() => {
-    const filteredNfts = collectionNfts.filter((item) => {
-      const attributes = item?.rawMetadata?.attributes;
-      return selectedTraits.some((trait) => {
-        return attributes.some((attr) => {
-          return trait.value == attr.value && trait.type == attr.trait_type;
-        });
-      });
-    });
+  // useEffect(() => {
+  //   const filteredNfts = collectionNfts.filter((item) => {
+  //     const attributes = item?.rawMetadata?.attributes;
+  //     return selectedTraits.some((trait) => {
+  //       return attributes.some((attr) => {
+  //         return trait.value == attr.value && trait.type == attr.trait_type;
+  //       });
+  //     });
+  //   });
 
-    setNftsTemp(filteredNfts);
+  //   setNftsTemp(filteredNfts);
 
-    if (selectedTraitList.length < 1) {
-      setNftsTemp(collectionNfts);
-    }
-  }, [selectedTraits, collectionNfts]);
+  //   if (selectedTraitList.length < 1) {
+  //     setNftsTemp(collectionNfts);
+  //   }
+  // }, [selectedTraits, collectionNfts]);
 
   return (
     <div

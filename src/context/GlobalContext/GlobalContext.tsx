@@ -6,16 +6,9 @@ import {
   useEffect,
   useState,
 } from "react";
+import { CollectionHistory, CollectionTraits } from "../../types/alchemy.types";
 import {
-  CollectionHistory,
-  CollectionTraits,
-  SingleNftData,
-} from "../../types/alchemy.types";
-import {
-  getCollection,
   getCollectionHistory,
-  getCollectionNfts,
-  getCollectionOwners,
   getCollectionTraits,
   getUserBalance,
 } from "../../services/marketplace-api";
@@ -23,8 +16,12 @@ import { API_KEY, collectionContract } from "../../config";
 import { ethers } from "ethers";
 import { metamaskPresent } from "../../utils";
 import { GlobalContextType } from "./types";
-import { getCollectionMetadata } from "../../services/marketplace-reservoir-api";
+import {
+  getCollectionMetadata,
+  getCollectionNftsV2,
+} from "../../services/marketplace-reservoir-api";
 import { CollectionMetadataV2 } from "../../types/reservoir-types/collection-metadata.types";
+import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.types";
 
 declare global {
   interface Window {
@@ -42,18 +39,18 @@ export const GlobalContextProvider = ({ children }: Props) => {
   const [user, setUser] = useState<string | null>(null);
   const [provider, setProvider] =
     useState<ethers.providers.Web3Provider | null>(null);
-  const [chainId, setChainId] = useState(0);
+  const [chainId, setChainId] = useState(1);
   const tabOptions = ["Items", "Activity"];
   const [currentTab, setCurrentTab] = useState(tabOptions[0]);
   const [collectionMetadata, setCollectionMetadata] =
     useState<CollectionMetadataV2 | null>(null);
+  const [collectionNfts, setCollectionNfts] = useState<GetNftsReservoir>(
+    {} as GetNftsReservoir
+  );
 
   const [collectionTraits, setCollectionTraits] = useState<CollectionTraits>(
     {} as CollectionTraits
   );
-  const [collectionNfts, setCollectionNfts] = useState<SingleNftData[]>([]);
-  const [nftsPageKey, setNftsPageKey] = useState("");
-  const [totalOwners, setTotalOwners] = useState(0);
   const [collectionHistory, setCollectionHistory] = useState<CollectionHistory>(
     {} as CollectionHistory
   );
@@ -64,17 +61,12 @@ export const GlobalContextProvider = ({ children }: Props) => {
       setCollectionMetadata(result);
     });
 
+    getCollectionNftsV2(1, collectionContract).then((result) => {
+      setCollectionNfts(result);
+    });
+
     getCollectionTraits(collectionContract, 1, API_KEY).then((result) => {
       setCollectionTraits(result.traits);
-    });
-
-    getCollectionNfts(collectionContract, 1, "1", API_KEY).then((result) => {
-      setCollectionNfts(result.nfts);
-      setNftsPageKey(result.pageKey);
-    });
-
-    getCollectionOwners(collectionContract, 1, API_KEY).then((result) => {
-      setTotalOwners(result.totalOwners);
     });
 
     getCollectionHistory(collectionContract, 1, API_KEY).then((result) => {
@@ -165,12 +157,8 @@ export const GlobalContextProvider = ({ children }: Props) => {
       value={{
         collectionMetadata,
         setCollectionMetadata,
-        collectionNfts,
-        setCollectionNfts,
         collectionTraits,
         setCollectionTraits,
-        totalOwners,
-        setTotalOwners,
         collectionHistory,
         setCollectionHistory,
         user,
@@ -181,11 +169,11 @@ export const GlobalContextProvider = ({ children }: Props) => {
         setChainId,
         userBalance,
         setUserBalance,
-        nftsPageKey,
-        setNftsPageKey,
         currentTab,
         setCurrentTab,
         tabOptions,
+        collectionNfts,
+        setCollectionNfts,
       }}
     >
       {children}

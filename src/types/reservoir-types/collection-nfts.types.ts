@@ -15,14 +15,14 @@ export interface Market {
 
 export interface FloorAsk {
   id: string;
-  price: Price;
+  price: FloorAskPrice;
   maker: string;
   validFrom: number;
   validUntil: number;
   source: Source;
 }
 
-export interface Price {
+export interface FloorAskPrice {
   currency: Currency;
   amount: Amount;
 }
@@ -59,7 +59,7 @@ export interface TokenToken {
   imageSmall: string;
   imageLarge: string;
   metadata: Metadata;
-  media: any;
+  media: null | any;
   kind: string;
   isFlagged: boolean;
   lastFlagUpdate: Date;
@@ -69,6 +69,7 @@ export interface TokenToken {
   rarity: number;
   rarityRank: number;
   collection: Collection;
+  lastSale: LastSale;
   owner: string;
 }
 
@@ -79,6 +80,29 @@ export interface Collection {
   slug: string;
   creator: string;
   tokenCount: number;
+}
+
+export interface LastSale {
+  orderSource: string;
+  fillSource: string;
+  timestamp: number;
+  price: LastSalePrice;
+  royaltyFeeBps?: number;
+  paidFullRoyalty?: boolean;
+  feeBreakdown?: FeeBreakdown[];
+}
+
+export interface FeeBreakdown {
+  kind: string;
+  bps: number;
+  recipient: string;
+  rawAmount: string;
+}
+
+export interface LastSalePrice {
+  currency: Currency;
+  amount: Amount;
+  netAmount?: Amount;
 }
 
 export interface Metadata {

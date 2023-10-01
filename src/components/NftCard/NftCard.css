@@ -18,6 +18,7 @@
 
 .nft_card_details {
   padding: 1rem;
+  position: relative;
 }
 
 .nft_card_details p {
@@ -42,4 +43,39 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.nft_card_last_sale {
+  font-size: 13px;
+  color: var(--ms-mp-transparent-black);
+}
+
+.nft_card_amount {
+  font-weight: 600;
+}
+
+.nft_card_amount > span {
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--ms-mp-transparent-black);
+}
+
+.nft_card_details button {
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* top: 100%; */
+  display: block;
+  width: 100%;
+  padding: 0.4rem;
+  border: none;
+  background-color: var(--ms-mp-blue);
+  color: white;
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+  transform: translateY(100%);
+}
+
+.nft_card:hover > .nft_card_details button {
+  transform: translateY(-50%);
 }
