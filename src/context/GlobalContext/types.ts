@@ -6,6 +6,7 @@ import {
   SingleNftData,
 } from "../../types/alchemy.types";
 import { ethers } from "ethers";
+import { CollectionMetadata2 } from "../../types/reservoir-types/collection-metadata.types";
 
 export type GlobalContextType = {
   collectionMetadata: CollectionMetaData | null;
@@ -33,4 +34,11 @@ export type GlobalContextType = {
   tabOptions: string[];
   currentTab: string;
   setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
+
+  // reservoir
+
+  collectionMetadata2: CollectionMetadata2 | null;
+  setCollectionMetadata2: React.Dispatch<
+    React.SetStateAction<CollectionMetadata2 | null>
+  >;
 };

@@ -24,6 +24,8 @@ import { API_KEY, collectionContract } from "../../config";
 import { ethers } from "ethers";
 import { metamaskPresent } from "../../utils";
 import { GlobalContextType } from "./types";
+import { getCollectionMetadata } from "../../services/marketplace-reservoir-api";
+import { CollectionMetadata2 } from "../../types/reservoir-types/collection-metadata.types";
 
 declare global {
   interface Window {
@@ -57,9 +59,16 @@ export const GlobalContextProvider = ({ children }: Props) => {
   );
   const [userBalance, setUserBalance] = useState(0);
 
+  const [collectionMetadata2, setCollectionMetadata2] =
+    useState<CollectionMetadata2 | null>(null);
+
   useEffect(() => {
     getCollection(collectionContract, 1, API_KEY).then((result) => {
       setCollectionMetadata(result);
+    });
+
+    getCollectionMetadata(1, collectionContract).then((result) => {
+      setCollectionMetadata2(result);
     });
 
     getCollectionTraits(collectionContract, 1, API_KEY).then((result) => {
@@ -182,6 +191,8 @@ export const GlobalContextProvider = ({ children }: Props) => {
         currentTab,
         setCurrentTab,
         tabOptions,
+        collectionMetadata2,
+        setCollectionMetadata2,
       }}
     >
       {children}

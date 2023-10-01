@@ -1,4 +1,4 @@
-export interface CollectionMetadata {
+export interface CollectionMetadata2 {
   collections: Collection[];
 }
 

@@ -32,6 +32,7 @@
     "@web3-onboard/walletconnect": "^2.4.4",
     "@web3-onboard/xdefi": "^2.0.4",
     "@web3-onboard/zeal": "^2.0.4",
+    "axios": "^1.5.1",
     "dayjs": "^1.11.10",
     "ethers": "^5.5.4",
     "millify": "^6.1.0",
