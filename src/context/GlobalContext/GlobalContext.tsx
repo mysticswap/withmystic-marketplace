@@ -8,7 +8,6 @@ import {
 } from "react";
 import {
   CollectionHistory,
-  CollectionMetaData,
   CollectionTraits,
   SingleNftData,
 } from "../../types/alchemy.types";
@@ -25,7 +24,7 @@ import { ethers } from "ethers";
 import { metamaskPresent } from "../../utils";
 import { GlobalContextType } from "./types";
 import { getCollectionMetadata } from "../../services/marketplace-reservoir-api";
-import { CollectionMetadata2 } from "../../types/reservoir-types/collection-metadata.types";
+import { CollectionMetadataV2 } from "../../types/reservoir-types/collection-metadata.types";
 
 declare global {
   interface Window {
@@ -47,7 +46,8 @@ export const GlobalContextProvider = ({ children }: Props) => {
   const tabOptions = ["Items", "Activity"];
   const [currentTab, setCurrentTab] = useState(tabOptions[0]);
   const [collectionMetadata, setCollectionMetadata] =
-    useState<CollectionMetaData | null>(null);
+    useState<CollectionMetadataV2 | null>(null);
+
   const [collectionTraits, setCollectionTraits] = useState<CollectionTraits>(
     {} as CollectionTraits
   );
@@ -59,16 +59,9 @@ export const GlobalContextProvider = ({ children }: Props) => {
   );
   const [userBalance, setUserBalance] = useState(0);
 
-  const [collectionMetadata2, setCollectionMetadata2] =
-    useState<CollectionMetadata2 | null>(null);
-
   useEffect(() => {
-    getCollection(collectionContract, 1, API_KEY).then((result) => {
-      setCollectionMetadata(result);
-    });
-
     getCollectionMetadata(1, collectionContract).then((result) => {
-      setCollectionMetadata2(result);
+      setCollectionMetadata(result);
     });
 
     getCollectionTraits(collectionContract, 1, API_KEY).then((result) => {
@@ -160,9 +153,11 @@ export const GlobalContextProvider = ({ children }: Props) => {
   }, [provider, addUser, attachListeners]);
 
   useEffect(() => {
-    getUserBalance(user!, chainId, API_KEY).then((result) => {
-      setUserBalance(Number(result));
-    });
+    if (user) {
+      getUserBalance(user!, chainId, API_KEY).then((result) => {
+        setUserBalance(Number(result));
+      });
+    }
   }, [user, chainId]);
 
   return (
@@ -191,8 +186,6 @@ export const GlobalContextProvider = ({ children }: Props) => {
         currentTab,
         setCurrentTab,
         tabOptions,
-        collectionMetadata2,
-        setCollectionMetadata2,
       }}
     >
       {children}

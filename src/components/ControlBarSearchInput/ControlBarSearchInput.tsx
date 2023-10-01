@@ -8,9 +8,9 @@ import {
 import { API_KEY } from "../../config";
 
 const ControlBarSearchInput = () => {
-  const { collectionMetadata, chainId, setCollectionNfts, setNftsPageKey } =
+  const { chainId, setCollectionNfts, setNftsPageKey, collectionMetadata } =
     useGlobalContext()!;
-  const contractAddress = collectionMetadata?.address;
+  const contractAddress = collectionMetadata?.collections?.[0]?.primaryContract;
   const onSearch = (id: string) => {
     getSingleNft(contractAddress!, id!, chainId, API_KEY).then((result) => {
       setCollectionNfts([result]);

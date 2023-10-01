@@ -23,7 +23,7 @@ import OfferOrListingModal from "../../components/OfferOrListingModal/OfferOrLis
 const NftPage = () => {
   const { collectionMetadata } = useGlobalContext()!;
   const { id } = useParams();
-  const contractAddress = collectionMetadata?.address;
+  const contractAddress = collectionMetadata?.collections[0].primaryContract;
   const [nftData, setNftData] = useState<SingleNftData>({} as SingleNftData);
   const [owner, setOwner] = useState("");
   const [isLoading, setIsLoading] = useState(true);

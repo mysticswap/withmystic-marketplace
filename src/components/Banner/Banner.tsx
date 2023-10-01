@@ -4,24 +4,31 @@ import millify from "millify";
 type Props = { bannerImage: string };
 
 const Banner = ({ bannerImage }: Props) => {
-  const {
-    collectionMetadata,
-    totalOwners,
-    currentTab,
-    setCurrentTab,
-    tabOptions,
-  } = useGlobalContext()!;
+  const { collectionMetadata, currentTab, setCurrentTab, tabOptions } =
+    useGlobalContext()!;
+
   const pillData = [
-    { title: "Items", value: collectionMetadata?.totalSupply },
-    { title: "Owners", value: totalOwners },
-    { title: "Total vol.", value: 1900 },
-    { title: "Floor price", value: collectionMetadata?.openSea?.floorPrice },
+    { title: "Items", value: collectionMetadata?.collections?.[0]?.tokenCount },
+    {
+      title: "Owners",
+      value: collectionMetadata?.collections?.[0]?.ownerCount,
+    },
+    {
+      title: "Total vol.",
+      value:
+        collectionMetadata?.collections?.[0]?.floorAsk?.price?.amount?.decimal,
+    },
+    {
+      title: "Floor price",
+      value: collectionMetadata?.collections?.[0]?.volume?.allTime,
+    },
   ];
+
   return (
     <div className="banner">
       <img src={bannerImage} alt="" />
       <div className="banner_details">
-        <h1>{collectionMetadata?.name}</h1>
+        <h1>{collectionMetadata?.collections?.[0]?.name}</h1>
         <div className="collection_pill">
           {pillData.map((item) => {
             return (

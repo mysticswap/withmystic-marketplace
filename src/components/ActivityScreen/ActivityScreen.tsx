@@ -28,7 +28,7 @@ const ActivityScreen = () => {
     setCanFetch(false);
     setIsFetching(true);
     getCollectionHistory(
-      collectionMetadata?.address!,
+      collectionMetadata?.collections[0].primaryContract!,
       chainId,
       API_KEY,
       pageKey
