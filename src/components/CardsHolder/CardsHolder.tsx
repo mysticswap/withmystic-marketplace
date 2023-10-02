@@ -77,6 +77,8 @@ const CardsHolder = () => {
 
   useEffect(() => {
     const attributeString = generateAttributeString(selectedTraits);
+    setCollectionNfts({ tokens: [], continuation: null });
+    setIsFetching(true);
     getCollectionNftsV2(
       chainId,
       collectionContract,
@@ -84,20 +86,8 @@ const CardsHolder = () => {
       attributeString
     ).then((result) => {
       setCollectionNfts(result);
+      setIsFetching(false);
     });
-
-    // const filteredNfts = collectionNfts.filter((item) => {
-    //   const attributes = item?.rawMetadata?.attributes;
-    //   return selectedTraits.some((trait) => {
-    //     return attributes.some((attr) => {
-    //       return trait.value == attr.value && trait.type == attr.trait_type;
-    //     });
-    //   });
-    // });
-    // setNftsTemp(filteredNfts);
-    // if (selectedTraitList.length < 1) {
-    //   setNftsTemp(collectionNfts);
-    // }
   }, [selectedTraits]);
 
   return (
