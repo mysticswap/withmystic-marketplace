@@ -1,3 +1,4 @@
+import { SelectedTrait } from "../context/HomeContext/types";
 import { SingleNftData } from "../types/alchemy.types";
 
 export const getQueryString = (params: { [x: string]: any }) => {
@@ -51,4 +52,12 @@ export const formatOnlyDecimals = (x: number) => {
 
 export const redirectToMSWalletPage = (address: string) => {
   address && window.open(`https://mysticswap.io/wallet-view/${address}`);
+};
+
+export const generateAttributeString = (selectedTraits: SelectedTrait[]) => {
+  let string = "";
+  selectedTraits.forEach((item) => {
+    string += `&attributes[${item.type}]=${item.value}`;
+  });
+  return string;
 };

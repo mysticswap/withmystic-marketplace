@@ -1,6 +1,6 @@
 export interface GetNftsReservoir {
   tokens: TokenElement[];
-  continuation: string;
+  continuation: string | null;
 }
 
 export interface TokenElement {

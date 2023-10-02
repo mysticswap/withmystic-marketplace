@@ -59,10 +59,10 @@ const TraitFilter = ({ attribute }: Props) => {
           <IoSearchSharp size={20} color="gray" />
         </div>
         <div>
-          {traitValuesTemp.map((value, index) => {
+          {traitValuesTemp.map((value) => {
             return (
               <StatusListItem
-                key={index}
+                key={value.value}
                 text={value.value}
                 subtext={value.count}
                 handleClick={selectTrait}

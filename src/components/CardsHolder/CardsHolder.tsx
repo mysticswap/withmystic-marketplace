@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { collectionContract } from "../../config";
 import { BiLoaderCircle } from "react-icons/bi";
 import { getCollectionNftsV2 } from "../../services/marketplace-reservoir-api";
+import { generateAttributeString } from "../../utils";
 
 const CardsHolder = () => {
   const { chainId, collectionNfts, setCollectionNfts } = useGlobalContext()!;
@@ -52,13 +53,15 @@ const CardsHolder = () => {
     // const isAtBottom = scrollTop + clientHeight == scrollHeight;
     // const isAtBottom = (scrollTop + clientHeight) % scrollHeight < 1;
     const isAtBottom = scrollTop + clientHeight - scrollHeight >= -1;
+    const attributeString = generateAttributeString(selectedTraits);
 
-    if (isAtBottom) {
+    if (isAtBottom && collectionNfts.continuation) {
       setIsFetching(true);
       getCollectionNftsV2(
         chainId,
         collectionContract,
-        collectionNfts.continuation
+        collectionNfts.continuation,
+        attributeString
       )
         .then((result) => {
           setCollectionNfts({
@@ -72,22 +75,30 @@ const CardsHolder = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const filteredNfts = collectionNfts.filter((item) => {
-  //     const attributes = item?.rawMetadata?.attributes;
-  //     return selectedTraits.some((trait) => {
-  //       return attributes.some((attr) => {
-  //         return trait.value == attr.value && trait.type == attr.trait_type;
-  //       });
-  //     });
-  //   });
+  useEffect(() => {
+    const attributeString = generateAttributeString(selectedTraits);
+    getCollectionNftsV2(
+      chainId,
+      collectionContract,
+      undefined,
+      attributeString
+    ).then((result) => {
+      setCollectionNfts(result);
+    });
 
-  //   setNftsTemp(filteredNfts);
-
-  //   if (selectedTraitList.length < 1) {
-  //     setNftsTemp(collectionNfts);
-  //   }
-  // }, [selectedTraits, collectionNfts]);
+    // const filteredNfts = collectionNfts.filter((item) => {
+    //   const attributes = item?.rawMetadata?.attributes;
+    //   return selectedTraits.some((trait) => {
+    //     return attributes.some((attr) => {
+    //       return trait.value == attr.value && trait.type == attr.trait_type;
+    //     });
+    //   });
+    // });
+    // setNftsTemp(filteredNfts);
+    // if (selectedTraitList.length < 1) {
+    //   setNftsTemp(collectionNfts);
+    // }
+  }, [selectedTraits]);
 
   return (
     <div

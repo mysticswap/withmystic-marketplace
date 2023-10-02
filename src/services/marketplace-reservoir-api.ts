@@ -13,13 +13,15 @@ export const getCollectionMetadata = async (
 export const getCollectionNftsV2 = async (
   chainId: number,
   contractAddress: string,
-  continuation?: string
+  continuation?: string,
+  attributes?: string
 ) => {
   const request = await marketplaceInstance.get("get-nfts-v2", {
     params: {
       chainId,
       contractAddress,
       ...(continuation && { continuation }),
+      ...(attributes && { attributes }),
     },
   });
   return request.data;
