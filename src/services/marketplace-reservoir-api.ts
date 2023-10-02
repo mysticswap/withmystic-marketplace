@@ -35,3 +35,13 @@ export const getCollectionActivity = async (
   });
   return request.data;
 };
+
+export const getCollectionTraitsV2 = async (
+  chainId: number,
+  contractAddress: string
+) => {
+  const request = await marketplaceInstance("/get-traits", {
+    params: { chainId, contractAddress },
+  });
+  return request.data;
+};

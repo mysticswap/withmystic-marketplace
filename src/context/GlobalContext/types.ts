@@ -1,12 +1,10 @@
-import { CollectionTraits } from "../../types/alchemy.types";
 import { ethers } from "ethers";
 import { CollectionMetadataV2 } from "../../types/reservoir-types/collection-metadata.types";
 import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.types";
 import { CollectionActivity } from "../../types/reservoir-types/collection-activity.types";
+import { CollectionTraitsV2 } from "../../types/reservoir-types/collection-traits.types";
 
 export type GlobalContextType = {
-  collectionTraits: CollectionTraits;
-  setCollectionTraits: React.Dispatch<React.SetStateAction<CollectionTraits>>;
   user: string | null;
   setUser: React.Dispatch<React.SetStateAction<string | null>>;
   provider: ethers.providers.Web3Provider | null;
@@ -32,5 +30,9 @@ export type GlobalContextType = {
   collectionActivity: CollectionActivity;
   setCollectionActivity: React.Dispatch<
     React.SetStateAction<CollectionActivity>
+  >;
+  collectionAttributes: CollectionTraitsV2;
+  setCollectionAttributes: React.Dispatch<
+    React.SetStateAction<CollectionTraitsV2>
   >;
 };

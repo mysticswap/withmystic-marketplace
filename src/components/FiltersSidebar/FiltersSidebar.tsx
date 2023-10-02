@@ -5,18 +5,15 @@ import TraitFilter from "../TraitFilter/TraitFilter";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
 const FiltersSidebar = () => {
-  const { collectionTraits } = useGlobalContext()!;
-  const traitTypes = Object.keys(collectionTraits);
+  const { collectionAttributes } = useGlobalContext()!;
 
   return (
     <div className="filters_sidebar">
       <StatusFilters />
       <NumericFilters title="Price" />
       <NumericFilters title="Rarity Rank" />
-      {traitTypes.map((type) => {
-        return (
-          <TraitFilter key={type} traits={collectionTraits} traitType={type} />
-        );
+      {collectionAttributes?.attributes?.map((attribute) => {
+        return <TraitFilter key={attribute.key} attribute={attribute} />;
       })}
     </div>
   );

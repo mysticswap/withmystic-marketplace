@@ -14,12 +14,12 @@ const ActivityScreen = () => {
     collectionActivity,
     setCollectionActivity,
   } = useGlobalContext()!;
-  const [sales, setSales] = useState(collectionActivity?.activities);
+  const [activities, setActivities] = useState(collectionActivity?.activities);
   const [canFetch, setCanFetch] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
-    setSales(collectionActivity?.activities);
+    setActivities(collectionActivity?.activities);
   }, [collectionActivity]);
 
   const loadMoreHistory = () => {
@@ -52,8 +52,8 @@ const ActivityScreen = () => {
         <div>To</div>
         <div>Time</div>
       </div>
-      {sales?.map((sale) => {
-        return <ActivityRow key={sale?.order?.id} activity={sale} />;
+      {activities?.map((activity) => {
+        return <ActivityRow key={activity?.order?.id} activity={activity} />;
       })}
       {collectionActivity.continuation && canFetch && (
         <SolidButton text="Show more" onClick={loadMoreHistory} />

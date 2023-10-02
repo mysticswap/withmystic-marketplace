@@ -4,27 +4,27 @@ import { useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
 import StatusListItem from "../StatusListItem/StatusListItem";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
-import { CollectionTraits } from "../../types/alchemy.types";
+import { AttributeV2 } from "../../types/reservoir-types/collection-traits.types";
 
 type Props = {
-  traits: CollectionTraits;
-  traitType: string;
+  attribute: AttributeV2;
 };
 
-const TraitFilter = ({ traits, traitType }: Props) => {
+const TraitFilter = ({ attribute }: Props) => {
   const { selectedTraits, setSelectedTraits } = useHomeContext()!;
   const [showList, setShowlist] = useState(false);
-  const traitValues = Object.keys(traits[traitType]);
-  const traitCount = Object.values(traits[traitType]);
+  const traitValues = attribute.values;
   const [traitValuesTemp, setTraitValuesTemp] = useState(traitValues);
-  const [traitCountTemp, setTraitCountTemp] = useState(traitCount);
 
   const selectTrait = (isClicked: boolean, trait: string) => {
     if (!isClicked) {
-      setSelectedTraits([...selectedTraits, { type: traitType, value: trait }]);
+      setSelectedTraits([
+        ...selectedTraits,
+        { type: attribute.key, value: trait },
+      ]);
     } else {
       const updatedSelection = selectedTraits.filter((item) => {
-        return !(item.type == traitType && item.value == trait);
+        return !(item.type == attribute.key && item.value == trait);
       });
       setSelectedTraits(updatedSelection);
     }
@@ -33,22 +33,15 @@ const TraitFilter = ({ traits, traitType }: Props) => {
   const onSearch = (text: string) => {
     const query = text.toLowerCase();
     const searchResults = traitValues.filter((value) => {
-      return value.toLowerCase().includes(query);
+      return value.value.toLowerCase().includes(query);
     });
-
-    const traitTypes = traits[traitType];
-    const updatedCounts = searchResults.map((item) => {
-      return traitTypes[item];
-    });
-
     setTraitValuesTemp(searchResults);
-    setTraitCountTemp(updatedCounts);
   };
 
   return (
     <div className="trait_filter">
       <button className="filter_trigger" onClick={() => setShowlist(!showList)}>
-        {traitType}{" "}
+        {attribute.key}{" "}
         <RiArrowUpSLine
           className="status_down_arrow"
           aria-expanded={showList}
@@ -69,9 +62,9 @@ const TraitFilter = ({ traits, traitType }: Props) => {
           {traitValuesTemp.map((value, index) => {
             return (
               <StatusListItem
-                key={value}
-                text={value}
-                subtext={traitCountTemp[index]}
+                key={index}
+                text={value.value}
+                subtext={value.count}
                 handleClick={selectTrait}
                 isForTraits={true}
               />

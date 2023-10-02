@@ -6,11 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { CollectionTraits } from "../../types/alchemy.types";
-import {
-  getCollectionTraits,
-  getUserBalance,
-} from "../../services/marketplace-api";
+import { getUserBalance } from "../../services/marketplace-api";
 import { API_KEY, collectionContract } from "../../config";
 import { ethers } from "ethers";
 import { metamaskPresent } from "../../utils";
@@ -19,11 +15,13 @@ import {
   getCollectionActivity,
   getCollectionMetadata,
   getCollectionNftsV2,
+  getCollectionTraitsV2,
 } from "../../services/marketplace-reservoir-api";
 import { CollectionMetadataV2 } from "../../types/reservoir-types/collection-metadata.types";
 import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.types";
 import { reservoirActivityTypes } from "../../constants";
 import { CollectionActivity } from "../../types/reservoir-types/collection-activity.types";
+import { CollectionTraitsV2 } from "../../types/reservoir-types/collection-traits.types";
 
 declare global {
   interface Window {
@@ -46,24 +44,22 @@ export const GlobalContextProvider = ({ children }: Props) => {
   const [currentTab, setCurrentTab] = useState(tabOptions[0]);
   const [collectionMetadata, setCollectionMetadata] =
     useState<CollectionMetadataV2 | null>(null);
-  const [collectionNfts, setCollectionNfts] = useState<GetNftsReservoir>(
-    {} as GetNftsReservoir
+  const [collectionNfts, setCollectionNfts] = useState({} as GetNftsReservoir);
+  const [collectionActivity, setCollectionActivity] = useState(
+    {} as CollectionActivity
   );
-  const [collectionActivity, setCollectionActivity] =
-    useState<CollectionActivity>({} as CollectionActivity);
-
-  const [collectionTraits, setCollectionTraits] = useState<CollectionTraits>(
-    {} as CollectionTraits
+  const [collectionAttributes, setCollectionAttributes] = useState(
+    {} as CollectionTraitsV2
   );
 
   const [userBalance, setUserBalance] = useState(0);
 
   useEffect(() => {
-    getCollectionMetadata(1, collectionContract).then((result) => {
+    getCollectionMetadata(chainId, collectionContract).then((result) => {
       setCollectionMetadata(result);
     });
 
-    getCollectionNftsV2(1, collectionContract).then((result) => {
+    getCollectionNftsV2(chainId, collectionContract).then((result) => {
       setCollectionNfts(result);
     });
 
@@ -75,8 +71,8 @@ export const GlobalContextProvider = ({ children }: Props) => {
       setCollectionActivity(result);
     });
 
-    getCollectionTraits(collectionContract, 1, API_KEY).then((result) => {
-      setCollectionTraits(result.traits);
+    getCollectionTraitsV2(chainId, collectionContract).then((result) => {
+      setCollectionAttributes(result);
     });
   }, []);
 
@@ -160,8 +156,6 @@ export const GlobalContextProvider = ({ children }: Props) => {
       value={{
         collectionMetadata,
         setCollectionMetadata,
-        collectionTraits,
-        setCollectionTraits,
         user,
         setUser,
         provider,
@@ -177,6 +171,8 @@ export const GlobalContextProvider = ({ children }: Props) => {
         setCollectionNfts,
         collectionActivity,
         setCollectionActivity,
+        collectionAttributes,
+        setCollectionAttributes,
       }}
     >
       {children}

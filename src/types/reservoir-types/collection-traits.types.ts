@@ -1,8 +1,8 @@
-export interface CollectionTraits {
-  attributes: Attribute[];
+export interface CollectionTraitsV2 {
+  attributes: AttributeV2[];
 }
 
-export interface Attribute {
+export interface AttributeV2 {
   key: string;
   attributeCount: number;
   kind: string;
