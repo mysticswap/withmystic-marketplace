@@ -1,4 +1,4 @@
-export interface CollectionActiviy {
+export interface CollectionActivity {
   activities: Activity[];
   continuation: string;
 }

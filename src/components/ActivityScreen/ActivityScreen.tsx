@@ -3,40 +3,37 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import "./ActivityScreen.css";
 import ActivityRow from "../ActivityRow/ActivityRow";
 import SolidButton from "../SolidButton/SolidButton";
-import { getCollectionHistory } from "../../services/marketplace-api";
-import { API_KEY } from "../../config";
 import { BiLoaderCircle } from "react-icons/bi";
+import { getCollectionActivity } from "../../services/marketplace-reservoir-api";
+import { reservoirActivityTypes } from "../../constants";
 
 const ActivityScreen = () => {
   const {
-    collectionHistory,
-    setCollectionHistory,
     collectionMetadata,
     chainId,
+    collectionActivity,
+    setCollectionActivity,
   } = useGlobalContext()!;
-  const [sales, setSales] = useState(collectionHistory?.nftSales);
-  const [pageKey, setPageKey] = useState(collectionHistory.pageKey);
+  const [sales, setSales] = useState(collectionActivity?.activities);
   const [canFetch, setCanFetch] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
-    setSales(collectionHistory.nftSales);
-    setPageKey(collectionHistory.pageKey);
-  }, [collectionHistory]);
+    setSales(collectionActivity?.activities);
+  }, [collectionActivity]);
 
   const loadMoreHistory = () => {
     setCanFetch(false);
     setIsFetching(true);
-    getCollectionHistory(
-      collectionMetadata?.collections[0].primaryContract!,
+    getCollectionActivity(
       chainId,
-      API_KEY,
-      pageKey
+      collectionMetadata?.collections[0].primaryContract!,
+      reservoirActivityTypes
     )
       .then((result) => {
-        setCollectionHistory({
-          nftSales: [...collectionHistory.nftSales, ...result?.nftSales],
-          pageKey: result?.pageKey,
+        setCollectionActivity({
+          activities: [...collectionActivity.activities, ...result.activities],
+          continuation: result.continuation,
         });
       })
       .finally(() => {
@@ -55,10 +52,10 @@ const ActivityScreen = () => {
         <div>To</div>
         <div>Time</div>
       </div>
-      {sales?.map((sale, index) => {
-        return <ActivityRow key={sale.blockNumber * index} activity={sale} />;
+      {sales?.map((sale) => {
+        return <ActivityRow key={sale?.order?.id} activity={sale} />;
       })}
-      {pageKey && canFetch && (
+      {collectionActivity.continuation && canFetch && (
         <SolidButton text="Show more" onClick={loadMoreHistory} />
       )}
       {isFetching && <BiLoaderCircle className="loader" size={50} />}

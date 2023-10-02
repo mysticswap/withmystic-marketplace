@@ -24,3 +24,14 @@ export const getCollectionNftsV2 = async (
   });
   return request.data;
 };
+
+export const getCollectionActivity = async (
+  chainId: number,
+  contractAddress: string,
+  types: string
+) => {
+  const request = await marketplaceInstance.get("/get-collection-activity", {
+    params: { chainId, contractAddress, types },
+  });
+  return request.data;
+};
