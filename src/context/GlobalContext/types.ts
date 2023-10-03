@@ -15,7 +15,6 @@ export type GlobalContextType = {
   setChainId: React.Dispatch<React.SetStateAction<number>>;
   userBalance: number;
   setUserBalance: React.Dispatch<React.SetStateAction<number>>;
-  tabOptions: string[];
   currentTab: string;
   setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
 

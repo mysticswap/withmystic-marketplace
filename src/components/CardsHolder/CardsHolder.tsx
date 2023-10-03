@@ -17,6 +17,7 @@ const CardsHolder = () => {
     selectedTraits,
     setSelectedTraits,
     isFetching,
+    selectedDropdownOption,
     setIsFetching,
   } = useHomeContext()!;
 
@@ -65,6 +66,8 @@ const CardsHolder = () => {
       setIsFetching(true);
       getCollectionNftsV2(
         chainId,
+        selectedDropdownOption.value,
+        selectedDropdownOption.order,
         collectionContract,
         collectionNfts.continuation,
         attributeString
@@ -87,6 +90,8 @@ const CardsHolder = () => {
     setIsFetching(true);
     getCollectionNftsV2(
       chainId,
+      selectedDropdownOption.value,
+      selectedDropdownOption.order,
       collectionContract,
       undefined,
       attributeString

@@ -1,11 +1,11 @@
 import "./Banner.css";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import millify from "millify";
+import { tabOptions } from "../../constants";
 type Props = { bannerImage: string };
 
 const Banner = ({ bannerImage }: Props) => {
-  const { collectionMetadata, currentTab, setCurrentTab, tabOptions } =
-    useGlobalContext()!;
+  const { collectionMetadata, currentTab, setCurrentTab } = useGlobalContext()!;
 
   const pillData = [
     { title: "Items", value: collectionMetadata?.collections?.[0]?.tokenCount },

@@ -8,7 +8,8 @@ import { useHomeContext } from "../../context/HomeContext/HomeContext";
 const ControlBarSearchInput = () => {
   const { chainId, setCollectionNfts, collectionMetadata } =
     useGlobalContext()!;
-  const { selectedTraits, setIsFetching } = useHomeContext()!;
+  const { selectedTraits, setIsFetching, selectedDropdownOption } =
+    useHomeContext()!;
   const contractAddress = collectionMetadata?.collections?.[0]?.primaryContract;
 
   const onSearch = (id: string) => {
@@ -18,15 +19,28 @@ const ControlBarSearchInput = () => {
     const tokenString = `${contractAddress!}:${id}`;
     const attribute = generateAttributeString(selectedTraits);
 
-    getCollectionNftsV2(chainId, undefined, undefined, attribute, tokenString)
+    getCollectionNftsV2(
+      chainId,
+      selectedDropdownOption.value,
+      selectedDropdownOption.order,
+      undefined,
+      undefined,
+      attribute,
+      tokenString
+    )
       .then((result) => setCollectionNfts(result))
       .catch(() => setCollectionNfts({ tokens: [], continuation: null }))
       .finally(() => setIsFetching(false));
 
     if (!id) {
-      getCollectionNftsV2(chainId, contractAddress, undefined, attribute).then(
-        (result) => setCollectionNfts(result)
-      );
+      getCollectionNftsV2(
+        chainId,
+        selectedDropdownOption.value,
+        selectedDropdownOption.order,
+        contractAddress,
+        undefined,
+        attribute
+      ).then((result) => setCollectionNfts(result));
     }
   };
 

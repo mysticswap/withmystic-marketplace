@@ -4,9 +4,10 @@ import ControlBar from "../../components/ControlBar/ControlBar";
 import ItemsScreen from "../../components/ItemsScreen/ItemsScreen";
 import ActivityScreen from "../../components/ActivityScreen/ActivityScreen";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
+import { tabOptions } from "../../constants";
 
 const Home = () => {
-  const { currentTab, tabOptions } = useGlobalContext()!;
+  const { currentTab } = useGlobalContext()!;
   const isInItemsSection = currentTab == tabOptions[0];
   return (
     <div>

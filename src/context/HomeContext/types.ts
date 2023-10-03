@@ -5,11 +5,17 @@ export type HomeContextType = {
   setMinimalCards: React.Dispatch<React.SetStateAction<boolean>>;
   selectedTraits: SelectedTrait[];
   setSelectedTraits: React.Dispatch<React.SetStateAction<SelectedTrait[]>>;
-  dropdownOptions: string[];
-  selectedDropdownOption: string;
-  setSelectedDropdownOption: React.Dispatch<React.SetStateAction<string>>;
+  selectedDropdownOption: DropdownOption;
+  setSelectedDropdownOption: React.Dispatch<
+    React.SetStateAction<DropdownOption>
+  >;
   isFetching: boolean;
   setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type SelectedTrait = { type: string; value: string };
+export type DropdownOption = {
+  title: string;
+  value: string;
+  order: string;
+};

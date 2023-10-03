@@ -12,6 +12,8 @@ export const getCollectionMetadata = async (
 
 export const getCollectionNftsV2 = async (
   chainId: number,
+  sortBy: string,
+  sortDirection: string,
   contractAddress?: string,
   continuation?: string,
   attributes?: string,
@@ -20,6 +22,8 @@ export const getCollectionNftsV2 = async (
   const request = await marketplaceInstance.get("get-nfts-v2", {
     params: {
       chainId,
+      sortBy,
+      sortDirection,
       contractAddress,
       ...(continuation && { continuation }),
       ...(attributes && { attributes }),

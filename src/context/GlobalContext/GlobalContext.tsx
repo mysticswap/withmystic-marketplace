@@ -19,7 +19,7 @@ import {
 } from "../../services/marketplace-reservoir-api";
 import { CollectionMetadataV2 } from "../../types/reservoir-types/collection-metadata.types";
 import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.types";
-import { reservoirActivityTypes } from "../../constants";
+import { reservoirActivityTypes, tabOptions } from "../../constants";
 import { CollectionActivity } from "../../types/reservoir-types/collection-activity.types";
 import { CollectionTraitsV2 } from "../../types/reservoir-types/collection-traits.types";
 
@@ -40,7 +40,6 @@ export const GlobalContextProvider = ({ children }: Props) => {
   const [provider, setProvider] =
     useState<ethers.providers.Web3Provider | null>(null);
   const [chainId, setChainId] = useState(1);
-  const tabOptions = ["Items", "Activity"];
   const [currentTab, setCurrentTab] = useState(tabOptions[0]);
   const [collectionMetadata, setCollectionMetadata] =
     useState<CollectionMetadataV2 | null>(null);
@@ -54,12 +53,20 @@ export const GlobalContextProvider = ({ children }: Props) => {
 
   const [userBalance, setUserBalance] = useState(0);
 
+  const defaultSort = "floorAskPrice";
+  const defaultSortby = "asc";
+
   useEffect(() => {
     getCollectionMetadata(chainId, collectionContract).then((result) => {
       setCollectionMetadata(result);
     });
 
-    getCollectionNftsV2(chainId, collectionContract).then((result) => {
+    getCollectionNftsV2(
+      chainId,
+      defaultSort,
+      defaultSortby,
+      collectionContract
+    ).then((result) => {
       setCollectionNfts(result);
     });
 
@@ -166,7 +173,6 @@ export const GlobalContextProvider = ({ children }: Props) => {
         setUserBalance,
         currentTab,
         setCurrentTab,
-        tabOptions,
         collectionNfts,
         setCollectionNfts,
         collectionActivity,
