@@ -29,6 +29,14 @@
   gap: 0.5rem;
 }
 
+.nav_links > a > svg {
+  transition: var(--ms-mp-transition);
+}
+
+.nav_links > a > svg:hover {
+  opacity: 0.5;
+}
+
 .collections_dropdown {
   display: flex;
   align-items: center;

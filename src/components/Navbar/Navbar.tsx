@@ -13,8 +13,11 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import ConnectedWalletButton from "../ConnectedWalletButton/ConnectedWalletButton";
 
 const Navbar = () => {
-  const { setProvider, user } = useGlobalContext()!;
+  const { setProvider, user, collectionMetadata } = useGlobalContext()!;
   const location = useLocation();
+
+  const discordUrl = collectionMetadata?.collections[0].discordUrl;
+  const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
 
   const connectWallet = () => {
     connectWallets(setProvider);
@@ -37,10 +40,10 @@ const Navbar = () => {
         </div>
 
         <div className="nav_links">
-          <a href="">
+          <a href={discordUrl}>
             <RiDiscordFill size={25} display="block" />
           </a>
-          <a href="">
+          <a href={twitterUrl}>
             <RiTwitterXLine size={20} display="block" />
           </a>
         </div>

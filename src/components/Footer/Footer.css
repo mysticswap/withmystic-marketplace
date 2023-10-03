@@ -47,4 +47,9 @@ footer {
 
 .socials svg {
   cursor: pointer;
+  transition: var(--ms-mp-transition);
+}
+
+.socials svg:hover {
+  opacity: 0.5;
 }

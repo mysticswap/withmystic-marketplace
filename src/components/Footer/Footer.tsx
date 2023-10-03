@@ -1,8 +1,14 @@
 import "./Footer.css";
 import mysticLogo from "../../assets/mystic-logo.svg";
 import { RiDiscordFill, RiTwitterXLine } from "react-icons/ri";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
 const Footer = () => {
+  const { collectionMetadata } = useGlobalContext()!;
+
+  const discordUrl = collectionMetadata?.collections[0].discordUrl;
+  const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
+
   return (
     <footer>
       <section>
@@ -20,8 +26,12 @@ const Footer = () => {
       </section>
 
       <section className="socials">
-        <RiDiscordFill size={30} display="block" />
-        <RiTwitterXLine size={25} display="block" />
+        <a href={discordUrl}>
+          <RiDiscordFill size={30} display="block" />
+        </a>
+        <a href={twitterUrl}>
+          <RiTwitterXLine size={25} display="block" />
+        </a>
       </section>
     </footer>
   );
