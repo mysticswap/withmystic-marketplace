@@ -7,6 +7,7 @@
   overflow-y: auto;
   /* border-left: var(--ms-mp-gray-border); */
   /* grid-template-rows: minmax(auto, 282.2px); */
+  /* position: relative; */
 }
 
 .cards_holder::-webkit-scrollbar {
@@ -64,4 +65,10 @@
 
 .cards_holder .loader {
   margin: auto;
+}
+
+.no_result {
+  text-align: center;
+  grid-column: 1 / -1;
+  font-size: 25px;
 }

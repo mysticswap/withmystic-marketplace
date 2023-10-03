@@ -6,3 +6,4 @@ export const WALLET_CONNECT_PROJECT_ID = import.meta.env
 
 // export const collectionContract = "0xbd3531da5cf5857e7cfaa92426877b022e612cf8";
 export const collectionContract = "0x74cb5611e89078b2e5cb638a873cf7bddc588659";
+// export const collectionContract = "0x0bbaded995e1ca7a273bd9a5171c3c488fbb8283";

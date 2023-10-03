@@ -19,6 +19,7 @@ export const HomeContextProvider = ({ children }: Props) => {
   const [selectedDropdownOption, setSelectedDropdownOption] = useState(
     dropdownOptions[0]
   );
+  const [isFetching, setIsFetching] = useState(false);
 
   return (
     <HomeContext.Provider
@@ -32,6 +33,8 @@ export const HomeContextProvider = ({ children }: Props) => {
         dropdownOptions,
         selectedDropdownOption,
         setSelectedDropdownOption,
+        isFetching,
+        setIsFetching,
       }}
     >
       {children}

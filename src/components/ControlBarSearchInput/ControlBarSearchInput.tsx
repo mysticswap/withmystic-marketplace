@@ -1,27 +1,31 @@
 import { IoSearchSharp } from "react-icons/io5";
 import "./ControlBarSearchInput.css";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
-import {
-  getCollectionNfts,
-  getSingleNft,
-} from "../../services/marketplace-api";
-import { API_KEY } from "../../config";
+import { getCollectionNftsV2 } from "../../services/marketplace-reservoir-api";
+import { generateAttributeString } from "../../utils";
+import { useHomeContext } from "../../context/HomeContext/HomeContext";
 
 const ControlBarSearchInput = () => {
-  const { chainId, setCollectionNfts, setNftsPageKey, collectionMetadata } =
+  const { chainId, setCollectionNfts, collectionMetadata } =
     useGlobalContext()!;
+  const { selectedTraits, setIsFetching } = useHomeContext()!;
   const contractAddress = collectionMetadata?.collections?.[0]?.primaryContract;
+
   const onSearch = (id: string) => {
-    getSingleNft(contractAddress!, id!, chainId, API_KEY).then((result) => {
-      setCollectionNfts([result]);
-    });
+    setIsFetching(true);
+    setCollectionNfts({ tokens: [], continuation: null });
+
+    const tokenString = `${contractAddress!}:${id}`;
+    const attribute = generateAttributeString(selectedTraits);
+
+    getCollectionNftsV2(chainId, undefined, undefined, attribute, tokenString)
+      .then((result) => setCollectionNfts(result))
+      .catch(() => setCollectionNfts({ tokens: [], continuation: null }))
+      .finally(() => setIsFetching(false));
 
     if (!id) {
-      getCollectionNfts(contractAddress!, chainId, "1", API_KEY).then(
-        (result) => {
-          setCollectionNfts(result.nfts);
-          setNftsPageKey(result.pageKey);
-        }
+      getCollectionNftsV2(chainId, contractAddress, undefined, attribute).then(
+        (result) => setCollectionNfts(result)
       );
     }
   };

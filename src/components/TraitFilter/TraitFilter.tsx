@@ -67,6 +67,7 @@ const TraitFilter = ({ attribute }: Props) => {
                 subtext={value.count}
                 handleClick={selectTrait}
                 isForTraits={true}
+                type={attribute.key}
               />
             );
           })}

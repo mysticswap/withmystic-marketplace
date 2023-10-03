@@ -8,16 +8,23 @@ type Props = {
   subtext?: string | number;
   handleClick?: (...args: any[]) => void;
   isForTraits?: boolean;
+  type?: string;
 };
 
-const StatusListItem = ({ text, subtext, handleClick, isForTraits }: Props) => {
+const StatusListItem = ({
+  text,
+  subtext,
+  handleClick,
+  isForTraits,
+  type,
+}: Props) => {
   const { selectedTraits } = useHomeContext()!;
   const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
     if (isForTraits) {
       const isSelected = selectedTraits.some((trait) => {
-        return trait.value == text;
+        return trait.value == text && trait.type == type;
       });
       setIsClicked(isSelected);
     }

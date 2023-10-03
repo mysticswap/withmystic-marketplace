@@ -11,17 +11,22 @@ import { generateAttributeString } from "../../utils";
 
 const CardsHolder = () => {
   const { chainId, collectionNfts, setCollectionNfts } = useGlobalContext()!;
-  const { showFilters, minimalCards, selectedTraits, setSelectedTraits } =
-    useHomeContext()!;
+  const {
+    showFilters,
+    minimalCards,
+    selectedTraits,
+    setSelectedTraits,
+    isFetching,
+    setIsFetching,
+  } = useHomeContext()!;
 
-  const [isFetching, setIsFetching] = useState(false);
   const [nftsTemp, setNftsTemp] = useState(collectionNfts.tokens);
 
   const cardsHolderRef = useRef(null);
 
-  const removeSelectedFilter = (trait: string) => {
+  const removeSelectedFilter = (trait: string, traitType: string) => {
     const selectedTraitsUpdate = selectedTraits.filter((item) => {
-      return item.value !== trait;
+      return !(item.value == trait && item.type == traitType);
     });
     setSelectedTraits(selectedTraitsUpdate);
   };
@@ -43,6 +48,7 @@ const CardsHolder = () => {
       <SelectedFilter
         key={index}
         trait={trait.value}
+        traitType={trait.type}
         handleClick={removeSelectedFilter}
       />
     );
@@ -115,6 +121,9 @@ const CardsHolder = () => {
         <div className="loader_holder">
           <BiLoaderCircle className="loader" size={50} />
         </div>
+      )}
+      {nftsList?.length < 1 && !isFetching && (
+        <p className="no_result">No result</p>
       )}
     </div>
   );

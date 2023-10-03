@@ -8,6 +8,8 @@ export type HomeContextType = {
   dropdownOptions: string[];
   selectedDropdownOption: string;
   setSelectedDropdownOption: React.Dispatch<React.SetStateAction<string>>;
+  isFetching: boolean;
+  setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type SelectedTrait = { type: string; value: string };
