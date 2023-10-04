@@ -72,7 +72,7 @@ const NftPage = () => {
   if (isLoading) {
     return <Loading />;
   }
-
+  // tt
   return (
     <>
       <div className="nft_page_top">
