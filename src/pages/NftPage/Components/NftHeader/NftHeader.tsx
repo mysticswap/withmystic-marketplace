@@ -2,28 +2,27 @@ import OutlineButton from "../../../../components/OutlineButton/OutlineButton";
 import SolidButton from "../../../../components/SolidButton/SolidButton";
 import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
 import { connectWallets } from "../../../../services/web3Onboard";
-import { SingleNftData } from "../../../../types/alchemy.types";
+import { TokenToken } from "../../../../types/reservoir-types/collection-nfts.types";
 import { truncateAddress } from "../../../../utils";
 import "./NftHeader.css";
 import { IoShareSocial } from "react-icons/io5";
 import { LuRefreshCw } from "react-icons/lu";
 
 type Props = {
-  nftData: SingleNftData;
-  owner: string;
+  nftInfo: TokenToken;
   setShowConfirmationModal: React.Dispatch<React.SetStateAction<boolean>>;
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const NftHeader = ({
-  nftData,
-  owner,
   setShowConfirmationModal,
   setShowOfferOrListingModal,
+  nftInfo,
 }: Props) => {
   const { user, setProvider } = useGlobalContext()!;
-  const collectionName = nftData?.contract?.name;
-  const nftName = nftData?.rawMetadata?.name;
+  const collectionName = nftInfo?.collection?.name;
+  const nftName = nftInfo?.name;
+  const owner = nftInfo?.owner;
 
   const triggerModal = (
     setter: React.Dispatch<React.SetStateAction<boolean>>

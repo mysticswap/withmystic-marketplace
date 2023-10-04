@@ -1,15 +1,16 @@
-import { Attribute } from "../../../../types/alchemy.types";
+import { NftAttributes } from "../../../../types/reservoir-types/collection-nfts.types";
 import "./TraitsHolder.css";
 
-type Props = { attributes: Attribute[] };
+type Props = { attributes: NftAttributes[] | undefined; tokenCount: number };
 
-const TraitsHolder = ({ attributes }: Props) => {
+const TraitsHolder = ({ attributes, tokenCount }: Props) => {
   const traitList = attributes?.map((trait) => {
+    const traitPercentage = Math.ceil((trait.tokenCount / tokenCount) * 100);
     return (
-      <div className="trait" key={trait.trait_type}>
-        <p>{trait.trait_type}</p>
+      <div className="trait" key={trait.key}>
+        <p>{trait.key}</p>
         <p>{trait.value}</p>
-        <p>10% have this trait</p>
+        <p>{traitPercentage}% have this trait</p>
       </div>
     );
   });

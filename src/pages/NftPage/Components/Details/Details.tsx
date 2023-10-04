@@ -1,18 +1,19 @@
-import { SingleNftData } from "../../../../types/alchemy.types";
+import { TokenToken } from "../../../../types/reservoir-types/collection-nfts.types";
 import { truncateAddress } from "../../../../utils";
 import "./Details.css";
 
 type Props = {
-  nftData: SingleNftData;
+  nftInfo: TokenToken;
 };
 
-const Details = ({ nftData }: Props) => {
+const Details = ({ nftInfo }: Props) => {
   const details = [
-    { title: "Contract Address", value: nftData?.contract?.address },
-    { title: "Token ID", value: nftData?.tokenId },
-    { title: "Token Standard", value: nftData?.tokenType },
+    { title: "Contract Address", value: nftInfo?.contract },
+    { title: "Token ID", value: nftInfo?.tokenId },
+    { title: "Token Standard", value: nftInfo?.kind.toUpperCase() },
     { title: "Royalties", value: "5%" },
   ];
+
   return (
     <div className="details">
       <p className="details_title">Details</p>

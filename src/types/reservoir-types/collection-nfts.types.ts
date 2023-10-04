@@ -71,6 +71,7 @@ export interface TokenToken {
   collection: Collection;
   lastSale: LastSale;
   owner: string;
+  attributes?: NftAttributes[];
 }
 
 export interface Collection {
@@ -107,4 +108,15 @@ export interface LastSalePrice {
 
 export interface Metadata {
   imageOriginal: string;
+}
+
+export interface NftAttributes {
+  key: string;
+  kind: string;
+  value: string;
+  tokenCount: number;
+  onSaleCount: number;
+  floorAskPrice: number;
+  topBidValue: null;
+  createdAt: Date;
 }

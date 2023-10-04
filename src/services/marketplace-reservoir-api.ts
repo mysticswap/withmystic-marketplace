@@ -53,3 +53,10 @@ export const getCollectionTraitsV2 = async (
   });
   return request.data;
 };
+
+export const getSingleNftV2 = async (chainId: number, tokens: string) => {
+  const request = await marketplaceInstance("/get-nft-v2", {
+    params: { chainId, tokens },
+  });
+  return request.data;
+};
