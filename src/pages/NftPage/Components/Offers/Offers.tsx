@@ -16,14 +16,11 @@ type Props = {
 const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
   const { chainId } = useGlobalContext()!;
   const [isFetching, setIsFetching] = useState(false);
+  const token = `${collectionContract}:${tokenId}`;
 
   const fetchMoreOffers = () => {
     setIsFetching(true);
-    getNftOffers(
-      chainId,
-      `${collectionContract}:${tokenId}`,
-      nftOffers.continuation!
-    )
+    getNftOffers(chainId, token, nftOffers.continuation!)
       .then((result) => {
         setNftOffers({
           orders: [...nftOffers.orders, ...result.orders],
