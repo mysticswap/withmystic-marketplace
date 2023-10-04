@@ -1,8 +1,40 @@
+import dayjs from "dayjs";
+import { NftOffers } from "../../../../types/reservoir-types/nft-offers.types";
 import { truncateAddress } from "../../../../utils";
 import "./Offers.css";
-import { offersData } from "./offers.data";
+import { getNftOffers } from "../../../../services/marketplace-reservoir-api";
+import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
+import { collectionContract } from "../../../../config";
+import { useState } from "react";
 
-const Offers = () => {
+type Props = {
+  nftOffers: NftOffers;
+  tokenId: string;
+  setNftOffers: React.Dispatch<React.SetStateAction<NftOffers>>;
+};
+
+const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
+  const { chainId } = useGlobalContext()!;
+  const [isFetching, setIsFetching] = useState(false);
+
+  const fetchMoreOffers = () => {
+    setIsFetching(true);
+    getNftOffers(
+      chainId,
+      `${collectionContract}:${tokenId}`,
+      nftOffers.continuation!
+    )
+      .then((result) => {
+        setNftOffers({
+          orders: [...nftOffers.orders, ...result.orders],
+          continuation: result.continuation,
+        });
+      })
+      .finally(() => {
+        setIsFetching(false);
+      });
+  };
+
   return (
     <div className="offers">
       <p className="offers_title">Offers</p>
@@ -13,17 +45,30 @@ const Offers = () => {
           <p>By</p>
         </div>
         <div>
-          {offersData.map((item) => {
+          {nftOffers?.orders?.map((order) => {
+            let timeStamp = dayjs(order?.expiration * 1000).fromNow();
+            let altTimeStamp =
+              timeStamp.startsWith("in") && timeStamp.substring(2);
+            const price = order.price.amount.decimal;
+            const symbol = order.price.currency.symbol;
+
             return (
-              <div key={item.id} className="offers_table_item">
-                <p>{item.price}</p>
-                <p>{item.expiration}</p>
-                <p>{truncateAddress(item.offerer, 5, "...")}</p>
+              <div key={order.id} className="offers_table_item">
+                <p>
+                  {price} {symbol}
+                </p>
+                <p>{altTimeStamp || timeStamp}</p>
+                <p>{truncateAddress(order.maker, 5, "...")}</p>
               </div>
             );
           })}
         </div>
-        <button className="more_offers_btn">Load More</button>
+
+        {nftOffers.continuation && !isFetching && (
+          <button className="more_offers_btn" onClick={fetchMoreOffers}>
+            Load More
+          </button>
+        )}
       </div>
     </div>
   );

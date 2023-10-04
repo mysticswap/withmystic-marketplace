@@ -15,8 +15,12 @@ import History from "./Components/History/History";
 import Loading from "../../components/Loading/Loading";
 import ConfirmPurchaseModal from "../../components/ConfirmPurchaseModal/ConfirmPurchaseModal";
 import OfferOrListingModal from "../../components/OfferOrListingModal/OfferOrListingModal";
-import { getSingleNftV2 } from "../../services/marketplace-reservoir-api";
+import {
+  getNftOffers,
+  getSingleNftV2,
+} from "../../services/marketplace-reservoir-api";
 import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.types";
+import { NftOffers } from "../../types/reservoir-types/nft-offers.types";
 
 const NftPage = () => {
   const { collectionMetadata, chainId } = useGlobalContext()!;
@@ -24,6 +28,7 @@ const NftPage = () => {
 
   const [nftData, setNftData] = useState<SingleNftData>({} as SingleNftData);
   const [nftDataV2, setNftDataV2] = useState({} as GetNftsReservoir);
+  const [nftOffers, setNftOffers] = useState({} as NftOffers);
 
   const [isLoading, setIsLoading] = useState(true);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
@@ -50,6 +55,10 @@ const NftPage = () => {
 
       getSingleNftV2(chainId, `${contractAddress}:${id}`).then((result) => {
         setNftDataV2(result);
+      }),
+
+      getNftOffers(chainId, `${contractAddress}:${id}`).then((result) => {
+        setNftOffers(result);
       }),
 
       getNftHistory(contractAddress!, id!, 1, API_KEY).then((result) => {
@@ -79,7 +88,11 @@ const NftPage = () => {
             setShowOfferOrListingModal={setShowOfferOrListingModal}
           />
           <CurrentPrice nftPriceData={nftPriceData} />
-          <Offers />
+          <Offers
+            nftOffers={nftOffers}
+            tokenId={id!}
+            setNftOffers={setNftOffers}
+          />
           <Details nftInfo={nftInfo} />
         </section>
       </div>

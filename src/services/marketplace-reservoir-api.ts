@@ -60,3 +60,14 @@ export const getSingleNftV2 = async (chainId: number, tokens: string) => {
   });
   return request.data;
 };
+
+export const getNftOffers = async (
+  chainId: number,
+  token: string,
+  continuation?: string
+) => {
+  const request = await marketplaceInstance("/get-nft-offers", {
+    params: { chainId, token, ...(continuation && { continuation }) },
+  });
+  return request.data;
+};
