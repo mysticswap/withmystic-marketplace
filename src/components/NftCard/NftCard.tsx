@@ -4,6 +4,7 @@ import { TokenElement } from "../../types/reservoir-types/collection-nfts.types"
 import { useEffect, useRef, useState } from "react";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import CustomTooltip from "../CustomTooltip/CustomTooltip";
+import { SiOpensea } from "react-icons/si";
 
 type Props = { nft: TokenElement };
 
@@ -20,6 +21,8 @@ const NftCard = ({ nft }: Props) => {
   const lastSale = nft?.market?.floorAsk?.price?.amount?.decimal?.toFixed(4);
   const nftName = nft?.token?.name;
   const nftId = nft?.token?.tokenId;
+  const sourceIcon = nft?.market?.floorAsk?.source?.icon;
+  const sourceLink = nft?.market?.floorAsk?.source?.url;
 
   const nameLink = (
     <Link to={`/nft/${nftId}`}>
@@ -65,6 +68,16 @@ const NftCard = ({ nft }: Props) => {
           {symbol} {!lastSale && !symbol && "---"}
         </p>
         {currentEthAmount && currentValue && <button>Buy now</button>}
+      </div>
+
+      <div className="source_icon">
+        <a href={sourceLink}>
+          {!sourceLink?.includes("opensea") ? (
+            <img src={sourceIcon} alt="" />
+          ) : (
+            <SiOpensea display="block" color="#3498db" size={20} />
+          )}
+        </a>
       </div>
     </div>
   );

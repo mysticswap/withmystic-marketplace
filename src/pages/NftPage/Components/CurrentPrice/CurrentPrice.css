@@ -31,7 +31,6 @@
 .current_price a > img {
   width: 20px;
   height: 20px;
-  border: var(--ms-mp-gray-border);
   border-radius: 50%;
   object-fit: cover;
   display: block;
