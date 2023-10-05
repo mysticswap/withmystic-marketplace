@@ -1,7 +1,22 @@
+.activity_screen_parent {
+  width: 95%;
+  width: 100%;
+  margin: auto;
+  display: flex;
+}
+
+.activity_screen_parent > .filters_sidebar {
+  border: none;
+}
+
+.activity_screen {
+  width: 80%;
+  border-left: var(--ms-mp-gray-border);
+}
+
 .sales_table_head {
   display: flex;
   align-items: center;
-  width: 90%;
   margin: auto;
 }
 
@@ -13,10 +28,10 @@
   width: 10%;
 }
 .sales_table_head > div:nth-of-type(2) {
-  width: 25%;
+  width: 30%;
 }
 .sales_table_head > div:not(:nth-of-type(2), :first-of-type) {
-  width: calc(65% / 4);
+  width: calc(60% / 4);
 }
 
 .activity_screen .solid_button,

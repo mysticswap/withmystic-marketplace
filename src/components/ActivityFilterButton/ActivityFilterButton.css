@@ -1,0 +1,23 @@
+.activity_filter_button {
+  width: 100%;
+  display: block;
+  background-color: transparent;
+  border: none;
+  transition: var(--ms-mp-transition);
+  border-bottom: var(--ms-mp-gray-border);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.activity_filter_button:hover {
+  background-color: var(--ms-mp-gray-light);
+}
+
+.activity_filter_button > div:first-of-type {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

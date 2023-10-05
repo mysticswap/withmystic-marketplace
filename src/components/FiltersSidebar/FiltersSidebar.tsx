@@ -3,18 +3,27 @@ import StatusFilters from "../StatusFilters/StatusFilters";
 import NumericFilters from "../NumericFilters/NumericFilters";
 import TraitFilter from "../TraitFilter/TraitFilter";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
+import ActivityFilters from "../ActivityFilters/ActivityFilters";
 
-const FiltersSidebar = () => {
+type Props = { isForTraits: boolean };
+
+const FiltersSidebar = ({ isForTraits }: Props) => {
   const { collectionAttributes } = useGlobalContext()!;
 
   return (
     <div className="filters_sidebar">
-      <StatusFilters />
-      <NumericFilters title="Price" />
-      <NumericFilters title="Rarity Rank" />
-      {collectionAttributes?.attributes?.map((attribute) => {
-        return <TraitFilter key={attribute.key} attribute={attribute} />;
-      })}
+      {isForTraits ? (
+        <>
+          <StatusFilters />
+          <NumericFilters title="Price" />
+          <NumericFilters title="Rarity Rank" />
+          {collectionAttributes?.attributes?.map((attribute) => {
+            return <TraitFilter key={attribute.key} attribute={attribute} />;
+          })}
+        </>
+      ) : (
+        <ActivityFilters />
+      )}
     </div>
   );
 };

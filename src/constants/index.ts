@@ -1,3 +1,7 @@
+import { BsFillCartFill, BsTagFill } from "react-icons/bs";
+import { FaMoneyBillTransfer, FaRectangleList } from "react-icons/fa6";
+import { IoSparklesSharp } from "react-icons/io5";
+
 export const reservoirActivityTypes = JSON.stringify([
   "sale",
   "ask",
@@ -23,3 +27,11 @@ export const dropdownOptions = [
 ];
 
 export const tabOptions = ["Items", "Activity"];
+
+export const activityButtons = [
+  { activity: "Sale", icon: BsFillCartFill, type: "sale" },
+  { activity: "Offers", icon: BsTagFill, type: "bid" },
+  { activity: "Listings", icon: FaRectangleList, type: "ask" },
+  { activity: "Transfer", icon: FaMoneyBillTransfer, type: "transfer" },
+  { activity: "Mint", icon: IoSparklesSharp, type: "mint" },
+];

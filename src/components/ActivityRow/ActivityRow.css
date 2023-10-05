@@ -1,5 +1,5 @@
 .activity_row {
-  width: 90%;
+  /* width: 90%; */
   margin: auto;
   border-top: var(--ms-mp-gray-border);
   padding: 1rem 0;
@@ -7,6 +7,7 @@
   align-items: center;
   transition: var(--ms-mp-transition);
   cursor: pointer;
+  font-size: 15px;
 }
 
 .activity_row:hover {
@@ -33,11 +34,11 @@
 }
 
 .activity_row > div:nth-of-type(2) {
-  width: 25%;
+  width: 30%;
 }
 
 .activity_row > div:not(:nth-of-type(2), :first-of-type) {
-  width: calc(65% / 4);
+  width: calc(60% / 4);
 }
 
 .activity_row > div:last-of-type > p {

@@ -7,7 +7,7 @@ const ItemsScreen = () => {
   const { showFilters } = useHomeContext()!;
   return (
     <div className="items_screen">
-      {showFilters && <FiltersSidebar />}
+      {showFilters && <FiltersSidebar isForTraits={true} />}
       <CardsHolder />
     </div>
   );
