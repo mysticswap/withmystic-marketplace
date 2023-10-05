@@ -8,6 +8,14 @@
   height: 100%;
   display: block;
   object-fit: cover;
+
+  /* -webkit-mask-image: linear-gradient(
+    to top,
+    transparent 10%,
+    black 50%,
+    black 70%,
+    rgba(34, 34, 34, 0.3) 100%
+  ); */
 }
 
 .banner_details {
