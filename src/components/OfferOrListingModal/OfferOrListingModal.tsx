@@ -1,6 +1,5 @@
 import { IoClose } from "react-icons/io5";
 import "./OfferOrListingModal.css";
-import { SingleNftData } from "../../types/alchemy.types";
 import { extractMetadata } from "../../utils";
 import ModalNft from "../ModalNft/ModalNft";
 import { BsCalendar } from "react-icons/bs";
@@ -8,21 +7,27 @@ import { useRef, useState } from "react";
 import SolidButton from "../SolidButton/SolidButton";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
+import {
+  Market,
+  TokenToken,
+} from "../../types/reservoir-types/collection-nfts.types";
 
 type Props = {
   isOffer: boolean;
-  nft: SingleNftData;
+  nft: TokenToken;
+  nftMarketInfo: Market;
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const OfferOrListingModal = ({
   isOffer,
   nft,
+  nftMarketInfo,
   setShowOfferOrListingModal,
 }: Props) => {
   const { userBalance } = useGlobalContext()!;
   const dropdownRef = useRef(null);
-  const nftData = extractMetadata(nft);
+  const nftData = extractMetadata(nft, nftMarketInfo);
   const headerContent = isOffer ? "Make an offer" : "Create a listing";
   const inputPlaceholder = isOffer ? "Enter offer" : "Listing price";
   const durationOptions = [

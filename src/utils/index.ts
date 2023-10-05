@@ -1,5 +1,8 @@
 import { SelectedTrait } from "../context/HomeContext/types";
-import { SingleNftData } from "../types/alchemy.types";
+import {
+  Market,
+  TokenToken,
+} from "../types/reservoir-types/collection-nfts.types";
 
 export const getQueryString = (params: { [x: string]: any }) => {
   return Object.entries(params)
@@ -35,14 +38,14 @@ export const metamaskPresent = () => {
   return typeof ethereum !== "undefined" && window.ethereum.isMetaMask;
 };
 
-export const extractMetadata = (nft: SingleNftData) => {
+export const extractMetadata = (nft: TokenToken, nftMarketInfo: Market) => {
   return {
-    collectionName: nft?.contract?.name,
-    nftName: nft?.rawMetadata?.name,
-    nftImage: nft?.media[0]?.gateway,
-    ethAmount: 4,
-    price: 123,
-    floorPrice: nft?.contract?.openSea?.floorPrice,
+    collectionName: nft?.collection?.name,
+    nftName: nft?.name,
+    nftImage: nft?.image,
+    amount: nftMarketInfo?.floorAsk?.price?.amount?.decimal,
+    price: nftMarketInfo?.floorAsk?.price?.amount?.usd,
+    floorPrice: nftMarketInfo?.floorAsk?.price?.amount?.decimal,
   };
 };
 

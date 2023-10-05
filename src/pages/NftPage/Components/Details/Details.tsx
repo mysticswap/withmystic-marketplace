@@ -1,3 +1,4 @@
+import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
 import { TokenToken } from "../../../../types/reservoir-types/collection-nfts.types";
 import { truncateAddress } from "../../../../utils";
 import "./Details.css";
@@ -7,11 +8,14 @@ type Props = {
 };
 
 const Details = ({ nftInfo }: Props) => {
+  const { collectionMetadata } = useGlobalContext()!;
+  const Royalties =
+    collectionMetadata?.collections?.[0]?.allRoyalties?.opensea?.[0]?.bps;
   const details = [
     { title: "Contract Address", value: nftInfo?.contract },
     { title: "Token ID", value: nftInfo?.tokenId },
     { title: "Token Standard", value: nftInfo?.kind.toUpperCase() },
-    { title: "Royalties", value: "5%" },
+    { title: "Royalties", value: `${Royalties! * 0.01}%` },
   ];
 
   return (

@@ -1,16 +1,24 @@
 import { IoClose } from "react-icons/io5";
 import "./ConfirmPurchaseModal.css";
-import { SingleNftData } from "../../types/alchemy.types";
 import ModalNft from "../ModalNft/ModalNft";
 import { extractMetadata } from "../../utils";
+import {
+  Market,
+  TokenToken,
+} from "../../types/reservoir-types/collection-nfts.types";
 
 type Props = {
-  nft: SingleNftData;
+  nft: TokenToken;
+  nftMarketInfo: Market;
   setShowConfirmationModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const ConfirmPurchaseModal = ({ nft, setShowConfirmationModal }: Props) => {
-  const nftData = extractMetadata(nft);
+const ConfirmPurchaseModal = ({
+  nft,
+  nftMarketInfo,
+  setShowConfirmationModal,
+}: Props) => {
+  const nftData = extractMetadata(nft, nftMarketInfo);
 
   return (
     <div className="modal_parent">

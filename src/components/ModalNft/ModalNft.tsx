@@ -5,7 +5,7 @@ type Props = {
     collectionName: string;
     nftName: string;
     nftImage: string;
-    ethAmount: number;
+    amount: number;
     price: number;
   };
 };
@@ -22,7 +22,7 @@ const ModalNft = ({ nftData }: Props) => {
       </div>
 
       <p className="modal_nft_value">
-        {nftData.ethAmount} ETH <span>(${nftData.price})</span>
+        {nftData.amount} ETH <span>(${Math.ceil(nftData.price)})</span>
       </p>
     </div>
   );

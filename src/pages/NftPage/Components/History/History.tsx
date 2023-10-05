@@ -1,21 +1,41 @@
 import dayjs from "dayjs";
-import { SingleNftHistory } from "../../../../types/alchemy.types";
-import {
-  convertDecimalsToReadableNumbers,
-  redirectToMSWalletPage,
-  truncateAddress,
-} from "../../../../utils";
 import "./History.css";
 import { TbExternalLink } from "react-icons/tb";
 import CustomTooltip from "../../../../components/CustomTooltip/CustomTooltip";
+import { CollectionActivity as NftActivity } from "../../../../types/reservoir-types/collection-activity.types";
+import { activityRenames, reservoirActivityTypes } from "../../../../constants";
+import { ActivityRowAddress } from "../../../../components/ActivityRow/ActivityRow";
+import { useState } from "react";
+import { getNftActivity } from "../../../../services/marketplace-reservoir-api";
+import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
 
 type Props = {
-  nftHistory: SingleNftHistory;
+  nftActivity: NftActivity;
+  token: string;
+  setNftActivity: React.Dispatch<React.SetStateAction<NftActivity>>;
 };
 
-const History = ({ nftHistory }: Props) => {
-  const historyData = nftHistory.transactions;
-
+const History = ({ nftActivity, token, setNftActivity }: Props) => {
+  const { chainId } = useGlobalContext()!;
+  const [isFetching, setIsFetching] = useState(false);
+  const fetchMoreActivity = () => {
+    setIsFetching(true);
+    getNftActivity(
+      chainId,
+      token,
+      reservoirActivityTypes,
+      nftActivity.continuation!
+    )
+      .then((result) => {
+        setNftActivity({
+          activities: [...nftActivity.activities, ...result.activities],
+          continuation: nftActivity.continuation,
+        });
+      })
+      .finally(() => {
+        setIsFetching(false);
+      });
+  };
   return (
     <div className="history">
       <div className="history_table">
@@ -27,27 +47,21 @@ const History = ({ nftHistory }: Props) => {
           <p>Time</p>
         </div>
         <div>
-          {historyData.map((item) => {
-            const price = convertDecimalsToReadableNumbers(
-              String(
-                Number(item?.sellerFee?.amount) +
-                  Number(item?.marketplaceFee?.amount) +
-                  Number(item?.protocolFee?.amount)
-              ),
-              item?.sellerFee?.decimals
-            );
-            const timeStamp = dayjs(item?.timestamp * 1000).fromNow();
-            const fullTime = dayjs(item?.timestamp * 1000).toString();
+          {nftActivity?.activities?.map((activity) => {
+            const timeStamp = dayjs(activity.timestamp * 1000).fromNow();
+            const fullTime = dayjs(activity.timestamp * 1000).toString();
             return (
-              <div key={item.timestamp} className="history_row">
-                <p>Sale</p>
-                <p>{price} ETH</p>
-                <p onClick={() => redirectToMSWalletPage(item.sellerAddress)}>
-                  {truncateAddress(item.sellerAddress, 5, "...")}
+              <div key={activity?.order?.id} className="history_row">
+                <p>{activityRenames[activity.type]}</p>
+                <p>
+                  {activity.price.amount.decimal}{" "}
+                  {activity.price.currency.symbol}
                 </p>
-                <p onClick={() => redirectToMSWalletPage(item.buyerAddress)}>
-                  {truncateAddress(item.buyerAddress, 5, "...")}
-                </p>
+                <ActivityRowAddress
+                  address={activity.fromAddress}
+                  isParagraph
+                />
+                <ActivityRowAddress address={activity.toAddress!} isParagraph />
                 <CustomTooltip text={fullTime}>
                   <p>
                     {timeStamp} <TbExternalLink display="block" />
@@ -58,6 +72,12 @@ const History = ({ nftHistory }: Props) => {
           })}
         </div>
       </div>
+
+      {nftActivity.continuation && !isFetching && (
+        <button className="more_offers_btn" onClick={fetchMoreActivity}>
+          Load More
+        </button>
+      )}
     </div>
   );
 };

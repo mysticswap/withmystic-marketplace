@@ -12,7 +12,7 @@ const CurrentPrice = ({ nftPriceData }: Props) => {
   const sourceLink = nftPriceData?.floorAsk?.source?.url;
 
   return (
-    <div className="current_price">
+    <div className={`current_price ${!currentPriceDecimal ? "hide" : ""}`}>
       <p>Current Price</p>
       <p>
         {currentPriceDecimal} {symbol} <span>(${currentPriceUsd})</span>

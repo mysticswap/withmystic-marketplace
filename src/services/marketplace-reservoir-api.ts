@@ -71,3 +71,15 @@ export const getNftOffers = async (
   });
   return request.data;
 };
+
+export const getNftActivity = async (
+  chainId: number,
+  token: string,
+  types: string,
+  continuation?: string
+) => {
+  const request = await marketplaceInstance("get-single-nft-activity", {
+    params: { chainId, token, types, ...(continuation && { continuation }) },
+  });
+  return request.data;
+};

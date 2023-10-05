@@ -48,8 +48,8 @@ const ActivityRow = ({ activity }: Props) => {
           </Link>
         </div>
       </>
-      <ActivityRowAddress address={activity?.fromAddress} />
-      <ActivityRowAddress address={activity?.toAddress!} />
+      <ActivityRowAddress address={activity?.fromAddress} isParagraph={false} />
+      <ActivityRowAddress address={activity?.toAddress!} isParagraph={false} />
       <div>
         <CustomTooltip text={fullTime}>
           <p>
@@ -63,12 +63,23 @@ const ActivityRow = ({ activity }: Props) => {
 
 export default ActivityRow;
 
-type AddressRowProps = { address: string };
+type AddressRowProps = { address: string; isParagraph: boolean };
 
-const ActivityRowAddress = ({ address }: AddressRowProps) => {
+export const ActivityRowAddress = ({
+  address,
+  isParagraph,
+}: AddressRowProps) => {
   return (
-    <div onClick={() => redirectToMSWalletPage(address)}>
-      {address ? <>{truncateAddress(address, 5, "...")}</> : "---"}
-    </div>
+    <>
+      {isParagraph ? (
+        <p onClick={() => redirectToMSWalletPage(address)}>
+          {address ? <>{truncateAddress(address, 5, "...")}</> : "---"}
+        </p>
+      ) : (
+        <div onClick={() => redirectToMSWalletPage(address)}>
+          {address ? <>{truncateAddress(address, 5, "...")}</> : "---"}
+        </div>
+      )}
+    </>
   );
 };
