@@ -50,11 +50,13 @@ export const GlobalContextProvider = ({ children }: Props) => {
   const [collectionAttributes, setCollectionAttributes] = useState(
     {} as CollectionTraitsV2
   );
+  const [selectedActivities, setSelectedActivities] = useState(["sale"]);
 
   const [userBalance, setUserBalance] = useState(0);
 
   const defaultSort = "floorAskPrice";
   const defaultSortby = "asc";
+  const selectedActivityTypes = JSON.stringify(selectedActivities);
 
   useEffect(() => {
     getCollectionMetadata(chainId, collectionContract).then((result) => {
@@ -73,7 +75,7 @@ export const GlobalContextProvider = ({ children }: Props) => {
     getCollectionActivity(
       chainId,
       collectionContract,
-      reservoirActivityTypes
+      selectedActivityTypes
     ).then((result) => {
       setCollectionActivity(result);
     });
@@ -82,6 +84,22 @@ export const GlobalContextProvider = ({ children }: Props) => {
       setCollectionAttributes(result);
     });
   }, []);
+
+  useEffect(() => {
+    if (selectedActivities.length < 1) {
+      setSelectedActivities(JSON.parse(reservoirActivityTypes));
+    }
+    setCollectionActivity({} as CollectionActivity);
+    getCollectionActivity(
+      chainId,
+      collectionContract,
+      selectedActivities.length < 1
+        ? reservoirActivityTypes
+        : selectedActivityTypes
+    ).then((result) => {
+      setCollectionActivity(result);
+    });
+  }, [selectedActivities]);
 
   useEffect(() => {
     if (provider) {
@@ -179,6 +197,8 @@ export const GlobalContextProvider = ({ children }: Props) => {
         setCollectionActivity,
         collectionAttributes,
         setCollectionAttributes,
+        selectedActivities,
+        setSelectedActivities,
       }}
     >
       {children}

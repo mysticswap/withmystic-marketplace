@@ -44,3 +44,7 @@
 .activity_screen .loader {
   width: unset;
 }
+
+.activities_loading {
+  text-align: center;
+}

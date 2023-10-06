@@ -5,7 +5,6 @@ import ActivityRow from "../ActivityRow/ActivityRow";
 import SolidButton from "../SolidButton/SolidButton";
 import { BiLoaderCircle } from "react-icons/bi";
 import { getCollectionActivity } from "../../services/marketplace-reservoir-api";
-import { reservoirActivityTypes } from "../../constants";
 import FiltersSidebar from "../FiltersSidebar/FiltersSidebar";
 
 const ActivityScreen = () => {
@@ -14,6 +13,7 @@ const ActivityScreen = () => {
     chainId,
     collectionActivity,
     setCollectionActivity,
+    selectedActivities,
   } = useGlobalContext()!;
   const [activities, setActivities] = useState(collectionActivity?.activities);
   const [canFetch, setCanFetch] = useState(true);
@@ -24,12 +24,13 @@ const ActivityScreen = () => {
   }, [collectionActivity]);
 
   const loadMoreHistory = () => {
+    const selectedActivityTypes = JSON.stringify(selectedActivities);
     setCanFetch(false);
     setIsFetching(true);
     getCollectionActivity(
       chainId,
       collectionMetadata?.collections[0].primaryContract!,
-      reservoirActivityTypes
+      selectedActivityTypes
     )
       .then((result) => {
         setCollectionActivity({
@@ -55,6 +56,9 @@ const ActivityScreen = () => {
           <div>To</div>
           <div>Time</div>
         </div>
+        {!activities?.length && (
+          <p className="activities_loading">Loading...</p>
+        )}
         {activities?.map((activity) => {
           return <ActivityRow key={activity?.order?.id} activity={activity} />;
         })}

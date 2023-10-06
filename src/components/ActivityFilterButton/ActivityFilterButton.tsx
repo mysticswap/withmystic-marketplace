@@ -2,6 +2,7 @@ import { IconType } from "react-icons";
 import "./ActivityFilterButton.css";
 import Checkbox from "../Checkbox/Checkbox";
 import { useEffect, useState } from "react";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
 type Props = {
   activity: {
@@ -9,34 +10,31 @@ type Props = {
     icon: IconType;
     type: string;
   };
-  activities: string[];
-  setActivities: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-const ActivityFilterButton = ({
-  activity,
-  activities,
-  setActivities,
-}: Props) => {
-  const isSelectedActivity = activities.some((item) => {
+const ActivityFilterButton = ({ activity }: Props) => {
+  const { selectedActivities, setSelectedActivities } = useGlobalContext()!;
+
+  const isSelectedActivity = selectedActivities.some((item) => {
     return item == activity.type;
   });
 
   const [isClicked, setIsClicked] = useState(false);
 
   const toggleSelection = () => {
-    const updatedActivities = activities.filter((item) => {
+    const updatedActivities = selectedActivities.filter((item) => {
       return item !== activity.type;
     });
+
     isSelectedActivity
-      ? setActivities(updatedActivities)
-      : setActivities([...activities, activity.type]);
+      ? setSelectedActivities(updatedActivities)
+      : setSelectedActivities([...selectedActivities, activity.type]);
     setIsClicked(!isClicked);
   };
 
   useEffect(() => {
     isSelectedActivity && setIsClicked(true);
-  }, [activities]);
+  }, [selectedActivities]);
 
   return (
     <button className="activity_filter_button" onClick={toggleSelection}>

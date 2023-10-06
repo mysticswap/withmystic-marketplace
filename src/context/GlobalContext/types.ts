@@ -34,4 +34,6 @@ export type GlobalContextType = {
   setCollectionAttributes: React.Dispatch<
     React.SetStateAction<CollectionTraitsV2>
   >;
+  selectedActivities: string[];
+  setSelectedActivities: React.Dispatch<React.SetStateAction<string[]>>;
 };
