@@ -21,6 +21,7 @@ import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.ty
 import { NftOffers } from "../../types/reservoir-types/nft-offers.types";
 import { reservoirActivityTypes } from "../../constants";
 import { CollectionActivity as NftActivity } from "../../types/reservoir-types/collection-activity.types";
+import FlaggedWarning from "./Components/FlaggedWarning/FlaggedWarning";
 
 const NftPage = () => {
   const { collectionMetadata, chainId } = useGlobalContext()!;
@@ -69,6 +70,7 @@ const NftPage = () => {
 
   return (
     <>
+      {nftInfo.isFlagged && <FlaggedWarning />}
       <div className="nft_page_top">
         <section className="nft_page_section">
           <img className="nft_image" src={nftImage} alt="" />

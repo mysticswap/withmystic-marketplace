@@ -18,6 +18,9 @@
   --ms-mp-transparent-black: rgba(0, 0, 0, 0.5);
   --ms-mp-large-border-radius: 64px;
   --ms-mp-card-border-radius: 16px;
+  --ms-mp-red: #ed263e;
+  --ms-mp-red-light: rgba(237, 38, 62, 0.25);
+  --ms-mp-red-super-light: rgba(237, 38, 62, 0.1);
 }
 
 * {
