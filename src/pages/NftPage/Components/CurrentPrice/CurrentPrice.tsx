@@ -1,6 +1,7 @@
 import { Market } from "../../../../types/reservoir-types/collection-nfts.types";
 import "./CurrentPrice.css";
 import { SiOpensea } from "react-icons/si";
+import x2y2 from "../../../../assets/x2y2.png";
 
 type Props = { nftPriceData: Market };
 
@@ -21,7 +22,7 @@ const CurrentPrice = ({ nftPriceData }: Props) => {
         <span>Listed on</span>
         <a href={sourceLink}>
           {!source?.includes("opensea") ? (
-            <img src={source} alt="" />
+            <img src={source?.includes("x2y2") ? x2y2 : source} alt="" />
           ) : (
             <SiOpensea display="block" color="#3498db" size={20} />
           )}

@@ -56,7 +56,7 @@ const StatusFilters = () => {
       </button>
       <ul className="status_list" aria-expanded={showList}>
         <StatusListItem text="Buy now only" handleClick={handleBuyOnlyFilter} />
-        <StatusListItem text="Local listings only" />
+        {/* <StatusListItem text="Local listings only" /> */}
       </ul>
     </div>
   );

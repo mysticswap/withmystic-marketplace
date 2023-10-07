@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import CustomTooltip from "../CustomTooltip/CustomTooltip";
 import { SiOpensea } from "react-icons/si";
+import x2y2 from "../../assets/x2y2.png";
 
 type Props = { nft: TokenElement };
 
@@ -73,7 +74,10 @@ const NftCard = ({ nft }: Props) => {
       <div className="source_icon">
         <a href={sourceLink}>
           {!sourceLink?.includes("opensea") ? (
-            <img src={sourceIcon} alt="" />
+            <img
+              src={sourceLink?.includes("x2y2") ? x2y2 : sourceIcon}
+              alt=""
+            />
           ) : (
             <SiOpensea display="block" color="#3498db" size={20} />
           )}
