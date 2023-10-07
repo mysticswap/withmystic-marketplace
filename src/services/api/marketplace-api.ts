@@ -1,5 +1,5 @@
-import { BASE_API } from "../config";
-import { getQueryString } from "../utils";
+import { BASE_API } from "../../config";
+import { getQueryString } from "../../utils";
 
 const makeApiRequest = async (
   endpoint: string,

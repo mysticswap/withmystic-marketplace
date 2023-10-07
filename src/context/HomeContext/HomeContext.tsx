@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import { HomeContextType, SelectedTrait } from "./types";
-import { dropdownOptions } from "../../constants";
+import { defaultNumericFilters, dropdownOptions } from "../../constants";
 
 const HomeContext = createContext<HomeContextType | null>(null);
 
@@ -14,6 +14,7 @@ export const HomeContextProvider = ({ children }: Props) => {
     dropdownOptions[0]
   );
   const [isFetching, setIsFetching] = useState(false);
+  const [numericFilters, setNumericFilters] = useState(defaultNumericFilters);
 
   return (
     <HomeContext.Provider
@@ -28,6 +29,8 @@ export const HomeContextProvider = ({ children }: Props) => {
         setSelectedDropdownOption,
         isFetching,
         setIsFetching,
+        numericFilters,
+        setNumericFilters,
       }}
     >
       {children}

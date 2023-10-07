@@ -1,4 +1,4 @@
-import { marketplaceInstance } from "./axios";
+import { marketplaceInstance } from "../axios";
 
 export const getCollectionMetadata = async (
   chainId: number,

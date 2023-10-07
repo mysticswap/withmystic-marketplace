@@ -1,7 +1,7 @@
 import { IoSearchSharp } from "react-icons/io5";
 import "./ControlBarSearchInput.css";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
-import { getCollectionNftsV2 } from "../../services/marketplace-reservoir-api";
+import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-api";
 import { generateAttributeString } from "../../utils";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
 

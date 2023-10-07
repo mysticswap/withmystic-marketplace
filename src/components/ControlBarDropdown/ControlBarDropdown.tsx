@@ -4,7 +4,7 @@ import "./ControlBarDropdown.css";
 import { BsCheck } from "react-icons/bs";
 import { useEffect, useRef, useState } from "react";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
-import { getCollectionNftsV2 } from "../../services/marketplace-reservoir-api";
+import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-api";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { generateAttributeString } from "../../utils";
 import { collectionContract } from "../../config";

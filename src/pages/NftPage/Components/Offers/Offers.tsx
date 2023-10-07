@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { NftOffers } from "../../../../types/reservoir-types/nft-offers.types";
 import { truncateAddress } from "../../../../utils";
 import "./Offers.css";
-import { getNftOffers } from "../../../../services/marketplace-reservoir-api";
+import { getNftOffers } from "../../../../services/api/marketplace-reservoir-api";
 import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
 import { collectionContract } from "../../../../config";
 import { useState } from "react";

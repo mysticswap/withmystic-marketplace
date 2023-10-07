@@ -6,7 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { getUserBalance } from "../../services/marketplace-api";
+import { getUserBalance } from "../../services/api/marketplace-api";
 import { API_KEY, collectionContract } from "../../config";
 import { ethers } from "ethers";
 import { metamaskPresent } from "../../utils";
@@ -16,7 +16,7 @@ import {
   getCollectionMetadata,
   getCollectionNftsV2,
   getCollectionTraitsV2,
-} from "../../services/marketplace-reservoir-api";
+} from "../../services/api/marketplace-reservoir-api";
 import { CollectionMetadataV2 } from "../../types/reservoir-types/collection-metadata.types";
 import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.types";
 import { reservoirActivityTypes, tabOptions } from "../../constants";

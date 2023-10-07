@@ -40,3 +40,9 @@
   padding: 0;
   margin-top: 0;
 }
+
+.numeric_input_error {
+  color: var(--ms-mp-red);
+  text-align: center;
+  font-size: 13px;
+}

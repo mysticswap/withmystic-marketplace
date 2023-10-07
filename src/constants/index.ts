@@ -35,3 +35,10 @@ export const activityButtons = [
   { activity: "Transfer", icon: FaMoneyBillTransfer, type: "transfer" },
   { activity: "Mint", icon: IoSparklesSharp, type: "mint" },
 ];
+
+export const defaultNumericFilters = {
+  minRarityRank: "",
+  maxRarityRank: "",
+  minFloorAskPrice: "",
+  maxFloorAskPrice: "",
+};

@@ -6,7 +6,7 @@ import { CollectionActivity as NftActivity } from "../../../../types/reservoir-t
 import { activityRenames, reservoirActivityTypes } from "../../../../constants";
 import { ActivityRowAddress } from "../../../../components/ActivityRow/ActivityRow";
 import { useState } from "react";
-import { getNftActivity } from "../../../../services/marketplace-reservoir-api";
+import { getNftActivity } from "../../../../services/api/marketplace-reservoir-api";
 import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
 
 type Props = {

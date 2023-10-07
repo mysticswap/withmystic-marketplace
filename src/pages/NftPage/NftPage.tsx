@@ -16,7 +16,7 @@ import {
   getNftActivity,
   getNftOffers,
   getSingleNftV2,
-} from "../../services/marketplace-reservoir-api";
+} from "../../services/api/marketplace-reservoir-api";
 import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.types";
 import { NftOffers } from "../../types/reservoir-types/nft-offers.types";
 import { reservoirActivityTypes } from "../../constants";

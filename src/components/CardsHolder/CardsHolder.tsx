@@ -6,7 +6,7 @@ import SelectedFilter from "../SelectedFilter/SelectedFilter";
 import { useEffect, useRef, useState } from "react";
 import { collectionContract } from "../../config";
 import { BiLoaderCircle } from "react-icons/bi";
-import { getCollectionNftsV2 } from "../../services/marketplace-reservoir-api";
+import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-api";
 import { generateAttributeString } from "../../utils";
 
 const CardsHolder = () => {

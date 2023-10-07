@@ -4,7 +4,7 @@ import "./ActivityScreen.css";
 import ActivityRow from "../ActivityRow/ActivityRow";
 import SolidButton from "../SolidButton/SolidButton";
 import { BiLoaderCircle } from "react-icons/bi";
-import { getCollectionActivity } from "../../services/marketplace-reservoir-api";
+import { getCollectionActivity } from "../../services/api/marketplace-reservoir-api";
 import FiltersSidebar from "../FiltersSidebar/FiltersSidebar";
 
 const ActivityScreen = () => {

@@ -11,6 +11,8 @@ export type HomeContextType = {
   >;
   isFetching: boolean;
   setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
+  numericFilters: NumericFiltersType;
+  setNumericFilters: React.Dispatch<React.SetStateAction<NumericFiltersType>>;
 };
 
 export type SelectedTrait = { type: string; value: string };
@@ -18,4 +20,10 @@ export type DropdownOption = {
   title: string;
   value: string;
   order: string;
+};
+export type NumericFiltersType = {
+  minRarityRank: string;
+  maxRarityRank: string;
+  minFloorAskPrice: string;
+  maxFloorAskPrice: string;
 };
