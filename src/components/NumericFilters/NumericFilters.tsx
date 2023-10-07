@@ -3,6 +3,10 @@ import "./NumericFilters.css";
 import { RiArrowUpSLine } from "react-icons/ri";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import { NumericFiltersType } from "../../context/HomeContext/types";
+import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-api";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
+import { collectionContract } from "../../config";
+import { generateAttributeString } from "../../utils";
 
 type Props = {
   title: string;
@@ -10,7 +14,14 @@ type Props = {
 };
 
 const NumericFilters = ({ title, isRarity }: Props) => {
-  const { numericFilters, setNumericFilters } = useHomeContext()!;
+  const { chainId, setCollectionNfts } = useGlobalContext()!;
+  const {
+    numericFilters,
+    setNumericFilters,
+    selectedDropdownOption,
+    setIsFetching,
+    selectedTraits,
+  } = useHomeContext()!;
   const { minFloorAskPrice, maxFloorAskPrice, minRarityRank, maxRarityRank } =
     numericFilters;
   const [showList, setShowlist] = useState(false);
@@ -18,19 +29,39 @@ const NumericFilters = ({ title, isRarity }: Props) => {
 
   const handleChange = (isMin: boolean, valueUpdate: string) => {
     let updatedValues: NumericFiltersType;
-    setShowError(isNaN(Number(valueUpdate)));
+    const inputIsNotNumber = isNaN(Number(valueUpdate));
+    setShowError(inputIsNotNumber);
+    const attribute = generateAttributeString(selectedTraits);
 
-    if (isRarity) {
-      updatedValues = isMin
-        ? { ...numericFilters, minRarityRank: valueUpdate }
-        : { ...numericFilters, maxRarityRank: valueUpdate };
-    } else {
-      updatedValues = isMin
-        ? { ...numericFilters, minFloorAskPrice: valueUpdate }
-        : { ...numericFilters, maxFloorAskPrice: valueUpdate };
+    if (!inputIsNotNumber) {
+      setIsFetching(true);
+
+      if (isRarity) {
+        updatedValues = isMin
+          ? { ...numericFilters, minRarityRank: valueUpdate }
+          : { ...numericFilters, maxRarityRank: valueUpdate };
+      } else {
+        updatedValues = isMin
+          ? { ...numericFilters, minFloorAskPrice: valueUpdate }
+          : { ...numericFilters, maxFloorAskPrice: valueUpdate };
+      }
+
+      setNumericFilters(updatedValues);
+      setCollectionNfts({ tokens: [], continuation: null });
+      getCollectionNftsV2(
+        chainId,
+        selectedDropdownOption.value,
+        selectedDropdownOption.order,
+        collectionContract,
+        undefined,
+        attribute,
+        undefined,
+        updatedValues
+      ).then((result) => {
+        setCollectionNfts(result);
+        setIsFetching(false);
+      });
     }
-
-    setNumericFilters(updatedValues);
   };
 
   return (

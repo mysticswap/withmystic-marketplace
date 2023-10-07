@@ -19,6 +19,7 @@ const CardsHolder = () => {
     isFetching,
     selectedDropdownOption,
     setIsFetching,
+    numericFilters,
   } = useHomeContext()!;
 
   const [nftsTemp, setNftsTemp] = useState(collectionNfts.tokens);
@@ -70,7 +71,9 @@ const CardsHolder = () => {
         selectedDropdownOption.order,
         collectionContract,
         collectionNfts.continuation,
-        attributeString
+        attributeString,
+        undefined,
+        numericFilters
       )
         .then((result) => {
           setCollectionNfts({
@@ -94,7 +97,9 @@ const CardsHolder = () => {
       selectedDropdownOption.order,
       collectionContract,
       undefined,
-      attributeString
+      attributeString,
+      undefined,
+      numericFilters
     ).then((result) => {
       setCollectionNfts(result);
       setIsFetching(false);

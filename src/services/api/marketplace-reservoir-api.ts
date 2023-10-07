@@ -1,3 +1,4 @@
+import { NumericFiltersType } from "../../context/HomeContext/types";
 import { marketplaceInstance } from "../axios";
 
 export const getCollectionMetadata = async (
@@ -17,7 +18,8 @@ export const getCollectionNftsV2 = async (
   contractAddress?: string,
   continuation?: string,
   attributes?: string,
-  tokens?: string
+  tokens?: string,
+  numericFilters?: NumericFiltersType
 ) => {
   const request = await marketplaceInstance.get("get-nfts-v2", {
     params: {
@@ -28,6 +30,7 @@ export const getCollectionNftsV2 = async (
       ...(continuation && { continuation }),
       ...(attributes && { attributes }),
       ...(tokens && { tokens }),
+      ...(numericFilters && { numericFilters }),
     },
   });
   return request.data;

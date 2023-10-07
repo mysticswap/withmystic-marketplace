@@ -17,6 +17,7 @@ const ControlBarDropdown = () => {
     setSelectedDropdownOption,
     selectedTraits,
     setIsFetching,
+    numericFilters,
   } = useHomeContext()!;
 
   const dropdownRef = useRef(null);
@@ -40,7 +41,8 @@ const ControlBarDropdown = () => {
       collectionContract,
       undefined,
       undefined,
-      attribute
+      attribute,
+      numericFilters
     )
       .then((result) => setCollectionNfts(result))
       .finally(() => {

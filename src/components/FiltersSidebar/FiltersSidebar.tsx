@@ -15,8 +15,8 @@ const FiltersSidebar = ({ isForTraits }: Props) => {
       {isForTraits ? (
         <>
           <StatusFilters />
-          <NumericFilters title="Price" isRarity={true} />
-          <NumericFilters title="Rarity Rank" isRarity={false} />
+          <NumericFilters title="Price" isRarity={false} />
+          <NumericFilters title="Rarity Rank" isRarity={true} />
           {collectionAttributes?.attributes?.map((attribute) => {
             return <TraitFilter key={attribute.key} attribute={attribute} />;
           })}
