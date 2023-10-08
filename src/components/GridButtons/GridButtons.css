@@ -27,3 +27,9 @@
 .grid_buttons button:hover {
   background-color: var(--ms-mp-gray);
 }
+
+@media screen and (max-width: 820px) {
+  .grid_buttons {
+    width: 15%;
+  }
+}

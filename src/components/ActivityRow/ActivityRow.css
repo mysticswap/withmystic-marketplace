@@ -61,3 +61,9 @@
     width: 100vw;
   }
 }
+
+@media screen and (max-width: 1024px) {
+  .activity_row {
+    font-size: 14px;
+  }
+}
