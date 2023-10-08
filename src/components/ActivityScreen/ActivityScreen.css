@@ -48,3 +48,14 @@
 .activities_loading {
   text-align: center;
 }
+
+@media screen and (max-width: 1024px) {
+  .activity_screen {
+    width: calc(100% - 320px);
+    overflow-x: auto;
+  }
+
+  .sales_table_head {
+    width: 100vw;
+  }
+}

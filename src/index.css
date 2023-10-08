@@ -98,3 +98,13 @@ a {
   display: block;
   color: unset;
 }
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+@media screen and (max-width: 1024px) {
+  .modal_content {
+    width: 60%;
+  }
+}

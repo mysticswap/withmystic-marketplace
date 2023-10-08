@@ -55,3 +55,9 @@
 .activity_row > div:is(:nth-of-type(4), :nth-of-type(5), :last-of-type):hover {
   color: var(--ms-mp-blue-2);
 }
+
+@media screen and (max-width: 1024px) {
+  .activity_row {
+    width: 100vw;
+  }
+}

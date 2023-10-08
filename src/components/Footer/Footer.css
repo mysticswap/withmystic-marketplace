@@ -53,3 +53,14 @@ footer {
 .socials svg:hover {
   opacity: 0.5;
 }
+
+@media screen and (max-width: 1024px) {
+  .footer_links_holder {
+    width: auto;
+    gap: 1.5rem;
+  }
+
+  .footer_links_holder > div {
+    gap: 0rem;
+  }
+}

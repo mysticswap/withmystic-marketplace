@@ -2,12 +2,8 @@
   padding: 0.75rem;
   display: grid;
   gap: 1rem;
-  /* min-height: calc(100vh - 48px - 48px); */
   max-height: calc(100vh - 48px - 48px);
   overflow-y: auto;
-  /* border-left: var(--ms-mp-gray-border); */
-  /* grid-template-rows: minmax(auto, 282.2px); */
-  /* position: relative; */
 }
 
 .cards_holder::-webkit-scrollbar {
@@ -71,4 +67,10 @@
   text-align: center;
   grid-column: 1 / -1;
   font-size: 25px;
+}
+
+@media screen and (max-width: 1024px) {
+  .cards_holder {
+    width: calc(100% - 320px);
+  }
 }
