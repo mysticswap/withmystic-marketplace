@@ -45,3 +45,13 @@
 .more_offers_btn:hover {
   color: var(--ms-mp-blue);
 }
+
+@media screen and (max-width: 820px) {
+  .offers_table {
+    overflow-x: auto;
+  }
+
+  .offers_table > div {
+    width: 120%;
+  }
+}

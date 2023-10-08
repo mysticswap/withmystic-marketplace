@@ -108,3 +108,9 @@ a {
     width: 60%;
   }
 }
+
+@media screen and (max-width: 820px) {
+  .modal_content {
+    width: 75%;
+  }
+}
