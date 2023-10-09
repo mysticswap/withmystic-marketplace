@@ -36,3 +36,9 @@
     width: 35%;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .control_bar_search {
+    width: 100%;
+  }
+}

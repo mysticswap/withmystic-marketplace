@@ -5,3 +5,27 @@
   width: 95%;
   margin: 1rem auto;
 }
+
+.control_bar button {
+  color: unset;
+}
+
+@media screen and (max-width: 600px) {
+  .control_bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .control_bar > .control_bar_search {
+    grid-column: 2/4;
+  }
+
+  .control_bar > .filter_button {
+    grid-column: 1/2;
+  }
+
+  .control_bar > .control_dropdown_parent {
+    grid-column: 1/-1;
+  }
+}
