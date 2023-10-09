@@ -96,3 +96,17 @@
     width: 60%;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .banner_details h1 {
+    text-align: center;
+  }
+
+  .collection_pill {
+    width: 80%;
+  }
+
+  .pill_item p {
+    font-size: 13px;
+  }
+}
