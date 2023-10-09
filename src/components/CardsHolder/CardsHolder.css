@@ -74,3 +74,17 @@
     width: calc(100% - 320px);
   }
 }
+
+@media screen and (max-width: 600px) {
+  .small_cards_holder {
+    width: 100%;
+  }
+
+  .small_cards_holder_minmax_v1 {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .small_cards_holder_minmax_v2 {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}

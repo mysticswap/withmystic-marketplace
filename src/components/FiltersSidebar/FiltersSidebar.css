@@ -15,3 +15,16 @@
     width: 320px;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .filters_sidebar {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    background-color: white;
+    min-height: 100vh;
+    max-height: 100vh;
+    z-index: 1;
+    transform: translateX(-100%);
+  }
+}
