@@ -41,4 +41,8 @@
   .control_bar_search {
     width: 100%;
   }
+
+  .control_bar_search input::placeholder {
+    font-size: 14px;
+  }
 }
