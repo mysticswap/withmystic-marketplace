@@ -59,3 +59,13 @@
     width: 100vw;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .activity_screen {
+    width: 100%;
+  }
+
+  .sales_table_head {
+    width: 230%;
+  }
+}

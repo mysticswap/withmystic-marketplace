@@ -60,10 +60,14 @@
   .activity_row {
     width: 100vw;
   }
-}
 
-@media screen and (max-width: 1024px) {
   .activity_row {
     font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .activity_row {
+    width: 230%;
   }
 }
