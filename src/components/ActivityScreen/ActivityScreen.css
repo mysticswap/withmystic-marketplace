@@ -80,6 +80,8 @@
     border-radius: 8px;
     cursor: pointer;
     transition: var(--ms-mp-transition);
+    font-size: 14px;
+    font-weight: 500;
   }
 
   .mobile_activity_filter_button:active {
