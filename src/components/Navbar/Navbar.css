@@ -15,6 +15,12 @@
   gap: 1.5rem;
 }
 
+.nav_main_contents {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
 .logo_holder {
   max-width: 150px;
 }
@@ -41,4 +47,32 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+}
+
+@media screen and (max-width: 600px) {
+  .connect_and_menu {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .logo_holder {
+    max-width: 100px;
+  }
+
+  .burger_btn {
+    cursor: pointer;
+  }
+
+  .nav_main_contents {
+    position: fixed;
+    background-color: rgba(255, 192, 203, 1);
+    width: 100%;
+    top: 6rem;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
 }

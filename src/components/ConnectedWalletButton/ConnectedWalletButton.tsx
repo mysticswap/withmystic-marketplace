@@ -4,6 +4,7 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { truncateAddress } from "../../utils";
 import { useRef, useState } from "react";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 const ConnectedWalletButton = () => {
   const { user, setUser } = useGlobalContext()!;
@@ -12,7 +13,7 @@ const ConnectedWalletButton = () => {
   const logoutUser = () => {
     setUser(null);
   };
-
+  const isMobile = useIsMobile();
   useOutsideClick(logoutRef, setLogout, "connected_wallet_button");
 
   return (
@@ -21,7 +22,7 @@ const ConnectedWalletButton = () => {
         className="connected_wallet_button"
         onClick={() => setLogout(!logout)}
       >
-        {truncateAddress(user!, 5, "...")}
+        {truncateAddress(user!, isMobile ? 2 : 5, "...")}
         <RiArrowDownSLine size={20} />
       </button>
 
