@@ -15,7 +15,7 @@ export const HomeContextProvider = ({ children }: Props) => {
   );
   const [isFetching, setIsFetching] = useState(false);
   const [numericFilters, setNumericFilters] = useState(defaultNumericFilters);
-  const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [showMobileFilters, setShowMobileFilters] = useState(true);
 
   return (
     <HomeContext.Provider

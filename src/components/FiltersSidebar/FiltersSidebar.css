@@ -10,6 +10,10 @@
   display: none;
 }
 
+.filters_header {
+  display: none;
+}
+
 @media screen and (max-width: 1024px) {
   .filters_sidebar {
     width: 320px;
@@ -28,10 +32,24 @@
     transform: translateX(-100%);
     transition: var(--ms-mp-transition);
     padding: 0.75rem;
+    padding-top: 0;
     box-sizing: border-box;
   }
 
   .show_sidebar {
     transform: translateX(0);
+  }
+
+  .filters_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background-color: white;
+  }
+
+  .filters_header p {
+    font-size: 20px;
   }
 }
