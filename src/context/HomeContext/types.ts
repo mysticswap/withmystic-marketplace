@@ -13,6 +13,8 @@ export type HomeContextType = {
   setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
   numericFilters: NumericFiltersType;
   setNumericFilters: React.Dispatch<React.SetStateAction<NumericFiltersType>>;
+  showMobileFilters: boolean;
+  setShowMobileFilters: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type SelectedTrait = { type: string; value: string };

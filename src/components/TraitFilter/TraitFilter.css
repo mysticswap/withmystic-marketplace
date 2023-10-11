@@ -62,3 +62,9 @@
 .trait_container .status_list_item small {
   font-size: 12px;
 }
+
+@media screen and (max-width: 600px) {
+  .trait_filter {
+    padding: 0.75rem 0 0.75rem 0;
+  }
+}

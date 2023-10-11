@@ -4,14 +4,18 @@ import NumericFilters from "../NumericFilters/NumericFilters";
 import TraitFilter from "../TraitFilter/TraitFilter";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import ActivityFilters from "../ActivityFilters/ActivityFilters";
+import { useHomeContext } from "../../context/HomeContext/HomeContext";
 
 type Props = { isForTraits: boolean };
 
 const FiltersSidebar = ({ isForTraits }: Props) => {
   const { collectionAttributes } = useGlobalContext()!;
+  const { showMobileFilters } = useHomeContext()!;
 
   return (
-    <div className="filters_sidebar">
+    <div
+      className={`filters_sidebar ${showMobileFilters ? "show_sidebar" : ""}`}
+    >
       {isForTraits ? (
         <>
           <StatusFilters />

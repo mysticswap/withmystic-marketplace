@@ -26,5 +26,12 @@
     max-height: 100vh;
     z-index: 1;
     transform: translateX(-100%);
+    transition: var(--ms-mp-transition);
+    padding: 0.75rem;
+    box-sizing: border-box;
+  }
+
+  .show_sidebar {
+    transform: translateX(0);
   }
 }
