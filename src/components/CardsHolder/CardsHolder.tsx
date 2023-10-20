@@ -10,10 +10,10 @@ import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-ap
 import { generateAttributeString } from "../../utils";
 
 const CardsHolder = () => {
-  const { chainId, collectionNfts, setCollectionNfts } = useGlobalContext()!;
+  const { chainId, collectionNfts, setCollectionNfts, minimalCards } =
+    useGlobalContext()!;
   const {
     showFilters,
-    minimalCards,
     selectedTraits,
     setSelectedTraits,
     isFetching,

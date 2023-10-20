@@ -18,6 +18,8 @@ export type GlobalContextType = {
   setUserBalance: React.Dispatch<React.SetStateAction<{ [x: string]: string }>>;
   currentTab: string;
   setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
+  minimalCards: boolean;
+  setMinimalCards: React.Dispatch<React.SetStateAction<boolean>>;
 
   // reservoir
 

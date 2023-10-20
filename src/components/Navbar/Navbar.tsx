@@ -6,16 +6,19 @@ import {
 } from "react-icons/ri";
 import SolidButton from "../SolidButton/SolidButton";
 import { Link, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { scrollToTop } from "../../utils";
 import { connectWallets } from "../../services/web3Onboard";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import ConnectedWalletButton from "../ConnectedWalletButton/ConnectedWalletButton";
+import UserNftsModal from "../UserNftsModal/UserNftsModal";
 
 const Navbar = () => {
   const { setProvider, user, collectionMetadata, userNfts } =
     useGlobalContext()!;
   const location = useLocation();
+
+  const [showNftsModal, setShowNftsModal] = useState(false);
 
   const userHasNfts = userNfts?.tokens?.length > 0 && user;
 
@@ -64,6 +67,8 @@ const Navbar = () => {
           <ConnectedWalletButton />
         )}
       </section>
+
+      <UserNftsModal />
     </nav>
   );
 };

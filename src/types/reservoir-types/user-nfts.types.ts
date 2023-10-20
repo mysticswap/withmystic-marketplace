@@ -1,9 +1,9 @@
 export interface UserNfts {
-  tokens: TokenElement[];
+  tokens: UserTokenElement[];
   continuation: null | string;
 }
 
-export interface TokenElement {
+export interface UserTokenElement {
   token: TokenToken;
   ownership: Ownership;
 }

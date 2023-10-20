@@ -56,6 +56,7 @@ export const GlobalContextProvider = ({ children }: Props) => {
 
   const [userBalance, setUserBalance] = useState({});
   const [userNfts, setUserNfts] = useState({} as UserNfts);
+  const [minimalCards, setMinimalCards] = useState(true);
 
   const defaultSort = "floorAskPrice";
   const defaultSortby = "asc";
@@ -212,6 +213,8 @@ export const GlobalContextProvider = ({ children }: Props) => {
         setSelectedActivities,
         userNfts,
         setUserNfts,
+        minimalCards,
+        setMinimalCards,
       }}
     >
       {children}

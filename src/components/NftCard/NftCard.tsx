@@ -2,15 +2,15 @@ import "./NftCard.css";
 import { Link } from "react-router-dom";
 import { TokenElement } from "../../types/reservoir-types/collection-nfts.types";
 import { useEffect, useRef, useState } from "react";
-import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import CustomTooltip from "../CustomTooltip/CustomTooltip";
 import { SiOpensea } from "react-icons/si";
 import x2y2 from "../../assets/x2y2.png";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
 type Props = { nft: TokenElement };
 
 const NftCard = ({ nft }: Props) => {
-  const { minimalCards } = useHomeContext()!;
+  const { minimalCards } = useGlobalContext()!;
 
   const nameRef = useRef(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
