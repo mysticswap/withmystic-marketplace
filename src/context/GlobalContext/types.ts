@@ -3,6 +3,7 @@ import { CollectionMetadataV2 } from "../../types/reservoir-types/collection-met
 import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.types";
 import { CollectionActivity } from "../../types/reservoir-types/collection-activity.types";
 import { CollectionTraitsV2 } from "../../types/reservoir-types/collection-traits.types";
+import { UserNfts } from "../../types/reservoir-types/user-nfts.types";
 
 export type GlobalContextType = {
   user: string | null;
@@ -13,8 +14,8 @@ export type GlobalContextType = {
   >;
   chainId: number;
   setChainId: React.Dispatch<React.SetStateAction<number>>;
-  userBalance: number;
-  setUserBalance: React.Dispatch<React.SetStateAction<number>>;
+  userBalance: { [x: string]: string };
+  setUserBalance: React.Dispatch<React.SetStateAction<{ [x: string]: string }>>;
   currentTab: string;
   setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
 
@@ -36,4 +37,6 @@ export type GlobalContextType = {
   >;
   selectedActivities: string[];
   setSelectedActivities: React.Dispatch<React.SetStateAction<string[]>>;
+  userNfts: UserNfts;
+  setUserNfts: React.Dispatch<React.SetStateAction<UserNfts>>;
 };

@@ -33,6 +33,11 @@ export const convertDecimalsToReadableNumbers = (
   return result || 0;
 };
 
+export const convertTokenAmountToDecimal = (amount: number) => {
+  return amount * Math.pow(10, 18);
+  // might need to change 18 to dynamic figure
+};
+
 export const metamaskPresent = () => {
   var ethereum = window.ethereum;
   return typeof ethereum !== "undefined" && window.ethereum.isMetaMask;

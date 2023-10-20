@@ -42,3 +42,10 @@
   align-items: center;
   cursor: pointer;
 }
+
+.sell_button {
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}

@@ -13,8 +13,11 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import ConnectedWalletButton from "../ConnectedWalletButton/ConnectedWalletButton";
 
 const Navbar = () => {
-  const { setProvider, user, collectionMetadata } = useGlobalContext()!;
+  const { setProvider, user, collectionMetadata, userNfts } =
+    useGlobalContext()!;
   const location = useLocation();
+
+  const userHasNfts = userNfts?.tokens?.length > 0 && user;
 
   const discordUrl = collectionMetadata?.collections[0].discordUrl;
   const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
@@ -51,6 +54,8 @@ const Navbar = () => {
         <div className="collections_dropdown">
           Collections <RiArrowDownSLine />
         </div>
+
+        {userHasNfts && <button className="sell_button">Sell</button>}
       </section>
       <section>
         {!user ? (

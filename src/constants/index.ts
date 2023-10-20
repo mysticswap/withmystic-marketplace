@@ -1,6 +1,7 @@
 import { BsFillCartFill, BsTagFill } from "react-icons/bs";
 import { FaMoneyBillTransfer, FaRectangleList } from "react-icons/fa6";
 import { IoSparklesSharp } from "react-icons/io5";
+import { addDays, addHours, addMonths } from "../utils/date-utils";
 
 export const reservoirActivityTypes = JSON.stringify([
   "sale",
@@ -41,4 +42,21 @@ export const defaultNumericFilters = {
   maxRarityRank: "",
   minFloorAskPrice: "",
   maxFloorAskPrice: "",
+};
+
+export const durationOptions = [
+  { title: "1 Hour", time: addHours(1) },
+  { title: "12 Hours", time: addHours(12) },
+  { title: "1 Day", time: addDays(1) },
+  { title: "3 Days", time: addDays(3) },
+  { title: "1 Week", time: addDays(7) },
+  { title: "1 Month", time: addMonths(1) },
+  { title: "3 Months", time: addMonths(3) },
+  { title: "6 Months", time: addMonths(6) },
+];
+
+export const wethAddresses: { [x: number]: string } = {
+  1: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+  5: "0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6",
+  137: "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
 };

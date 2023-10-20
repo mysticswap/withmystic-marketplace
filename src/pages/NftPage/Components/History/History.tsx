@@ -47,11 +47,11 @@ const History = ({ nftActivity, token, setNftActivity }: Props) => {
           <p>Time</p>
         </div>
         <div>
-          {nftActivity?.activities?.map((activity) => {
+          {nftActivity?.activities?.map((activity, index) => {
             const timeStamp = dayjs(activity.timestamp * 1000).fromNow();
             const fullTime = dayjs(activity.timestamp * 1000).toString();
             return (
-              <div key={activity?.order?.id} className="history_row">
+              <div key={activity?.order?.id * index} className="history_row">
                 <p>{activityRenames[activity.type]}</p>
                 <p>
                   {activity.price.amount.decimal}{" "}

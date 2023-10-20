@@ -16,12 +16,14 @@ import {
   getCollectionMetadata,
   getCollectionNftsV2,
   getCollectionTraitsV2,
+  getUserNfts,
 } from "../../services/api/marketplace-reservoir-api";
 import { CollectionMetadataV2 } from "../../types/reservoir-types/collection-metadata.types";
 import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.types";
 import { reservoirActivityTypes, tabOptions } from "../../constants";
 import { CollectionActivity } from "../../types/reservoir-types/collection-activity.types";
 import { CollectionTraitsV2 } from "../../types/reservoir-types/collection-traits.types";
+import { UserNfts } from "../../types/reservoir-types/user-nfts.types";
 
 declare global {
   interface Window {
@@ -52,7 +54,8 @@ export const GlobalContextProvider = ({ children }: Props) => {
   );
   const [selectedActivities, setSelectedActivities] = useState(["sale"]);
 
-  const [userBalance, setUserBalance] = useState(0);
+  const [userBalance, setUserBalance] = useState({});
+  const [userNfts, setUserNfts] = useState({} as UserNfts);
 
   const defaultSort = "floorAskPrice";
   const defaultSortby = "asc";
@@ -170,8 +173,16 @@ export const GlobalContextProvider = ({ children }: Props) => {
 
   useEffect(() => {
     if (user) {
+      getUserNfts(chainId, user, collectionContract).then((result) => {
+        setUserNfts(result);
+      });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
       getUserBalance(user!, chainId, API_KEY).then((result) => {
-        setUserBalance(Number(result));
+        setUserBalance(result);
       });
     }
   }, [user, chainId]);
@@ -199,6 +210,8 @@ export const GlobalContextProvider = ({ children }: Props) => {
         setCollectionAttributes,
         selectedActivities,
         setSelectedActivities,
+        userNfts,
+        setUserNfts,
       }}
     >
       {children}

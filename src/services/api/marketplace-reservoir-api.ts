@@ -86,3 +86,20 @@ export const getNftActivity = async (
   });
   return request.data;
 };
+
+export const getUserNfts = async (
+  chainId: number,
+  user: string,
+  collection: string,
+  continuation?: string
+) => {
+  const request = await marketplaceInstance("get-user-nfts", {
+    params: {
+      user,
+      chainId,
+      collection,
+      ...(continuation && { continuation }),
+    },
+  });
+  return request.data;
+};
