@@ -16,6 +16,7 @@ import { ListOrOfferType } from "../../types/market-schemas.types";
 import { useNftPageContext } from "../../context/NftPageContext/NftPageContext";
 import { collectionContract } from "../../config";
 import { handleCreateOffer } from "../../services/seaport";
+import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 
 type Props = {
   isOffer: boolean;
@@ -30,7 +31,8 @@ const OfferOrListingModal = ({
   nftMarketInfo,
   setShowOfferOrListingModal,
 }: Props) => {
-  const { userBalance, user, chainId } = useGlobalContext()!;
+  const { user, chainId } = useConnectionContext()!;
+  const { userBalance } = useGlobalContext()!;
   const { nftInfo } = useNftPageContext()!;
   const dropdownRef = useRef(null);
   const nftData = extractMetadata(nft, nftMarketInfo);

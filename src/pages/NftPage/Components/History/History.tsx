@@ -7,7 +7,7 @@ import { activityRenames, reservoirActivityTypes } from "../../../../constants";
 import { ActivityRowAddress } from "../../../../components/ActivityRow/ActivityRow";
 import { useState } from "react";
 import { getNftActivity } from "../../../../services/api/marketplace-reservoir-api";
-import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
+import { useConnectionContext } from "../../../../context/ConnectionContext/ConnectionContext";
 
 type Props = {
   nftActivity: NftActivity;
@@ -16,7 +16,7 @@ type Props = {
 };
 
 const History = ({ nftActivity, token, setNftActivity }: Props) => {
-  const { chainId } = useGlobalContext()!;
+  const { chainId } = useConnectionContext()!;
   const [isFetching, setIsFetching] = useState(false);
   const fetchMoreActivity = () => {
     setIsFetching(true);
@@ -51,7 +51,10 @@ const History = ({ nftActivity, token, setNftActivity }: Props) => {
             const timeStamp = dayjs(activity.timestamp * 1000).fromNow();
             const fullTime = dayjs(activity.timestamp * 1000).toString();
             return (
-              <div key={activity?.order?.id * index} className="history_row">
+              <div
+                key={Number(activity?.order?.id) * index}
+                className="history_row"
+              >
                 <p>{activityRenames[activity.type]}</p>
                 <p>
                   {activity.price.amount.decimal}{" "}

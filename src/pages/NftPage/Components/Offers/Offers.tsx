@@ -3,9 +3,9 @@ import { NftOffers } from "../../../../types/reservoir-types/nft-offers.types";
 import { truncateAddress } from "../../../../utils";
 import "./Offers.css";
 import { getNftOffers } from "../../../../services/api/marketplace-reservoir-api";
-import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
 import { collectionContract } from "../../../../config";
 import { useState } from "react";
+import { useConnectionContext } from "../../../../context/ConnectionContext/ConnectionContext";
 
 type Props = {
   nftOffers: NftOffers;
@@ -14,7 +14,7 @@ type Props = {
 };
 
 const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
-  const { chainId } = useGlobalContext()!;
+  const { chainId } = useConnectionContext()!;
   const [isFetching, setIsFetching] = useState(false);
   const token = `${collectionContract}:${tokenId}`;
 

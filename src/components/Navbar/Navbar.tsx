@@ -11,14 +11,14 @@ import { scrollToTop } from "../../utils";
 import { connectWallets } from "../../services/web3Onboard";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import ConnectedWalletButton from "../ConnectedWalletButton/ConnectedWalletButton";
-import UserNftsModal from "../UserNftsModal/UserNftsModal";
+import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 
 const Navbar = () => {
-  const { setProvider, user, collectionMetadata, userNfts } =
-    useGlobalContext()!;
+  const { setProvider, user } = useConnectionContext()!;
+  const { collectionMetadata, userNfts } = useGlobalContext()!;
   const location = useLocation();
 
-  const [showNftsModal, setShowNftsModal] = useState(false);
+  // const [showNftsModal, setShowNftsModal] = useState(false);
 
   const userHasNfts = userNfts?.tokens?.length > 0 && user;
 
@@ -68,7 +68,7 @@ const Navbar = () => {
         )}
       </section>
 
-      <UserNftsModal />
+      {/* <UserNftsModal /> */}
     </nav>
   );
 };

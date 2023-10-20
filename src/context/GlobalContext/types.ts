@@ -1,4 +1,3 @@
-import { ethers } from "ethers";
 import { CollectionMetadataV2 } from "../../types/reservoir-types/collection-metadata.types";
 import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.types";
 import { CollectionActivity } from "../../types/reservoir-types/collection-activity.types";
@@ -6,14 +5,14 @@ import { CollectionTraitsV2 } from "../../types/reservoir-types/collection-trait
 import { UserNfts } from "../../types/reservoir-types/user-nfts.types";
 
 export type GlobalContextType = {
-  user: string | null;
-  setUser: React.Dispatch<React.SetStateAction<string | null>>;
-  provider: ethers.providers.Web3Provider | null;
-  setProvider: React.Dispatch<
-    React.SetStateAction<ethers.providers.Web3Provider | null>
-  >;
-  chainId: number;
-  setChainId: React.Dispatch<React.SetStateAction<number>>;
+  // user: string | null;
+  // setUser: React.Dispatch<React.SetStateAction<string | null>>;
+  // provider: ethers.providers.Web3Provider | null;
+  // setProvider: React.Dispatch<
+  //   React.SetStateAction<ethers.providers.Web3Provider | null>
+  // >;
+  // chainId: number;
+  // setChainId: React.Dispatch<React.SetStateAction<number>>;
   userBalance: { [x: string]: string };
   setUserBalance: React.Dispatch<React.SetStateAction<{ [x: string]: string }>>;
   currentTab: string;

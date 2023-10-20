@@ -9,9 +9,11 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { generateAttributeString } from "../../utils";
 import { collectionContract } from "../../config";
 import { dropdownOptions } from "../../constants";
+import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 
 const ControlBarDropdown = () => {
-  const { chainId, setCollectionNfts } = useGlobalContext()!;
+  const { chainId } = useConnectionContext()!;
+  const { setCollectionNfts } = useGlobalContext()!;
   const {
     selectedDropdownOption,
     setSelectedDropdownOption,

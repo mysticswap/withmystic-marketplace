@@ -1,6 +1,6 @@
 import OutlineButton from "../../../../components/OutlineButton/OutlineButton";
 import SolidButton from "../../../../components/SolidButton/SolidButton";
-import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
+import { useConnectionContext } from "../../../../context/ConnectionContext/ConnectionContext";
 import { connectWallets } from "../../../../services/web3Onboard";
 import { TokenToken } from "../../../../types/reservoir-types/collection-nfts.types";
 import { truncateAddress } from "../../../../utils";
@@ -19,7 +19,7 @@ const NftHeader = ({
   setShowOfferOrListingModal,
   nftInfo,
 }: Props) => {
-  const { user, setProvider } = useGlobalContext()!;
+  const { user, setProvider } = useConnectionContext()!;
   const collectionName = nftInfo?.collection?.name;
   const nftName = nftInfo?.name;
   const owner = nftInfo?.owner;

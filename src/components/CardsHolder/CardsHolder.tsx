@@ -8,9 +8,11 @@ import { collectionContract } from "../../config";
 import { BiLoaderCircle } from "react-icons/bi";
 import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-api";
 import { generateAttributeString } from "../../utils";
+import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 
 const CardsHolder = () => {
-  const { chainId, collectionNfts, setCollectionNfts, minimalCards } =
+  const { chainId } = useConnectionContext()!;
+  const { collectionNfts, setCollectionNfts, minimalCards } =
     useGlobalContext()!;
   const {
     showFilters,
