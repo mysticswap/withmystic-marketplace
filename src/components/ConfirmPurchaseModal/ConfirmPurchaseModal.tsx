@@ -6,6 +6,7 @@ import {
   Market,
   TokenToken,
 } from "../../types/reservoir-types/collection-nfts.types";
+import { OfferOrListUiData } from "../../context/GlobalContext/types";
 
 type Props = {
   nft: TokenToken;
@@ -32,7 +33,7 @@ const ConfirmPurchaseModal = ({
         />
         <div className="confirm_purchase_modal">
           <div className="modal_nft_holder">
-            <ModalNft nftData={nftData} />
+            <ModalNft nftData={nftData as unknown as OfferOrListUiData} />
           </div>
           <div className="confirm_purchase_modal_buttom">
             <p>Confirm in Wallet</p>

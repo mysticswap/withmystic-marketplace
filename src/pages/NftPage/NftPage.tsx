@@ -14,6 +14,7 @@ import FlaggedWarning from "./Components/FlaggedWarning/FlaggedWarning";
 import { useNftPageContext } from "../../context/NftPageContext/NftPageContext";
 import { collectionContract } from "../../config";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
+import OfferOrListingModal from "../../components/OfferOrListingModal/OfferOrListingModal";
 
 const NftPage = () => {
   const { id } = useParams();
@@ -26,7 +27,8 @@ const NftPage = () => {
     nftInfo,
     nftPriceData,
   } = useNftPageContext()!;
-  const { setShowOfferOrListingModal } = useGlobalContext()!;
+  const { showOfferOrListingModal, setShowOfferOrListingModal } =
+    useGlobalContext()!;
 
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
@@ -54,6 +56,7 @@ const NftPage = () => {
         <section className="nft_page_section">
           <NftHeader
             nftInfo={nftInfo}
+            nftPriceData={nftPriceData}
             setShowConfirmationModal={setShowConfirmationModal}
             setShowOfferOrListingModal={setShowOfferOrListingModal}
           />
@@ -81,14 +84,11 @@ const NftPage = () => {
         />
       )}
 
-      {/* {showOfferOrListingModal && (
+      {showOfferOrListingModal && (
         <OfferOrListingModal
-          isOffer={true}
-          nft={nftInfo}
-          nftMarketInfo={nftPriceData}
           setShowOfferOrListingModal={setShowOfferOrListingModal}
         />
-      )} */}
+      )}
     </>
   );
 };
