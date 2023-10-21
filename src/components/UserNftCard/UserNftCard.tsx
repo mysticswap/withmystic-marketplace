@@ -16,7 +16,7 @@ const UserNftCard = ({ nft }: Props) => {
   const rarityRank = nft?.token?.rarityRank;
 
   return (
-    <div className="nft_card">
+    <div className="nft_card user_nft_card">
       <img src={nft?.token?.image} alt="" />
 
       <div className="nft_card_details">

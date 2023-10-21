@@ -8,3 +8,8 @@
   margin-top: 0.25rem;
   border-radius: 6px;
 }
+
+.user_nft_card.nft_card:hover {
+  transform: scale(100%);
+  border-color: var(--ms-mp-blue);
+}
