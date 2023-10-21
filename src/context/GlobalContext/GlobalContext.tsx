@@ -17,17 +17,17 @@ import {
 } from "../../services/api/marketplace-reservoir-api";
 import { CollectionMetadataV2 } from "../../types/reservoir-types/collection-metadata.types";
 import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.types";
-import { reservoirActivityTypes, tabOptions } from "../../constants";
+import {
+  defaultOfferOrList,
+  defaultSort,
+  defaultSortby,
+  reservoirActivityTypes,
+  tabOptions,
+} from "../../constants";
 import { CollectionActivity } from "../../types/reservoir-types/collection-activity.types";
 import { CollectionTraitsV2 } from "../../types/reservoir-types/collection-traits.types";
 import { UserNfts } from "../../types/reservoir-types/user-nfts.types";
 import { useConnectionContext } from "../ConnectionContext/ConnectionContext";
-
-declare global {
-  interface Window {
-    ethereum: any;
-  }
-}
 
 const GlobalContext = createContext<GlobalContextType | null>(null);
 
@@ -48,13 +48,13 @@ export const GlobalContextProvider = ({ children }: Props) => {
     {} as CollectionTraitsV2
   );
   const [selectedActivities, setSelectedActivities] = useState(["sale"]);
-
   const [userBalance, setUserBalance] = useState({});
   const [userNfts, setUserNfts] = useState({} as UserNfts);
   const [minimalCards, setMinimalCards] = useState(true);
+  const [showOfferOrListingModal, setShowOfferOrListingModal] = useState(false);
+  const [offerOrListModalContent, setOfferOrListModalContent] =
+    useState(defaultOfferOrList);
 
-  const defaultSort = "floorAskPrice";
-  const defaultSortby = "asc";
   const selectedActivityTypes = JSON.stringify(selectedActivities);
 
   useEffect(() => {
@@ -137,6 +137,10 @@ export const GlobalContextProvider = ({ children }: Props) => {
         setUserNfts,
         minimalCards,
         setMinimalCards,
+        showOfferOrListingModal,
+        setShowOfferOrListingModal,
+        offerOrListModalContent,
+        setOfferOrListModalContent,
       }}
     >
       {children}

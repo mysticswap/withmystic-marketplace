@@ -5,23 +5,12 @@ import { CollectionTraitsV2 } from "../../types/reservoir-types/collection-trait
 import { UserNfts } from "../../types/reservoir-types/user-nfts.types";
 
 export type GlobalContextType = {
-  // user: string | null;
-  // setUser: React.Dispatch<React.SetStateAction<string | null>>;
-  // provider: ethers.providers.Web3Provider | null;
-  // setProvider: React.Dispatch<
-  //   React.SetStateAction<ethers.providers.Web3Provider | null>
-  // >;
-  // chainId: number;
-  // setChainId: React.Dispatch<React.SetStateAction<number>>;
   userBalance: { [x: string]: string };
   setUserBalance: React.Dispatch<React.SetStateAction<{ [x: string]: string }>>;
   currentTab: string;
   setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
   minimalCards: boolean;
   setMinimalCards: React.Dispatch<React.SetStateAction<boolean>>;
-
-  // reservoir
-
   collectionMetadata: CollectionMetadataV2 | null;
   setCollectionMetadata: React.Dispatch<
     React.SetStateAction<CollectionMetadataV2 | null>
@@ -40,4 +29,19 @@ export type GlobalContextType = {
   setSelectedActivities: React.Dispatch<React.SetStateAction<string[]>>;
   userNfts: UserNfts;
   setUserNfts: React.Dispatch<React.SetStateAction<UserNfts>>;
+  showOfferOrListingModal: boolean;
+  setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
+  offerOrListModalContent: OfferOrListUiData;
+  setOfferOrListModalContent: React.Dispatch<
+    React.SetStateAction<OfferOrListUiData>
+  >;
+};
+
+export type OfferOrListUiData = {
+  collectionName: string;
+  nftName: string;
+  nftImage: string;
+  amount: number;
+  price: number;
+  isOffer: boolean;
 };

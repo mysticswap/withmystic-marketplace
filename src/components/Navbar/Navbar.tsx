@@ -16,7 +16,8 @@ import UserNftsModal from "../UserNftsModal/UserNftsModal";
 
 const Navbar = () => {
   const { setProvider, user } = useConnectionContext()!;
-  const { collectionMetadata, userNfts } = useGlobalContext()!;
+  const { collectionMetadata, userNfts, setShowOfferOrListingModal } =
+    useGlobalContext()!;
   const location = useLocation();
 
   const [showUserNftsModal, setShowUserNftsModal] = useState(false);
@@ -32,6 +33,7 @@ const Navbar = () => {
 
   useEffect(() => {
     scrollToTop();
+    setShowOfferOrListingModal(false);
   }, [location.pathname]);
 
   return (

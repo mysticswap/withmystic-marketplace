@@ -5,9 +5,11 @@ import ItemsScreen from "../../components/ItemsScreen/ItemsScreen";
 import ActivityScreen from "../../components/ActivityScreen/ActivityScreen";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { tabOptions } from "../../constants";
+import OfferOrListingModal from "../../components/OfferOrListingModal/OfferOrListingModal";
 
 const Home = () => {
-  const { currentTab } = useGlobalContext()!;
+  const { currentTab, showOfferOrListingModal, setShowOfferOrListingModal } =
+    useGlobalContext()!;
   const isInItemsSection = currentTab == tabOptions[0];
   return (
     <div>
@@ -17,7 +19,14 @@ const Home = () => {
         }
       />
       <ControlBar isInItemsSection={isInItemsSection} />
+
       {isInItemsSection ? <ItemsScreen /> : <ActivityScreen />}
+
+      {showOfferOrListingModal && (
+        <OfferOrListingModal
+          setShowOfferOrListingModal={setShowOfferOrListingModal}
+        />
+      )}
     </div>
   );
 };

@@ -10,10 +10,10 @@ import Details from "./Components/Details/Details";
 import History from "./Components/History/History";
 import Loading from "../../components/Loading/Loading";
 import ConfirmPurchaseModal from "../../components/ConfirmPurchaseModal/ConfirmPurchaseModal";
-import OfferOrListingModal from "../../components/OfferOrListingModal/OfferOrListingModal";
 import FlaggedWarning from "./Components/FlaggedWarning/FlaggedWarning";
 import { useNftPageContext } from "../../context/NftPageContext/NftPageContext";
 import { collectionContract } from "../../config";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
 const NftPage = () => {
   const { id } = useParams();
@@ -26,9 +26,9 @@ const NftPage = () => {
     nftInfo,
     nftPriceData,
   } = useNftPageContext()!;
+  const { setShowOfferOrListingModal } = useGlobalContext()!;
 
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-  const [showOfferOrListingModal, setShowOfferOrListingModal] = useState(false);
 
   const contractAddress = collectionContract;
 
@@ -81,14 +81,14 @@ const NftPage = () => {
         />
       )}
 
-      {showOfferOrListingModal && (
+      {/* {showOfferOrListingModal && (
         <OfferOrListingModal
           isOffer={true}
           nft={nftInfo}
           nftMarketInfo={nftPriceData}
           setShowOfferOrListingModal={setShowOfferOrListingModal}
         />
-      )}
+      )} */}
     </>
   );
 };

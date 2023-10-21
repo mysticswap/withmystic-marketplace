@@ -1,43 +1,32 @@
 import { IoClose } from "react-icons/io5";
 import "./OfferOrListingModal.css";
-import { convertTokenAmountToDecimal, extractMetadata } from "../../utils";
 import ModalNft from "../ModalNft/ModalNft";
 import { BsCalendar } from "react-icons/bs";
 import { useRef, useState } from "react";
 import SolidButton from "../SolidButton/SolidButton";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
-import {
-  Market,
-  TokenToken,
-} from "../../types/reservoir-types/collection-nfts.types";
-import { durationOptions, wethAddresses } from "../../constants";
-import { ListOrOfferType } from "../../types/market-schemas.types";
-import { useNftPageContext } from "../../context/NftPageContext/NftPageContext";
-import { collectionContract } from "../../config";
-import { handleCreateOffer } from "../../services/seaport";
-import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
+import { durationOptions } from "../../constants";
 
 type Props = {
-  isOffer: boolean;
-  nft: TokenToken;
-  nftMarketInfo: Market;
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const OfferOrListingModal = ({
-  isOffer,
-  nft,
-  nftMarketInfo,
-  setShowOfferOrListingModal,
-}: Props) => {
-  const { user, chainId } = useConnectionContext()!;
-  const { userBalance } = useGlobalContext()!;
-  const { nftInfo } = useNftPageContext()!;
+const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
+  const { userBalance, offerOrListModalContent, collectionMetadata } =
+    useGlobalContext()!;
   const dropdownRef = useRef(null);
-  const nftData = extractMetadata(nft, nftMarketInfo);
+
+  const { isOffer } = offerOrListModalContent;
+
   const headerContent = isOffer ? "Make an offer" : "Create a listing";
   const inputPlaceholder = isOffer ? "Enter offer" : "Listing price";
+  const collectionFloorPrice =
+    collectionMetadata?.collections[0].floorAsk.price.amount.decimal;
+  const Royalties =
+    Number(
+      collectionMetadata?.collections?.[0]?.allRoyalties?.opensea?.[0]?.bps
+    ) * 0.01;
 
   const [selectedDuration, setSelectedDuration] = useState(durationOptions[6]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -45,31 +34,31 @@ const OfferOrListingModal = ({
 
   useOutsideClick(dropdownRef, setShowDropdown, "duration_trigger");
 
-  const nftSchema = nftInfo.kind.toUpperCase();
-  const body: ListOrOfferType = {
-    chainId: chainId,
-    consideration: [
-      {
-        itemtype: nftSchema,
-        amount: "1",
-        identifier: nftInfo.tokenId,
-        token: collectionContract,
-      },
-    ],
-    creatorAddress: user!,
-    endTime: String(selectedDuration.time),
-    offer: [
-      {
-        itemtype: "ERC20",
-        amount: String(convertTokenAmountToDecimal(Number(offerAmount!))),
-        identifier: "0",
-        token: wethAddresses[chainId],
-      },
-    ],
-    offerer: user!,
-    takerAddress: nftInfo.owner,
-    type: "offer",
-  };
+  const offerBottom = (
+    <>
+      <p>
+        <span>Your Balance</span>
+        <span>{userBalance?.WETH} wETH</span>
+      </p>
+      <p>
+        <span>Floor price</span>
+        <span>{collectionFloorPrice} ETH</span>
+      </p>
+    </>
+  );
+
+  const listBottom = (
+    <>
+      <p>
+        <span>Creator earnings</span>
+        <span>{Royalties}%</span>
+      </p>
+      <p>
+        <span>Marketplace fee</span>
+        <span>0%</span>
+      </p>
+    </>
+  );
 
   return (
     <div className="modal_parent">
@@ -80,13 +69,13 @@ const OfferOrListingModal = ({
           display="block"
           size={25}
           onClick={() => {
-            setShowOfferOrListingModal(false);
+            setShowOfferOrListingModal?.(false);
           }}
         />
 
         <div className="listing_or_offer_modal">
           <div className="modal_nft_holder">
-            <ModalNft nftData={nftData} />
+            <ModalNft nftData={offerOrListModalContent} />
           </div>
 
           <div className="listing_or_offer_modal_bottom">
@@ -134,34 +123,12 @@ const OfferOrListingModal = ({
             </div>
 
             <div className="bottom_details">
-              {isOffer ? (
-                <>
-                  <p>
-                    <span>Your Balance</span>
-                    <span>{userBalance?.WETH} wETH</span>
-                  </p>
-                  <p>
-                    <span>Floor price</span>
-                    <span>{nftData.floorPrice} ETH</span>
-                  </p>
-                </>
-              ) : (
-                <>
-                  <p>
-                    <span>Creator earnings</span>
-                    <span>5%</span>
-                  </p>
-                  <p>
-                    <span>Marketplace fee</span>
-                    <span>0%</span>
-                  </p>
-                </>
-              )}
+              {isOffer ? offerBottom : listBottom}
             </div>
 
             <SolidButton
               text={isOffer ? "Make Offer" : "Create Listing"}
-              onClick={() => handleCreateOffer(body)}
+              // onClick={() => handleCreateOffer(body)}
             />
           </div>
         </div>

@@ -60,3 +60,15 @@ export const wethAddresses: { [x: number]: string } = {
   5: "0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6",
   137: "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
 };
+
+export const defaultSort = "floorAskPrice";
+export const defaultSortby = "asc";
+
+export const defaultOfferOrList = {
+  collectionName: "",
+  nftName: "",
+  nftImage: "",
+  amount: 0,
+  price: 0,
+  isOffer: true,
+};

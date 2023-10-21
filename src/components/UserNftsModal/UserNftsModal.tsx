@@ -43,7 +43,13 @@ const UserNftsModal = ({ setShowUserNftsModal }: Props) => {
 
         <div className="user_nfts_container">
           {userNfts?.tokens?.map((nft) => {
-            return <UserNftCard key={nft.token.tokenId} nft={nft} />;
+            return (
+              <UserNftCard
+                key={nft.token.tokenId}
+                nft={nft}
+                setShowUserNftsModal={setShowUserNftsModal}
+              />
+            );
           })}
         </div>
 
