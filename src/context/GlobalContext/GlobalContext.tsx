@@ -121,12 +121,6 @@ export const GlobalContextProvider = ({ children }: Props) => {
       value={{
         collectionMetadata,
         setCollectionMetadata,
-        // user,
-        // setUser,
-        // provider,
-        // setProvider,
-        // chainId,
-        // setChainId,
         userBalance,
         setUserBalance,
         currentTab,

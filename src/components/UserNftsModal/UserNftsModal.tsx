@@ -1,11 +1,34 @@
 import { IoClose } from "react-icons/io5";
 import "./UserNftsModal.css";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
-import NftCard from "../NftCard/NftCard";
-import { TokenElement } from "../../types/reservoir-types/collection-nfts.types";
+import UserNftCard from "../UserNftCard/UserNftCard";
+import { useState } from "react";
+import { getUserNfts } from "../../services/api/marketplace-reservoir-api";
+import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
+import { BiLoaderCircle } from "react-icons/bi";
+import { collectionContract } from "../../config";
 
-const UserNftsModal = () => {
-  const { userNfts } = useGlobalContext()!;
+type Props = {
+  setShowUserNftsModal: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const UserNftsModal = ({ setShowUserNftsModal }: Props) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const { userNfts, setUserNfts } = useGlobalContext()!;
+  const { chainId, user } = useConnectionContext()!;
+
+  const fetchMore = () => {
+    setIsLoading(true);
+    getUserNfts(chainId, user!, collectionContract, userNfts.continuation!)
+      .then((result) => {
+        setUserNfts({
+          tokens: [...userNfts.tokens, ...result.tokens],
+          continuation: result.continuation,
+        });
+      })
+      .finally(() => setIsLoading(false));
+  };
+
   return (
     <div className="modal_parent">
       <div className="modal_content user_nfts_content">
@@ -14,15 +37,23 @@ const UserNftsModal = () => {
           className="modal_closer"
           display="block"
           size={25}
-          onClick={() => {}}
+          onClick={() => setShowUserNftsModal(false)}
         />
         <p>Choose which NFTs you want to list.</p>
 
         <div className="user_nfts_container">
-          {userNfts?.tokens?.map((nft: unknown) => {
-            return <NftCard nft={nft as TokenElement} />;
+          {userNfts?.tokens?.map((nft) => {
+            return <UserNftCard key={nft.token.tokenId} nft={nft} />;
           })}
         </div>
+
+        {userNfts.continuation && !isLoading && (
+          <button className="user_nfts_load_btn" onClick={fetchMore}>
+            Load More
+          </button>
+        )}
+
+        {isLoading && <BiLoaderCircle className="loader" size={50} />}
       </div>
     </div>
   );
