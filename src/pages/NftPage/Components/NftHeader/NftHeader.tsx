@@ -47,6 +47,7 @@ const NftHeader = ({
       isOffer: true,
       amount: nftPriceData?.floorAsk?.price?.amount?.decimal,
       price: Math.ceil(nftPriceData?.floorAsk?.price?.amount?.usd),
+      tokenId: nftInfo?.tokenId,
     };
     setOfferOrListModalContent(offerData);
   };

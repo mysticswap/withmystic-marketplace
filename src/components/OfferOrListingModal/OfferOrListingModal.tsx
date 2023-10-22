@@ -7,22 +7,27 @@ import SolidButton from "../SolidButton/SolidButton";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { durationOptions } from "../../constants";
+import { createListing } from "../../services/api/buy-offer-list.api";
+import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
+import { collectionContract } from "../../config";
+import { convertTokenAmountToDecimal } from "../../utils";
 
 type Props = {
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
+  const { chainId, user } = useConnectionContext()!;
   const { userBalance, offerOrListModalContent, collectionMetadata } =
     useGlobalContext()!;
   const dropdownRef = useRef(null);
 
-  const { isOffer } = offerOrListModalContent;
+  const { isOffer, tokenId } = offerOrListModalContent;
 
   const headerContent = isOffer ? "Make an offer" : "Create a listing";
   const inputPlaceholder = isOffer ? "Enter offer" : "Listing price";
   const collectionFloorPrice =
-    collectionMetadata?.collections[0].floorAsk.price.amount.decimal;
+    collectionMetadata?.collections?.[0]?.floorAsk?.price?.amount?.decimal;
   const Royalties =
     Number(
       collectionMetadata?.collections?.[0]?.allRoyalties?.opensea?.[0]?.bps
@@ -59,6 +64,16 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
       </p>
     </>
   );
+
+  const handleListing = () => {
+    const source = "marketplace.mysticswap.io";
+    const token = `${collectionContract}:${tokenId}`;
+    const weiPrice = convertTokenAmountToDecimal(
+      Number(offerAmount)
+    ).toString();
+    const expiration = String(selectedDuration.time);
+    createListing(chainId, user!, source, token, weiPrice, expiration);
+  };
 
   return (
     <div className="modal_parent">
@@ -128,7 +143,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
             <SolidButton
               text={isOffer ? "Make Offer" : "Create Listing"}
-              // onClick={() => handleCreateOffer(body)}
+              onClick={handleListing}
             />
           </div>
         </div>

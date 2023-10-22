@@ -44,4 +44,5 @@ export type OfferOrListUiData = {
   amount: number;
   price: number;
   isOffer: boolean;
+  tokenId: string;
 };

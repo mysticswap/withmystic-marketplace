@@ -71,4 +71,5 @@ export const defaultOfferOrList = {
   amount: 0,
   price: 0,
   isOffer: true,
+  tokenId: "",
 };

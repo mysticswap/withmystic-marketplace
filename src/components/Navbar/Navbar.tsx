@@ -24,7 +24,7 @@ const Navbar = () => {
 
   const userHasNfts = userNfts?.tokens?.length > 0 && user;
 
-  const discordUrl = collectionMetadata?.collections[0].discordUrl;
+  const discordUrl = collectionMetadata?.collections?.[0]?.discordUrl;
   const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
 
   const connectWallet = () => {
