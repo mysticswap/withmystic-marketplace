@@ -105,8 +105,8 @@ export const getUserNfts = async (
   return request.data;
 };
 
-export const submitListingData = async (chainId: number, data: Post) => {
-  const request = await marketplaceInstance.post("/submit-listing", {
+export const submitListOrBid = async (chainId: number, data: Post) => {
+  const request = await marketplaceInstance.post("/submit-list-or-bid", {
     chainId,
     data,
   });

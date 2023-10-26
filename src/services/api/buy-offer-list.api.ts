@@ -23,7 +23,7 @@ export const createListing = async (
   expirationTime: string,
   isListing: boolean = true
 ) => {
-  const request = await marketplaceInstance.post("/create-listing", {
+  const request = await marketplaceInstance.post("/create-list-or-bid", {
     chainId,
     maker,
     source,
@@ -44,7 +44,7 @@ export const createBid = async (
   expirationTime: string,
   isListing: boolean = false
 ) => {
-  const request = await marketplaceInstance.post("/create-listing", {
+  const request = await marketplaceInstance.post("/create-list-or-bid", {
     chainId,
     maker,
     source,

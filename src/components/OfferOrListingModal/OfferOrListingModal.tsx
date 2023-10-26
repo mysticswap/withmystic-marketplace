@@ -7,11 +7,15 @@ import SolidButton from "../SolidButton/SolidButton";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { durationOptions } from "../../constants";
-import { createListing } from "../../services/api/buy-offer-list.api";
+import {
+  createBid,
+  createListing,
+} from "../../services/api/buy-offer-list.api";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 import { collectionContract } from "../../config";
 import { convertTokenAmountToDecimal, getHostName } from "../../utils";
 import { handleListingData } from "../../services/listing-service";
+import { handleBiddingData } from "../../services/bidding-service";
 
 type Props = {
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -74,11 +78,21 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     ).toString();
     const expiration = String(selectedDuration.time);
 
-    createListing(chainId, user!, source, token, weiPrice, expiration).then(
-      async (result) => {
-        handleListingData(chainId, result);
-      }
-    );
+    console.log(isOffer);
+
+    if (!isOffer) {
+      createListing(chainId, user!, source, token, weiPrice, expiration).then(
+        async (result) => {
+          handleListingData(chainId, result);
+        }
+      );
+    } else {
+      createBid(chainId, user!, source, token, weiPrice, expiration).then(
+        (result) => {
+          handleBiddingData(chainId, result);
+        }
+      );
+    }
   };
 
   return (

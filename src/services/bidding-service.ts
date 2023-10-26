@@ -1,9 +1,9 @@
 import { TypedDataField, ethers } from "ethers";
 import { ListOrBidData } from "../types/reservoir-types/listing-data.types";
-import { submitListOrBid } from "./api/marketplace-reservoir-api";
 import { executeTransactions } from "./seaport";
+import { submitListOrBid } from "./api/marketplace-reservoir-api";
 
-export const handleListingData = async (
+export const handleBiddingData = async (
   chainId: number,
   data: ListOrBidData
 ) => {
@@ -12,16 +12,21 @@ export const handleListingData = async (
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
 
-  const approvalData = data.steps[0];
-  const mainListData = data.steps[1];
+  const currencyWrapping = data.steps[0].items;
+  const currencyApproval = data.steps[1].items;
+  const authTransaction = data.steps[2].items;
+  const authorizeOffer = data.steps[3].items;
 
-  const requiredApprovals = approvalData.items.map((item) => {
-    return item.data;
-  });
+  const requiredApprovals = [
+    ...currencyWrapping,
+    ...currencyApproval,
+    ...authTransaction,
+  ].map((item) => item.data);
 
   executeTransactions(requiredApprovals, signer).then(async () => {
-    const signTypedMessage = mainListData.items[0].data.sign;
-    let orderPost = mainListData.items[0].data.post;
+    const signTypedMessage = authorizeOffer[0].data.sign;
+    let orderPost = authorizeOffer[0].data.post;
+
     const signature = await signer._signTypedData(
       signTypedMessage?.domain!,
       signTypedMessage?.types as unknown as Record<

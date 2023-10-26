@@ -1,4 +1,4 @@
-export interface ListingData {
+export interface ListOrBidData {
   steps: Step[];
   errors: any[];
 }
