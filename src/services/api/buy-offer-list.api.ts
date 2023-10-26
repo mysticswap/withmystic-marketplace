@@ -1,18 +1,4 @@
-import {
-  ListOrOfferType,
-  PayloadVerify,
-} from "../../types/market-schemas.types";
 import { marketplaceInstance } from "../axios";
-
-export const listOrOffer = async (postBody: ListOrOfferType) => {
-  const request = await marketplaceInstance.post("/create-swap", postBody);
-  return request.data;
-};
-
-export const validateOfferOrList = async (postBody: PayloadVerify) => {
-  const request = await marketplaceInstance.post("/validate-swap", postBody);
-  return request.data;
-};
 
 export const createListing = async (
   chainId: number,
@@ -52,6 +38,21 @@ export const createBid = async (
     weiPrice,
     expirationTime,
     isListing,
+  });
+  return request.data;
+};
+
+export const buyListedNft = async (
+  chainId: number,
+  orderId: string,
+  taker: string,
+  source: string
+) => {
+  const request = await marketplaceInstance.post("/buy-nft", {
+    chainId,
+    orderId,
+    taker,
+    source,
   });
   return request.data;
 };

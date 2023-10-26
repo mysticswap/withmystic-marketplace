@@ -7,11 +7,16 @@ import { SiOpensea } from "react-icons/si";
 import x2y2 from "../../assets/x2y2.png";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { useIsOverflow } from "../../hooks/useIsOverflow";
+import { buyListedNft } from "../../services/api/buy-offer-list.api";
+import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
+import { getHostName } from "../../utils";
+import { handleBuyData } from "../../services/buying-service";
 
 type Props = { nft: TokenElement };
 
 const NftCard = ({ nft }: Props) => {
   const { minimalCards } = useGlobalContext()!;
+  const { user } = useConnectionContext()!;
 
   const nameRef = useRef(null);
   const isOverflowing = useIsOverflow(nameRef, minimalCards);
@@ -31,6 +36,15 @@ const NftCard = ({ nft }: Props) => {
       <p ref={nameRef}>{nftName}</p>
     </Link>
   );
+
+  const buyNft = async () => {
+    const chainId = nft?.token?.chainId;
+    const orderId = nft?.market?.floorAsk?.id;
+    const source = getHostName();
+    buyListedNft(chainId, orderId, user!, source).then((result) => {
+      handleBuyData(result);
+    });
+  };
 
   return (
     <div className="nft_card">
@@ -61,7 +75,9 @@ const NftCard = ({ nft }: Props) => {
           Last sale: {lastSale}
           {symbol} {!lastSale && !symbol && "---"}
         </p>
-        {currentEthAmount && currentValue && <button>Buy now</button>}
+        {currentEthAmount && currentValue && (
+          <button onClick={buyNft}>Buy now</button>
+        )}
       </div>
 
       <div className="source_icon">
