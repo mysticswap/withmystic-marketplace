@@ -10,7 +10,8 @@ import { durationOptions } from "../../constants";
 import { createListing } from "../../services/api/buy-offer-list.api";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 import { collectionContract } from "../../config";
-import { convertTokenAmountToDecimal } from "../../utils";
+import { convertTokenAmountToDecimal, getHostName } from "../../utils";
+import { handleListingData } from "../../services/listing-service";
 
 type Props = {
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -65,14 +66,19 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     </>
   );
 
-  const handleListing = () => {
-    const source = "marketplace.mysticswap.io";
+  const initialiseListing = () => {
+    const source = getHostName();
     const token = `${collectionContract}:${tokenId}`;
     const weiPrice = convertTokenAmountToDecimal(
       Number(offerAmount)
     ).toString();
     const expiration = String(selectedDuration.time);
-    createListing(chainId, user!, source, token, weiPrice, expiration);
+
+    createListing(chainId, user!, source, token, weiPrice, expiration).then(
+      async (result) => {
+        handleListingData(chainId, result);
+      }
+    );
   };
 
   return (
@@ -143,7 +149,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
             <SolidButton
               text={isOffer ? "Make Offer" : "Create Listing"}
-              onClick={handleListing}
+              onClick={initialiseListing}
             />
           </div>
         </div>

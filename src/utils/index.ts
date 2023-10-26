@@ -69,3 +69,10 @@ export const generateAttributeString = (selectedTraits: SelectedTrait[]) => {
   });
   return string;
 };
+
+export const getHostName = () => {
+  const hostName = window.location.hostname;
+  return hostName.includes("localhost")
+    ? "marketplace.mysticswap.io"
+    : hostName;
+};
