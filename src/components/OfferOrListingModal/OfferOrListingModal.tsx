@@ -2,7 +2,7 @@ import { IoClose } from "react-icons/io5";
 import "./OfferOrListingModal.css";
 import ModalNft from "../ModalNft/ModalNft";
 import { BsCalendar } from "react-icons/bs";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SolidButton from "../SolidButton/SolidButton";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
@@ -41,8 +41,14 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const [selectedDuration, setSelectedDuration] = useState(durationOptions[6]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [offerAmount, setOfferAmount] = useState<number | string>("");
+  const [isOverBalance, setIsOverBalance] = useState(false);
 
   useOutsideClick(dropdownRef, setShowDropdown, "duration_trigger");
+
+  useEffect(() => {
+    const isOverUserBalance = Number(offerAmount) > Number(userBalance.WETH);
+    setIsOverBalance(isOverUserBalance);
+  }, [offerAmount]);
 
   const offerBottom = (
     <>
@@ -78,8 +84,6 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     ).toString();
     const expiration = String(selectedDuration.time);
 
-    console.log(isOffer);
-
     if (!isOffer) {
       createListing(chainId, user!, source, token, weiPrice, expiration).then(
         async (result) => {
@@ -114,7 +118,11 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
           </div>
 
           <div className="listing_or_offer_modal_bottom">
-            <div className="input_area">
+            <div
+              className={`input_area ${
+                isOverBalance && isOffer ? "balance_warning" : ""
+              }`}
+            >
               <input
                 type="number"
                 placeholder={inputPlaceholder}

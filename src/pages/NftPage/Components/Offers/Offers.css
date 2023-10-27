@@ -25,11 +25,12 @@
 .offers_table_item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .offers_table_item > p:last-of-type {
   color: var(--ms-mp-blue);
+  width: fit-content;
 }
 
 .more_offers_btn {
@@ -44,4 +45,19 @@
 
 .more_offers_btn:hover {
   color: var(--ms-mp-blue);
+}
+
+.offer_accept_button {
+  display: block;
+  margin: auto;
+  cursor: pointer;
+  background-color: transparent;
+  border: var(--ms-mp-gray-border);
+  border-radius: 8px;
+  padding: 8px;
+  transition: var(--ms-mp-transition);
+}
+
+.offer_accept_button:hover {
+  background-color: var(--ms-mp-gray-light);
 }

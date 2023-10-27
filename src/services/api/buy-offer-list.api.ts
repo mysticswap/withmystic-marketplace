@@ -56,3 +56,18 @@ export const buyListedNft = async (
   });
   return request.data;
 };
+
+export const acceptOffer = async (
+  chainId: number,
+  token: string,
+  taker: string,
+  source: string
+) => {
+  const request = await marketplaceInstance.post("/accept-offer", {
+    chainId,
+    token,
+    taker,
+    source,
+  });
+  return request.data;
+};

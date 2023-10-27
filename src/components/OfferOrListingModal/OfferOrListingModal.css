@@ -113,3 +113,7 @@
 .duration_list > button:not(:last-of-type) {
   margin-bottom: 0.5rem;
 }
+
+.listing_or_offer_modal_bottom > .input_area.balance_warning {
+  border-color: red;
+}

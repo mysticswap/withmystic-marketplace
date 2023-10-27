@@ -1,11 +1,14 @@
 import dayjs from "dayjs";
 import { NftOffers } from "../../../../types/reservoir-types/nft-offers.types";
-import { truncateAddress } from "../../../../utils";
+import { getHostName, truncateAddress } from "../../../../utils";
 import "./Offers.css";
 import { getNftOffers } from "../../../../services/api/marketplace-reservoir-api";
 import { collectionContract } from "../../../../config";
 import { useState } from "react";
 import { useConnectionContext } from "../../../../context/ConnectionContext/ConnectionContext";
+import { useNftPageContext } from "../../../../context/NftPageContext/NftPageContext";
+import { acceptOffer } from "../../../../services/api/buy-offer-list.api";
+import { handleBuyData } from "../../../../services/buying-service";
 
 type Props = {
   nftOffers: NftOffers;
@@ -14,7 +17,8 @@ type Props = {
 };
 
 const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
-  const { chainId } = useConnectionContext()!;
+  const { chainId, user } = useConnectionContext()!;
+  const { nftInfo } = useNftPageContext()!;
   const [isFetching, setIsFetching] = useState(false);
   const token = `${collectionContract}:${tokenId}`;
 
@@ -30,6 +34,16 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
       .finally(() => {
         setIsFetching(false);
       });
+  };
+
+  const isOwner = nftInfo?.owner?.toLowerCase() == user?.toLowerCase();
+
+  const acceptBid = () => {
+    const chainId = nftInfo.chainId;
+    const source = getHostName();
+    acceptOffer(chainId, user!, token, source).then((result) => {
+      handleBuyData(result);
+    });
   };
 
   return (
@@ -56,6 +70,11 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
                 </p>
                 <p>{altTimeStamp || timeStamp}</p>
                 <p>{truncateAddress(order.maker, 5, "...")}</p>
+                {isOwner && (
+                  <button className="offer_accept_button" onClick={acceptBid}>
+                    Accept
+                  </button>
+                )}
               </div>
             );
           })}
