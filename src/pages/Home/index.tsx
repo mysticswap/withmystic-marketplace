@@ -6,10 +6,12 @@ import ActivityScreen from "../../components/ActivityScreen/ActivityScreen";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { tabOptions } from "../../constants";
 import OfferOrListingModal from "../../components/OfferOrListingModal/OfferOrListingModal";
+import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 
 const Home = () => {
-  const { currentTab, showOfferOrListingModal, setShowOfferOrListingModal } =
-    useGlobalContext()!;
+  const { currentTab } = useGlobalContext()!;
+  const { showOfferOrListingModal, setShowOfferOrListingModal } =
+    useTransactionContext()!;
   const isInItemsSection = currentTab == tabOptions[0];
   return (
     <div>

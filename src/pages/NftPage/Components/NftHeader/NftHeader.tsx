@@ -1,8 +1,8 @@
 import OutlineButton from "../../../../components/OutlineButton/OutlineButton";
 import SolidButton from "../../../../components/SolidButton/SolidButton";
 import { useConnectionContext } from "../../../../context/ConnectionContext/ConnectionContext";
-import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
-import { OfferOrListUiData } from "../../../../context/GlobalContext/types";
+import { useTransactionContext } from "../../../../context/TransactionContext/TransactionContext";
+import { OfferOrListUiData } from "../../../../context/TransactionContext/types";
 import { connectWallets } from "../../../../services/web3Onboard";
 import {
   Market,
@@ -27,7 +27,7 @@ const NftHeader = ({
   nftPriceData,
 }: Props) => {
   const { user, setProvider } = useConnectionContext()!;
-  const { setOfferOrListModalContent } = useGlobalContext()!;
+  const { setOfferOrListModalContent } = useTransactionContext()!;
   const collectionName = nftInfo?.collection?.name;
   const nftName = nftInfo?.name;
   const owner = nftInfo?.owner;

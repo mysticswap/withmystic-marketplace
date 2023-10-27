@@ -17,6 +17,7 @@ import { convertTokenAmountToDecimal, getHostName } from "../../utils";
 import { handleListingData } from "../../services/listing-service";
 import { handleBiddingData } from "../../services/bidding-service";
 import ProcessComponent from "./ProcessComponent/ProcessComponent";
+import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 
 type Props = {
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,8 +25,8 @@ type Props = {
 
 const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const { chainId, user } = useConnectionContext()!;
-  const { userBalance, offerOrListModalContent, collectionMetadata } =
-    useGlobalContext()!;
+  const { userBalance, collectionMetadata } = useGlobalContext()!;
+  const { offerOrListModalContent } = useTransactionContext()!;
   const dropdownRef = useRef(null);
 
   const { isOffer, tokenId } = offerOrListModalContent;

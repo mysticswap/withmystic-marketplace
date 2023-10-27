@@ -1,4 +1,4 @@
-import { OfferOrListUiData } from "../../context/GlobalContext/types";
+import { OfferOrListUiData } from "../../context/TransactionContext/types";
 import "./ModalNft.css";
 
 type Props = {

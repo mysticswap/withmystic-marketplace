@@ -3,8 +3,8 @@ import { UserTokenElement } from "../../types/reservoir-types/user-nfts.types";
 import "./UserNftCard.css";
 import CustomTooltip from "../CustomTooltip/CustomTooltip";
 import { useIsOverflow } from "../../hooks/useIsOverflow";
-import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
-import { OfferOrListUiData } from "../../context/GlobalContext/types";
+import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
+import { OfferOrListUiData } from "../../context/TransactionContext/types";
 
 type Props = {
   nft: UserTokenElement;
@@ -13,7 +13,7 @@ type Props = {
 
 const UserNftCard = ({ nft, setShowUserNftsModal }: Props) => {
   const { setOfferOrListModalContent, setShowOfferOrListingModal } =
-    useGlobalContext()!;
+    useTransactionContext()!;
   const nameRef = useRef(null);
   const isOverflowing = useIsOverflow(nameRef);
 

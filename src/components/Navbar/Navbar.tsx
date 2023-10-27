@@ -13,11 +13,12 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import ConnectedWalletButton from "../ConnectedWalletButton/ConnectedWalletButton";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 import UserNftsModal from "../UserNftsModal/UserNftsModal";
+import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 
 const Navbar = () => {
   const { setProvider, user } = useConnectionContext()!;
-  const { collectionMetadata, userNfts, setShowOfferOrListingModal } =
-    useGlobalContext()!;
+  const { collectionMetadata, userNfts } = useGlobalContext()!;
+  const { setShowOfferOrListingModal } = useTransactionContext()!;
   const location = useLocation();
 
   const [showUserNftsModal, setShowUserNftsModal] = useState(false);

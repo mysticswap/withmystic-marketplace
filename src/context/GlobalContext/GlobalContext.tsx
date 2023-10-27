@@ -18,7 +18,6 @@ import {
 import { CollectionMetadataV2 } from "../../types/reservoir-types/collection-metadata.types";
 import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.types";
 import {
-  defaultOfferOrList,
   defaultSort,
   defaultSortby,
   reservoirActivityTypes,
@@ -51,9 +50,6 @@ export const GlobalContextProvider = ({ children }: Props) => {
   const [userBalance, setUserBalance] = useState({});
   const [userNfts, setUserNfts] = useState({} as UserNfts);
   const [minimalCards, setMinimalCards] = useState(true);
-  const [showOfferOrListingModal, setShowOfferOrListingModal] = useState(false);
-  const [offerOrListModalContent, setOfferOrListModalContent] =
-    useState(defaultOfferOrList);
 
   const selectedActivityTypes = JSON.stringify(selectedActivities);
 
@@ -137,10 +133,6 @@ export const GlobalContextProvider = ({ children }: Props) => {
         setUserNfts,
         minimalCards,
         setMinimalCards,
-        showOfferOrListingModal,
-        setShowOfferOrListingModal,
-        offerOrListModalContent,
-        setOfferOrListModalContent,
       }}
     >
       {children}

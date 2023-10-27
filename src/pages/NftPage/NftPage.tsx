@@ -13,8 +13,8 @@ import ConfirmPurchaseModal from "../../components/ConfirmPurchaseModal/ConfirmP
 import FlaggedWarning from "./Components/FlaggedWarning/FlaggedWarning";
 import { useNftPageContext } from "../../context/NftPageContext/NftPageContext";
 import { collectionContract } from "../../config";
-import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import OfferOrListingModal from "../../components/OfferOrListingModal/OfferOrListingModal";
+import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 
 const NftPage = () => {
   const { id } = useParams();
@@ -28,7 +28,7 @@ const NftPage = () => {
     nftPriceData,
   } = useNftPageContext()!;
   const { showOfferOrListingModal, setShowOfferOrListingModal } =
-    useGlobalContext()!;
+    useTransactionContext()!;
 
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 

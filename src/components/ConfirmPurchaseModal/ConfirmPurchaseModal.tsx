@@ -6,7 +6,7 @@ import {
   Market,
   TokenToken,
 } from "../../types/reservoir-types/collection-nfts.types";
-import { OfferOrListUiData } from "../../context/GlobalContext/types";
+import { OfferOrListUiData } from "../../context/TransactionContext/types";
 
 type Props = {
   nft: TokenToken;

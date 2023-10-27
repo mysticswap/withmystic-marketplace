@@ -8,27 +8,30 @@ import Footer from "./components/Footer/Footer";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import { NftPageContextProvider } from "./context/NftPageContext/NftPageContext";
 import { ConnectionContextProvider } from "./context/ConnectionContext/ConnectionContext";
+import { TransactionContextProvider } from "./context/TransactionContext/TransactionContext";
 
 function App() {
   return (
     <>
       <ConnectionContextProvider>
         <GlobalContextProvider>
-          <Router>
-            <Navbar />
-            <Routes>
-              <Route
-                path="/"
-                element={<HomeContextProvider children={<Home />} />}
-              />
-              <Route
-                path="/nft/:id"
-                element={<NftPageContextProvider children={<NftPage />} />}
-              />
-              <Route path="*" element={<ErrorPage />} />
-            </Routes>
-            <Footer />
-          </Router>
+          <TransactionContextProvider>
+            <Router>
+              <Navbar />
+              <Routes>
+                <Route
+                  path="/"
+                  element={<HomeContextProvider children={<Home />} />}
+                />
+                <Route
+                  path="/nft/:id"
+                  element={<NftPageContextProvider children={<NftPage />} />}
+                />
+                <Route path="*" element={<ErrorPage />} />
+              </Routes>
+              <Footer />
+            </Router>
+          </TransactionContextProvider>
         </GlobalContextProvider>
       </ConnectionContextProvider>
     </>
