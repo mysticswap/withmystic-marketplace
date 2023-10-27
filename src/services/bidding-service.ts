@@ -5,7 +5,8 @@ import { submitListOrBid } from "./api/marketplace-reservoir-api";
 
 export const handleBiddingData = async (
   chainId: number,
-  data: ListOrBidData
+  data: ListOrBidData,
+  setStage: React.Dispatch<React.SetStateAction<number>>
 ) => {
   await window.ethereum.enable();
 
@@ -24,6 +25,7 @@ export const handleBiddingData = async (
   ].map((item) => item.data);
 
   executeTransactions(requiredApprovals, signer).then(async () => {
+    setStage(1);
     const signTypedMessage = authorizeOffer[0].data.sign;
     let orderPost = authorizeOffer[0].data.post;
 
@@ -47,8 +49,10 @@ export const handleBiddingData = async (
       },
     };
 
-    submitListOrBid(chainId, orderPost).then((result) =>
-      alert(result?.message)
-    );
+    submitListOrBid(chainId, orderPost).then((result) => {
+      if (result?.message == "Success") {
+        setStage(2);
+      }
+    });
   });
 };

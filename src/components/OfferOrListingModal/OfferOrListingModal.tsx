@@ -16,6 +16,7 @@ import { collectionContract } from "../../config";
 import { convertTokenAmountToDecimal, getHostName } from "../../utils";
 import { handleListingData } from "../../services/listing-service";
 import { handleBiddingData } from "../../services/bidding-service";
+import ProcessComponent from "./ProcessComponent/ProcessComponent";
 
 type Props = {
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,7 +31,9 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const { isOffer, tokenId } = offerOrListModalContent;
 
   const headerContent = isOffer ? "Make an offer" : "Create a listing";
+  const finalHeader = isOffer ? "Offer completed!" : "Listing completed!";
   const inputPlaceholder = isOffer ? "Enter offer" : "Listing price";
+
   const collectionFloorPrice =
     collectionMetadata?.collections?.[0]?.floorAsk?.price?.amount?.decimal;
   const Royalties =
@@ -42,6 +45,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [offerAmount, setOfferAmount] = useState<number | string>("");
   const [isOverBalance, setIsOverBalance] = useState(false);
+  const [stage, setStage] = useState(0);
 
   useOutsideClick(dropdownRef, setShowDropdown, "duration_trigger");
 
@@ -87,13 +91,13 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     if (!isOffer) {
       createListing(chainId, user!, source, token, weiPrice, expiration).then(
         async (result) => {
-          handleListingData(chainId, result);
+          handleListingData(chainId, result, setStage);
         }
       );
     } else {
       createBid(chainId, user!, source, token, weiPrice, expiration).then(
         (result) => {
-          handleBiddingData(chainId, result);
+          handleBiddingData(chainId, result, setStage);
         }
       );
     }
@@ -102,7 +106,9 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   return (
     <div className="modal_parent">
       <div className="modal_content">
-        <p className="modal_header">{headerContent}</p>
+        <p className="modal_header">
+          {stage !== 2 ? headerContent : finalHeader}
+        </p>
         <IoClose
           className="modal_closer"
           display="block"
@@ -117,63 +123,67 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
             <ModalNft nftData={offerOrListModalContent} />
           </div>
 
-          <div className="listing_or_offer_modal_bottom">
-            <div
-              className={`input_area ${
-                isOverBalance && isOffer ? "balance_warning" : ""
-              }`}
-            >
-              <input
-                type="number"
-                placeholder={inputPlaceholder}
-                value={offerAmount}
-                onChange={(e) => {
-                  setOfferAmount(Number(e.target.value));
-                }}
-              />
-              <p>wETH</p>
-            </div>
-
-            <div className="duration_area">
-              <p>Expires in</p>
-              <div className="duration_container">
-                <button
-                  className="duration_trigger"
-                  onClick={() => setShowDropdown(!showDropdown)}
-                >
-                  <BsCalendar display="block" />
-                  {selectedDuration.title}
-                </button>
-
-                {showDropdown && (
-                  <div className="duration_list" ref={dropdownRef}>
-                    {durationOptions.map((duration) => {
-                      return (
-                        <button
-                          key={duration.title}
-                          onClick={() => {
-                            setSelectedDuration(duration);
-                            setShowDropdown(false);
-                          }}
-                        >
-                          {duration.title}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
+          {!stage ? (
+            <div className="listing_or_offer_modal_bottom">
+              <div
+                className={`input_area ${
+                  isOverBalance && isOffer ? "balance_warning" : ""
+                }`}
+              >
+                <input
+                  type="number"
+                  placeholder={inputPlaceholder}
+                  value={offerAmount}
+                  onChange={(e) => {
+                    setOfferAmount(Number(e.target.value));
+                  }}
+                />
+                <p>wETH</p>
               </div>
-            </div>
 
-            <div className="bottom_details">
-              {isOffer ? offerBottom : listBottom}
-            </div>
+              <div className="duration_area">
+                <p>Expires in</p>
+                <div className="duration_container">
+                  <button
+                    className="duration_trigger"
+                    onClick={() => setShowDropdown(!showDropdown)}
+                  >
+                    <BsCalendar display="block" />
+                    {selectedDuration.title}
+                  </button>
 
-            <SolidButton
-              text={isOffer ? "Make Offer" : "Create Listing"}
-              onClick={initialiseListing}
-            />
-          </div>
+                  {showDropdown && (
+                    <div className="duration_list" ref={dropdownRef}>
+                      {durationOptions.map((duration) => {
+                        return (
+                          <button
+                            key={duration.title}
+                            onClick={() => {
+                              setSelectedDuration(duration);
+                              setShowDropdown(false);
+                            }}
+                          >
+                            {duration.title}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="bottom_details">
+                {isOffer ? offerBottom : listBottom}
+              </div>
+
+              <SolidButton
+                text={isOffer ? "Make Offer" : "Create Listing"}
+                onClick={initialiseListing}
+              />
+            </div>
+          ) : (
+            <ProcessComponent stage={stage} />
+          )}
         </div>
       </div>
     </div>

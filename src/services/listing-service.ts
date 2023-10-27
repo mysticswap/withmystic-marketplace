@@ -5,7 +5,8 @@ import { executeTransactions } from "./seaport";
 
 export const handleListingData = async (
   chainId: number,
-  data: ListOrBidData
+  data: ListOrBidData,
+  setStage: React.Dispatch<React.SetStateAction<number>>
 ) => {
   await window.ethereum.enable();
 
@@ -20,6 +21,7 @@ export const handleListingData = async (
   });
 
   executeTransactions(requiredApprovals, signer).then(async () => {
+    setStage(1);
     const signTypedMessage = mainListData.items[0].data.sign;
     let orderPost = mainListData.items[0].data.post;
     const signature = await signer._signTypedData(
@@ -42,8 +44,10 @@ export const handleListingData = async (
       },
     };
 
-    submitListOrBid(chainId, orderPost).then((result) =>
-      alert(result?.message)
-    );
+    submitListOrBid(chainId, orderPost).then((result) => {
+      if (result?.message == "Success") {
+        setStage(2);
+      }
+    });
   });
 };
