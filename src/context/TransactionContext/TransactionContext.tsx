@@ -10,15 +10,24 @@ type Props = {
 
 export const TransactionContextProvider = ({ children }: Props) => {
   const [showOfferOrListingModal, setShowOfferOrListingModal] = useState(false);
-  const [offerOrListModalContent, setOfferOrListModalContent] =
-    useState(defaultOfferOrList);
+  const [transactionNft, setTransactionNft] = useState(defaultOfferOrList);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [transactionStage, setTransactionStage] = useState(0);
+  const [transactionHash, setTransactionHash] = useState("");
+
   return (
     <TransactionContext.Provider
       value={{
         showOfferOrListingModal,
         setShowOfferOrListingModal,
-        offerOrListModalContent,
-        setOfferOrListModalContent,
+        transactionNft,
+        setTransactionNft,
+        showConfirmationModal,
+        setShowConfirmationModal,
+        transactionStage,
+        setTransactionStage,
+        transactionHash,
+        setTransactionHash,
       }}
     >
       {children}

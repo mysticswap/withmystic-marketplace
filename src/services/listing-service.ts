@@ -21,7 +21,6 @@ export const handleListingData = async (
   });
 
   executeTransactions(requiredApprovals, signer).then(async () => {
-    setStage(1);
     const signTypedMessage = mainListData.items[0].data.sign;
     let orderPost = mainListData.items[0].data.post;
     const signature = await signer._signTypedData(

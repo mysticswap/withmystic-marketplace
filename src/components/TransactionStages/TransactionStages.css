@@ -24,3 +24,20 @@
 .twitter_share:hover {
   color: var(--ms-mp-blue);
 }
+
+.modal_transaction_button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-top: 1rem;
+  color: var(--ms-mp-blue);
+  font-size: 1rem;
+  transition: var(--ms-mp-transition);
+}
+
+.modal_transaction_button:hover {
+  color: var(--ms-mp-blue-2);
+}

@@ -78,8 +78,6 @@ const NftPage = () => {
 
       {showConfirmationModal && (
         <ConfirmPurchaseModal
-          nft={nftInfo}
-          nftMarketInfo={nftPriceData}
           setShowConfirmationModal={setShowConfirmationModal}
         />
       )}

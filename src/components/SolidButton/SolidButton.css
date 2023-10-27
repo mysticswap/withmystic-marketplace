@@ -13,3 +13,7 @@
   box-shadow: rgb(0 0 0 / 20%) 0px 2px 10px;
   filter: brightness(105%);
 }
+
+.list_or_bid_submit_btn:active {
+  transform: scale(105%);
+}

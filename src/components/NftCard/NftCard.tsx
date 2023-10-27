@@ -11,12 +11,20 @@ import { buyListedNft } from "../../services/api/buy-offer-list.api";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 import { getHostName } from "../../utils";
 import { handleBuyData } from "../../services/buying-service";
+import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
+import { TransactionNft } from "../../context/TransactionContext/types";
 
 type Props = { nft: TokenElement };
 
 const NftCard = ({ nft }: Props) => {
   const { minimalCards } = useGlobalContext()!;
   const { user } = useConnectionContext()!;
+  const {
+    setShowConfirmationModal,
+    setTransactionNft,
+    setTransactionStage,
+    setTransactionHash,
+  } = useTransactionContext()!;
 
   const nameRef = useRef(null);
   const isOverflowing = useIsOverflow(nameRef, minimalCards);
@@ -38,13 +46,28 @@ const NftCard = ({ nft }: Props) => {
   );
 
   const buyNft = async () => {
+    const transactionNft: TransactionNft = {
+      collectionName: nft?.token?.collection?.name,
+      nftName,
+      nftImage: nft?.token?.image,
+      amount: Number(currentEthAmount),
+      price: currentValue,
+      isOffer: false,
+      tokenId: nftId,
+    };
+    setTransactionNft(transactionNft);
+    setShowConfirmationModal(true);
     const chainId = nft?.token?.chainId;
     const orderId = nft?.market?.floorAsk?.id;
     const source = getHostName();
+
     buyListedNft(chainId, orderId, user!, source).then((result) => {
-      handleBuyData(result);
+      setTransactionStage(1);
+      handleBuyData(result, setTransactionStage, setTransactionHash);
     });
   };
+
+  const userIsOwner = user?.toLowerCase() == nft?.token?.owner?.toLowerCase();
 
   return (
     <div className="nft_card">
@@ -75,7 +98,8 @@ const NftCard = ({ nft }: Props) => {
           Last sale: {lastSale}
           {symbol} {!lastSale && !symbol && "---"}
         </p>
-        {currentEthAmount && currentValue && (
+
+        {currentEthAmount && currentValue && !userIsOwner && (
           <button onClick={buyNft}>Buy now</button>
         )}
       </div>

@@ -2,7 +2,11 @@ import { ethers } from "ethers";
 import { BuyData } from "../types/reservoir-types/buy-data.types";
 import { executeTransactions } from "./seaport";
 
-export const handleBuyData = async (data: BuyData) => {
+export const handleBuyData = async (
+  data: BuyData,
+  setTransactionStage: React.Dispatch<React.SetStateAction<number>>,
+  setTransactionHash: React.Dispatch<React.SetStateAction<string>>
+) => {
   await window.ethereum.enable();
 
   const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -15,7 +19,8 @@ export const handleBuyData = async (data: BuyData) => {
     return item.data;
   });
 
-  executeTransactions(requiredApprovals, signer).then(async () => {
-    alert("bought");
+  executeTransactions(requiredApprovals, signer).then(async (result) => {
+    setTransactionStage(2);
+    setTransactionHash(result);
   });
 };

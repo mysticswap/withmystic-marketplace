@@ -4,7 +4,7 @@ import "./UserNftCard.css";
 import CustomTooltip from "../CustomTooltip/CustomTooltip";
 import { useIsOverflow } from "../../hooks/useIsOverflow";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
-import { OfferOrListUiData } from "../../context/TransactionContext/types";
+import { TransactionNft } from "../../context/TransactionContext/types";
 
 type Props = {
   nft: UserTokenElement;
@@ -12,7 +12,7 @@ type Props = {
 };
 
 const UserNftCard = ({ nft, setShowUserNftsModal }: Props) => {
-  const { setOfferOrListModalContent, setShowOfferOrListingModal } =
+  const { setTransactionNft, setShowOfferOrListingModal } =
     useTransactionContext()!;
   const nameRef = useRef(null);
   const isOverflowing = useIsOverflow(nameRef);
@@ -22,7 +22,7 @@ const UserNftCard = ({ nft, setShowUserNftsModal }: Props) => {
 
   const handleClick = () => {
     setShowUserNftsModal(false);
-    const listData: OfferOrListUiData = {
+    const listData: TransactionNft = {
       collectionName: nft.token.collection.name,
       nftName: nft.token.name,
       nftImage: nft.token.image,
@@ -31,7 +31,7 @@ const UserNftCard = ({ nft, setShowUserNftsModal }: Props) => {
       price: nft?.token?.lastSale?.price?.amount?.usd!,
       tokenId: nft?.token?.tokenId,
     };
-    setOfferOrListModalContent(listData);
+    setTransactionNft(listData);
     setShowOfferOrListingModal(true);
   };
 

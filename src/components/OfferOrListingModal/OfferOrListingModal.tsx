@@ -16,7 +16,7 @@ import { collectionContract } from "../../config";
 import { convertTokenAmountToDecimal, getHostName } from "../../utils";
 import { handleListingData } from "../../services/listing-service";
 import { handleBiddingData } from "../../services/bidding-service";
-import ProcessComponent from "./ProcessComponent/ProcessComponent";
+import ProcessComponent from "../TransactionStages/TransactionStages";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 
 type Props = {
@@ -26,10 +26,11 @@ type Props = {
 const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const { chainId, user } = useConnectionContext()!;
   const { userBalance, collectionMetadata } = useGlobalContext()!;
-  const { offerOrListModalContent } = useTransactionContext()!;
+  const { transactionNft, transactionStage, setTransactionStage } =
+    useTransactionContext()!;
   const dropdownRef = useRef(null);
 
-  const { isOffer, tokenId } = offerOrListModalContent;
+  const { isOffer, tokenId } = transactionNft;
 
   const headerContent = isOffer ? "Make an offer" : "Create a listing";
   const finalHeader = isOffer ? "Offer completed!" : "Listing completed!";
@@ -46,7 +47,6 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [offerAmount, setOfferAmount] = useState<number | string>("");
   const [isOverBalance, setIsOverBalance] = useState(false);
-  const [stage, setStage] = useState(0);
 
   useOutsideClick(dropdownRef, setShowDropdown, "duration_trigger");
 
@@ -81,24 +81,25 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     </>
   );
 
-  const initialiseListing = () => {
+  const createBidOrList = () => {
     const source = getHostName();
     const token = `${collectionContract}:${tokenId}`;
     const weiPrice = convertTokenAmountToDecimal(
       Number(offerAmount)
     ).toString();
     const expiration = String(selectedDuration.time);
+    setTransactionStage(1);
 
     if (!isOffer) {
       createListing(chainId, user!, source, token, weiPrice, expiration).then(
         async (result) => {
-          handleListingData(chainId, result, setStage);
+          handleListingData(chainId, result, setTransactionStage);
         }
       );
     } else {
       createBid(chainId, user!, source, token, weiPrice, expiration).then(
         (result) => {
-          handleBiddingData(chainId, result, setStage);
+          handleBiddingData(chainId, result, setTransactionStage);
         }
       );
     }
@@ -108,7 +109,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     <div className="modal_parent">
       <div className="modal_content">
         <p className="modal_header">
-          {stage !== 2 ? headerContent : finalHeader}
+          {transactionStage !== 2 ? headerContent : finalHeader}
         </p>
         <IoClose
           className="modal_closer"
@@ -116,15 +117,16 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
           size={25}
           onClick={() => {
             setShowOfferOrListingModal?.(false);
+            setTransactionStage(0);
           }}
         />
 
         <div className="listing_or_offer_modal">
           <div className="modal_nft_holder">
-            <ModalNft nftData={offerOrListModalContent} />
+            <ModalNft nftData={transactionNft} />
           </div>
 
-          {!stage ? (
+          {!transactionStage ? (
             <div className="listing_or_offer_modal_bottom">
               <div
                 className={`input_area ${
@@ -178,12 +180,13 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
               </div>
 
               <SolidButton
+                className="list_or_bid_submit_btn"
                 text={isOffer ? "Make Offer" : "Create Listing"}
-                onClick={initialiseListing}
+                onClick={createBidOrList}
               />
             </div>
           ) : (
-            <ProcessComponent stage={stage} />
+            <ProcessComponent stage={transactionStage} />
           )}
         </div>
       </div>

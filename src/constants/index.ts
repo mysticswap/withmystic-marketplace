@@ -73,3 +73,10 @@ export const defaultOfferOrList = {
   isOffer: true,
   tokenId: "",
 };
+
+export const scanWebsites: { [x: number]: string } = {
+  5: "https://goerli.etherscan.io/tx/",
+  1: "https://etherscan.io/tx/",
+  137: "https://polygonscan.com/tx/",
+  169: "https://pacific-explorer.manta.network/tx/",
+};

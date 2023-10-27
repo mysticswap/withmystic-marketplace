@@ -1,8 +1,8 @@
-import { OfferOrListUiData } from "../../context/TransactionContext/types";
+import { TransactionNft } from "../../context/TransactionContext/types";
 import "./ModalNft.css";
 
 type Props = {
-  nftData: OfferOrListUiData;
+  nftData: TransactionNft;
 };
 
 const ModalNft = ({ nftData }: Props) => {

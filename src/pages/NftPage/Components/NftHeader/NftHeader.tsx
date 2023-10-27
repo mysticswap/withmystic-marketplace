@@ -2,7 +2,7 @@ import OutlineButton from "../../../../components/OutlineButton/OutlineButton";
 import SolidButton from "../../../../components/SolidButton/SolidButton";
 import { useConnectionContext } from "../../../../context/ConnectionContext/ConnectionContext";
 import { useTransactionContext } from "../../../../context/TransactionContext/TransactionContext";
-import { OfferOrListUiData } from "../../../../context/TransactionContext/types";
+import { TransactionNft } from "../../../../context/TransactionContext/types";
 import { connectWallets } from "../../../../services/web3Onboard";
 import {
   Market,
@@ -27,7 +27,7 @@ const NftHeader = ({
   nftPriceData,
 }: Props) => {
   const { user, setProvider } = useConnectionContext()!;
-  const { setOfferOrListModalContent } = useTransactionContext()!;
+  const { setTransactionNft } = useTransactionContext()!;
   const collectionName = nftInfo?.collection?.name;
   const nftName = nftInfo?.name;
   const owner = nftInfo?.owner;
@@ -40,7 +40,7 @@ const NftHeader = ({
 
   const makeOffer = () => {
     triggerModal(setShowOfferOrListingModal);
-    const offerData: OfferOrListUiData = {
+    const offerData: TransactionNft = {
       collectionName,
       nftName,
       nftImage: nftInfo.image,
@@ -49,7 +49,7 @@ const NftHeader = ({
       price: Math.ceil(nftPriceData?.floorAsk?.price?.amount?.usd),
       tokenId: nftInfo?.tokenId,
     };
-    setOfferOrListModalContent(offerData);
+    setTransactionNft(offerData);
   };
 
   return (

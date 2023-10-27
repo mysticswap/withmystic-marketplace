@@ -4,7 +4,7 @@ export const executeTransactions = async (transactions: any, signer: any) => {
       try {
         const tx = await signer.sendTransaction(transaction);
         await tx.wait();
-        console.log("Transaction hash:", tx.hash);
+        return tx.hash;
       } catch (error) {
         throw new Error(`${error}`);
       }

@@ -25,7 +25,6 @@ export const handleBiddingData = async (
   ].map((item) => item.data);
 
   executeTransactions(requiredApprovals, signer).then(async () => {
-    setStage(1);
     const signTypedMessage = authorizeOffer[0].data.sign;
     let orderPost = authorizeOffer[0].data.post;
 
