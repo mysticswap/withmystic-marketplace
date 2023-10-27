@@ -27,6 +27,7 @@ import { CollectionActivity } from "../../types/reservoir-types/collection-activ
 import { CollectionTraitsV2 } from "../../types/reservoir-types/collection-traits.types";
 import { UserNfts } from "../../types/reservoir-types/user-nfts.types";
 import { useConnectionContext } from "../ConnectionContext/ConnectionContext";
+import { getHostName } from "../../utils";
 
 const GlobalContext = createContext<GlobalContextType | null>(null);
 
@@ -52,6 +53,7 @@ export const GlobalContextProvider = ({ children }: Props) => {
   const [minimalCards, setMinimalCards] = useState(true);
 
   const selectedActivityTypes = JSON.stringify(selectedActivities);
+  const source = getHostName();
 
   useEffect(() => {
     getCollectionMetadata(chainId, collectionContract).then((result) => {
@@ -133,6 +135,7 @@ export const GlobalContextProvider = ({ children }: Props) => {
         setUserNfts,
         minimalCards,
         setMinimalCards,
+        source,
       }}
     >
       {children}

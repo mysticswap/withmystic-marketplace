@@ -29,4 +29,5 @@ export type GlobalContextType = {
   setSelectedActivities: React.Dispatch<React.SetStateAction<string[]>>;
   userNfts: UserNfts;
   setUserNfts: React.Dispatch<React.SetStateAction<UserNfts>>;
+  source: string;
 };

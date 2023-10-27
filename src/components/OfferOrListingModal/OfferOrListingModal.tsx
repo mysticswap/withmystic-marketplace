@@ -105,6 +105,9 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     }
   };
 
+  const transactionButtonIsDisable =
+    Number(offerAmount) <= 0 || (isOffer && isOverBalance);
+
   return (
     <div className="modal_parent">
       <div className="modal_content">
@@ -183,6 +186,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                 className="list_or_bid_submit_btn"
                 text={isOffer ? "Make Offer" : "Create Listing"}
                 onClick={createBidOrList}
+                disabled={transactionButtonIsDisable}
               />
             </div>
           ) : (

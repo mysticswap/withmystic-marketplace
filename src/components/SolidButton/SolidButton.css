@@ -17,3 +17,8 @@
 .list_or_bid_submit_btn:active {
   transform: scale(105%);
 }
+
+.solid_button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

@@ -9,6 +9,8 @@ import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import { NftPageContextProvider } from "./context/NftPageContext/NftPageContext";
 import { ConnectionContextProvider } from "./context/ConnectionContext/ConnectionContext";
 import { TransactionContextProvider } from "./context/TransactionContext/TransactionContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -30,6 +32,7 @@ function App() {
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
               <Footer />
+              <ToastContainer />
             </Router>
           </TransactionContextProvider>
         </GlobalContextProvider>
