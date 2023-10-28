@@ -13,12 +13,13 @@ import { getHostName } from "../../utils";
 import { handleBuyData } from "../../services/buying-service";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import { TransactionNft } from "../../context/TransactionContext/types";
+import { switchChains } from "../../utils/wallet-connection";
 
 type Props = { nft: TokenElement };
 
 const NftCard = ({ nft }: Props) => {
   const { minimalCards, collectionChainId } = useGlobalContext()!;
-  const { user } = useConnectionContext()!;
+  const { user, chainId } = useConnectionContext()!;
   const {
     setShowConfirmationModal,
     setTransactionNft,
@@ -61,9 +62,13 @@ const NftCard = ({ nft }: Props) => {
     const orderId = nft?.market?.floorAsk?.id;
     const source = getHostName();
 
-    buyListedNft(collectionChainId!, orderId, user!, source).then((result) => {
-      setTransactionStage(1);
-      handleBuyData(result, setTransactionStage, setTransactionHash);
+    switchChains(chainId, collectionChainId!).then(() => {
+      buyListedNft(collectionChainId!, orderId, user!, source).then(
+        (result) => {
+          setTransactionStage(1);
+          handleBuyData(result, setTransactionStage, setTransactionHash);
+        }
+      );
     });
   };
 

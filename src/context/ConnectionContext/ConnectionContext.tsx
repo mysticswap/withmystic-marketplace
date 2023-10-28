@@ -54,7 +54,7 @@ export const ConnectionContextProvider = ({ children }: Props) => {
     });
 
     window.ethereum.on("chainChanged", (Id: string) => {
-      window.location.reload();
+      // window.location.reload();
       const chainId = parseInt(Id, 16);
       setChainId(chainId);
     });

@@ -18,13 +18,14 @@ import { handleListingData } from "../../services/listing-service";
 import { handleBiddingData } from "../../services/bidding-service";
 import ProcessComponent from "../TransactionStages/TransactionStages";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
+import { switchChains } from "../../utils/wallet-connection";
 
 type Props = {
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
-  const { user } = useConnectionContext()!;
+  const { user, chainId } = useConnectionContext()!;
   const { userBalance, collectionMetadata, collectionChainId } =
     useGlobalContext()!;
   const { transactionNft, transactionStage, setTransactionStage } =
@@ -91,29 +92,31 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     const expiration = String(selectedDuration.time);
     setTransactionStage(1);
 
-    if (!isOffer) {
-      createListing(
-        collectionChainId!,
-        user!,
-        source,
-        token,
-        weiPrice,
-        expiration
-      ).then(async (result) => {
-        handleListingData(collectionChainId!, result, setTransactionStage);
-      });
-    } else {
-      createBid(
-        collectionChainId!,
-        user!,
-        source,
-        token,
-        weiPrice,
-        expiration
-      ).then((result) => {
-        handleBiddingData(collectionChainId!, result, setTransactionStage);
-      });
-    }
+    switchChains(chainId, collectionChainId!).then(() => {
+      if (!isOffer) {
+        createListing(
+          collectionChainId!,
+          user!,
+          source,
+          token,
+          weiPrice,
+          expiration
+        ).then(async (result) => {
+          handleListingData(collectionChainId!, result, setTransactionStage);
+        });
+      } else {
+        createBid(
+          collectionChainId!,
+          user!,
+          source,
+          token,
+          weiPrice,
+          expiration
+        ).then((result) => {
+          handleBiddingData(collectionChainId!, result, setTransactionStage);
+        });
+      }
+    });
   };
 
   const transactionButtonIsDisable =

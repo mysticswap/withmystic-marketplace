@@ -11,6 +11,7 @@ import { acceptOffer } from "../../../../services/api/buy-offer-list.api";
 import { handleBuyData } from "../../../../services/buying-service";
 import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
 import { useTransactionContext } from "../../../../context/TransactionContext/TransactionContext";
+import { switchChains } from "../../../../utils/wallet-connection";
 
 type Props = {
   nftOffers: NftOffers;
@@ -19,7 +20,7 @@ type Props = {
 };
 
 const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
-  const { user } = useConnectionContext()!;
+  const { user, chainId } = useConnectionContext()!;
   const { collectionChainId } = useGlobalContext()!;
   const { nftInfo } = useNftPageContext()!;
   const { setTransactionStage, setTransactionHash } = useTransactionContext()!;
@@ -44,8 +45,10 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
 
   const acceptBid = () => {
     const source = getHostName();
-    acceptOffer(collectionChainId!, user!, token, source).then((result) => {
-      handleBuyData(result, setTransactionStage, setTransactionHash);
+    switchChains(chainId, collectionChainId!).then(() => {
+      acceptOffer(collectionChainId!, user!, token, source).then((result) => {
+        handleBuyData(result, setTransactionStage, setTransactionHash);
+      });
     });
   };
 
