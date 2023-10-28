@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
 import "./NftPage.css";
 import TraitsHolder from "./Components/TraitsHolder/TraitsHolder";
 import DescriptionHolder from "./Components/DescriptionHolder/DescriptionHolder";
@@ -27,10 +26,12 @@ const NftPage = () => {
     nftInfo,
     nftPriceData,
   } = useNftPageContext()!;
-  const { showOfferOrListingModal, setShowOfferOrListingModal } =
-    useTransactionContext()!;
-
-  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const {
+    showOfferOrListingModal,
+    setShowOfferOrListingModal,
+    showConfirmationModal,
+    setShowConfirmationModal,
+  } = useTransactionContext()!;
 
   const contractAddress = collectionContract;
 

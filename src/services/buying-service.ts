@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 import { BuyData } from "../types/reservoir-types/buy-data.types";
 import { executeTransactions } from "./seaport";
 
-export const handleBuyData = async (
+export const handleBuyOrSellData = async (
   data: BuyData,
   setTransactionStage: React.Dispatch<React.SetStateAction<number>>,
   setTransactionHash: React.Dispatch<React.SetStateAction<string>>

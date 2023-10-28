@@ -5,7 +5,7 @@ import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContex
 import { useTransactionContext } from "../../../../context/TransactionContext/TransactionContext";
 import { TransactionNft } from "../../../../context/TransactionContext/types";
 import { buyListedNft } from "../../../../services/api/buy-offer-list.api";
-import { handleBuyData } from "../../../../services/buying-service";
+import { handleBuyOrSellData } from "../../../../services/buying-service";
 import { connectWallets } from "../../../../services/web3Onboard";
 import {
   Market,
@@ -44,6 +44,7 @@ const NftHeader = ({
     nftName,
     nftImage: nftInfo?.image,
     isOffer: !userIsOwner,
+    isSale: false,
     amount: nftPriceData?.floorAsk?.price?.amount?.decimal,
     price: Math.ceil(nftPriceData?.floorAsk?.price?.amount?.usd),
     tokenId: nftInfo?.tokenId,
@@ -65,7 +66,7 @@ const NftHeader = ({
       buyListedNft(collectionChainId!, orderId, user!, source).then(
         (result) => {
           setTransactionStage(1);
-          handleBuyData(result, setTransactionStage, setTransactionHash);
+          handleBuyOrSellData(result, setTransactionStage, setTransactionHash);
         }
       );
   };
@@ -89,10 +90,12 @@ const NftHeader = ({
         </div>
       </div>
       <div className="nft_header_button_holder">
-        <SolidButton
-          text={!userIsOwner ? "Buy Now" : "List for Sale"}
-          onClick={buyOrList}
-        />
+        {orderId && (
+          <SolidButton
+            text={!userIsOwner ? "Buy Now" : "List for Sale"}
+            onClick={buyOrList}
+          />
+        )}
         {!userIsOwner && (
           <OutlineButton text="Make Offer" onClick={makeOffer} />
         )}

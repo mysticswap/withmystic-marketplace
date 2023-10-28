@@ -27,6 +27,7 @@ const UserNftCard = ({ nft, setShowUserNftsModal }: Props) => {
       nftName: nft.token.name,
       nftImage: nft.token.image,
       isOffer: false,
+      isSale: false,
       amount: nft?.token?.lastSale?.price?.amount?.decimal!,
       price: nft?.token?.lastSale?.price?.amount?.usd!,
       tokenId: nft?.token?.tokenId,

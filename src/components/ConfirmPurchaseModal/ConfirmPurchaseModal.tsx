@@ -16,14 +16,18 @@ const ConfirmPurchaseModal = ({ setShowConfirmationModal }: Props) => {
     setTransactionStage,
   } = useTransactionContext()!;
   const nftData = transactionNft;
+  const modalTitle = transactionNft.isSale
+    ? "Confirm transaction"
+    : "Confirm purchase";
+  const successMessage = transactionNft.isSale
+    ? "Congratulations on your sale!"
+    : "Congratulations on your purchase!";
 
   return (
     <div className="modal_parent">
       <div className="modal_content">
         <p className="modal_header">
-          {transactionStage !== 2
-            ? "Confirm purchase"
-            : "Congratulations on your purchase!"}
+          {transactionStage !== 2 ? modalTitle : successMessage}
         </p>
         <IoClose
           className="modal_closer"

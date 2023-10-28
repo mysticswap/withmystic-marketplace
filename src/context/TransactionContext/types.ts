@@ -18,5 +18,6 @@ export type TransactionNft = {
   amount: number;
   price: number;
   isOffer: boolean;
+  isSale: boolean;
   tokenId: string;
 };

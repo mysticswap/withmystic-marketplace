@@ -8,10 +8,11 @@ import { useState } from "react";
 import { useConnectionContext } from "../../../../context/ConnectionContext/ConnectionContext";
 import { useNftPageContext } from "../../../../context/NftPageContext/NftPageContext";
 import { acceptOffer } from "../../../../services/api/buy-offer-list.api";
-import { handleBuyData } from "../../../../services/buying-service";
+import { handleBuyOrSellData } from "../../../../services/buying-service";
 import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
 import { useTransactionContext } from "../../../../context/TransactionContext/TransactionContext";
 import { switchChains } from "../../../../utils/wallet-connection";
+import { TransactionNft } from "../../../../context/TransactionContext/types";
 
 type Props = {
   nftOffers: NftOffers;
@@ -23,7 +24,12 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
   const { user, chainId } = useConnectionContext()!;
   const { collectionChainId } = useGlobalContext()!;
   const { nftInfo } = useNftPageContext()!;
-  const { setTransactionStage, setTransactionHash } = useTransactionContext()!;
+  const {
+    setTransactionStage,
+    setTransactionHash,
+    setShowConfirmationModal,
+    setTransactionNft,
+  } = useTransactionContext()!;
   const [isFetching, setIsFetching] = useState(false);
   const token = `${collectionContract}:${tokenId}`;
 
@@ -43,11 +49,24 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
 
   const isOwner = nftInfo?.owner?.toLowerCase() == user?.toLowerCase();
 
-  const acceptBid = () => {
+  const acceptBid = (amount: number, price: number) => {
+    const transactionNft: TransactionNft = {
+      collectionName: nftInfo?.collection?.name,
+      nftName: nftInfo?.name,
+      nftImage: nftInfo?.image,
+      amount,
+      price,
+      isOffer: false,
+      isSale: true,
+      tokenId: nftInfo.tokenId,
+    };
+    setTransactionNft(transactionNft);
+    setShowConfirmationModal(true);
     const source = getHostName();
     switchChains(chainId, collectionChainId!).then(() => {
       acceptOffer(collectionChainId!, user!, token, source).then((result) => {
-        handleBuyData(result, setTransactionStage, setTransactionHash);
+        setTransactionStage(1);
+        handleBuyOrSellData(result, setTransactionStage, setTransactionHash);
       });
     });
   };
@@ -67,6 +86,7 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
             let altTimeStamp =
               timeStamp.startsWith("in") && timeStamp.substring(2);
             const price = order.price.amount.decimal;
+            const usd = order.price.amount.usd;
             const symbol = order.price.currency.symbol;
 
             return (
@@ -77,7 +97,10 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
                 <p>{altTimeStamp || timeStamp}</p>
                 <p>{truncateAddress(order.maker, 5, "...")}</p>
                 {isOwner && (
-                  <button className="offer_accept_button" onClick={acceptBid}>
+                  <button
+                    className="offer_accept_button"
+                    onClick={() => acceptBid(price, usd)}
+                  >
                     Accept
                   </button>
                 )}

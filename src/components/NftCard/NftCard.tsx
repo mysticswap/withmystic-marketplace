@@ -10,7 +10,7 @@ import { useIsOverflow } from "../../hooks/useIsOverflow";
 import { buyListedNft } from "../../services/api/buy-offer-list.api";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 import { getHostName } from "../../utils";
-import { handleBuyData } from "../../services/buying-service";
+import { handleBuyOrSellData } from "../../services/buying-service";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import { TransactionNft } from "../../context/TransactionContext/types";
 import { switchChains } from "../../utils/wallet-connection";
@@ -54,6 +54,7 @@ const NftCard = ({ nft }: Props) => {
       amount: Number(currentEthAmount),
       price: currentValue,
       isOffer: false,
+      isSale: false,
       tokenId: nftId,
     };
     setTransactionNft(transactionNft);
@@ -66,7 +67,7 @@ const NftCard = ({ nft }: Props) => {
       buyListedNft(collectionChainId!, orderId, user!, source).then(
         (result) => {
           setTransactionStage(1);
-          handleBuyData(result, setTransactionStage, setTransactionHash);
+          handleBuyOrSellData(result, setTransactionStage, setTransactionHash);
         }
       );
     });

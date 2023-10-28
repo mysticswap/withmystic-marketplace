@@ -78,8 +78,6 @@ const CardsHolder = () => {
         numericFilters
       )
         .then((result) => {
-          console.log("fired from onscroll");
-
           setCollectionNfts({
             tokens: [...collectionNfts.tokens, ...result.tokens],
             continuation: result.continuation,
@@ -105,8 +103,6 @@ const CardsHolder = () => {
       undefined,
       numericFilters
     ).then((result) => {
-      console.log("fired from traits selection");
-
       setCollectionNfts(result);
       setIsFetching(false);
     });
