@@ -32,18 +32,17 @@ const NftHeader = ({
   const { user, setProvider } = useConnectionContext()!;
   const { setTransactionNft, setTransactionStage, setTransactionHash } =
     useTransactionContext()!;
-  const { source } = useGlobalContext()!;
+  const { source, collectionChainId } = useGlobalContext()!;
   const collectionName = nftInfo?.collection?.name;
   const nftName = nftInfo?.name;
   const owner = nftInfo?.owner;
-  const chainId = nftInfo?.chainId;
   const orderId = nftPriceData?.floorAsk?.id;
-  const userIsOwner = user?.toLowerCase() == owner.toLowerCase();
+  const userIsOwner = user?.toLowerCase() == owner?.toLowerCase();
 
   const transactionNft: TransactionNft = {
     collectionName,
     nftName,
-    nftImage: nftInfo.image,
+    nftImage: nftInfo?.image,
     isOffer: !userIsOwner,
     amount: nftPriceData?.floorAsk?.price?.amount?.decimal,
     price: Math.ceil(nftPriceData?.floorAsk?.price?.amount?.usd),
@@ -63,10 +62,12 @@ const NftHeader = ({
       : triggerModal(setShowOfferOrListingModal);
 
     !userIsOwner &&
-      buyListedNft(chainId, orderId, user!, source).then((result) => {
-        setTransactionStage(1);
-        handleBuyData(result, setTransactionStage, setTransactionHash);
-      });
+      buyListedNft(collectionChainId!, orderId, user!, source).then(
+        (result) => {
+          setTransactionStage(1);
+          handleBuyData(result, setTransactionStage, setTransactionHash);
+        }
+      );
   };
 
   const makeOffer = () => {

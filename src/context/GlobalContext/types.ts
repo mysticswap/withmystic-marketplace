@@ -30,4 +30,5 @@ export type GlobalContextType = {
   userNfts: UserNfts;
   setUserNfts: React.Dispatch<React.SetStateAction<UserNfts>>;
   source: string;
+  collectionChainId: number | undefined;
 };

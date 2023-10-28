@@ -17,7 +17,7 @@ import { TransactionNft } from "../../context/TransactionContext/types";
 type Props = { nft: TokenElement };
 
 const NftCard = ({ nft }: Props) => {
-  const { minimalCards } = useGlobalContext()!;
+  const { minimalCards, collectionChainId } = useGlobalContext()!;
   const { user } = useConnectionContext()!;
   const {
     setShowConfirmationModal,
@@ -57,11 +57,11 @@ const NftCard = ({ nft }: Props) => {
     };
     setTransactionNft(transactionNft);
     setShowConfirmationModal(true);
-    const chainId = nft?.token?.chainId;
+
     const orderId = nft?.market?.floorAsk?.id;
     const source = getHostName();
 
-    buyListedNft(chainId, orderId, user!, source).then((result) => {
+    buyListedNft(collectionChainId!, orderId, user!, source).then((result) => {
       setTransactionStage(1);
       handleBuyData(result, setTransactionStage, setTransactionHash);
     });

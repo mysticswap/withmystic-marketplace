@@ -12,7 +12,7 @@ import { useConnectionContext } from "../../context/ConnectionContext/Connection
 
 const CardsHolder = () => {
   const { chainId } = useConnectionContext()!;
-  const { collectionNfts, setCollectionNfts, minimalCards } =
+  const { collectionNfts, setCollectionNfts, minimalCards, collectionChainId } =
     useGlobalContext()!;
   const {
     showFilters,
@@ -68,7 +68,7 @@ const CardsHolder = () => {
     if (isAtBottom && collectionNfts.continuation) {
       setIsFetching(true);
       getCollectionNftsV2(
-        chainId,
+        collectionChainId! || chainId,
         selectedDropdownOption.value,
         selectedDropdownOption.order,
         collectionContract,
@@ -78,6 +78,8 @@ const CardsHolder = () => {
         numericFilters
       )
         .then((result) => {
+          console.log("fired from onscroll");
+
           setCollectionNfts({
             tokens: [...collectionNfts.tokens, ...result.tokens],
             continuation: result.continuation,
@@ -94,7 +96,7 @@ const CardsHolder = () => {
     setCollectionNfts({ tokens: [], continuation: null });
     setIsFetching(true);
     getCollectionNftsV2(
-      chainId,
+      collectionChainId! || chainId,
       selectedDropdownOption.value,
       selectedDropdownOption.order,
       collectionContract,
@@ -103,6 +105,8 @@ const CardsHolder = () => {
       undefined,
       numericFilters
     ).then((result) => {
+      console.log("fired from traits selection");
+
       setCollectionNfts(result);
       setIsFetching(false);
     });

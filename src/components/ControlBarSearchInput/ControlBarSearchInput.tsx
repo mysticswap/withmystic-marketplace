@@ -4,11 +4,10 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-api";
 import { generateAttributeString } from "../../utils";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
-import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 
 const ControlBarSearchInput = () => {
-  const { chainId } = useConnectionContext()!;
-  const { setCollectionNfts, collectionMetadata } = useGlobalContext()!;
+  const { setCollectionNfts, collectionMetadata, collectionChainId } =
+    useGlobalContext()!;
   const { selectedTraits, setIsFetching, selectedDropdownOption } =
     useHomeContext()!;
   const contractAddress = collectionMetadata?.collections?.[0]?.primaryContract;
@@ -21,7 +20,7 @@ const ControlBarSearchInput = () => {
     const attribute = generateAttributeString(selectedTraits);
 
     getCollectionNftsV2(
-      chainId,
+      collectionChainId!,
       selectedDropdownOption.value,
       selectedDropdownOption.order,
       undefined,
@@ -35,7 +34,7 @@ const ControlBarSearchInput = () => {
 
     if (!id) {
       getCollectionNftsV2(
-        chainId,
+        collectionChainId!,
         selectedDropdownOption.value,
         selectedDropdownOption.order,
         contractAddress,

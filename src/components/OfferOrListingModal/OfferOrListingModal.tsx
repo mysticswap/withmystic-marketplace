@@ -24,8 +24,9 @@ type Props = {
 };
 
 const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
-  const { chainId, user } = useConnectionContext()!;
-  const { userBalance, collectionMetadata } = useGlobalContext()!;
+  const { user } = useConnectionContext()!;
+  const { userBalance, collectionMetadata, collectionChainId } =
+    useGlobalContext()!;
   const { transactionNft, transactionStage, setTransactionStage } =
     useTransactionContext()!;
   const dropdownRef = useRef(null);
@@ -91,17 +92,27 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     setTransactionStage(1);
 
     if (!isOffer) {
-      createListing(chainId, user!, source, token, weiPrice, expiration).then(
-        async (result) => {
-          handleListingData(chainId, result, setTransactionStage);
-        }
-      );
+      createListing(
+        collectionChainId!,
+        user!,
+        source,
+        token,
+        weiPrice,
+        expiration
+      ).then(async (result) => {
+        handleListingData(collectionChainId!, result, setTransactionStage);
+      });
     } else {
-      createBid(chainId, user!, source, token, weiPrice, expiration).then(
-        (result) => {
-          handleBiddingData(chainId, result, setTransactionStage);
-        }
-      );
+      createBid(
+        collectionChainId!,
+        user!,
+        source,
+        token,
+        weiPrice,
+        expiration
+      ).then((result) => {
+        handleBiddingData(collectionChainId!, result, setTransactionStage);
+      });
     }
   };
 

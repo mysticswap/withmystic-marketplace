@@ -9,6 +9,8 @@ import { useConnectionContext } from "../../../../context/ConnectionContext/Conn
 import { useNftPageContext } from "../../../../context/NftPageContext/NftPageContext";
 import { acceptOffer } from "../../../../services/api/buy-offer-list.api";
 import { handleBuyData } from "../../../../services/buying-service";
+import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
+import { useTransactionContext } from "../../../../context/TransactionContext/TransactionContext";
 
 type Props = {
   nftOffers: NftOffers;
@@ -17,14 +19,16 @@ type Props = {
 };
 
 const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
-  const { chainId, user } = useConnectionContext()!;
+  const { user } = useConnectionContext()!;
+  const { collectionChainId } = useGlobalContext()!;
   const { nftInfo } = useNftPageContext()!;
+  const { setTransactionStage, setTransactionHash } = useTransactionContext()!;
   const [isFetching, setIsFetching] = useState(false);
   const token = `${collectionContract}:${tokenId}`;
 
   const fetchMoreOffers = () => {
     setIsFetching(true);
-    getNftOffers(chainId, token, nftOffers.continuation!)
+    getNftOffers(collectionChainId!, token, nftOffers.continuation!)
       .then((result) => {
         setNftOffers({
           orders: [...nftOffers.orders, ...result.orders],
@@ -39,10 +43,9 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
   const isOwner = nftInfo?.owner?.toLowerCase() == user?.toLowerCase();
 
   const acceptBid = () => {
-    const chainId = nftInfo.chainId;
     const source = getHostName();
-    acceptOffer(chainId, user!, token, source).then((result) => {
-      handleBuyData(result);
+    acceptOffer(collectionChainId!, user!, token, source).then((result) => {
+      handleBuyData(result, setTransactionStage, setTransactionHash);
     });
   };
 

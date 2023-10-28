@@ -6,15 +6,14 @@ import SolidButton from "../SolidButton/SolidButton";
 import { BiLoaderCircle } from "react-icons/bi";
 import { getCollectionActivity } from "../../services/api/marketplace-reservoir-api";
 import FiltersSidebar from "../FiltersSidebar/FiltersSidebar";
-import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 
 const ActivityScreen = () => {
-  const { chainId } = useConnectionContext()!;
   const {
     collectionMetadata,
     collectionActivity,
     setCollectionActivity,
     selectedActivities,
+    collectionChainId,
   } = useGlobalContext()!;
   const [activities, setActivities] = useState(collectionActivity?.activities);
   const [canFetch, setCanFetch] = useState(true);
@@ -29,7 +28,7 @@ const ActivityScreen = () => {
     setCanFetch(false);
     setIsFetching(true);
     getCollectionActivity(
-      chainId,
+      collectionChainId!,
       collectionMetadata?.collections[0].primaryContract!,
       selectedActivityTypes
     )

@@ -7,7 +7,6 @@ import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-ap
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { collectionContract } from "../../config";
 import { generateAttributeString } from "../../utils";
-import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 
 type Props = {
   title: string;
@@ -15,8 +14,7 @@ type Props = {
 };
 
 const NumericFilters = ({ title, isRarity }: Props) => {
-  const { chainId } = useConnectionContext()!;
-  const { setCollectionNfts } = useGlobalContext()!;
+  const { setCollectionNfts, collectionChainId } = useGlobalContext()!;
   const {
     numericFilters,
     setNumericFilters,
@@ -51,7 +49,7 @@ const NumericFilters = ({ title, isRarity }: Props) => {
       setNumericFilters(updatedValues);
       setCollectionNfts({ tokens: [], continuation: null });
       getCollectionNftsV2(
-        chainId,
+        collectionChainId!,
         selectedDropdownOption.value,
         selectedDropdownOption.order,
         collectionContract,

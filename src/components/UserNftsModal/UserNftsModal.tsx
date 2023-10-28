@@ -14,12 +14,17 @@ type Props = {
 
 const UserNftsModal = ({ setShowUserNftsModal }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { userNfts, setUserNfts } = useGlobalContext()!;
-  const { chainId, user } = useConnectionContext()!;
+  const { userNfts, setUserNfts, collectionChainId } = useGlobalContext()!;
+  const { user } = useConnectionContext()!;
 
   const fetchMore = () => {
     setIsLoading(true);
-    getUserNfts(chainId, user!, collectionContract, userNfts.continuation!)
+    getUserNfts(
+      collectionChainId!,
+      user!,
+      collectionContract,
+      userNfts.continuation!
+    )
       .then((result) => {
         setUserNfts({
           tokens: [...userNfts.tokens, ...result.tokens],

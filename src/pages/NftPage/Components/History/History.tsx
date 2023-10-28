@@ -7,7 +7,7 @@ import { activityRenames, reservoirActivityTypes } from "../../../../constants";
 import { ActivityRowAddress } from "../../../../components/ActivityRow/ActivityRow";
 import { useState } from "react";
 import { getNftActivity } from "../../../../services/api/marketplace-reservoir-api";
-import { useConnectionContext } from "../../../../context/ConnectionContext/ConnectionContext";
+import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
 
 type Props = {
   nftActivity: NftActivity;
@@ -16,12 +16,12 @@ type Props = {
 };
 
 const History = ({ nftActivity, token, setNftActivity }: Props) => {
-  const { chainId } = useConnectionContext()!;
+  const { collectionChainId } = useGlobalContext()!;
   const [isFetching, setIsFetching] = useState(false);
   const fetchMoreActivity = () => {
     setIsFetching(true);
     getNftActivity(
-      chainId,
+      collectionChainId!,
       token,
       reservoirActivityTypes,
       nftActivity.continuation!

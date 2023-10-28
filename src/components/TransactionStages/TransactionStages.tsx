@@ -4,7 +4,7 @@ import { RiTwitterXLine } from "react-icons/ri";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import { TbExternalLink } from "react-icons/tb";
 import { scanWebsites } from "../../constants";
-import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
 type Props = {
   stage: number;
@@ -12,7 +12,7 @@ type Props = {
 
 const TransactionStages = ({ stage }: Props) => {
   const { transactionHash } = useTransactionContext()!;
-  const { chainId } = useConnectionContext()!;
+  const { collectionChainId } = useGlobalContext()!;
   return (
     <div className="process_component">
       {stage == 1 && (
@@ -30,7 +30,9 @@ const TransactionStages = ({ stage }: Props) => {
             <button
               className="modal_transaction_button"
               onClick={() =>
-                window.open(`${scanWebsites[chainId]}${transactionHash}`)
+                window.open(
+                  `${scanWebsites[collectionChainId!]}${transactionHash}`
+                )
               }
             >
               Transaction <TbExternalLink display="block" />

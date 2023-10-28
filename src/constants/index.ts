@@ -80,3 +80,9 @@ export const scanWebsites: { [x: number]: string } = {
   137: "https://polygonscan.com/tx/",
   169: "https://pacific-explorer.manta.network/tx/",
 };
+
+export const chainIdsMap: { [x: number]: string } = {
+  1: "0x1",
+  5: "0x5",
+  137: "0x89",
+};

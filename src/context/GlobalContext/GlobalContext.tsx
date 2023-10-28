@@ -54,6 +54,7 @@ export const GlobalContextProvider = ({ children }: Props) => {
 
   const selectedActivityTypes = JSON.stringify(selectedActivities);
   const source = getHostName();
+  const collectionChainId = collectionMetadata?.collections?.[0]?.chainId;
 
   useEffect(() => {
     getCollectionMetadata(chainId, collectionContract).then((result) => {
@@ -99,20 +100,24 @@ export const GlobalContextProvider = ({ children }: Props) => {
   }, [selectedActivities]);
 
   useEffect(() => {
-    if (user) {
-      getUserNfts(chainId, user, collectionContract).then((result) => {
-        setUserNfts(result);
-      });
+    if (user && collectionChainId) {
+      getUserNfts(collectionChainId, user, collectionContract).then(
+        (result) => {
+          setUserNfts(result);
+        }
+      );
     }
-  }, [user]);
+  }, [user, collectionMetadata]);
 
   useEffect(() => {
     if (user) {
-      getUserBalance(user!, chainId, API_KEY).then((result) => {
-        setUserBalance(result);
-      });
+      getUserBalance(user!, collectionChainId! || chainId, API_KEY).then(
+        (result) => {
+          setUserBalance(result);
+        }
+      );
     }
-  }, [user, chainId]);
+  }, [user, chainId, collectionChainId]);
 
   return (
     <GlobalContext.Provider
@@ -136,6 +141,7 @@ export const GlobalContextProvider = ({ children }: Props) => {
         minimalCards,
         setMinimalCards,
         source,
+        collectionChainId,
       }}
     >
       {children}
