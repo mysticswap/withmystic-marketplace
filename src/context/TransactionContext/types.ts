@@ -9,6 +9,7 @@ export type TransactionContextType = {
   setTransactionStage: React.Dispatch<React.SetStateAction<number>>;
   transactionHash: string;
   setTransactionHash: React.Dispatch<React.SetStateAction<string>>;
+  userCanCompleteTransaction: boolean;
 };
 
 export type TransactionNft = {

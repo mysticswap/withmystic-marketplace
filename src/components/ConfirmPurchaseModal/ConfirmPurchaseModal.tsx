@@ -3,6 +3,7 @@ import "./ConfirmPurchaseModal.css";
 import ModalNft from "../ModalNft/ModalNft";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import TransactionStages from "../TransactionStages/TransactionStages";
+import { TbMoodSadSquint } from "react-icons/tb";
 
 type Props = {
   setShowConfirmationModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,6 +15,7 @@ const ConfirmPurchaseModal = ({ setShowConfirmationModal }: Props) => {
     transactionStage,
     setTransactionHash,
     setTransactionStage,
+    userCanCompleteTransaction,
   } = useTransactionContext()!;
   const nftData = transactionNft;
   const modalTitle = transactionNft.isSale
@@ -43,16 +45,26 @@ const ConfirmPurchaseModal = ({ setShowConfirmationModal }: Props) => {
           <div className="modal_nft_holder">
             <ModalNft nftData={nftData} />
           </div>
-          {!transactionStage ? (
-            <div className="confirm_purchase_modal_buttom">
-              <p>Confirm in Wallet</p>
-              <p>
-                Approve this purchase by accepting the transaction in your
-                wallet.
-              </p>
-            </div>
+
+          {userCanCompleteTransaction ? (
+            <>
+              {!transactionStage ? (
+                <div className="confirm_purchase_modal_buttom">
+                  <p>Confirm in Wallet</p>
+                  <p>
+                    Approve this purchase by accepting the transaction in your
+                    wallet.
+                  </p>
+                </div>
+              ) : (
+                <TransactionStages stage={transactionStage} />
+              )}
+            </>
           ) : (
-            <TransactionStages stage={transactionStage} />
+            <div className="stage">
+              <TbMoodSadSquint size={50} color="red" />
+              <p>Insufficient funds</p>
+            </div>
           )}
         </div>
       </div>
