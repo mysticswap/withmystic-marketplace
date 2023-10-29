@@ -2,6 +2,8 @@ import { BsFillCartFill, BsTagFill } from "react-icons/bs";
 import { FaMoneyBillTransfer, FaRectangleList } from "react-icons/fa6";
 import { IoSparklesSharp } from "react-icons/io5";
 import { addDays, addHours, addMonths } from "../utils/date-utils";
+import maticIcon from "../assets/matic.svg";
+import ethereumIcon from "../assets/ethereum-1.svg";
 
 export const reservoirActivityTypes = JSON.stringify([
   "sale",
@@ -86,4 +88,10 @@ export const chainIdsMap: { [x: number]: string } = {
   1: "0x1",
   5: "0x5",
   137: "0x89",
+};
+
+export const collectionNetworkIcon: { [x: number]: string } = {
+  1: ethereumIcon,
+  5: ethereumIcon,
+  137: maticIcon,
 };
