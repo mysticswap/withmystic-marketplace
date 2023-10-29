@@ -26,7 +26,7 @@ export const ConnectionContextProvider = ({ children }: Props) => {
   const [user, setUser] = useState<string | null>(null);
   const [provider, setProvider] =
     useState<ethers.providers.Web3Provider | null>(null);
-  const [chainId, setChainId] = useState(5);
+  const [chainId, setChainId] = useState(1);
 
   useEffect(() => {
     if (provider) {
