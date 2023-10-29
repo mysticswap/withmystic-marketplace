@@ -89,7 +89,7 @@ export const GlobalContextProvider = ({ children }: Props) => {
     }
     setCollectionActivity({} as CollectionActivity);
     getCollectionActivity(
-      chainId,
+      collectionChainId! || chainId,
       collectionContract,
       selectedActivities.length < 1
         ? reservoirActivityTypes
