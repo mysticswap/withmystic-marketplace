@@ -54,11 +54,11 @@ const StatusFilters = () => {
         Status{" "}
         <RiArrowUpSLine
           className="status_down_arrow"
-          aria-expanded={showList}
+          aria-expanded={!showList}
           size={20}
         />
       </button>
-      <ul className="status_list" aria-expanded={showList}>
+      <ul className="status_list" aria-expanded={!showList}>
         <StatusListItem
           text="Buy now only"
           handleClick={() => handleBuyOrListingFilter(true)}

@@ -51,12 +51,12 @@ const TraitFilter = ({ attribute }: Props) => {
         {attribute.key}{" "}
         <RiArrowUpSLine
           className="status_down_arrow"
-          aria-expanded={showList}
+          aria-expanded={!showList}
           size={20}
         />
       </button>
 
-      <div className="trait_container" aria-expanded={showList}>
+      <div className="trait_container" aria-expanded={!showList}>
         <div className="trait_search">
           <input
             type="text"

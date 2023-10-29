@@ -70,11 +70,11 @@ const NumericFilters = ({ title, isRarity }: Props) => {
         {title}{" "}
         <RiArrowUpSLine
           className="status_down_arrow"
-          aria-expanded={showList}
+          aria-expanded={!showList}
           size={20}
         />
       </button>
-      <div className="minmax" aria-expanded={showList}>
+      <div className="minmax" aria-expanded={!showList}>
         <input
           type="text"
           placeholder="Min"
