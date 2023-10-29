@@ -43,3 +43,7 @@
 .nft_header_button_holder button {
   width: 48%;
 }
+
+.refreshing {
+  animation: rotate 1s infinite;
+}

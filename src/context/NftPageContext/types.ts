@@ -17,4 +17,5 @@ export type NftPageContextType = {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   nftInfo: TokenToken;
   nftPriceData: Market;
+  token: string;
 };

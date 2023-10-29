@@ -1,10 +1,13 @@
+import { useEffect, useState } from "react";
 import OutlineButton from "../../../../components/OutlineButton/OutlineButton";
 import SolidButton from "../../../../components/SolidButton/SolidButton";
 import { useConnectionContext } from "../../../../context/ConnectionContext/ConnectionContext";
 import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
+import { useNftPageContext } from "../../../../context/NftPageContext/NftPageContext";
 import { useTransactionContext } from "../../../../context/TransactionContext/TransactionContext";
 import { TransactionNft } from "../../../../context/TransactionContext/types";
 import { buyListedNft } from "../../../../services/api/buy-offer-list.api";
+import { getSingleNftV2 } from "../../../../services/api/marketplace-reservoir-api";
 import { handleBuyOrSellData } from "../../../../services/buying-service";
 import { connectWallets } from "../../../../services/web3Onboard";
 import {
@@ -15,6 +18,7 @@ import { truncateAddress } from "../../../../utils";
 import "./NftHeader.css";
 import { IoShareSocial } from "react-icons/io5";
 import { LuRefreshCw } from "react-icons/lu";
+import { BsCheckCircleFill } from "react-icons/bs";
 
 type Props = {
   nftInfo: TokenToken;
@@ -33,6 +37,11 @@ const NftHeader = ({
   const { setTransactionNft, setTransactionStage, setTransactionHash } =
     useTransactionContext()!;
   const { source, collectionChainId } = useGlobalContext()!;
+  const { token, setNftDataV2 } = useNftPageContext()!;
+
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [hasRefreshed, setHasRefreshed] = useState(false);
+
   const collectionName = nftInfo?.collection?.name;
   const nftName = nftInfo?.name;
   const owner = nftInfo?.owner;
@@ -76,6 +85,23 @@ const NftHeader = ({
     setTransactionNft(transactionNft);
   };
 
+  const refreshMetadata = () => {
+    setIsRefreshing(true);
+    getSingleNftV2(collectionChainId!, token).then((result) => {
+      setNftDataV2(result);
+      setIsRefreshing(false);
+      setHasRefreshed(true);
+    });
+  };
+
+  useEffect(() => {
+    if (hasRefreshed) {
+      setTimeout(() => {
+        setHasRefreshed(false);
+      }, 3000);
+    }
+  }, [hasRefreshed]);
+
   return (
     <div className="nft_header">
       <p>{collectionName}</p>
@@ -86,7 +112,13 @@ const NftHeader = ({
         </p>
         <div>
           <IoShareSocial />
-          <LuRefreshCw />
+          {!hasRefreshed && (
+            <LuRefreshCw
+              className={isRefreshing ? "refreshing" : ""}
+              onClick={refreshMetadata}
+            />
+          )}
+          {hasRefreshed && <BsCheckCircleFill size={20} color="green" />}
         </div>
       </div>
       <div className="nft_header_button_holder">

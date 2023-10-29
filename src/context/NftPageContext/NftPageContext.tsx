@@ -71,6 +71,7 @@ export const NftPageContextProvider = ({ children }: Props) => {
         setIsLoading,
         nftInfo,
         nftPriceData,
+        token,
       }}
     >
       {children}
