@@ -18,12 +18,13 @@ import {
   Market,
   TokenToken,
 } from "../../../../types/reservoir-types/collection-nfts.types";
-import { truncateAddress } from "../../../../utils";
+import { redirectToMSWalletPage, truncateAddress } from "../../../../utils";
 import "./NftHeader.css";
 import { IoShareSocial } from "react-icons/io5";
 import { LuRefreshCw } from "react-icons/lu";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { reservoirActivityTypes } from "../../../../constants";
+import { Link } from "react-router-dom";
 
 type Props = {
   nftInfo: TokenToken;
@@ -119,11 +120,16 @@ const NftHeader = ({
 
   return (
     <div className="nft_header">
-      <p>{collectionName}</p>
+      <Link to="/">
+        <p>{collectionName}</p>
+      </Link>
       <p>{nftName}</p>
       <div className="nft_header_owner">
         <p>
-          Owned by <span>{truncateAddress(owner, 5, "...")}</span>
+          Owned by{" "}
+          <span onClick={() => redirectToMSWalletPage(owner)}>
+            {truncateAddress(owner, 5, "...")}
+          </span>
         </p>
         <div>
           <IoShareSocial />
