@@ -10,10 +10,10 @@ import FiltersSidebar from "../FiltersSidebar/FiltersSidebar";
 const ActivityScreen = () => {
   const {
     collectionMetadata,
-    chainId,
     collectionActivity,
     setCollectionActivity,
     selectedActivities,
+    collectionChainId,
   } = useGlobalContext()!;
   const [activities, setActivities] = useState(collectionActivity?.activities);
   const [canFetch, setCanFetch] = useState(true);
@@ -28,7 +28,7 @@ const ActivityScreen = () => {
     setCanFetch(false);
     setIsFetching(true);
     getCollectionActivity(
-      chainId,
+      collectionChainId!,
       collectionMetadata?.collections[0].primaryContract!,
       selectedActivityTypes
     )

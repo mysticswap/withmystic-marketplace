@@ -16,12 +16,12 @@ type Props = {
 };
 
 const History = ({ nftActivity, token, setNftActivity }: Props) => {
-  const { chainId } = useGlobalContext()!;
+  const { collectionChainId } = useGlobalContext()!;
   const [isFetching, setIsFetching] = useState(false);
   const fetchMoreActivity = () => {
     setIsFetching(true);
     getNftActivity(
-      chainId,
+      collectionChainId!,
       token,
       reservoirActivityTypes,
       nftActivity.continuation!
@@ -51,7 +51,10 @@ const History = ({ nftActivity, token, setNftActivity }: Props) => {
             const timeStamp = dayjs(activity.timestamp * 1000).fromNow();
             const fullTime = dayjs(activity.timestamp * 1000).toString();
             return (
-              <div key={activity?.order?.id * index} className="history_row">
+              <div
+                key={Number(activity?.order?.id) * index}
+                className="history_row"
+              >
                 <p>{activityRenames[activity.type]}</p>
                 <p>
                   {activity.price.amount.decimal}{" "}

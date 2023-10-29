@@ -1,19 +1,35 @@
 import "./NftCard.css";
 import { Link } from "react-router-dom";
 import { TokenElement } from "../../types/reservoir-types/collection-nfts.types";
-import { useEffect, useRef, useState } from "react";
-import { useHomeContext } from "../../context/HomeContext/HomeContext";
+import { useRef } from "react";
 import CustomTooltip from "../CustomTooltip/CustomTooltip";
 import { SiOpensea } from "react-icons/si";
 import x2y2 from "../../assets/x2y2.png";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
+import { useIsOverflow } from "../../hooks/useIsOverflow";
+import { buyListedNft } from "../../services/api/buy-offer-list.api";
+import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
+import { getHostName } from "../../utils";
+import { handleBuyOrSellData } from "../../services/buying-service";
+import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
+import { TransactionNft } from "../../context/TransactionContext/types";
+import { switchChains } from "../../utils/wallet-connection";
+import { connectWallets } from "../../services/web3Onboard";
 
 type Props = { nft: TokenElement };
 
 const NftCard = ({ nft }: Props) => {
-  const { minimalCards } = useHomeContext()!;
+  const { minimalCards, collectionChainId } = useGlobalContext()!;
+  const { user, chainId, setProvider } = useConnectionContext()!;
+  const {
+    setShowConfirmationModal,
+    setTransactionNft,
+    setTransactionStage,
+    setTransactionHash,
+  } = useTransactionContext()!;
 
   const nameRef = useRef(null);
-  const [isOverflowing, setIsOverflowing] = useState(false);
+  const isOverflowing = useIsOverflow(nameRef, minimalCards);
 
   const currentEthAmount =
     nft?.market?.floorAsk?.price?.amount?.decimal?.toFixed(4);
@@ -31,13 +47,34 @@ const NftCard = ({ nft }: Props) => {
     </Link>
   );
 
-  useEffect(() => {
-    if (nameRef.current) {
-      const element = nameRef.current as HTMLElement;
-      const isOverflowing = element.scrollWidth > element.clientWidth;
-      setIsOverflowing(isOverflowing);
-    }
-  }, [nameRef, minimalCards]);
+  const buyNft = async () => {
+    const transactionNft: TransactionNft = {
+      collectionName: nft?.token?.collection?.name,
+      nftName,
+      nftImage: nft?.token?.image,
+      amount: Number(currentEthAmount),
+      price: currentValue,
+      isOffer: false,
+      isSale: false,
+      tokenId: nftId,
+    };
+    setTransactionNft(transactionNft);
+    setShowConfirmationModal(true);
+
+    const orderId = nft?.market?.floorAsk?.id;
+    const source = getHostName();
+    !user && connectWallets(setProvider);
+    switchChains(chainId, collectionChainId!).then(() => {
+      buyListedNft(collectionChainId!, orderId, user!, source).then(
+        (result) => {
+          setTransactionStage(1);
+          handleBuyOrSellData(result, setTransactionStage, setTransactionHash);
+        }
+      );
+    });
+  };
+
+  const userIsOwner = user?.toLowerCase() == nft?.token?.owner?.toLowerCase();
 
   return (
     <div className="nft_card">
@@ -68,7 +105,10 @@ const NftCard = ({ nft }: Props) => {
           Last sale: {lastSale}
           {symbol} {!lastSale && !symbol && "---"}
         </p>
-        {currentEthAmount && currentValue && <button>Buy now</button>}
+
+        {currentEthAmount && currentValue && !userIsOwner && (
+          <button onClick={buyNft}>Buy now</button>
+        )}
       </div>
 
       <div className="source_icon">

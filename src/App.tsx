@@ -7,27 +7,36 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import { NftPageContextProvider } from "./context/NftPageContext/NftPageContext";
+import { ConnectionContextProvider } from "./context/ConnectionContext/ConnectionContext";
+import { TransactionContextProvider } from "./context/TransactionContext/TransactionContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <>
-      <GlobalContextProvider>
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route
-              path="/"
-              element={<HomeContextProvider children={<Home />} />}
-            />
-            <Route
-              path="/nft/:id"
-              element={<NftPageContextProvider children={<NftPage />} />}
-            />
-            <Route path="*" element={<ErrorPage />} />
-          </Routes>
-          <Footer />
-        </Router>
-      </GlobalContextProvider>
+      <ConnectionContextProvider>
+        <GlobalContextProvider>
+          <TransactionContextProvider>
+            <Router>
+              <Navbar />
+              <Routes>
+                <Route
+                  path="/"
+                  element={<HomeContextProvider children={<Home />} />}
+                />
+                <Route
+                  path="/nft/:id"
+                  element={<NftPageContextProvider children={<NftPage />} />}
+                />
+                <Route path="*" element={<ErrorPage />} />
+              </Routes>
+              <Footer />
+              <ToastContainer />
+            </Router>
+          </TransactionContextProvider>
+        </GlobalContextProvider>
+      </ConnectionContextProvider>
     </>
   );
 }

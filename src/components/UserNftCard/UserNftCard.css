@@ -1,0 +1,15 @@
+.nft_card_details p.user_nft_card_rarity {
+  font-size: 13px;
+  border: 1px solid black;
+  width: fit-content;
+  box-sizing: border-box;
+  padding: 0.1rem 0.2rem;
+  margin-left: auto;
+  margin-top: 0.25rem;
+  border-radius: 6px;
+}
+
+.user_nft_card.nft_card:hover {
+  transform: scale(100%);
+  border-color: var(--ms-mp-blue);
+}

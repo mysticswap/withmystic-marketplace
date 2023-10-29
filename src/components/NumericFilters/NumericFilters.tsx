@@ -14,7 +14,7 @@ type Props = {
 };
 
 const NumericFilters = ({ title, isRarity }: Props) => {
-  const { chainId, setCollectionNfts } = useGlobalContext()!;
+  const { setCollectionNfts, collectionChainId } = useGlobalContext()!;
   const {
     numericFilters,
     setNumericFilters,
@@ -49,7 +49,7 @@ const NumericFilters = ({ title, isRarity }: Props) => {
       setNumericFilters(updatedValues);
       setCollectionNfts({ tokens: [], continuation: null });
       getCollectionNftsV2(
-        chainId,
+        collectionChainId!,
         selectedDropdownOption.value,
         selectedDropdownOption.order,
         collectionContract,

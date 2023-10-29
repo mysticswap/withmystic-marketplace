@@ -6,20 +6,26 @@ import {
 } from "react-icons/ri";
 import SolidButton from "../SolidButton/SolidButton";
 import { Link, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { scrollToTop } from "../../utils";
 import { connectWallets } from "../../services/web3Onboard";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import ConnectedWalletButton from "../ConnectedWalletButton/ConnectedWalletButton";
+import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
+import UserNftsModal from "../UserNftsModal/UserNftsModal";
+import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 
 const Navbar = () => {
-  const { setProvider, user, collectionMetadata, userNfts } =
-    useGlobalContext()!;
+  const { setProvider, user } = useConnectionContext()!;
+  const { collectionMetadata, userNfts } = useGlobalContext()!;
+  const { setShowOfferOrListingModal } = useTransactionContext()!;
   const location = useLocation();
+
+  const [showUserNftsModal, setShowUserNftsModal] = useState(false);
 
   const userHasNfts = userNfts?.tokens?.length > 0 && user;
 
-  const discordUrl = collectionMetadata?.collections[0].discordUrl;
+  const discordUrl = collectionMetadata?.collections?.[0]?.discordUrl;
   const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
 
   const connectWallet = () => {
@@ -28,6 +34,7 @@ const Navbar = () => {
 
   useEffect(() => {
     scrollToTop();
+    setShowOfferOrListingModal(false);
   }, [location.pathname]);
 
   return (
@@ -55,7 +62,14 @@ const Navbar = () => {
           Collections <RiArrowDownSLine />
         </div>
 
-        {userHasNfts && <button className="sell_button">Sell</button>}
+        {userHasNfts && (
+          <button
+            className="sell_button"
+            onClick={() => setShowUserNftsModal(true)}
+          >
+            Sell
+          </button>
+        )}
       </section>
       <section>
         {!user ? (
@@ -64,6 +78,10 @@ const Navbar = () => {
           <ConnectedWalletButton />
         )}
       </section>
+
+      {showUserNftsModal && (
+        <UserNftsModal setShowUserNftsModal={setShowUserNftsModal} />
+      )}
     </nav>
   );
 };

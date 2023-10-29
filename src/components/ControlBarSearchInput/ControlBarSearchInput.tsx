@@ -6,7 +6,7 @@ import { generateAttributeString } from "../../utils";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
 
 const ControlBarSearchInput = () => {
-  const { chainId, setCollectionNfts, collectionMetadata } =
+  const { setCollectionNfts, collectionMetadata, collectionChainId } =
     useGlobalContext()!;
   const { selectedTraits, setIsFetching, selectedDropdownOption } =
     useHomeContext()!;
@@ -20,7 +20,7 @@ const ControlBarSearchInput = () => {
     const attribute = generateAttributeString(selectedTraits);
 
     getCollectionNftsV2(
-      chainId,
+      collectionChainId!,
       selectedDropdownOption.value,
       selectedDropdownOption.order,
       undefined,
@@ -34,7 +34,7 @@ const ControlBarSearchInput = () => {
 
     if (!id) {
       getCollectionNftsV2(
-        chainId,
+        collectionChainId!,
         selectedDropdownOption.value,
         selectedDropdownOption.order,
         contractAddress,

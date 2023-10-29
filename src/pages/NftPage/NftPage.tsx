@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
 import "./NftPage.css";
 import TraitsHolder from "./Components/TraitsHolder/TraitsHolder";
 import DescriptionHolder from "./Components/DescriptionHolder/DescriptionHolder";
@@ -10,10 +9,11 @@ import Details from "./Components/Details/Details";
 import History from "./Components/History/History";
 import Loading from "../../components/Loading/Loading";
 import ConfirmPurchaseModal from "../../components/ConfirmPurchaseModal/ConfirmPurchaseModal";
-import OfferOrListingModal from "../../components/OfferOrListingModal/OfferOrListingModal";
 import FlaggedWarning from "./Components/FlaggedWarning/FlaggedWarning";
 import { useNftPageContext } from "../../context/NftPageContext/NftPageContext";
 import { collectionContract } from "../../config";
+import OfferOrListingModal from "../../components/OfferOrListingModal/OfferOrListingModal";
+import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 
 const NftPage = () => {
   const { id } = useParams();
@@ -26,9 +26,12 @@ const NftPage = () => {
     nftInfo,
     nftPriceData,
   } = useNftPageContext()!;
-
-  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-  const [showOfferOrListingModal, setShowOfferOrListingModal] = useState(false);
+  const {
+    showOfferOrListingModal,
+    setShowOfferOrListingModal,
+    showConfirmationModal,
+    setShowConfirmationModal,
+  } = useTransactionContext()!;
 
   const contractAddress = collectionContract;
 
@@ -54,6 +57,7 @@ const NftPage = () => {
         <section className="nft_page_section">
           <NftHeader
             nftInfo={nftInfo}
+            nftPriceData={nftPriceData}
             setShowConfirmationModal={setShowConfirmationModal}
             setShowOfferOrListingModal={setShowOfferOrListingModal}
           />
@@ -75,17 +79,12 @@ const NftPage = () => {
 
       {showConfirmationModal && (
         <ConfirmPurchaseModal
-          nft={nftInfo}
-          nftMarketInfo={nftPriceData}
           setShowConfirmationModal={setShowConfirmationModal}
         />
       )}
 
       {showOfferOrListingModal && (
         <OfferOrListingModal
-          isOffer={true}
-          nft={nftInfo}
-          nftMarketInfo={nftPriceData}
           setShowOfferOrListingModal={setShowOfferOrListingModal}
         />
       )}

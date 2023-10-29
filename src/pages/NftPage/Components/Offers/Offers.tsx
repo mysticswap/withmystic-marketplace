@@ -1,11 +1,18 @@
 import dayjs from "dayjs";
 import { NftOffers } from "../../../../types/reservoir-types/nft-offers.types";
-import { truncateAddress } from "../../../../utils";
+import { getHostName, truncateAddress } from "../../../../utils";
 import "./Offers.css";
 import { getNftOffers } from "../../../../services/api/marketplace-reservoir-api";
-import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
 import { collectionContract } from "../../../../config";
 import { useState } from "react";
+import { useConnectionContext } from "../../../../context/ConnectionContext/ConnectionContext";
+import { useNftPageContext } from "../../../../context/NftPageContext/NftPageContext";
+import { acceptOffer } from "../../../../services/api/buy-offer-list.api";
+import { handleBuyOrSellData } from "../../../../services/buying-service";
+import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
+import { useTransactionContext } from "../../../../context/TransactionContext/TransactionContext";
+import { switchChains } from "../../../../utils/wallet-connection";
+import { TransactionNft } from "../../../../context/TransactionContext/types";
 
 type Props = {
   nftOffers: NftOffers;
@@ -14,13 +21,21 @@ type Props = {
 };
 
 const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
-  const { chainId } = useGlobalContext()!;
+  const { user, chainId } = useConnectionContext()!;
+  const { collectionChainId } = useGlobalContext()!;
+  const { nftInfo } = useNftPageContext()!;
+  const {
+    setTransactionStage,
+    setTransactionHash,
+    setShowConfirmationModal,
+    setTransactionNft,
+  } = useTransactionContext()!;
   const [isFetching, setIsFetching] = useState(false);
   const token = `${collectionContract}:${tokenId}`;
 
   const fetchMoreOffers = () => {
     setIsFetching(true);
-    getNftOffers(chainId, token, nftOffers.continuation!)
+    getNftOffers(collectionChainId!, token, nftOffers.continuation!)
       .then((result) => {
         setNftOffers({
           orders: [...nftOffers.orders, ...result.orders],
@@ -30,6 +45,30 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
       .finally(() => {
         setIsFetching(false);
       });
+  };
+
+  const isOwner = nftInfo?.owner?.toLowerCase() == user?.toLowerCase();
+
+  const acceptBid = (amount: number, price: number) => {
+    const transactionNft: TransactionNft = {
+      collectionName: nftInfo?.collection?.name,
+      nftName: nftInfo?.name,
+      nftImage: nftInfo?.image,
+      amount,
+      price,
+      isOffer: false,
+      isSale: true,
+      tokenId: nftInfo.tokenId,
+    };
+    setTransactionNft(transactionNft);
+    setShowConfirmationModal(true);
+    const source = getHostName();
+    switchChains(chainId, collectionChainId!).then(() => {
+      acceptOffer(collectionChainId!, user!, token, source).then((result) => {
+        setTransactionStage(1);
+        handleBuyOrSellData(result, setTransactionStage, setTransactionHash);
+      });
+    });
   };
 
   return (
@@ -47,6 +86,7 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
             let altTimeStamp =
               timeStamp.startsWith("in") && timeStamp.substring(2);
             const price = order.price.amount.decimal;
+            const usd = order.price.amount.usd;
             const symbol = order.price.currency.symbol;
 
             return (
@@ -56,6 +96,14 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
                 </p>
                 <p>{altTimeStamp || timeStamp}</p>
                 <p>{truncateAddress(order.maker, 5, "...")}</p>
+                {isOwner && (
+                  <button
+                    className="offer_accept_button"
+                    onClick={() => acceptBid(price, usd)}
+                  >
+                    Accept
+                  </button>
+                )}
               </div>
             );
           })}

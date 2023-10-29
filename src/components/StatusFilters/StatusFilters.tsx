@@ -9,7 +9,7 @@ import { collectionContract } from "../../config";
 import { generateAttributeString } from "../../utils";
 
 const StatusFilters = () => {
-  const { chainId, setCollectionNfts } = useGlobalContext()!;
+  const { setCollectionNfts, collectionChainId } = useGlobalContext()!;
   const {
     numericFilters,
     setNumericFilters,
@@ -30,7 +30,7 @@ const StatusFilters = () => {
     setCollectionNfts({ tokens: [], continuation: null });
     setIsFetching(true);
     getCollectionNftsV2(
-      chainId,
+      collectionChainId!,
       selectedDropdownOption.value,
       selectedDropdownOption.order,
       collectionContract,

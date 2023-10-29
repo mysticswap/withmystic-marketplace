@@ -54,11 +54,18 @@
   font-size: 18px;
 }
 
-.pill_item p:first-of-type {
+.pill_item > div {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.pill_item > div p:first-of-type {
   font-weight: bold;
 }
 
-.pill_item p:last-of-type {
+.pill_item > p {
+  font-weight: 400;
   color: var(--ms-mp-transparent-black);
 }
 
@@ -83,4 +90,8 @@
 .tabs > .active_tab {
   border-color: yellow;
   color: white;
+}
+
+.banner_pill_icon {
+  max-width: 15px;
 }

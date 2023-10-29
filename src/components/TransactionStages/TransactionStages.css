@@ -1,0 +1,43 @@
+.process_component {
+  padding: 1rem;
+  padding-bottom: 2rem;
+  border-top: var(--ms-mp-gray-border);
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stage p {
+  font-size: 24px;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.twitter_share {
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+}
+
+.twitter_share:hover {
+  color: var(--ms-mp-blue);
+}
+
+.modal_transaction_button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-top: 1rem;
+  color: var(--ms-mp-blue);
+  font-size: 1rem;
+  transition: var(--ms-mp-transition);
+}
+
+.modal_transaction_button:hover {
+  color: var(--ms-mp-blue-2);
+}

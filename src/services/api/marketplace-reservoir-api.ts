@@ -1,4 +1,5 @@
 import { NumericFiltersType } from "../../context/HomeContext/types";
+import { Post } from "../../types/reservoir-types/listing-data.types";
 import { marketplaceInstance } from "../axios";
 
 export const getCollectionMetadata = async (
@@ -102,4 +103,13 @@ export const getUserNfts = async (
     },
   });
   return request.data;
+};
+
+export const submitListOrBid = async (chainId: number, data: Post) => {
+  const request = await marketplaceInstance.post("/submit-list-or-bid", {
+    chainId,
+    data,
+  });
+  const response = request.data;
+  return response;
 };

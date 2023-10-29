@@ -7,7 +7,6 @@ const HomeContext = createContext<HomeContextType | null>(null);
 type Props = { children: ReactNode };
 
 export const HomeContextProvider = ({ children }: Props) => {
-  const [minimalCards, setMinimalCards] = useState(true);
   const [showFilters, setShowFilters] = useState(true);
   const [selectedTraits, setSelectedTraits] = useState<SelectedTrait[]>([]);
   const [selectedDropdownOption, setSelectedDropdownOption] = useState(
@@ -19,8 +18,6 @@ export const HomeContextProvider = ({ children }: Props) => {
   return (
     <HomeContext.Provider
       value={{
-        minimalCards,
-        setMinimalCards,
         showFilters,
         setShowFilters,
         selectedTraits,

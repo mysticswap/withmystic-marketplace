@@ -9,9 +9,11 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { generateAttributeString } from "../../utils";
 import { collectionContract } from "../../config";
 import { dropdownOptions } from "../../constants";
+import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 
 const ControlBarDropdown = () => {
-  const { chainId, setCollectionNfts } = useGlobalContext()!;
+  const { chainId } = useConnectionContext()!;
+  const { setCollectionNfts, collectionChainId } = useGlobalContext()!;
   const {
     selectedDropdownOption,
     setSelectedDropdownOption,
@@ -35,7 +37,7 @@ const ControlBarDropdown = () => {
     setCollectionNfts({ tokens: [], continuation: null });
     setIsFetching(true);
     getCollectionNftsV2(
-      chainId,
+      collectionChainId! || chainId,
       selectedDropdownOption.value,
       selectedDropdownOption.order,
       collectionContract,

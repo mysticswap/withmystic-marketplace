@@ -8,12 +8,14 @@ import { collectionContract } from "../../config";
 import { BiLoaderCircle } from "react-icons/bi";
 import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-api";
 import { generateAttributeString } from "../../utils";
+import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 
 const CardsHolder = () => {
-  const { chainId, collectionNfts, setCollectionNfts } = useGlobalContext()!;
+  const { chainId } = useConnectionContext()!;
+  const { collectionNfts, setCollectionNfts, minimalCards, collectionChainId } =
+    useGlobalContext()!;
   const {
     showFilters,
-    minimalCards,
     selectedTraits,
     setSelectedTraits,
     isFetching,
@@ -66,7 +68,7 @@ const CardsHolder = () => {
     if (isAtBottom && collectionNfts.continuation) {
       setIsFetching(true);
       getCollectionNftsV2(
-        chainId,
+        collectionChainId! || chainId,
         selectedDropdownOption.value,
         selectedDropdownOption.order,
         collectionContract,
@@ -92,7 +94,7 @@ const CardsHolder = () => {
     setCollectionNfts({ tokens: [], continuation: null });
     setIsFetching(true);
     getCollectionNftsV2(
-      chainId,
+      collectionChainId! || chainId,
       selectedDropdownOption.value,
       selectedDropdownOption.order,
       collectionContract,
