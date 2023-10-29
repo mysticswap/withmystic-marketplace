@@ -1,6 +1,10 @@
 import dayjs from "dayjs";
 import { NftOffers } from "../../../../types/reservoir-types/nft-offers.types";
-import { getHostName, truncateAddress } from "../../../../utils";
+import {
+  getHostName,
+  redirectToMSWalletPage,
+  truncateAddress,
+} from "../../../../utils";
 import "./Offers.css";
 import { getNftOffers } from "../../../../services/api/marketplace-reservoir-api";
 import { collectionContract } from "../../../../config";
@@ -95,7 +99,9 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
                   {price} {symbol}
                 </p>
                 <p>{altTimeStamp || timeStamp}</p>
-                <p>{truncateAddress(order.maker, 5, "...")}</p>
+                <p onClick={() => redirectToMSWalletPage(order.maker)}>
+                  {truncateAddress(order.maker, 5, "...")}
+                </p>
                 {isOwner && (
                   <button
                     className="offer_accept_button"

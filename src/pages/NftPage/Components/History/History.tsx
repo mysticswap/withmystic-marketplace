@@ -3,7 +3,11 @@ import "./History.css";
 import { TbExternalLink } from "react-icons/tb";
 import CustomTooltip from "../../../../components/CustomTooltip/CustomTooltip";
 import { CollectionActivity as NftActivity } from "../../../../types/reservoir-types/collection-activity.types";
-import { activityRenames, reservoirActivityTypes } from "../../../../constants";
+import {
+  activityRenames,
+  reservoirActivityTypes,
+  scanWebsites,
+} from "../../../../constants";
 import { ActivityRowAddress } from "../../../../components/ActivityRow/ActivityRow";
 import { useState } from "react";
 import { getNftActivity } from "../../../../services/api/marketplace-reservoir-api";
@@ -50,6 +54,8 @@ const History = ({ nftActivity, token, setNftActivity }: Props) => {
           {nftActivity?.activities?.map((activity, index) => {
             const timeStamp = dayjs(activity.timestamp * 1000).fromNow();
             const fullTime = dayjs(activity.timestamp * 1000).toString();
+            const hasTxHas = activity.hasOwnProperty("txHash");
+
             return (
               <div
                 key={Number(activity?.order?.id) * index}
@@ -66,8 +72,14 @@ const History = ({ nftActivity, token, setNftActivity }: Props) => {
                 />
                 <ActivityRowAddress address={activity.toAddress!} isParagraph />
                 <CustomTooltip text={fullTime}>
-                  <p>
-                    {timeStamp} <TbExternalLink display="block" />
+                  <p
+                    onClick={() =>
+                      window.open(
+                        `${scanWebsites[collectionChainId!]}${activity.txHash}`
+                      )
+                    }
+                  >
+                    {timeStamp} {hasTxHas && <TbExternalLink display="block" />}
                   </p>
                 </CustomTooltip>
               </div>
