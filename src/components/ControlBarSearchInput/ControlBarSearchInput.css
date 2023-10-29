@@ -24,3 +24,7 @@
   outline: none;
   border: none;
 }
+
+.input_closer {
+  cursor: pointer;
+}

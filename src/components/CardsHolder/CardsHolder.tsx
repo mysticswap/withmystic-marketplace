@@ -60,8 +60,6 @@ const CardsHolder = () => {
 
   const onScroll = () => {
     const { scrollTop, scrollHeight, clientHeight } = cardsHolderRef.current!;
-    // const isAtBottom = scrollTop + clientHeight == scrollHeight;
-    // const isAtBottom = (scrollTop + clientHeight) % scrollHeight < 1;
     const isAtBottom = scrollTop + clientHeight - scrollHeight >= -1;
     const attributeString = generateAttributeString(selectedTraits);
 

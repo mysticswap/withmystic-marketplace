@@ -5,6 +5,11 @@
   align-items: center;
   gap: 0.5rem;
   border-radius: 6px;
+  transition: var(--ms-mp-transition);
+}
+
+.selected_filter:hover {
+  background-color: var(--ms-mp-gray-light-alt);
 }
 
 .selected_filter svg {

@@ -55,12 +55,11 @@
 }
 
 .loader_holder {
-  border: var(--ms-mp-gray-border);
-  border-radius: var(--ms-mp-card-border-radius);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  grid-column: 1/-1;
 }
 
 .cards_holder .loader {
