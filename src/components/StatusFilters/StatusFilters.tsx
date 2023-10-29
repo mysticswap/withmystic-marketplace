@@ -6,7 +6,7 @@ import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-api";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { collectionContract } from "../../config";
-import { generateAttributeString } from "../../utils";
+import { generateAttributeString, getHostName } from "../../utils";
 
 const StatusFilters = () => {
   const { setCollectionNfts, collectionChainId } = useGlobalContext()!;
@@ -18,8 +18,10 @@ const StatusFilters = () => {
     setIsFetching,
   } = useHomeContext()!;
   const [showList, setShowlist] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
 
-  const handleBuyOnlyFilter = () => {
+  const handleBuyOrListingFilter = (isBuyFilter: boolean) => {
+    const source = getHostName();
     const { minFloorAskPrice } = numericFilters;
     const updatedFilters = {
       ...numericFilters,
@@ -37,9 +39,11 @@ const StatusFilters = () => {
       undefined,
       attributeString,
       undefined,
-      updatedFilters
+      updatedFilters,
+      isBuyFilter ? undefined : !isClicked ? source : undefined
     ).then((result) => {
       setCollectionNfts(result);
+      setIsClicked(!isClicked);
       setIsFetching(false);
     });
   };
@@ -55,8 +59,14 @@ const StatusFilters = () => {
         />
       </button>
       <ul className="status_list" aria-expanded={showList}>
-        <StatusListItem text="Buy now only" handleClick={handleBuyOnlyFilter} />
-        {/* <StatusListItem text="Local listings only" /> */}
+        <StatusListItem
+          text="Buy now only"
+          handleClick={() => handleBuyOrListingFilter(true)}
+        />
+        <StatusListItem
+          text="Local listings only"
+          handleClick={() => handleBuyOrListingFilter(false)}
+        />
       </ul>
     </div>
   );
