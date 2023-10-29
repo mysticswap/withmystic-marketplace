@@ -7,7 +7,11 @@ import { useNftPageContext } from "../../../../context/NftPageContext/NftPageCon
 import { useTransactionContext } from "../../../../context/TransactionContext/TransactionContext";
 import { TransactionNft } from "../../../../context/TransactionContext/types";
 import { buyListedNft } from "../../../../services/api/buy-offer-list.api";
-import { getSingleNftV2 } from "../../../../services/api/marketplace-reservoir-api";
+import {
+  getNftActivity,
+  getNftOffers,
+  getSingleNftV2,
+} from "../../../../services/api/marketplace-reservoir-api";
 import { handleBuyOrSellData } from "../../../../services/buying-service";
 import { connectWallets } from "../../../../services/web3Onboard";
 import {
@@ -19,6 +23,7 @@ import "./NftHeader.css";
 import { IoShareSocial } from "react-icons/io5";
 import { LuRefreshCw } from "react-icons/lu";
 import { BsCheckCircleFill } from "react-icons/bs";
+import { reservoirActivityTypes } from "../../../../constants";
 
 type Props = {
   nftInfo: TokenToken;
@@ -37,7 +42,8 @@ const NftHeader = ({
   const { setTransactionNft, setTransactionStage, setTransactionHash } =
     useTransactionContext()!;
   const { source, collectionChainId } = useGlobalContext()!;
-  const { token, setNftDataV2 } = useNftPageContext()!;
+  const { token, setNftDataV2, setNftOffers, setNftActivity } =
+    useNftPageContext()!;
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [hasRefreshed, setHasRefreshed] = useState(false);
@@ -85,10 +91,19 @@ const NftHeader = ({
     setTransactionNft(transactionNft);
   };
 
-  const refreshMetadata = () => {
+  const refreshMetadata = async () => {
     setIsRefreshing(true);
-    getSingleNftV2(collectionChainId!, token).then((result) => {
-      setNftDataV2(result);
+    await Promise.all([
+      getNftOffers(collectionChainId!, token).then((result) => {
+        setNftOffers(result);
+      }),
+      getNftActivity(collectionChainId!, token, reservoirActivityTypes).then(
+        (result) => setNftActivity(result)
+      ),
+      getSingleNftV2(collectionChainId!, token).then((result) => {
+        setNftDataV2(result);
+      }),
+    ]).then(() => {
       setIsRefreshing(false);
       setHasRefreshed(true);
     });
