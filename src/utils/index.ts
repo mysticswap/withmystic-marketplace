@@ -76,3 +76,12 @@ export const getHostName = () => {
     ? "marketplace.mysticswap.io"
     : hostName;
 };
+
+export const getPreviousCollectionAddress = () => {
+  let previousCollectionAddress = localStorage.getItem("current-collection");
+  return previousCollectionAddress && JSON.parse(previousCollectionAddress);
+};
+
+export const copyToClipboard = (text: string) => {
+  window.navigator.clipboard.writeText(text);
+};

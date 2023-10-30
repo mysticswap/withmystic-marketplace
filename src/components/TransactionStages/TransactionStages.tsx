@@ -31,7 +31,7 @@ const TransactionStages = ({ stage }: Props) => {
               className="modal_transaction_button"
               onClick={() =>
                 window.open(
-                  `${scanWebsites[collectionChainId]}${transactionHash}`
+                  `${scanWebsites[collectionChainId]}tx/${transactionHash}`
                 )
               }
             >

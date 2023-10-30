@@ -6,7 +6,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import CustomTooltip from "../CustomTooltip/CustomTooltip";
 import { Link } from "react-router-dom";
 import { Activity } from "../../types/reservoir-types/collection-activity.types";
-import { activityRenames, scanWebsites } from "../../constants";
+import { activityRenames, scanWebsites, tabOptions } from "../../constants";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { SiOpensea } from "react-icons/si";
 import x2y2 from "../../assets/x2y2.png";
@@ -16,7 +16,7 @@ dayjs.extend(relativeTime);
 type Props = { activity: Activity };
 
 const ActivityRow = ({ activity }: Props) => {
-  const { collectionChainId } = useGlobalContext()!;
+  const { collectionChainId, setCurrentTab } = useGlobalContext()!;
 
   const nftImage = activity?.token?.tokenImage;
   const nftName = activity?.token?.tokenName;
@@ -28,6 +28,10 @@ const ActivityRow = ({ activity }: Props) => {
   const activityType = activity.type;
   const hasTxHash = activity.hasOwnProperty("txHash");
   const source = activity?.order?.source?.icon;
+  const tokenId = activity?.token?.tokenId;
+  const contract = activity?.collection?.collectionId;
+  const singlePageLink = `/${contract}/${tokenId}`;
+  const switchTab = () => !tokenId && setCurrentTab(tabOptions[0]);
 
   return (
     <div className="activity_row">
@@ -38,24 +42,24 @@ const ActivityRow = ({ activity }: Props) => {
           ) : (
             <SiOpensea display="block" color="#3498db" size={20} />
           )}
-          <Link to={`/nft/${activity?.token?.tokenId}`}>
+          <Link to={tokenId ? singlePageLink : ""} onClick={switchTab}>
             {activityRenames[activityType]}
           </Link>
         </div>
         <div className="activity_row_item">
-          <Link to={`/nft/${activity?.token?.tokenId}`}>
+          <Link to={tokenId ? singlePageLink : ""} onClick={switchTab}>
             <img
               src={nftImage || collectionImage}
               className="activity_row_image"
               alt=""
             />
           </Link>
-          <Link to={`/nft/${activity?.token?.tokenId}`}>
+          <Link to={tokenId ? singlePageLink : ""} onClick={switchTab}>
             <p>{nftName || collectionName}</p>
           </Link>
         </div>
         <div>
-          <Link to={`/nft/${activity?.token?.tokenId}`}>
+          <Link to={tokenId ? singlePageLink : ""} onClick={switchTab}>
             {price} {activity?.price.currency.symbol}
           </Link>
         </div>
@@ -68,7 +72,7 @@ const ActivityRow = ({ activity }: Props) => {
             onClick={() => {
               hasTxHash &&
                 window.open(
-                  `${scanWebsites[collectionChainId]}${activity?.txHash}`
+                  `${scanWebsites[collectionChainId]}tx/${activity?.txHash}`
                 );
             }}
           >

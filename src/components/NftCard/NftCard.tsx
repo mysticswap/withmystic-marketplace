@@ -19,7 +19,8 @@ import { connectWallets } from "../../services/web3Onboard";
 type Props = { nft: TokenElement };
 
 const NftCard = ({ nft }: Props) => {
-  const { minimalCards, collectionChainId } = useGlobalContext()!;
+  const { minimalCards, collectionChainId, collectionContract } =
+    useGlobalContext()!;
   const { user, chainId, setProvider } = useConnectionContext()!;
   const {
     setShowConfirmationModal,
@@ -42,7 +43,7 @@ const NftCard = ({ nft }: Props) => {
   const sourceLink = nft?.market?.floorAsk?.source?.url;
 
   const nameLink = (
-    <Link to={`/nft/${nftId}`}>
+    <Link to={`/${collectionContract}/${nftId}`}>
       <p ref={nameRef}>{nftName}</p>
     </Link>
   );
@@ -76,7 +77,7 @@ const NftCard = ({ nft }: Props) => {
 
   return (
     <div className="nft_card">
-      <Link to={`/nft/${nftId}`}>
+      <Link to={`/${collectionContract}/${nftId}`}>
         <img src={nft?.token?.image} alt="" />
       </Link>
       <div className="nft_card_details">
@@ -87,7 +88,7 @@ const NftCard = ({ nft }: Props) => {
             <>{nameLink}</>
           )}
         </div>
-        <Link to={`/nft/${nftId}`}>
+        <Link to={`/${collectionContract}/${nftId}`}>
           <p className="nft_card_amount">
             {currentEthAmount && currentValue ? (
               <>

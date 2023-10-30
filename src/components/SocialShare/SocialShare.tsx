@@ -12,7 +12,7 @@ import {
   EmailIcon,
 } from "react-share";
 import { useLocation } from "react-router-dom";
-import { getHostName } from "../../utils";
+import { copyToClipboard, getHostName } from "../../utils";
 import { useIsCopied } from "../../hooks/useIsCopied";
 import CustomTooltip from "../CustomTooltip/CustomTooltip";
 
@@ -64,7 +64,12 @@ const SocialShare = () => {
           <p>{pageLink}</p>
           <CustomTooltip text={copiedMessage}>
             <div>
-              <IoCopyOutline onClick={() => setIsCopied(!isCopied)} />
+              <IoCopyOutline
+                onClick={() => {
+                  copyToClipboard(pageLink);
+                  setIsCopied(!isCopied);
+                }}
+              />
             </div>
           </CustomTooltip>
         </div>

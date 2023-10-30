@@ -25,8 +25,8 @@ type Props = {
 };
 
 export const NftPageContextProvider = ({ children }: Props) => {
-  const { id } = useParams();
-  const { collectionChainId, collectionMetadata, collectionContract } =
+  const { id, contract } = useParams();
+  const { collectionMetadata, setSelectedCollection, availableCollections } =
     useGlobalContext()!;
 
   const [nftDataV2, setNftDataV2] = useState({} as GetNftsReservoir);
@@ -37,7 +37,14 @@ export const NftPageContextProvider = ({ children }: Props) => {
   const nftInfo = nftDataV2?.tokens?.[0]?.token;
   const nftPriceData = nftDataV2?.tokens?.[0]?.market;
 
-  const token = `${collectionContract}:${id}`;
+  const requiredCollection = availableCollections.find((collection) => {
+    return collection.address == contract;
+  });
+
+  setSelectedCollection(requiredCollection!);
+
+  const collectionChainId = requiredCollection?.chainId!;
+  const token = `${requiredCollection?.address}:${id}`;
 
   useEffect(() => {
     Promise.all([

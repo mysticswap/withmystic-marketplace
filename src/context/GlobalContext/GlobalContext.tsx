@@ -27,7 +27,7 @@ import { CollectionActivity } from "../../types/reservoir-types/collection-activ
 import { CollectionTraitsV2 } from "../../types/reservoir-types/collection-traits.types";
 import { UserNfts } from "../../types/reservoir-types/user-nfts.types";
 import { useConnectionContext } from "../ConnectionContext/ConnectionContext";
-import { getHostName } from "../../utils";
+import { getHostName, getPreviousCollectionAddress } from "../../utils";
 import { marketPlaceCollections } from "../../constants/hard-coded-collections";
 
 const GlobalContext = createContext<GlobalContextType | null>(null);
@@ -41,8 +41,13 @@ export const GlobalContextProvider = ({ children }: Props) => {
   const [availableCollections, setAvailableCollections] = useState(
     marketPlaceCollections
   );
+
+  const previousCollection = availableCollections.find((collection) => {
+    return collection.address == getPreviousCollectionAddress();
+  });
+
   const [selectedCollection, setSelectedCollection] = useState(
-    availableCollections[0]
+    previousCollection || availableCollections[0]
   );
   const [currentTab, setCurrentTab] = useState(tabOptions[0]);
   const [collectionMetadata, setCollectionMetadata] =
@@ -128,6 +133,13 @@ export const GlobalContextProvider = ({ children }: Props) => {
       });
     }
   }, [user, chainId, collectionChainId]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "current-collection",
+      JSON.stringify(selectedCollection.address)
+    );
+  }, [selectedCollection]);
 
   return (
     <GlobalContext.Provider

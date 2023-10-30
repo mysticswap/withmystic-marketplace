@@ -12,6 +12,7 @@ import { ActivityRowAddress } from "../../../../components/ActivityRow/ActivityR
 import { useState } from "react";
 import { getNftActivity } from "../../../../services/api/marketplace-reservoir-api";
 import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
+import { v4 as uuid } from "uuid";
 
 type Props = {
   nftActivity: NftActivity;
@@ -57,10 +58,7 @@ const History = ({ nftActivity, token, setNftActivity }: Props) => {
             const hasTxHas = activity.hasOwnProperty("txHash");
 
             return (
-              <div
-                key={activity?.order?.id || activity.timestamp}
-                className="history_row"
-              >
+              <div key={uuid()} className="history_row">
                 <p>{activityRenames[activity.type]}</p>
                 <p>
                   {activity.price.amount.decimal}{" "}
@@ -75,7 +73,7 @@ const History = ({ nftActivity, token, setNftActivity }: Props) => {
                   <p
                     onClick={() =>
                       window.open(
-                        `${scanWebsites[collectionChainId]}${activity.txHash}`
+                        `${scanWebsites[collectionChainId]}tx/${activity.txHash}`
                       )
                     }
                   >

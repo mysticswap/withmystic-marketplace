@@ -1,6 +1,7 @@
+import { scanWebsites } from "../../../../constants";
 import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
 import { TokenToken } from "../../../../types/reservoir-types/collection-nfts.types";
-import { redirectToMSWalletPage, truncateAddress } from "../../../../utils";
+import { truncateAddress } from "../../../../utils";
 import "./Details.css";
 
 type Props = {
@@ -8,7 +9,7 @@ type Props = {
 };
 
 const Details = ({ nftInfo }: Props) => {
-  const { collectionMetadata } = useGlobalContext()!;
+  const { collectionMetadata, collectionChainId } = useGlobalContext()!;
   const Royalties =
     collectionMetadata?.collections?.[0]?.allRoyalties?.opensea?.[0]?.bps;
   const details = [
@@ -29,7 +30,12 @@ const Details = ({ nftInfo }: Props) => {
               <p>{detail.title}</p>
               <p
                 className={isFirst ? "detail_address" : ""}
-                onClick={() => isFirst && redirectToMSWalletPage(detail.value)}
+                onClick={() =>
+                  isFirst &&
+                  window.open(
+                    `${scanWebsites[collectionChainId]}address/${detail.value}`
+                  )
+                }
               >
                 {isFirst
                   ? truncateAddress(detail.value, 5, "...")
