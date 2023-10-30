@@ -15,7 +15,7 @@ const Details = ({ nftInfo }: Props) => {
     { title: "Contract Address", value: nftInfo?.contract },
     { title: "Token ID", value: nftInfo?.tokenId },
     { title: "Token Standard", value: nftInfo?.kind.toUpperCase() },
-    { title: "Royalties", value: `${Number(Royalties)! * 0.01}%` },
+    { title: "Royalties", value: `${Number(Royalties)! * 0.01 || "-- "}%` },
   ];
 
   return (

@@ -35,6 +35,7 @@ export const NftPageContextProvider = ({ children }: Props) => {
   const [nftOffers, setNftOffers] = useState({} as NftOffers);
   const [nftActivity, setNftActivity] = useState({} as NftActivity);
   const [isLoading, setIsLoading] = useState(true);
+  const [showShareModal, setShowShareModal] = useState(false);
   const nftInfo = nftDataV2?.tokens?.[0]?.token;
   const nftPriceData = nftDataV2?.tokens?.[0]?.market;
 
@@ -72,6 +73,8 @@ export const NftPageContextProvider = ({ children }: Props) => {
         nftInfo,
         nftPriceData,
         token,
+        showShareModal,
+        setShowShareModal,
       }}
     >
       {children}

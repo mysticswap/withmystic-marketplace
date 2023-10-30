@@ -43,8 +43,13 @@ const NftHeader = ({
   const { setTransactionNft, setTransactionStage, setTransactionHash } =
     useTransactionContext()!;
   const { source, collectionChainId } = useGlobalContext()!;
-  const { token, setNftDataV2, setNftOffers, setNftActivity } =
-    useNftPageContext()!;
+  const {
+    token,
+    setNftDataV2,
+    setNftOffers,
+    setNftActivity,
+    setShowShareModal,
+  } = useNftPageContext()!;
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [hasRefreshed, setHasRefreshed] = useState(false);
@@ -132,7 +137,7 @@ const NftHeader = ({
           </span>
         </p>
         <div>
-          <IoShareSocial />
+          <IoShareSocial onClick={() => setShowShareModal(true)} />
           {!hasRefreshed && (
             <LuRefreshCw
               className={isRefreshing ? "refreshing" : ""}

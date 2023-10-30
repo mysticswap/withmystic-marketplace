@@ -42,6 +42,11 @@
 
 .nft_header_owner > div > svg {
   cursor: pointer;
+  transition: var(--ms-mp-transition);
+}
+
+.nft_header_owner > div > svg:hover {
+  color: var(--ms-mp-blue-2);
 }
 
 .nft_header_button_holder {

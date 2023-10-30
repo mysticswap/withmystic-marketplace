@@ -18,4 +18,6 @@ export type NftPageContextType = {
   nftInfo: TokenToken;
   nftPriceData: Market;
   token: string;
+  showShareModal: boolean;
+  setShowShareModal: React.Dispatch<React.SetStateAction<boolean>>;
 };

@@ -1,0 +1,55 @@
+.modal_content.social_modal_content {
+  width: 30%;
+  padding: 1rem;
+}
+
+.social_modal_nft img {
+  width: 65px;
+  border-radius: 8px;
+}
+
+.social_modal_nft p {
+  margin: 0;
+  margin-top: 0.5rem;
+}
+
+.social_modal_main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.social_modal_main > button:hover {
+  transition: var(--ms-mp-transition);
+  transform: scale(1.1);
+}
+
+.social_modal_link {
+  width: 100%;
+  border: var(--ms-mp-gray-border);
+  padding: 0.5rem;
+  box-sizing: border-box;
+  border-radius: var(--ms-mp-large-border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.social_modal_link svg {
+  cursor: pointer;
+  color: var(--ms-mp-gray);
+  transition: var(--ms-mp-transition);
+}
+
+.social_modal_link svg:hover {
+  color: black;
+}
+
+.social_modal_link p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}

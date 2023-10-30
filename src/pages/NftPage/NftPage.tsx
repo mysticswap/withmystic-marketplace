@@ -14,6 +14,7 @@ import { useNftPageContext } from "../../context/NftPageContext/NftPageContext";
 import { collectionContract } from "../../config";
 import OfferOrListingModal from "../../components/OfferOrListingModal/OfferOrListingModal";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
+import SocialShare from "../../components/SocialShare/SocialShare";
 
 const NftPage = () => {
   const { id } = useParams();
@@ -25,6 +26,7 @@ const NftPage = () => {
     isLoading,
     nftInfo,
     nftPriceData,
+    showShareModal,
   } = useNftPageContext()!;
   const {
     showOfferOrListingModal,
@@ -88,6 +90,8 @@ const NftPage = () => {
           setShowOfferOrListingModal={setShowOfferOrListingModal}
         />
       )}
+
+      {showShareModal && <SocialShare />}
     </>
   );
 };
