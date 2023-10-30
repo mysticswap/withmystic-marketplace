@@ -17,7 +17,6 @@ import {
 import { useGlobalContext } from "../GlobalContext/GlobalContext";
 import { reservoirActivityTypes } from "../../constants";
 import { useParams } from "react-router-dom";
-import { useConnectionContext } from "../ConnectionContext/ConnectionContext";
 
 const NftPageContext = createContext<NftPageContextType | null>(null);
 
@@ -27,7 +26,6 @@ type Props = {
 
 export const NftPageContextProvider = ({ children }: Props) => {
   const { id } = useParams();
-  const { chainId } = useConnectionContext()!;
   const { collectionChainId, collectionMetadata, collectionContract } =
     useGlobalContext()!;
 

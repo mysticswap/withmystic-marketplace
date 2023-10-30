@@ -8,10 +8,8 @@ import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-ap
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { generateAttributeString } from "../../utils";
 import { dropdownOptions } from "../../constants";
-import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 
 const ControlBarDropdown = () => {
-  const { chainId } = useConnectionContext()!;
   const { setCollectionNfts, collectionChainId, collectionContract } =
     useGlobalContext()!;
   const {
