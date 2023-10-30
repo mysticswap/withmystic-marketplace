@@ -17,13 +17,13 @@ const Banner = ({ bannerImage }: Props) => {
     {
       title: "Total vol.",
       value: collectionMetadata?.collections?.[0]?.volume?.allTime,
-      icon: collectionNetworkIcon[collectionChainId!],
+      icon: collectionNetworkIcon[collectionChainId],
     },
     {
       title: "Floor price",
       value:
         collectionMetadata?.collections?.[0]?.floorAsk?.price?.amount?.decimal,
-      icon: collectionNetworkIcon[collectionChainId!],
+      icon: collectionNetworkIcon[collectionChainId],
     },
   ];
 

@@ -7,13 +7,13 @@ import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-api";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { generateAttributeString } from "../../utils";
-import { collectionContract } from "../../config";
 import { dropdownOptions } from "../../constants";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 
 const ControlBarDropdown = () => {
   const { chainId } = useConnectionContext()!;
-  const { setCollectionNfts, collectionChainId } = useGlobalContext()!;
+  const { setCollectionNfts, collectionChainId, collectionContract } =
+    useGlobalContext()!;
   const {
     selectedDropdownOption,
     setSelectedDropdownOption,
@@ -37,7 +37,7 @@ const ControlBarDropdown = () => {
     setCollectionNfts({ tokens: [], continuation: null });
     setIsFetching(true);
     getCollectionNftsV2(
-      collectionChainId! || chainId,
+      collectionChainId || chainId,
       selectedDropdownOption.value,
       selectedDropdownOption.order,
       collectionContract,

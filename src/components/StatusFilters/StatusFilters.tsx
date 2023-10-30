@@ -5,11 +5,11 @@ import StatusListItem from "../StatusListItem/StatusListItem";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-api";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
-import { collectionContract } from "../../config";
 import { generateAttributeString, getHostName } from "../../utils";
 
 const StatusFilters = () => {
-  const { setCollectionNfts, collectionChainId } = useGlobalContext()!;
+  const { setCollectionNfts, collectionChainId, collectionContract } =
+    useGlobalContext()!;
   const {
     numericFilters,
     setNumericFilters,
@@ -32,7 +32,7 @@ const StatusFilters = () => {
     setCollectionNfts({ tokens: [], continuation: null });
     setIsFetching(true);
     getCollectionNftsV2(
-      collectionChainId!,
+      collectionChainId,
       selectedDropdownOption.value,
       selectedDropdownOption.order,
       collectionContract,

@@ -6,7 +6,6 @@ import { useState } from "react";
 import { getUserNfts } from "../../services/api/marketplace-reservoir-api";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 import { BiLoaderCircle } from "react-icons/bi";
-import { collectionContract } from "../../config";
 
 type Props = {
   setShowUserNftsModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,13 +13,14 @@ type Props = {
 
 const UserNftsModal = ({ setShowUserNftsModal }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { userNfts, setUserNfts, collectionChainId } = useGlobalContext()!;
+  const { userNfts, setUserNfts, collectionChainId, collectionContract } =
+    useGlobalContext()!;
   const { user } = useConnectionContext()!;
 
   const fetchMore = () => {
     setIsLoading(true);
     getUserNfts(
-      collectionChainId!,
+      collectionChainId,
       user!,
       collectionContract,
       userNfts.continuation!

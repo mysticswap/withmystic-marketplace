@@ -64,13 +64,11 @@ const NftCard = ({ nft }: Props) => {
     const orderId = nft?.market?.floorAsk?.id;
     const source = getHostName();
     !user && connectWallets(setProvider);
-    switchChains(chainId, collectionChainId!).then(() => {
-      buyListedNft(collectionChainId!, orderId, user!, source).then(
-        (result) => {
-          setTransactionStage(1);
-          handleBuyOrSellData(result, setTransactionStage, setTransactionHash);
-        }
-      );
+    switchChains(chainId, collectionChainId).then(() => {
+      buyListedNft(collectionChainId, orderId, user!, source).then((result) => {
+        setTransactionStage(1);
+        handleBuyOrSellData(result, setTransactionStage, setTransactionHash);
+      });
     });
   };
 

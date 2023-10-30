@@ -7,7 +7,6 @@ import {
 } from "../../../../utils";
 import "./Offers.css";
 import { getNftOffers } from "../../../../services/api/marketplace-reservoir-api";
-import { collectionContract } from "../../../../config";
 import { useState } from "react";
 import { useConnectionContext } from "../../../../context/ConnectionContext/ConnectionContext";
 import { useNftPageContext } from "../../../../context/NftPageContext/NftPageContext";
@@ -26,7 +25,7 @@ type Props = {
 
 const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
   const { user, chainId } = useConnectionContext()!;
-  const { collectionChainId } = useGlobalContext()!;
+  const { collectionChainId, collectionContract } = useGlobalContext()!;
   const { nftInfo } = useNftPageContext()!;
   const {
     setTransactionStage,
@@ -39,7 +38,7 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
 
   const fetchMoreOffers = () => {
     setIsFetching(true);
-    getNftOffers(collectionChainId!, token, nftOffers.continuation!)
+    getNftOffers(collectionChainId, token, nftOffers.continuation!)
       .then((result) => {
         setNftOffers({
           orders: [...nftOffers.orders, ...result.orders],
@@ -67,8 +66,8 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
     setTransactionNft(transactionNft);
     setShowConfirmationModal(true);
     const source = getHostName();
-    switchChains(chainId, collectionChainId!).then(() => {
-      acceptOffer(collectionChainId!, user!, token, source).then((result) => {
+    switchChains(chainId, collectionChainId).then(() => {
+      acceptOffer(collectionChainId, user!, token, source).then((result) => {
         setTransactionStage(1);
         handleBuyOrSellData(result, setTransactionStage, setTransactionHash);
       });

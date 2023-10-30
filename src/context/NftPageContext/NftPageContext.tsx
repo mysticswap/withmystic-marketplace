@@ -17,7 +17,6 @@ import {
 import { useGlobalContext } from "../GlobalContext/GlobalContext";
 import { reservoirActivityTypes } from "../../constants";
 import { useParams } from "react-router-dom";
-import { collectionContract } from "../../config";
 import { useConnectionContext } from "../ConnectionContext/ConnectionContext";
 
 const NftPageContext = createContext<NftPageContextType | null>(null);
@@ -29,7 +28,8 @@ type Props = {
 export const NftPageContextProvider = ({ children }: Props) => {
   const { id } = useParams();
   const { chainId } = useConnectionContext()!;
-  const { collectionChainId, collectionMetadata } = useGlobalContext()!;
+  const { collectionChainId, collectionMetadata, collectionContract } =
+    useGlobalContext()!;
 
   const [nftDataV2, setNftDataV2] = useState({} as GetNftsReservoir);
   const [nftOffers, setNftOffers] = useState({} as NftOffers);
@@ -43,14 +43,14 @@ export const NftPageContextProvider = ({ children }: Props) => {
 
   useEffect(() => {
     Promise.all([
-      getSingleNftV2(collectionChainId! || chainId, token).then((result) => {
+      getSingleNftV2(collectionChainId || chainId, token).then((result) => {
         setNftDataV2(result);
       }),
-      getNftOffers(collectionChainId! || chainId, token).then((result) => {
+      getNftOffers(collectionChainId || chainId, token).then((result) => {
         setNftOffers(result);
       }),
       getNftActivity(
-        collectionChainId! || chainId,
+        collectionChainId || chainId,
         token,
         reservoirActivityTypes
       ).then((result) => setNftActivity(result)),

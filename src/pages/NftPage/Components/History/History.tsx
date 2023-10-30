@@ -25,7 +25,7 @@ const History = ({ nftActivity, token, setNftActivity }: Props) => {
   const fetchMoreActivity = () => {
     setIsFetching(true);
     getNftActivity(
-      collectionChainId!,
+      collectionChainId,
       token,
       reservoirActivityTypes,
       nftActivity.continuation!
@@ -75,7 +75,7 @@ const History = ({ nftActivity, token, setNftActivity }: Props) => {
                   <p
                     onClick={() =>
                       window.open(
-                        `${scanWebsites[collectionChainId!]}${activity.txHash}`
+                        `${scanWebsites[collectionChainId]}${activity.txHash}`
                       )
                     }
                   >

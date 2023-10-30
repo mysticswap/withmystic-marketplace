@@ -68,7 +68,7 @@ const ActivityRow = ({ activity }: Props) => {
             onClick={() => {
               hasTxHash &&
                 window.open(
-                  `${scanWebsites[collectionChainId!]}${activity?.txHash}`
+                  `${scanWebsites[collectionChainId]}${activity?.txHash}`
                 );
             }}
           >

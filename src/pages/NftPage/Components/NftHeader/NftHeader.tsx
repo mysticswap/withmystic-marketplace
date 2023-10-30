@@ -84,12 +84,10 @@ const NftHeader = ({
       : triggerModal(setShowOfferOrListingModal);
 
     !userIsOwner &&
-      buyListedNft(collectionChainId!, orderId, user!, source).then(
-        (result) => {
-          setTransactionStage(1);
-          handleBuyOrSellData(result, setTransactionStage, setTransactionHash);
-        }
-      );
+      buyListedNft(collectionChainId, orderId, user!, source).then((result) => {
+        setTransactionStage(1);
+        handleBuyOrSellData(result, setTransactionStage, setTransactionHash);
+      });
   };
 
   const makeOffer = () => {
@@ -100,13 +98,13 @@ const NftHeader = ({
   const refreshMetadata = async () => {
     setIsRefreshing(true);
     await Promise.all([
-      getNftOffers(collectionChainId!, token).then((result) => {
+      getNftOffers(collectionChainId, token).then((result) => {
         setNftOffers(result);
       }),
-      getNftActivity(collectionChainId!, token, reservoirActivityTypes).then(
+      getNftActivity(collectionChainId, token, reservoirActivityTypes).then(
         (result) => setNftActivity(result)
       ),
-      getSingleNftV2(collectionChainId!, token).then((result) => {
+      getSingleNftV2(collectionChainId, token).then((result) => {
         setNftDataV2(result);
       }),
     ]).then(() => {

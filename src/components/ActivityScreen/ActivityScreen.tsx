@@ -28,7 +28,7 @@ const ActivityScreen = () => {
     setCanFetch(false);
     setIsFetching(true);
     getCollectionActivity(
-      collectionChainId!,
+      collectionChainId,
       collectionMetadata?.collections[0].primaryContract!,
       selectedActivityTypes
     )

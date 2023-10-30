@@ -19,7 +19,7 @@ const ControlBarSearchInput = () => {
     setIsFetching(true);
     const attribute = generateAttributeString(selectedTraits);
     getCollectionNftsV2(
-      collectionChainId!,
+      collectionChainId,
       selectedDropdownOption.value,
       selectedDropdownOption.order,
       contractAddress,
@@ -38,7 +38,7 @@ const ControlBarSearchInput = () => {
     const attribute = generateAttributeString(selectedTraits);
 
     getCollectionNftsV2(
-      collectionChainId!,
+      collectionChainId,
       selectedDropdownOption.value,
       selectedDropdownOption.order,
       undefined,
@@ -52,7 +52,7 @@ const ControlBarSearchInput = () => {
 
     if (!id) {
       getCollectionNftsV2(
-        collectionChainId!,
+        collectionChainId,
         selectedDropdownOption.value,
         selectedDropdownOption.order,
         contractAddress,
