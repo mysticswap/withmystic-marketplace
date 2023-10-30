@@ -37,7 +37,7 @@ const ControlBarDropdown = () => {
     setCollectionNfts({ tokens: [], continuation: null });
     setIsFetching(true);
     getCollectionNftsV2(
-      collectionChainId || chainId,
+      collectionChainId,
       selectedDropdownOption.value,
       selectedDropdownOption.order,
       collectionContract,

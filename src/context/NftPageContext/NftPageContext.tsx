@@ -43,17 +43,15 @@ export const NftPageContextProvider = ({ children }: Props) => {
 
   useEffect(() => {
     Promise.all([
-      getSingleNftV2(collectionChainId || chainId, token).then((result) => {
+      getSingleNftV2(collectionChainId, token).then((result) => {
         setNftDataV2(result);
       }),
-      getNftOffers(collectionChainId || chainId, token).then((result) => {
+      getNftOffers(collectionChainId, token).then((result) => {
         setNftOffers(result);
       }),
-      getNftActivity(
-        collectionChainId || chainId,
-        token,
-        reservoirActivityTypes
-      ).then((result) => setNftActivity(result)),
+      getNftActivity(collectionChainId, token, reservoirActivityTypes).then(
+        (result) => setNftActivity(result)
+      ),
     ]).then(() => {
       setIsLoading(false);
     });

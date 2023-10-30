@@ -7,10 +7,8 @@ import { useEffect, useRef, useState } from "react";
 import { BiLoaderCircle } from "react-icons/bi";
 import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-api";
 import { generateAttributeString } from "../../utils";
-import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 
 const CardsHolder = () => {
-  const { chainId } = useConnectionContext()!;
   const {
     collectionNfts,
     setCollectionNfts,
@@ -70,7 +68,7 @@ const CardsHolder = () => {
     if (isAtBottom && collectionNfts.continuation) {
       setIsFetching(true);
       getCollectionNftsV2(
-        collectionChainId || chainId,
+        collectionChainId,
         selectedDropdownOption.value,
         selectedDropdownOption.order,
         collectionContract,
@@ -96,7 +94,7 @@ const CardsHolder = () => {
     setCollectionNfts({ tokens: [], continuation: null });
     setIsFetching(true);
     getCollectionNftsV2(
-      collectionChainId || chainId,
+      collectionChainId,
       selectedDropdownOption.value,
       selectedDropdownOption.order,
       collectionContract,
