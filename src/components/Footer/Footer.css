@@ -38,6 +38,10 @@ footer {
   opacity: 0.5;
 }
 
+.footer_links_holder > div img {
+  cursor: pointer;
+}
+
 .socials {
   display: flex;
   align-items: center;

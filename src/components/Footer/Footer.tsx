@@ -19,7 +19,7 @@ const Footer = () => {
         <a>Terms & Conditions</a>
         <div>
           <p>Powered by</p>
-          <span>
+          <span onClick={() => window.open("https://withmystic.xyz")}>
             <img src={mysticLogo} alt="" />
           </span>
         </div>
