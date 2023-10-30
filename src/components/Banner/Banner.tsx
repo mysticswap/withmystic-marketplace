@@ -43,7 +43,9 @@ const Banner = ({ bannerImage }: Props) => {
                   <p>
                     {Number(item.value) < 1
                       ? Number(item.value)
-                      : millify(Number(item.value))}
+                      : Number(item.value)
+                      ? millify(Number(item.value))
+                      : "--"}
                   </p>
                 </div>
                 <p>{item.title}</p>

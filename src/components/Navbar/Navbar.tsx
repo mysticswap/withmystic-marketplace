@@ -91,6 +91,7 @@ const Navbar = () => {
 
                 return (
                   <button
+                    key={collection.id}
                     onClick={() => {
                       setSelectedCollection(collection);
                       setShowDropdownOptions(false);
