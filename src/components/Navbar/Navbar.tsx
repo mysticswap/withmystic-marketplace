@@ -90,16 +90,17 @@ const Navbar = () => {
                   collection.address == selectedCollection.address;
 
                 return (
-                  <button
-                    key={collection.id}
-                    onClick={() => {
-                      setSelectedCollection(collection);
-                      setShowDropdownOptions(false);
-                    }}
-                  >
-                    {collection.name}{" "}
-                    {isSelected && <BsCheck size={15} display="block" />}
-                  </button>
+                  <Link key={collection.id} to="/">
+                    <button
+                      onClick={() => {
+                        setSelectedCollection(collection);
+                        setShowDropdownOptions(false);
+                      }}
+                    >
+                      {collection.name}{" "}
+                      {isSelected && <BsCheck size={15} display="block" />}
+                    </button>
+                  </Link>
                 );
               })}
             </div>
