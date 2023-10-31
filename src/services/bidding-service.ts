@@ -2,7 +2,6 @@ import { TypedDataField, ethers } from "ethers";
 import { ListOrBidData } from "../types/reservoir-types/listing-data.types";
 import { executeTransactions } from "./seaport";
 import { submitListOrBid } from "./api/marketplace-reservoir-api";
-import { toast } from "react-toastify";
 
 export const handleBiddingData = async (
   chainId: number,

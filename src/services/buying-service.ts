@@ -1,7 +1,6 @@
 import { ethers } from "ethers";
 import { BuyData } from "../types/reservoir-types/buy-data.types";
 import { executeTransactions } from "./seaport";
-import { toast } from "react-toastify";
 
 export const handleBuyOrSellData = async (
   data: BuyData,
