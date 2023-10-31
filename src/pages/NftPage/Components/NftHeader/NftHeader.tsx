@@ -146,7 +146,7 @@ const NftHeader = ({
         </div>
       </div>
       <div className="nft_header_button_holder">
-        {orderId && (
+        {(orderId || userIsOwner) && (
           <SolidButton
             text={!userIsOwner ? "Buy Now" : "List for Sale"}
             onClick={buyOrList}
