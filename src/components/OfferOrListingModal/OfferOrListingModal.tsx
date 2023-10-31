@@ -50,7 +50,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
   const [selectedDuration, setSelectedDuration] = useState(durationOptions[6]);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [offerAmount, setOfferAmount] = useState<number | string>("");
+  const [offerAmount, setOfferAmount] = useState("");
   const [isOverBalance, setIsOverBalance] = useState(false);
 
   useOutsideClick(dropdownRef, setShowDropdown, "duration_trigger");
@@ -158,7 +158,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                   placeholder={inputPlaceholder}
                   value={offerAmount}
                   onChange={(e) => {
-                    setOfferAmount(Number(e.target.value));
+                    setOfferAmount(e.target.value);
                   }}
                 />
                 <p>{!isOffer ? "ETH" : "wETH"}</p>

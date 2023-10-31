@@ -19,7 +19,7 @@ import { connectWallets } from "../../services/web3Onboard";
 type Props = { nft: TokenElement };
 
 const NftCard = ({ nft }: Props) => {
-  const { minimalCards, collectionChainId, collectionContract } =
+  const { minimalCards, collectionChainId, collectionContract, userBalance } =
     useGlobalContext()!;
   const { user, chainId, setProvider } = useConnectionContext()!;
   const {
@@ -75,6 +75,7 @@ const NftCard = ({ nft }: Props) => {
   };
 
   const userIsOwner = user?.toLowerCase() == nft?.token?.owner?.toLowerCase();
+  const userCanBuy = Number(currentEthAmount) <= Number(userBalance.ETH);
 
   return (
     <div className="nft_card">
@@ -107,7 +108,9 @@ const NftCard = ({ nft }: Props) => {
         </p>
 
         {currentEthAmount && currentValue && !userIsOwner && (
-          <button onClick={buyNft}>Buy now</button>
+          <button onClick={buyNft} disabled={!userCanBuy}>
+            {userCanBuy ? "Buy now" : "Insufficient balance"}
+          </button>
         )}
       </div>
 
