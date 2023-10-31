@@ -91,13 +91,16 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
             const price = order.price.amount.decimal;
             const usd = order.price.amount.usd;
             const symbol = order.price.currency.symbol;
+            const currentTime = new Date().getTime();
+            const endTime = order?.expiration * 1000;
+            const isExpired = currentTime > endTime;
 
             return (
               <div key={order.id} className="offers_table_item">
                 <p>
                   {price} {symbol}
                 </p>
-                <p>{altTimeStamp || timeStamp}</p>
+                {isExpired ? <p>---</p> : <p>{altTimeStamp || timeStamp}</p>}
                 <p onClick={() => redirectToMSWalletPage(order.maker)}>
                   {truncateAddress(order.maker, 5, "...")}
                 </p>

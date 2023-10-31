@@ -41,8 +41,6 @@ export const NftPageContextProvider = ({ children }: Props) => {
     return collection.address == contract;
   });
 
-  setSelectedCollection(requiredCollection!);
-
   const collectionChainId = requiredCollection?.chainId!;
   const token = `${requiredCollection?.address}:${id}`;
 
@@ -59,6 +57,7 @@ export const NftPageContextProvider = ({ children }: Props) => {
       ),
     ]).then(() => {
       setIsLoading(false);
+      setSelectedCollection(requiredCollection!);
     });
   }, [collectionMetadata]);
 
