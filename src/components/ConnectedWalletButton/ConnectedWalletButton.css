@@ -14,11 +14,12 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  color: var(--ms-mp-text-color);
 }
 
 .connected_wallet_button:hover,
 .logout_btn:hover {
-  background-color: var(--ms-mp-gray);
+  background-color: var(--ms-mp-transparent-black);
 }
 
 .logout_btn {
@@ -26,7 +27,7 @@
   right: 1rem;
   margin-top: 0.5rem;
   padding: 0.5rem;
-  background-color: white;
+  background-color: var(--ms-mp-primary);
   z-index: 1;
   border: none;
   cursor: pointer;
@@ -34,4 +35,5 @@
   transition: var(--ms-mp-transition);
   border-radius: 6px;
   font-size: 14px;
+  color: var(--ms-mp-text-color);
 }

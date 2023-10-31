@@ -8,6 +8,7 @@
   justify-content: space-between;
   box-sizing: border-box;
   transition: var(--ms-mp-transition);
+  color: var(--ms-mp-text-color);
 }
 
 .control_bar_search:hover {
@@ -23,6 +24,7 @@
   background-color: transparent;
   outline: none;
   border: none;
+  color: var(--ms-mp-trait-text-color);
 }
 
 .input_closer {

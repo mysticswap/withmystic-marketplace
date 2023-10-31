@@ -8,6 +8,7 @@
   transition: var(--ms-mp-transition);
   cursor: pointer;
   font-size: 15px;
+  color: var(--ms-mp-text-color);
 }
 
 .activity_row:hover {

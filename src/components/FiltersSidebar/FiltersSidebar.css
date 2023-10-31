@@ -4,6 +4,7 @@
   max-height: calc(100vh - 48px - 48px + 1.5rem);
   overflow-y: auto;
   border-right: var(--ms-mp-gray-border);
+  color: var(--ms-mp-text-color);
 }
 
 .filters_sidebar::-webkit-scrollbar {

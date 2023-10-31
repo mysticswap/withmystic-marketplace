@@ -5,6 +5,7 @@
   align-items: start;
   justify-content: space-between;
   padding: 3rem 0;
+  color: var(--ms-mp-text-color);
 }
 
 .nft_page_section:first-of-type {

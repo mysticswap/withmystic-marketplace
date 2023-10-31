@@ -22,7 +22,7 @@ const Home = () => {
     <div>
       <Banner
         bannerImage={
-          "https://i.seadn.io/gcs/files/6d4b873bd01107ff35489dbe69e031d1.png?auto=format&dpr=1&w=3840"
+          "https://i.seadn.io/gcs/files/0c8aeaaecca582cc095cabbf1b6950de.jpg?auto=format&dpr=1&w=3840"
         }
       />
       <ControlBar isInItemsSection={isInItemsSection} />

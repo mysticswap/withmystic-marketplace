@@ -2,19 +2,23 @@
 
 :root {
   --ms-mp-poppins: "Poppins", sans-serif;
-  --ms-mp-blue: #086abc;
-  --ms-mp-blue-2: #346beb;
+  --ms-mp-blue: #dc3545;
+  --ms-mp-blue-2: #ff132a;
   --ms-mp-gray: #d9e0ec;
   --ms-mp-gray-light: #d9e0ec3d;
   --ms-mp-gray-light-alt: #d9e0ec76;
-  --ms-mp-gradient-blue: linear-gradient(180deg, #086abc, #346beb 100%);
+  --ms-mp-gradient-blue: linear-gradient(
+    180deg,
+    var(--ms-mp-blue),
+    var(--ms-mp-blue-2) 100%
+  );
   --ms-mp-transition: all 0.25s ease-in-out;
   --ms-mp-smooth-transform-transition: transform 0.25s ease-in-out;
   --ms-mp-super-smooth-transition: all 0.5s cubic-bezier(0, 1, 0, 1);
-  --ms-mp-trait-title-color: rgba(38, 57, 237, 1);
-  --ms-mp-trait-background-color: rgba(38, 57, 237, 0.1);
-  --ms-mp-trait-border-color: rgba(38, 57, 237, 0.5);
-  --ms-mp-trait-hover-color: rgba(38, 57, 237, 0.25);
+  --ms-mp-trait-title-color: rgb(191, 47, 64);
+  --ms-mp-trait-background-color: rgba(191, 47, 64, 0.1);
+  --ms-mp-trait-border-color: rgba(191, 47, 64, 0.5);
+  --ms-mp-trait-hover-color: rgba(191, 47, 64, 0.25);
   --ms-mp-gray-border: 1px solid #d9e0ec;
   --ms-mp-transparent-black: rgba(0, 0, 0, 0.5);
   --ms-mp-large-border-radius: 64px;
@@ -24,6 +28,9 @@
   --ms-mp-red-super-light: rgba(237, 38, 62, 0.1);
   --ms-mp-box-shadow: 0 3px 10px var(--ms-mp-transparent-black);
   --ms-mp-box-shadow-light: 0 3px 10px rgba(0, 0, 0, 0.25);
+  --ms-mp-primary: #212428;
+  --ms-mp-text-color: white;
+  --ms-mp-socials: white;
 }
 
 * {
@@ -39,6 +46,7 @@ body {
   margin: 0;
   padding: 0;
   transition: var(--ms-mp-transition);
+  background-color: var(--ms-mp-primary);
 }
 
 .hide {
@@ -60,7 +68,8 @@ body {
 
 .modal_content {
   width: 45%;
-  background-color: white;
+  background-color: var(--ms-mp-primary);
+  color: var(--ms-mp-text-color);
   border-radius: 11px;
   position: relative;
 }
@@ -69,7 +78,8 @@ body {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  color: var(--ms-mp-transparent-black);
+  /* color: var(--ms-mp-transparent-black); */
+  color: var(--ms-mp-text-color);
   transition: var(--ms-mp-transition);
   cursor: pointer;
 }

@@ -22,7 +22,7 @@
 }
 
 .modal_nft_metadata > div > p:first-of-type {
-  color: var(--ms-mp-transparent-black);
+  color: var(--ms-mp-text-color);
 }
 
 .modal_nft_value {
@@ -33,5 +33,5 @@
 .modal_nft_value span {
   font-size: 14px;
   font-weight: 400;
-  color: var(--ms-mp-transparent-black);
+  color: var(--ms-mp-text-color);
 }

@@ -22,6 +22,7 @@
   font-size: 36px;
   color: black;
   margin: 0;
+  color: var(--ms-mp-text-color);
 }
 
 .history_row {
@@ -31,6 +32,7 @@
 
 .history_row p {
   width: calc(100% / 5);
+  color: var(--ms-mp-text-color);
 }
 
 .history_row p:last-of-type {

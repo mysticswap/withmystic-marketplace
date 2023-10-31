@@ -18,6 +18,7 @@
   display: flex;
   align-items: center;
   margin: auto;
+  color: var(--ms-mp-text-color);
 }
 
 .sales_table_head > div {
@@ -47,4 +48,5 @@
 
 .activities_loading {
   text-align: center;
+  color: var(--ms-mp-text-color);
 }

@@ -62,7 +62,7 @@ const Navbar = () => {
         <div className="logo_holder">
           <Link to="/" onClick={() => setCurrentTab(tabOptions[0])}>
             <img
-              src="https://mysticswap.io/static/media/mystWizGuild2.824b89cd.png"
+              src="https://explorer.galaxiastudios.com/images/galaxiaE/Galaxia%20Studios.png"
               alt="collection_logo"
             />
           </Link>

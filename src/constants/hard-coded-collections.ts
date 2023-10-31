@@ -1,34 +1,80 @@
-import { v4 as uuid } from "uuid";
-
 export const marketPlaceCollections = [
   {
-    id: uuid(),
-    name: "Mystical Wizards",
-    address: "0x74cb5611e89078b2e5cb638a873cf7bddc588659",
-    chainId: 1,
-  },
-  {
-    id: uuid(),
-    name: "Pudgy penguins",
-    address: "0xbd3531da5cf5857e7cfaa92426877b022e612cf8",
-    chainId: 1,
-  },
-  {
-    id: uuid(),
-    name: "Red Apples - TneeRp25zq",
-    address: "0x037aca480459ae361a87b023f189532d80cb6769",
-    chainId: 5,
-  },
-  {
-    id: uuid(),
-    name: "Oranges - 2pvQkz3R2L",
-    address: "0x229dd7144fec1008dddf5fcf779ec63c3d576aa7",
-    chainId: 5,
-  },
-  {
-    id: uuid(),
-    name: "Mythical Beings",
-    address: "0xcf55f528492768330c0750a6527c1dfb50e2a7c3",
+    id: "652fa715226f97560b861113",
+    name: "Rabbits Vs Turtles",
     chainId: 137,
+    address: "0x829a67ef339e6230fcfdbf3c8730ffbb0329e796",
   },
+  {
+    id: "652fa714226f97560b861110",
+    name: "Aquatic Wars",
+    chainId: 137,
+    address: "0x15e9064bc16a1a59121556b5d99c1c5c288d9c51",
+  },
+  {
+    id: "652fa716226f97560b861116",
+    name: "Squares on Chain",
+    chainId: 137,
+    address: "0x58cea934a5b0e9831c1d6e6eee6b56e0cec5fee3",
+  },
+  {
+    id: "652fa717226f97560b861119",
+    name: "Eggs on Chain",
+    chainId: 137,
+    address: "0x50255c4e5668bd1cc98fb0ae4e4120b534f61e5e",
+  },
+  {
+    id: "652fa718226f97560b86111c",
+    name: "Apes 2 Punks",
+    chainId: 137,
+    address: "0x6d358d40637fd687c4454c0692ed247f695eaf70",
+  },
+  {
+    id: "652fa719226f97560b86111f",
+    name: "Lazy Smileys",
+    chainId: 137,
+    address: "0xd902b485fc43b813289690a923820fe08cb251de",
+  },
+  {
+    id: "652fa71b226f97560b861122",
+    name: "Galaxia Studios Explorer",
+    chainId: 137,
+    address: "0x6307d073df51251d7cab0bc5a971f8bd3db5e66f",
+  },
+  {
+    id: "652fa71c226f97560b861125",
+    name: "Galaxia Fam",
+    chainId: 137,
+    address: "0xe6b078803b761da37a2c7ad72fbeb8296a850a02",
+  },
+  {
+    id: "652fa71d226f97560b861128",
+    name: "Galaxia Collector",
+    chainId: 137,
+    address: "0x7b799e463046fc31a8c85f32fd6c1e10d722d024",
+  },
+  {
+    id: "652fa71f226f97560b86112b",
+    name: "FrensOnChain",
+    chainId: 137,
+    address: "0x4e60cd6c6e0d8090743ed9c1727e4c5c313f5917",
+  },
+  {
+    id: "652fa720226f97560b86112e",
+    name: "Galaxia Studios Odyssey",
+    chainId: 137,
+    address: "0xad55790efacfc199193ad67e36cb424ced2073bc",
+  },
+  {
+    id: "652fa825226f97560b861133",
+    name: "Rabbits Vs Turtles: Season 2",
+    chainId: 137,
+    address: "0x5bb41ada9097c67986822280349cd0ce9b6bd5c1",
+  },
+  // {
+  //   id: "652fa825226f9cwdb861133",
+  //   name: "Mystical wizards",
+  //   chainId: 1,
+  //   address: "0x74cb5611e89078b2e5cb638a873cf7bddc588659",
+  // },
 ];

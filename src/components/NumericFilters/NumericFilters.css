@@ -24,6 +24,7 @@
   box-sizing: border-box;
   background-color: var(--ms-mp-gray-light);
   border-radius: var(--ms-mp-large-border-radius);
+  color: var(--ms-mp-text-color);
 }
 
 .minmax input:hover {

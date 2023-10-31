@@ -21,6 +21,8 @@
 
 .logo_holder img {
   width: 100%;
+  max-height: 3.5rem;
+  object-fit: contain;
 }
 
 .nav_links {
@@ -31,6 +33,7 @@
 
 .nav_links > a > svg {
   transition: var(--ms-mp-transition);
+  color: var(--ms-mp-socials);
 }
 
 .nav_links > a > svg:hover {
@@ -53,6 +56,7 @@
   font-size: 1rem;
   cursor: pointer;
   transition: var(--ms-mp-transition);
+  color: var(--ms-mp-text-color);
 }
 
 .collection_dropdown_trigger:hover {
@@ -62,7 +66,7 @@
 .collections_dropdown_list {
   position: absolute;
   top: 150%;
-  background-color: white;
+  background-color: var(--ms-mp-primary);
   width: 230%;
   z-index: 1;
   padding: 0.75rem;
@@ -81,6 +85,7 @@
   border-radius: 8px;
   transition: var(--ms-mp-transition);
   cursor: pointer;
+  color: var(--ms-mp-text-color);
 }
 
 .collections_dropdown_list button:hover {
@@ -93,6 +98,7 @@
   font-size: 1rem;
   cursor: pointer;
   transition: var(--ms-mp-transition);
+  color: var(--ms-mp-text-color);
 }
 
 .sell_button:hover {
