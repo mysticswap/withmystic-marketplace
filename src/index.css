@@ -102,3 +102,9 @@ a {
   display: block;
   color: unset;
 }
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

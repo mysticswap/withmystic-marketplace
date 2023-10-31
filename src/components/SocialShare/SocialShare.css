@@ -3,6 +3,12 @@
   padding: 1rem;
 }
 
+.social_modal_nft {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .social_modal_nft img {
   width: 65px;
   height: 65px;
@@ -12,7 +18,8 @@
 
 .social_modal_nft p {
   margin: 0;
-  margin-top: 0.5rem;
+  width: 100%;
+  /* margin-top: 0.5rem; */
 }
 
 .social_modal_main {

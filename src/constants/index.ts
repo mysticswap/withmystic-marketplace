@@ -75,6 +75,7 @@ export const defaultOfferOrList = {
   isOffer: true,
   isSale: false,
   tokenId: "",
+  message: "",
 };
 
 export const scanWebsites: { [x: number]: string } = {

@@ -21,4 +21,5 @@ export type TransactionNft = {
   isOffer: boolean;
   isSale: boolean;
   tokenId: string;
+  message: string;
 };

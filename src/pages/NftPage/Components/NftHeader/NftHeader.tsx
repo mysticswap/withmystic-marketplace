@@ -69,6 +69,9 @@ const NftHeader = ({
     amount: nftPriceData?.floorAsk?.price?.amount?.decimal,
     price: Math.ceil(nftPriceData?.floorAsk?.price?.amount?.usd),
     tokenId: nftInfo?.tokenId,
+    message: userIsOwner
+      ? `I’ve just listed ${nftName} for sale! Any takers?`
+      : `I’ve just made a bid on ${nftName}!`,
   };
 
   const triggerModal = (

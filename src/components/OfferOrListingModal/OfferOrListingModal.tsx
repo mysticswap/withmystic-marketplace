@@ -161,7 +161,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                     setOfferAmount(Number(e.target.value));
                   }}
                 />
-                <p>wETH</p>
+                <p>{!isOffer ? "ETH" : "wETH"}</p>
               </div>
 
               <div className="duration_area">

@@ -58,6 +58,7 @@ const NftCard = ({ nft }: Props) => {
       isOffer: false,
       isSale: false,
       tokenId: nftId,
+      message: `I’ve just bought ${nft?.token?.name}!`,
     };
     setTransactionNft(transactionNft);
     setShowConfirmationModal(true);

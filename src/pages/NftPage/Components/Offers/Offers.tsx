@@ -62,6 +62,7 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
       isOffer: false,
       isSale: true,
       tokenId: nftInfo.tokenId,
+      message: `I’ve just sold ${nftInfo?.name}!`,
     };
     setTransactionNft(transactionNft);
     setShowConfirmationModal(true);

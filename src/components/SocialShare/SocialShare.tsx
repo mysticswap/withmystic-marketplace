@@ -29,7 +29,10 @@ const SocialShare = () => {
       <div className="modal_content social_modal_content">
         <div className="social_modal_nft">
           <img src={nftInfo.image} alt="" />
-          <p>{nftInfo.name}</p>
+          <div className="ellipsis">
+            <p className="ellipsis">{nftInfo.collection.name}</p>
+            <p className="ellipsis">{nftInfo.name}</p>
+          </div>
         </div>
         <IoClose
           className="modal_closer"

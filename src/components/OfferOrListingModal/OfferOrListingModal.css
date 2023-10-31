@@ -93,6 +93,13 @@
   padding: 0.5rem;
   border-radius: 1rem;
   box-shadow: var(--ms-mp-box-shadow);
+  z-index: 1;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.duration_list::-webkit-scrollbar {
+  display: none;
 }
 
 .duration_list > button {
