@@ -32,8 +32,7 @@ const NftCard = ({ nft }: Props) => {
   const nameRef = useRef(null);
   const isOverflowing = useIsOverflow(nameRef, minimalCards);
 
-  const currentEthAmount =
-    nft?.market?.floorAsk?.price?.amount?.decimal?.toFixed(4);
+  const currentEthAmount = nft?.market?.floorAsk?.price?.amount?.decimal;
   const symbol = nft?.market?.floorAsk?.price?.currency?.symbol;
   const currentValue = Math.ceil(nft?.market?.floorAsk?.price?.amount?.usd);
   const lastSale = nft?.market?.floorAsk?.price?.amount?.decimal?.toFixed(4);

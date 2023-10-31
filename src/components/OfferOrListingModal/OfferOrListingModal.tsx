@@ -57,8 +57,8 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
   useEffect(() => {
     const isOverUserBalance = Number(offerAmount) > Number(userBalance.WETH);
-    setIsOverBalance(isOverUserBalance);
-  }, [offerAmount]);
+    isOffer && setIsOverBalance(isOverUserBalance);
+  }, [offerAmount, isOffer]);
 
   const offerBottom = (
     <>
@@ -134,6 +134,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
   const transactionButtonIsDisable =
     Number(offerAmount) <= 0 || (isOffer && isOverBalance);
+  const transactionButtonText = isOffer ? "Make Offer" : "Create Listing";
 
   return (
     <div className="modal_parent">
@@ -211,7 +212,9 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
               <SolidButton
                 className="list_or_bid_submit_btn"
-                text={isOffer ? "Make Offer" : "Create Listing"}
+                text={
+                  isOverBalance ? "Insufficient Funds" : transactionButtonText
+                }
                 onClick={createBidOrList}
                 disabled={transactionButtonIsDisable}
               />
