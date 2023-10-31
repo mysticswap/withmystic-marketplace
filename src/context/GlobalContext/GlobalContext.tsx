@@ -132,7 +132,7 @@ export const GlobalContextProvider = ({ children }: Props) => {
         setUserBalance(result);
       });
     }
-  }, [user, chainId, collectionChainId]);
+  }, [user, chainId, collectionChainId, selectedCollection]);
 
   useEffect(() => {
     localStorage.setItem(
