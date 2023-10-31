@@ -70,7 +70,12 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
     switchChains(chainId, collectionChainId).then(() => {
       acceptOffer(collectionChainId, user!, token, source).then((result) => {
         setTransactionStage(1);
-        handleBuyOrSellData(result, setTransactionStage, setTransactionHash);
+        handleBuyOrSellData(
+          result,
+          setTransactionStage,
+          setTransactionHash,
+          setShowConfirmationModal
+        );
       });
     });
   };
