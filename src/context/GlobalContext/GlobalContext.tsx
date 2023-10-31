@@ -27,7 +27,11 @@ import { CollectionActivity } from "../../types/reservoir-types/collection-activ
 import { CollectionTraitsV2 } from "../../types/reservoir-types/collection-traits.types";
 import { UserNfts } from "../../types/reservoir-types/user-nfts.types";
 import { useConnectionContext } from "../ConnectionContext/ConnectionContext";
-import { getHostName, getPreviousCollectionAddress } from "../../utils";
+import {
+  getHostName,
+  getPreviousCollectionAddress,
+  updateFavicon,
+} from "../../utils";
 import { marketPlaceCollections } from "../../constants/hard-coded-collections";
 
 const GlobalContext = createContext<GlobalContextType | null>(null);
@@ -140,6 +144,12 @@ export const GlobalContextProvider = ({ children }: Props) => {
       JSON.stringify(selectedCollection.address)
     );
   }, [selectedCollection]);
+
+  useEffect(() => {
+    updateFavicon(
+      "https://explorer.galaxiastudios.com/images/galaxiaE/Galaxia%20Studios.png"
+    );
+  }, []);
 
   return (
     <GlobalContext.Provider

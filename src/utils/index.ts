@@ -85,3 +85,15 @@ export const getPreviousCollectionAddress = () => {
 export const copyToClipboard = (text: string) => {
   window.navigator.clipboard.writeText(text);
 };
+
+export const updateFavicon = (url: string) => {
+  let link = document.querySelector("link[rel~='icon']");
+  if (!link) {
+    link = document.createElement("link");
+    //@ts-ignore
+    link.rel = "icon";
+    document.getElementsByTagName("head")[0].appendChild(link);
+  }
+  //@ts-ignore
+  link.href = url;
+};
