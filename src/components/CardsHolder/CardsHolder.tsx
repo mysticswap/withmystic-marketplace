@@ -135,7 +135,7 @@ const CardsHolder = () => {
         </div>
       )}
       {nftsList?.length < 1 && !isFetching && (
-        <p className="no_result">No result</p>
+        <p className="no_result">No results</p>
       )}
     </div>
   );

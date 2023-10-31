@@ -16,6 +16,7 @@ import UserNftsModal from "../UserNftsModal/UserNftsModal";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import { BsCheck } from "react-icons/bs";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
+import { tabOptions } from "../../constants";
 
 const Navbar = () => {
   const { setProvider, user } = useConnectionContext()!;
@@ -25,6 +26,7 @@ const Navbar = () => {
     availableCollections,
     selectedCollection,
     setSelectedCollection,
+    setCurrentTab,
   } = useGlobalContext()!;
   const { setShowOfferOrListingModal } = useTransactionContext()!;
   const location = useLocation();
@@ -58,7 +60,7 @@ const Navbar = () => {
     <nav className="navbar">
       <section className="nav_left">
         <div className="logo_holder">
-          <Link to="/">
+          <Link to="/" onClick={() => setCurrentTab(tabOptions[0])}>
             <img
               src="https://mysticswap.io/static/media/mystWizGuild2.824b89cd.png"
               alt="collection_logo"
