@@ -32,7 +32,7 @@ function App() {
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
               <Footer />
-              <ToastContainer />
+              <ToastContainer limit={1} />
             </Router>
           </TransactionContextProvider>
         </GlobalContextProvider>
