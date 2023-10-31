@@ -26,13 +26,13 @@ function App() {
                   element={<HomeContextProvider children={<Home />} />}
                 />
                 <Route
-                  path="/nft/:id"
+                  path="/:contract/:id"
                   element={<NftPageContextProvider children={<NftPage />} />}
                 />
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
               <Footer />
-              <ToastContainer />
+              <ToastContainer limit={1} />
             </Router>
           </TransactionContextProvider>
         </GlobalContextProvider>

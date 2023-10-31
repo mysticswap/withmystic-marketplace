@@ -31,6 +31,12 @@
 .offers_table_item > p:last-of-type {
   color: var(--ms-mp-blue);
   width: fit-content;
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+}
+
+.offers_table_item > p:last-of-type:hover {
+  color: var(--ms-mp-blue-2);
 }
 
 .more_offers_btn {

@@ -29,3 +29,12 @@
   color: gray;
   /* margin: 0; */
 }
+
+.detail_address:hover {
+  transition: var(--ms-mp-transition);
+  cursor: pointer;
+}
+
+.detail_address:hover {
+  color: var(--ms-mp-blue-2);
+}

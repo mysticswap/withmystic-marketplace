@@ -11,9 +11,10 @@ import Loading from "../../components/Loading/Loading";
 import ConfirmPurchaseModal from "../../components/ConfirmPurchaseModal/ConfirmPurchaseModal";
 import FlaggedWarning from "./Components/FlaggedWarning/FlaggedWarning";
 import { useNftPageContext } from "../../context/NftPageContext/NftPageContext";
-import { collectionContract } from "../../config";
 import OfferOrListingModal from "../../components/OfferOrListingModal/OfferOrListingModal";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
+import SocialShare from "../../components/SocialShare/SocialShare";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
 const NftPage = () => {
   const { id } = useParams();
@@ -25,6 +26,7 @@ const NftPage = () => {
     isLoading,
     nftInfo,
     nftPriceData,
+    showShareModal,
   } = useNftPageContext()!;
   const {
     showOfferOrListingModal,
@@ -32,6 +34,7 @@ const NftPage = () => {
     showConfirmationModal,
     setShowConfirmationModal,
   } = useTransactionContext()!;
+  const { collectionContract } = useGlobalContext()!;
 
   const contractAddress = collectionContract;
 
@@ -88,6 +91,8 @@ const NftPage = () => {
           setShowOfferOrListingModal={setShowOfferOrListingModal}
         />
       )}
+
+      {showShareModal && <SocialShare />}
     </>
   );
 };

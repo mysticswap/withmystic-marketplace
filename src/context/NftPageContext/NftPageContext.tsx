@@ -17,8 +17,6 @@ import {
 import { useGlobalContext } from "../GlobalContext/GlobalContext";
 import { reservoirActivityTypes } from "../../constants";
 import { useParams } from "react-router-dom";
-import { collectionContract } from "../../config";
-import { useConnectionContext } from "../ConnectionContext/ConnectionContext";
 
 const NftPageContext = createContext<NftPageContextType | null>(null);
 
@@ -27,34 +25,39 @@ type Props = {
 };
 
 export const NftPageContextProvider = ({ children }: Props) => {
-  const { id } = useParams();
-  const { chainId } = useConnectionContext()!;
-  const { collectionChainId, collectionMetadata } = useGlobalContext()!;
+  const { id, contract } = useParams();
+  const { collectionMetadata, setSelectedCollection, availableCollections } =
+    useGlobalContext()!;
 
   const [nftDataV2, setNftDataV2] = useState({} as GetNftsReservoir);
   const [nftOffers, setNftOffers] = useState({} as NftOffers);
   const [nftActivity, setNftActivity] = useState({} as NftActivity);
   const [isLoading, setIsLoading] = useState(true);
+  const [showShareModal, setShowShareModal] = useState(false);
   const nftInfo = nftDataV2?.tokens?.[0]?.token;
   const nftPriceData = nftDataV2?.tokens?.[0]?.market;
 
-  const token = `${collectionContract}:${id}`;
+  const requiredCollection = availableCollections.find((collection) => {
+    return collection.address == contract;
+  });
+
+  const collectionChainId = requiredCollection?.chainId!;
+  const token = `${requiredCollection?.address}:${id}`;
 
   useEffect(() => {
     Promise.all([
-      getSingleNftV2(collectionChainId! || chainId, token).then((result) => {
+      getSingleNftV2(collectionChainId, token).then((result) => {
         setNftDataV2(result);
       }),
-      getNftOffers(collectionChainId! || chainId, token).then((result) => {
+      getNftOffers(collectionChainId, token).then((result) => {
         setNftOffers(result);
       }),
-      getNftActivity(
-        collectionChainId! || chainId,
-        token,
-        reservoirActivityTypes
-      ).then((result) => setNftActivity(result)),
+      getNftActivity(collectionChainId, token, reservoirActivityTypes).then(
+        (result) => setNftActivity(result)
+      ),
     ]).then(() => {
       setIsLoading(false);
+      setSelectedCollection(requiredCollection!);
     });
   }, [collectionMetadata]);
 
@@ -71,6 +74,9 @@ export const NftPageContextProvider = ({ children }: Props) => {
         setIsLoading,
         nftInfo,
         nftPriceData,
+        token,
+        showShareModal,
+        setShowShareModal,
       }}
     >
       {children}

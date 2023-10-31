@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { getUserBalance } from "../../services/api/marketplace-api";
-import { API_KEY, collectionContract } from "../../config";
+import { API_KEY } from "../../config";
 import { GlobalContextType } from "./types";
 import {
   getCollectionActivity,
@@ -27,7 +27,8 @@ import { CollectionActivity } from "../../types/reservoir-types/collection-activ
 import { CollectionTraitsV2 } from "../../types/reservoir-types/collection-traits.types";
 import { UserNfts } from "../../types/reservoir-types/user-nfts.types";
 import { useConnectionContext } from "../ConnectionContext/ConnectionContext";
-import { getHostName } from "../../utils";
+import { getHostName, getPreviousCollectionAddress } from "../../utils";
+import { marketPlaceCollections } from "../../constants/hard-coded-collections";
 
 const GlobalContext = createContext<GlobalContextType | null>(null);
 
@@ -37,6 +38,17 @@ type Props = {
 
 export const GlobalContextProvider = ({ children }: Props) => {
   const { user, chainId } = useConnectionContext()!;
+  const [availableCollections, setAvailableCollections] = useState(
+    marketPlaceCollections
+  );
+
+  const previousCollection = availableCollections.find((collection) => {
+    return collection.address == getPreviousCollectionAddress();
+  });
+
+  const [selectedCollection, setSelectedCollection] = useState(
+    previousCollection || availableCollections[0]
+  );
   const [currentTab, setCurrentTab] = useState(tabOptions[0]);
   const [collectionMetadata, setCollectionMetadata] =
     useState<CollectionMetadataV2 | null>(null);
@@ -54,15 +66,18 @@ export const GlobalContextProvider = ({ children }: Props) => {
 
   const selectedActivityTypes = JSON.stringify(selectedActivities);
   const source = getHostName();
-  const collectionChainId = collectionMetadata?.collections?.[0]?.chainId;
+  const collectionChainId = selectedCollection.chainId;
+  const collectionContract = selectedCollection.address;
 
   useEffect(() => {
-    getCollectionMetadata(chainId, collectionContract).then((result) => {
-      setCollectionMetadata(result);
-    });
+    getCollectionMetadata(collectionChainId, collectionContract).then(
+      (result) => {
+        setCollectionMetadata(result);
+      }
+    );
 
     getCollectionNftsV2(
-      chainId,
+      collectionChainId,
       defaultSort,
       defaultSortby,
       collectionContract
@@ -71,17 +86,19 @@ export const GlobalContextProvider = ({ children }: Props) => {
     });
 
     getCollectionActivity(
-      chainId,
+      collectionChainId,
       collectionContract,
       selectedActivityTypes
     ).then((result) => {
       setCollectionActivity(result);
     });
 
-    getCollectionTraitsV2(chainId, collectionContract).then((result) => {
-      setCollectionAttributes(result);
-    });
-  }, []);
+    getCollectionTraitsV2(collectionChainId, collectionContract).then(
+      (result) => {
+        setCollectionAttributes(result);
+      }
+    );
+  }, [selectedCollection]);
 
   useEffect(() => {
     if (selectedActivities.length < 1) {
@@ -89,7 +106,7 @@ export const GlobalContextProvider = ({ children }: Props) => {
     }
     setCollectionActivity({} as CollectionActivity);
     getCollectionActivity(
-      chainId,
+      collectionChainId,
       collectionContract,
       selectedActivities.length < 1
         ? reservoirActivityTypes
@@ -111,13 +128,18 @@ export const GlobalContextProvider = ({ children }: Props) => {
 
   useEffect(() => {
     if (user) {
-      getUserBalance(user!, collectionChainId! || chainId, API_KEY).then(
-        (result) => {
-          setUserBalance(result);
-        }
-      );
+      getUserBalance(user!, collectionChainId, API_KEY).then((result) => {
+        setUserBalance(result);
+      });
     }
-  }, [user, chainId, collectionChainId]);
+  }, [user, chainId, collectionChainId, selectedCollection]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "current-collection",
+      JSON.stringify(selectedCollection.address)
+    );
+  }, [selectedCollection]);
 
   return (
     <GlobalContext.Provider
@@ -142,6 +164,11 @@ export const GlobalContextProvider = ({ children }: Props) => {
         setMinimalCards,
         source,
         collectionChainId,
+        availableCollections,
+        setAvailableCollections,
+        selectedCollection,
+        setSelectedCollection,
+        collectionContract,
       }}
     >
       {children}

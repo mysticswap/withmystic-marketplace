@@ -5,7 +5,6 @@ import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import { NumericFiltersType } from "../../context/HomeContext/types";
 import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-api";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
-import { collectionContract } from "../../config";
 import { generateAttributeString } from "../../utils";
 
 type Props = {
@@ -14,7 +13,8 @@ type Props = {
 };
 
 const NumericFilters = ({ title, isRarity }: Props) => {
-  const { setCollectionNfts, collectionChainId } = useGlobalContext()!;
+  const { setCollectionNfts, collectionChainId, collectionContract } =
+    useGlobalContext()!;
   const {
     numericFilters,
     setNumericFilters,
@@ -49,7 +49,7 @@ const NumericFilters = ({ title, isRarity }: Props) => {
       setNumericFilters(updatedValues);
       setCollectionNfts({ tokens: [], continuation: null });
       getCollectionNftsV2(
-        collectionChainId!,
+        collectionChainId,
         selectedDropdownOption.value,
         selectedDropdownOption.order,
         collectionContract,
@@ -70,11 +70,11 @@ const NumericFilters = ({ title, isRarity }: Props) => {
         {title}{" "}
         <RiArrowUpSLine
           className="status_down_arrow"
-          aria-expanded={showList}
+          aria-expanded={!showList}
           size={20}
         />
       </button>
-      <div className="minmax" aria-expanded={showList}>
+      <div className="minmax" aria-expanded={!showList}>
         <input
           type="text"
           placeholder="Min"

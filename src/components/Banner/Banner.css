@@ -87,6 +87,10 @@
   font-size: 18px;
 }
 
+.tabs button:hover {
+  color: white;
+}
+
 .tabs > .active_tab {
   border-color: yellow;
   color: white;

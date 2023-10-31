@@ -3,7 +3,6 @@ import "./ConfirmPurchaseModal.css";
 import ModalNft from "../ModalNft/ModalNft";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import TransactionStages from "../TransactionStages/TransactionStages";
-import { TbMoodSadSquint } from "react-icons/tb";
 
 type Props = {
   setShowConfirmationModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -62,7 +61,6 @@ const ConfirmPurchaseModal = ({ setShowConfirmationModal }: Props) => {
             </>
           ) : (
             <div className="stage">
-              <TbMoodSadSquint size={50} color="red" />
               <p>Insufficient funds</p>
             </div>
           )}

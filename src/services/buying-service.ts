@@ -5,7 +5,8 @@ import { executeTransactions } from "./seaport";
 export const handleBuyOrSellData = async (
   data: BuyData,
   setTransactionStage: React.Dispatch<React.SetStateAction<number>>,
-  setTransactionHash: React.Dispatch<React.SetStateAction<string>>
+  setTransactionHash: React.Dispatch<React.SetStateAction<string>>,
+  modalSetter: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   await window.ethereum.enable();
 
@@ -19,8 +20,14 @@ export const handleBuyOrSellData = async (
     return item.data;
   });
 
-  executeTransactions(requiredApprovals, signer).then(async (result) => {
-    setTransactionStage(2);
-    setTransactionHash(result);
-  });
+  executeTransactions(requiredApprovals, signer)
+    .then(async (result) => {
+      setTransactionStage(2);
+      setTransactionHash(result);
+    })
+    .catch(() => {
+      modalSetter(false);
+      // toast.error("Something went wrong!");
+      setTransactionStage(0);
+    });
 };

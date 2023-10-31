@@ -12,7 +12,6 @@ import {
   createListing,
 } from "../../services/api/buy-offer-list.api";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
-import { collectionContract } from "../../config";
 import { convertTokenAmountToDecimal, getHostName } from "../../utils";
 import { handleListingData } from "../../services/listing-service";
 import { handleBiddingData } from "../../services/bidding-service";
@@ -26,8 +25,12 @@ type Props = {
 
 const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const { user, chainId } = useConnectionContext()!;
-  const { userBalance, collectionMetadata, collectionChainId } =
-    useGlobalContext()!;
+  const {
+    userBalance,
+    collectionMetadata,
+    collectionChainId,
+    collectionContract,
+  } = useGlobalContext()!;
   const { transactionNft, transactionStage, setTransactionStage } =
     useTransactionContext()!;
   const dropdownRef = useRef(null);
@@ -47,7 +50,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
   const [selectedDuration, setSelectedDuration] = useState(durationOptions[6]);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [offerAmount, setOfferAmount] = useState<number | string>("");
+  const [offerAmount, setOfferAmount] = useState("");
   const [isOverBalance, setIsOverBalance] = useState(false);
 
   useOutsideClick(dropdownRef, setShowDropdown, "duration_trigger");
@@ -92,28 +95,38 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     const expiration = String(selectedDuration.time);
     setTransactionStage(1);
 
-    switchChains(chainId, collectionChainId!).then(() => {
+    switchChains(chainId, collectionChainId).then(() => {
       if (!isOffer) {
         createListing(
-          collectionChainId!,
+          collectionChainId,
           user!,
           source,
           token,
           weiPrice,
           expiration
         ).then(async (result) => {
-          handleListingData(collectionChainId!, result, setTransactionStage);
+          handleListingData(
+            collectionChainId,
+            result,
+            setTransactionStage,
+            setShowOfferOrListingModal
+          );
         });
       } else {
         createBid(
-          collectionChainId!,
+          collectionChainId,
           user!,
           source,
           token,
           weiPrice,
           expiration
         ).then((result) => {
-          handleBiddingData(collectionChainId!, result, setTransactionStage);
+          handleBiddingData(
+            collectionChainId,
+            result,
+            setTransactionStage,
+            setShowOfferOrListingModal
+          );
         });
       }
     });
@@ -155,10 +168,10 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                   placeholder={inputPlaceholder}
                   value={offerAmount}
                   onChange={(e) => {
-                    setOfferAmount(Number(e.target.value));
+                    setOfferAmount(e.target.value);
                   }}
                 />
-                <p>wETH</p>
+                <p>{!isOffer ? "ETH" : "wETH"}</p>
               </div>
 
               <div className="duration_area">

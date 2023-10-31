@@ -5,14 +5,17 @@ import { useTransactionContext } from "../../context/TransactionContext/Transact
 import { TbExternalLink } from "react-icons/tb";
 import { scanWebsites } from "../../constants";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
+import { TwitterShareButton } from "react-share";
+import { getHostName } from "../../utils";
 
 type Props = {
   stage: number;
 };
 
 const TransactionStages = ({ stage }: Props) => {
-  const { transactionHash } = useTransactionContext()!;
+  const { transactionHash, transactionNft } = useTransactionContext()!;
   const { collectionChainId } = useGlobalContext()!;
+
   return (
     <div className="process_component">
       {stage == 1 && (
@@ -25,13 +28,22 @@ const TransactionStages = ({ stage }: Props) => {
       {stage == 2 && (
         <div className="stage">
           <p>Share it:</p>
-          <RiTwitterXLine className="twitter_share" size={50} display="block" />
+          <TwitterShareButton
+            title={transactionNft.message}
+            url={getHostName()}
+          >
+            <RiTwitterXLine
+              className="twitter_share"
+              size={50}
+              display="block"
+            />
+          </TwitterShareButton>
           {transactionHash && (
             <button
               className="modal_transaction_button"
               onClick={() =>
                 window.open(
-                  `${scanWebsites[collectionChainId!]}${transactionHash}`
+                  `${scanWebsites[collectionChainId]}tx/${transactionHash}`
                 )
               }
             >

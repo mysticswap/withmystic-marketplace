@@ -19,7 +19,8 @@ import { connectWallets } from "../../services/web3Onboard";
 type Props = { nft: TokenElement };
 
 const NftCard = ({ nft }: Props) => {
-  const { minimalCards, collectionChainId } = useGlobalContext()!;
+  const { minimalCards, collectionChainId, collectionContract, userBalance } =
+    useGlobalContext()!;
   const { user, chainId, setProvider } = useConnectionContext()!;
   const {
     setShowConfirmationModal,
@@ -42,7 +43,7 @@ const NftCard = ({ nft }: Props) => {
   const sourceLink = nft?.market?.floorAsk?.source?.url;
 
   const nameLink = (
-    <Link to={`/nft/${nftId}`}>
+    <Link to={`/${collectionContract}/${nftId}`}>
       <p ref={nameRef}>{nftName}</p>
     </Link>
   );
@@ -57,6 +58,7 @@ const NftCard = ({ nft }: Props) => {
       isOffer: false,
       isSale: false,
       tokenId: nftId,
+      message: `I’ve just bought ${nft?.token?.name}!`,
     };
     setTransactionNft(transactionNft);
     setShowConfirmationModal(true);
@@ -64,21 +66,25 @@ const NftCard = ({ nft }: Props) => {
     const orderId = nft?.market?.floorAsk?.id;
     const source = getHostName();
     !user && connectWallets(setProvider);
-    switchChains(chainId, collectionChainId!).then(() => {
-      buyListedNft(collectionChainId!, orderId, user!, source).then(
-        (result) => {
-          setTransactionStage(1);
-          handleBuyOrSellData(result, setTransactionStage, setTransactionHash);
-        }
-      );
+    switchChains(chainId, collectionChainId).then(() => {
+      buyListedNft(collectionChainId, orderId, user!, source).then((result) => {
+        setTransactionStage(1);
+        handleBuyOrSellData(
+          result,
+          setTransactionStage,
+          setTransactionHash,
+          setShowConfirmationModal
+        );
+      });
     });
   };
 
   const userIsOwner = user?.toLowerCase() == nft?.token?.owner?.toLowerCase();
+  const userCanBuy = Number(currentEthAmount) <= Number(userBalance.ETH);
 
   return (
     <div className="nft_card">
-      <Link to={`/nft/${nftId}`}>
+      <Link to={`/${collectionContract}/${nftId}`}>
         <img src={nft?.token?.image} alt="" />
       </Link>
       <div className="nft_card_details">
@@ -89,7 +95,7 @@ const NftCard = ({ nft }: Props) => {
             <>{nameLink}</>
           )}
         </div>
-        <Link to={`/nft/${nftId}`}>
+        <Link to={`/${collectionContract}/${nftId}`}>
           <p className="nft_card_amount">
             {currentEthAmount && currentValue ? (
               <>
@@ -107,7 +113,9 @@ const NftCard = ({ nft }: Props) => {
         </p>
 
         {currentEthAmount && currentValue && !userIsOwner && (
-          <button onClick={buyNft}>Buy now</button>
+          <button onClick={buyNft} disabled={!userCanBuy}>
+            {userCanBuy ? "Buy now" : "Insufficient balance"}
+          </button>
         )}
       </div>
 

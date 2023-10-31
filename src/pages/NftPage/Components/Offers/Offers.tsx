@@ -1,9 +1,12 @@
 import dayjs from "dayjs";
 import { NftOffers } from "../../../../types/reservoir-types/nft-offers.types";
-import { getHostName, truncateAddress } from "../../../../utils";
+import {
+  getHostName,
+  redirectToMSWalletPage,
+  truncateAddress,
+} from "../../../../utils";
 import "./Offers.css";
 import { getNftOffers } from "../../../../services/api/marketplace-reservoir-api";
-import { collectionContract } from "../../../../config";
 import { useState } from "react";
 import { useConnectionContext } from "../../../../context/ConnectionContext/ConnectionContext";
 import { useNftPageContext } from "../../../../context/NftPageContext/NftPageContext";
@@ -22,7 +25,7 @@ type Props = {
 
 const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
   const { user, chainId } = useConnectionContext()!;
-  const { collectionChainId } = useGlobalContext()!;
+  const { collectionChainId, collectionContract } = useGlobalContext()!;
   const { nftInfo } = useNftPageContext()!;
   const {
     setTransactionStage,
@@ -35,7 +38,7 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
 
   const fetchMoreOffers = () => {
     setIsFetching(true);
-    getNftOffers(collectionChainId!, token, nftOffers.continuation!)
+    getNftOffers(collectionChainId, token, nftOffers.continuation!)
       .then((result) => {
         setNftOffers({
           orders: [...nftOffers.orders, ...result.orders],
@@ -59,14 +62,20 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
       isOffer: false,
       isSale: true,
       tokenId: nftInfo.tokenId,
+      message: `I’ve just sold ${nftInfo?.name}!`,
     };
     setTransactionNft(transactionNft);
     setShowConfirmationModal(true);
     const source = getHostName();
-    switchChains(chainId, collectionChainId!).then(() => {
-      acceptOffer(collectionChainId!, user!, token, source).then((result) => {
+    switchChains(chainId, collectionChainId).then(() => {
+      acceptOffer(collectionChainId, user!, token, source).then((result) => {
         setTransactionStage(1);
-        handleBuyOrSellData(result, setTransactionStage, setTransactionHash);
+        handleBuyOrSellData(
+          result,
+          setTransactionStage,
+          setTransactionHash,
+          setShowConfirmationModal
+        );
       });
     });
   };
@@ -88,14 +97,19 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
             const price = order.price.amount.decimal;
             const usd = order.price.amount.usd;
             const symbol = order.price.currency.symbol;
+            const currentTime = new Date().getTime();
+            const endTime = order?.expiration * 1000;
+            const isExpired = currentTime > endTime;
 
             return (
               <div key={order.id} className="offers_table_item">
                 <p>
                   {price} {symbol}
                 </p>
-                <p>{altTimeStamp || timeStamp}</p>
-                <p>{truncateAddress(order.maker, 5, "...")}</p>
+                {isExpired ? <p>---</p> : <p>{altTimeStamp || timeStamp}</p>}
+                <p onClick={() => redirectToMSWalletPage(order.maker)}>
+                  {truncateAddress(order.maker, 5, "...")}
+                </p>
                 {isOwner && (
                   <button
                     className="offer_accept_button"

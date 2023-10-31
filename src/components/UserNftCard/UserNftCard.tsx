@@ -24,13 +24,14 @@ const UserNftCard = ({ nft, setShowUserNftsModal }: Props) => {
     setShowUserNftsModal(false);
     const listData: TransactionNft = {
       collectionName: nft.token.collection.name,
-      nftName: nft.token.name,
+      nftName,
       nftImage: nft.token.image,
       isOffer: false,
       isSale: false,
       amount: nft?.token?.lastSale?.price?.amount?.decimal!,
       price: nft?.token?.lastSale?.price?.amount?.usd!,
       tokenId: nft?.token?.tokenId,
+      message: `I’ve just listed ${nftName} for sale! Any takers?`,
     };
     setTransactionNft(listData);
     setShowOfferOrListingModal(true);

@@ -1,7 +1,7 @@
 import { RiArrowUpSLine } from "react-icons/ri";
 import "./TraitFilter.css";
 import { useState } from "react";
-import { IoSearchSharp } from "react-icons/io5";
+import { IoClose, IoSearchSharp } from "react-icons/io5";
 import StatusListItem from "../StatusListItem/StatusListItem";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import { AttributeV2 } from "../../types/reservoir-types/collection-traits.types";
@@ -15,6 +15,7 @@ const TraitFilter = ({ attribute }: Props) => {
   const [showList, setShowlist] = useState(false);
   const traitValues = attribute.values;
   const [traitValuesTemp, setTraitValuesTemp] = useState(traitValues);
+  const [inputValue, setInputValue] = useState("");
 
   const selectTrait = (isClicked: boolean, trait: string) => {
     if (!isClicked) {
@@ -31,11 +32,17 @@ const TraitFilter = ({ attribute }: Props) => {
   };
 
   const onSearch = (text: string) => {
+    setInputValue(text);
     const query = text.toLowerCase();
     const searchResults = traitValues.filter((value) => {
       return value.value.toLowerCase().includes(query);
     });
     setTraitValuesTemp(searchResults);
+  };
+
+  const clearInput = () => {
+    setInputValue("");
+    setTraitValuesTemp(traitValues);
   };
 
   return (
@@ -44,19 +51,24 @@ const TraitFilter = ({ attribute }: Props) => {
         {attribute.key}{" "}
         <RiArrowUpSLine
           className="status_down_arrow"
-          aria-expanded={showList}
+          aria-expanded={!showList}
           size={20}
         />
       </button>
 
-      <div className="trait_container" aria-expanded={showList}>
+      <div className="trait_container" aria-expanded={!showList}>
         <div className="trait_search">
           <input
             type="text"
             placeholder="Search"
             onChange={(e) => onSearch(e.target.value)}
+            value={inputValue}
           />
-          <IoSearchSharp size={20} color="gray" />
+          {!inputValue ? (
+            <IoSearchSharp size={20} color="gray" />
+          ) : (
+            <IoClose size={20} className="input_closer" onClick={clearInput} />
+          )}
         </div>
         <div>
           {traitValuesTemp?.map((value) => {

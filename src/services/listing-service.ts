@@ -6,7 +6,8 @@ import { executeTransactions } from "./seaport";
 export const handleListingData = async (
   chainId: number,
   data: ListOrBidData,
-  setStage: React.Dispatch<React.SetStateAction<number>>
+  setStage: React.Dispatch<React.SetStateAction<number>>,
+  modalSetter: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   await window.ethereum.enable();
 
@@ -20,33 +21,39 @@ export const handleListingData = async (
     return item.data;
   });
 
-  executeTransactions(requiredApprovals, signer).then(async () => {
-    const signTypedMessage = mainListData.items[0].data.sign;
-    let orderPost = mainListData.items[0].data.post;
-    const signature = await signer._signTypedData(
-      signTypedMessage?.domain!,
-      signTypedMessage?.types as unknown as Record<
-        string,
-        Array<TypedDataField>
-      >,
-      signTypedMessage?.value!
-    );
+  executeTransactions(requiredApprovals, signer)
+    .then(async () => {
+      const signTypedMessage = mainListData.items[0].data.sign;
+      let orderPost = mainListData.items[0].data.post;
+      const signature = await signer._signTypedData(
+        signTypedMessage?.domain!,
+        signTypedMessage?.types as unknown as Record<
+          string,
+          Array<TypedDataField>
+        >,
+        signTypedMessage?.value!
+      );
 
-    orderPost = {
-      ...orderPost!,
-      body: {
-        ...orderPost?.body!,
-        order: {
-          ...orderPost?.body?.order!,
-          data: { ...orderPost?.body?.order.data!, signature },
+      orderPost = {
+        ...orderPost!,
+        body: {
+          ...orderPost?.body!,
+          order: {
+            ...orderPost?.body?.order!,
+            data: { ...orderPost?.body?.order.data!, signature },
+          },
         },
-      },
-    };
+      };
 
-    submitListOrBid(chainId, orderPost).then((result) => {
-      if (result?.message == "Success") {
-        setStage(2);
-      }
+      submitListOrBid(chainId, orderPost).then((result) => {
+        if (result?.message == "Success") {
+          setStage(2);
+        }
+      });
+    })
+    .catch(() => {
+      modalSetter(false);
+      setStage(0);
+      // toast.error("Something went wrong!");
     });
-  });
 };

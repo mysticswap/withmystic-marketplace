@@ -5,11 +5,11 @@ import StatusListItem from "../StatusListItem/StatusListItem";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-api";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
-import { collectionContract } from "../../config";
-import { generateAttributeString } from "../../utils";
+import { generateAttributeString, getHostName } from "../../utils";
 
 const StatusFilters = () => {
-  const { setCollectionNfts, collectionChainId } = useGlobalContext()!;
+  const { setCollectionNfts, collectionChainId, collectionContract } =
+    useGlobalContext()!;
   const {
     numericFilters,
     setNumericFilters,
@@ -18,8 +18,10 @@ const StatusFilters = () => {
     setIsFetching,
   } = useHomeContext()!;
   const [showList, setShowlist] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
 
-  const handleBuyOnlyFilter = () => {
+  const handleBuyOrListingFilter = (isBuyFilter: boolean) => {
+    const source = getHostName();
     const { minFloorAskPrice } = numericFilters;
     const updatedFilters = {
       ...numericFilters,
@@ -30,16 +32,18 @@ const StatusFilters = () => {
     setCollectionNfts({ tokens: [], continuation: null });
     setIsFetching(true);
     getCollectionNftsV2(
-      collectionChainId!,
+      collectionChainId,
       selectedDropdownOption.value,
       selectedDropdownOption.order,
       collectionContract,
       undefined,
       attributeString,
       undefined,
-      updatedFilters
+      updatedFilters,
+      isBuyFilter ? undefined : !isClicked ? source : undefined
     ).then((result) => {
       setCollectionNfts(result);
+      setIsClicked(!isClicked);
       setIsFetching(false);
     });
   };
@@ -50,13 +54,19 @@ const StatusFilters = () => {
         Status{" "}
         <RiArrowUpSLine
           className="status_down_arrow"
-          aria-expanded={showList}
+          aria-expanded={!showList}
           size={20}
         />
       </button>
-      <ul className="status_list" aria-expanded={showList}>
-        <StatusListItem text="Buy now only" handleClick={handleBuyOnlyFilter} />
-        {/* <StatusListItem text="Local listings only" /> */}
+      <ul className="status_list" aria-expanded={!showList}>
+        <StatusListItem
+          text="Buy now only"
+          handleClick={() => handleBuyOrListingFilter(true)}
+        />
+        <StatusListItem
+          text="Local listings only"
+          handleClick={() => handleBuyOrListingFilter(false)}
+        />
       </ul>
     </div>
   );

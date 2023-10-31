@@ -6,6 +6,7 @@
   --ms-mp-blue-2: #346beb;
   --ms-mp-gray: #d9e0ec;
   --ms-mp-gray-light: #d9e0ec3d;
+  --ms-mp-gray-light-alt: #d9e0ec76;
   --ms-mp-gradient-blue: linear-gradient(180deg, #086abc, #346beb 100%);
   --ms-mp-transition: all 0.25s ease-in-out;
   --ms-mp-smooth-transform-transition: transform 0.25s ease-in-out;
@@ -21,6 +22,8 @@
   --ms-mp-red: #ed263e;
   --ms-mp-red-light: rgba(237, 38, 62, 0.25);
   --ms-mp-red-super-light: rgba(237, 38, 62, 0.1);
+  --ms-mp-box-shadow: 0 3px 10px var(--ms-mp-transparent-black);
+  --ms-mp-box-shadow-light: 0 3px 10px rgba(0, 0, 0, 0.25);
 }
 
 * {
@@ -98,4 +101,10 @@ a {
   text-decoration: none;
   display: block;
   color: unset;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -41,6 +41,50 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  position: relative;
+}
+
+.collection_dropdown_trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+}
+
+.collection_dropdown_trigger:hover {
+  opacity: 0.5;
+}
+
+.collections_dropdown_list {
+  position: absolute;
+  top: 150%;
+  background-color: white;
+  width: 230%;
+  z-index: 1;
+  padding: 0.75rem;
+  border-radius: var(--ms-mp-card-border-radius);
+  box-shadow: var(--ms-mp-box-shadow);
+}
+
+.collections_dropdown_list button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: transparent;
+  border: none;
+  border-radius: 8px;
+  transition: var(--ms-mp-transition);
+  cursor: pointer;
+}
+
+.collections_dropdown_list button:hover {
+  background-color: var(--ms-mp-gray-light);
 }
 
 .sell_button {
@@ -48,4 +92,9 @@
   border: none;
   font-size: 1rem;
   cursor: pointer;
+  transition: var(--ms-mp-transition);
+}
+
+.sell_button:hover {
+  opacity: 0.5;
 }
