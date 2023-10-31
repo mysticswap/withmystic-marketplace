@@ -105,7 +105,12 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
           weiPrice,
           expiration
         ).then(async (result) => {
-          handleListingData(collectionChainId, result, setTransactionStage);
+          handleListingData(
+            collectionChainId,
+            result,
+            setTransactionStage,
+            setShowOfferOrListingModal
+          );
         });
       } else {
         createBid(
@@ -116,7 +121,12 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
           weiPrice,
           expiration
         ).then((result) => {
-          handleBiddingData(collectionChainId, result, setTransactionStage);
+          handleBiddingData(
+            collectionChainId,
+            result,
+            setTransactionStage,
+            setShowOfferOrListingModal
+          );
         });
       }
     });

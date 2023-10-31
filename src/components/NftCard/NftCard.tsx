@@ -69,7 +69,12 @@ const NftCard = ({ nft }: Props) => {
     switchChains(chainId, collectionChainId).then(() => {
       buyListedNft(collectionChainId, orderId, user!, source).then((result) => {
         setTransactionStage(1);
-        handleBuyOrSellData(result, setTransactionStage, setTransactionHash);
+        handleBuyOrSellData(
+          result,
+          setTransactionStage,
+          setTransactionHash,
+          setShowConfirmationModal
+        );
       });
     });
   };
