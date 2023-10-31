@@ -55,6 +55,6 @@ export const handleListingData = async (
     .catch(() => {
       modalSetter(false);
       setStage(0);
-      toast.error("Something went wrong!");
+      // toast.error("Something went wrong!");
     });
 };

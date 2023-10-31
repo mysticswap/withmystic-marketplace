@@ -28,7 +28,7 @@ export const handleBuyOrSellData = async (
     })
     .catch(() => {
       modalSetter(false);
-      toast.error("Something went wrong!");
+      // toast.error("Something went wrong!");
       setTransactionStage(0);
     });
 };
