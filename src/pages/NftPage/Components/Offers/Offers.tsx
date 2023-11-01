@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useConnectionContext } from "../../../../context/ConnectionContext/ConnectionContext";
 import { useNftPageContext } from "../../../../context/NftPageContext/NftPageContext";
 import { acceptOffer } from "../../../../services/api/buy-offer-list.api";
-import { handleBuyOrSellData } from "../../../../services/buying-service";
+import { handleBuyOrSellData } from "../../../../services/buy-sale-service";
 import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
 import { useTransactionContext } from "../../../../context/TransactionContext/TransactionContext";
 import { switchChains } from "../../../../utils/wallet-connection";

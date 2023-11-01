@@ -10,7 +10,7 @@ import { useIsOverflow } from "../../hooks/useIsOverflow";
 import { buyListedNft } from "../../services/api/buy-offer-list.api";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 import { getHostName } from "../../utils";
-import { handleBuyOrSellData } from "../../services/buying-service";
+import { handleBuyOrSellData } from "../../services/buy-sale-service";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import { TransactionNft } from "../../context/TransactionContext/types";
 import { switchChains } from "../../utils/wallet-connection";
@@ -32,8 +32,7 @@ const NftCard = ({ nft }: Props) => {
   const nameRef = useRef(null);
   const isOverflowing = useIsOverflow(nameRef, minimalCards);
 
-  const currentEthAmount =
-    nft?.market?.floorAsk?.price?.amount?.decimal?.toFixed(4);
+  const currentEthAmount = nft?.market?.floorAsk?.price?.amount?.decimal;
   const symbol = nft?.market?.floorAsk?.price?.currency?.symbol;
   const currentValue = Math.ceil(nft?.market?.floorAsk?.price?.amount?.usd);
   const lastSale = nft?.market?.floorAsk?.price?.amount?.decimal?.toFixed(4);

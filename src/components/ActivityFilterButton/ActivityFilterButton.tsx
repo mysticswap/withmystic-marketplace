@@ -27,9 +27,10 @@ const ActivityFilterButton = ({ activity }: Props) => {
     });
 
     isSelectedActivity
-      ? setSelectedActivities(updatedActivities)
+      ? !(selectedActivities.length < 2) &&
+        setSelectedActivities(updatedActivities)
       : setSelectedActivities([...selectedActivities, activity.type]);
-    setIsClicked(!isClicked);
+    !(selectedActivities.length < 2) && setIsClicked(!isClicked);
   };
 
   useEffect(() => {

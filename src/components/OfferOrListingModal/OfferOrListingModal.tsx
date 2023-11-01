@@ -13,8 +13,7 @@ import {
 } from "../../services/api/buy-offer-list.api";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 import { convertTokenAmountToDecimal, getHostName } from "../../utils";
-import { handleListingData } from "../../services/listing-service";
-import { handleBiddingData } from "../../services/bidding-service";
+import { handleListOrBidData } from "../../services/list-bid-service";
 import ProcessComponent from "../TransactionStages/TransactionStages";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import { switchChains } from "../../utils/wallet-connection";
@@ -30,9 +29,14 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     collectionMetadata,
     collectionChainId,
     collectionContract,
+    ethValue,
   } = useGlobalContext()!;
-  const { transactionNft, transactionStage, setTransactionStage } =
-    useTransactionContext()!;
+  const {
+    transactionNft,
+    transactionStage,
+    setTransactionStage,
+    setTransactionNft,
+  } = useTransactionContext()!;
   const dropdownRef = useRef(null);
 
   const { isOffer, tokenId } = transactionNft;
@@ -57,8 +61,8 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
   useEffect(() => {
     const isOverUserBalance = Number(offerAmount) > Number(userBalance.WETH);
-    setIsOverBalance(isOverUserBalance);
-  }, [offerAmount]);
+    isOffer && setIsOverBalance(isOverUserBalance);
+  }, [offerAmount, isOffer]);
 
   const offerBottom = (
     <>
@@ -105,7 +109,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
           weiPrice,
           expiration
         ).then(async (result) => {
-          handleListingData(
+          handleListOrBidData(
             collectionChainId,
             result,
             setTransactionStage,
@@ -121,7 +125,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
           weiPrice,
           expiration
         ).then((result) => {
-          handleBiddingData(
+          handleListOrBidData(
             collectionChainId,
             result,
             setTransactionStage,
@@ -134,6 +138,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
   const transactionButtonIsDisable =
     Number(offerAmount) <= 0 || (isOffer && isOverBalance);
+  const transactionButtonText = isOffer ? "Make Offer" : "Create Listing";
 
   return (
     <div className="modal_parent">
@@ -169,6 +174,11 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                   value={offerAmount}
                   onChange={(e) => {
                     setOfferAmount(e.target.value);
+                    setTransactionNft({
+                      ...transactionNft,
+                      amount: Number(e.target.value),
+                      price: ethValue * Number(e.target.value),
+                    });
                   }}
                 />
                 <p>{!isOffer ? "ETH" : "wETH"}</p>
@@ -211,7 +221,9 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
               <SolidButton
                 className="list_or_bid_submit_btn"
-                text={isOffer ? "Make Offer" : "Create Listing"}
+                text={
+                  isOverBalance ? "Insufficient Funds" : transactionButtonText
+                }
                 onClick={createBidOrList}
                 disabled={transactionButtonIsDisable}
               />

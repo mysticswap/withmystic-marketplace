@@ -12,7 +12,7 @@ import {
   getNftOffers,
   getSingleNftV2,
 } from "../../../../services/api/marketplace-reservoir-api";
-import { handleBuyOrSellData } from "../../../../services/buying-service";
+import { handleBuyOrSellData } from "../../../../services/buy-sale-service";
 import { connectWallets } from "../../../../services/web3Onboard";
 import {
   Market,
@@ -66,8 +66,8 @@ const NftHeader = ({
     nftImage: nftInfo?.image,
     isOffer: !userIsOwner,
     isSale: false,
-    amount: nftPriceData?.floorAsk?.price?.amount?.decimal,
-    price: Math.ceil(nftPriceData?.floorAsk?.price?.amount?.usd),
+    amount: 0,
+    price: 0,
     tokenId: nftInfo?.tokenId,
     message: userIsOwner
       ? `I’ve just listed ${nftName} for sale! Any takers?`
