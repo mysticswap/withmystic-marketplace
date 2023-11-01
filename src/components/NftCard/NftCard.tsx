@@ -10,7 +10,7 @@ import { useIsOverflow } from "../../hooks/useIsOverflow";
 import { buyListedNft } from "../../services/api/buy-offer-list.api";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 import { getHostName } from "../../utils";
-import { handleBuyOrSellData } from "../../services/buying-service";
+import { handleBuyOrSellData } from "../../services/buy-sale-service";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import { TransactionNft } from "../../context/TransactionContext/types";
 import { switchChains } from "../../utils/wallet-connection";

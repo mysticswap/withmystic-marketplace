@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { BuyData } from "../types/reservoir-types/buy-data.types";
+import { BuyData, Data } from "../types/reservoir-types/buy-data.types";
 import { executeTransactions } from "./seaport";
 
 export const handleBuyOrSellData = async (
@@ -13,11 +13,13 @@ export const handleBuyOrSellData = async (
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
 
-  const preSignature = data.steps[0].items;
-  const sale = data.steps[1].items;
+  const requiredApprovals: Data[] = [];
 
-  const requiredApprovals = [...preSignature, ...sale].map((item) => {
-    return item.data;
+  data.steps.forEach((step) => {
+    const stepItems = step.items;
+    stepItems.map((item) => {
+      requiredApprovals.push(item.data);
+    });
   });
 
   executeTransactions(requiredApprovals, signer)
@@ -27,7 +29,6 @@ export const handleBuyOrSellData = async (
     })
     .catch(() => {
       modalSetter(false);
-      // toast.error("Something went wrong!");
       setTransactionStage(0);
     });
 };

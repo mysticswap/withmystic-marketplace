@@ -40,6 +40,7 @@ export type GlobalContextType = {
     React.SetStateAction<MarketPlaceCollections>
   >;
   collectionContract: string;
+  ethValue: number;
 };
 
 export type MarketPlaceCollections = {

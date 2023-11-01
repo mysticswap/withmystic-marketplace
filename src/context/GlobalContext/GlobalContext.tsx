@@ -29,6 +29,7 @@ import { UserNfts } from "../../types/reservoir-types/user-nfts.types";
 import { useConnectionContext } from "../ConnectionContext/ConnectionContext";
 import { getHostName, getPreviousCollectionAddress } from "../../utils";
 import { marketPlaceCollections } from "../../constants/hard-coded-collections";
+import { getEthPrice } from "../../services/api/coin-gecko.api";
 
 const GlobalContext = createContext<GlobalContextType | null>(null);
 
@@ -63,6 +64,7 @@ export const GlobalContextProvider = ({ children }: Props) => {
   const [userBalance, setUserBalance] = useState({});
   const [userNfts, setUserNfts] = useState({} as UserNfts);
   const [minimalCards, setMinimalCards] = useState(true);
+  const [ethValue, setEthValue] = useState(0);
 
   const selectedActivityTypes = JSON.stringify(selectedActivities);
   const source = getHostName();
@@ -141,6 +143,12 @@ export const GlobalContextProvider = ({ children }: Props) => {
     );
   }, [selectedCollection]);
 
+  useEffect(() => {
+    getEthPrice().then((result) => {
+      setEthValue(result.ethereum.usd);
+    });
+  }, []);
+
   return (
     <GlobalContext.Provider
       value={{
@@ -169,6 +177,7 @@ export const GlobalContextProvider = ({ children }: Props) => {
         selectedCollection,
         setSelectedCollection,
         collectionContract,
+        ethValue,
       }}
     >
       {children}

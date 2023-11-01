@@ -28,8 +28,8 @@ const UserNftCard = ({ nft, setShowUserNftsModal }: Props) => {
       nftImage: nft.token.image,
       isOffer: false,
       isSale: false,
-      amount: nft?.token?.lastSale?.price?.amount?.decimal!,
-      price: nft?.token?.lastSale?.price?.amount?.usd!,
+      amount: 0,
+      price: 0,
       tokenId: nft?.token?.tokenId,
       message: `I’ve just listed ${nftName} for sale! Any takers?`,
     };
