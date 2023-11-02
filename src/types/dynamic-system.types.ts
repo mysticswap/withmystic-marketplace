@@ -11,6 +11,7 @@ export type ClientObject = {
 };
 
 export type MarketplaceClientCollection = {
+  id: string;
   name: string;
   address: string;
   chainId: number;
