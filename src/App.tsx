@@ -24,12 +24,10 @@ function App() {
     getMarketplaceClient()
       .then((result) => {
         setClient(result);
+        setIsFetchingClient(false);
       })
       .catch(() => {
         setIsFetchingClient(true);
-      })
-      .finally(() => {
-        setIsFetchingClient(false);
       });
   }, []);
 
