@@ -11,32 +11,52 @@ import { ConnectionContextProvider } from "./context/ConnectionContext/Connectio
 import { TransactionContextProvider } from "./context/TransactionContext/TransactionContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect, useState } from "react";
+import { getMarketplaceClient } from "./services/api/dynamic-system";
+import { ClientObject } from "./types/dynamic-system.types";
+import Loading from "./components/Loading/Loading";
 
 function App() {
+  const [isFetchingClient, setIsFetchingClient] = useState(true);
+  const [client, setClient] = useState({} as ClientObject);
+
+  useEffect(() => {
+    getMarketplaceClient()
+      .then((result) => {
+        setClient(result);
+      })
+      .finally(() => {
+        setIsFetchingClient(false);
+      });
+  }, []);
+
   return (
     <>
-      <ConnectionContextProvider>
-        <GlobalContextProvider>
-          <TransactionContextProvider>
-            <Router>
-              <Navbar />
-              <Routes>
-                <Route
-                  path="/"
-                  element={<HomeContextProvider children={<Home />} />}
-                />
-                <Route
-                  path="/:contract/:id"
-                  element={<NftPageContextProvider children={<NftPage />} />}
-                />
-                <Route path="*" element={<ErrorPage />} />
-              </Routes>
-              <Footer />
-              <ToastContainer limit={1} />
-            </Router>
-          </TransactionContextProvider>
-        </GlobalContextProvider>
-      </ConnectionContextProvider>
+      {isFetchingClient && <Loading />}
+      {!isFetchingClient && (
+        <ConnectionContextProvider>
+          <GlobalContextProvider client={client}>
+            <TransactionContextProvider>
+              <Router>
+                <Navbar />
+                <Routes>
+                  <Route
+                    path="/"
+                    element={<HomeContextProvider children={<Home />} />}
+                  />
+                  <Route
+                    path="/:contract/:id"
+                    element={<NftPageContextProvider children={<NftPage />} />}
+                  />
+                  <Route path="*" element={<ErrorPage />} />
+                </Routes>
+                <Footer />
+                <ToastContainer limit={1} />
+              </Router>
+            </TransactionContextProvider>
+          </GlobalContextProvider>
+        </ConnectionContextProvider>
+      )}
     </>
   );
 }

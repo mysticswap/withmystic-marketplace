@@ -28,21 +28,21 @@ import { CollectionTraitsV2 } from "../../types/reservoir-types/collection-trait
 import { UserNfts } from "../../types/reservoir-types/user-nfts.types";
 import { useConnectionContext } from "../ConnectionContext/ConnectionContext";
 import { getHostName, getPreviousCollectionAddress } from "../../utils";
-import { marketPlaceCollections } from "../../constants/hard-coded-collections";
 import { getEthPrice } from "../../services/api/coin-gecko.api";
+import { ClientObject } from "../../types/dynamic-system.types";
 
 const GlobalContext = createContext<GlobalContextType | null>(null);
 
 type Props = {
   children: ReactNode;
+  client: ClientObject;
 };
 
-export const GlobalContextProvider = ({ children }: Props) => {
-  const { user, chainId } = useConnectionContext()!;
-  const [availableCollections, setAvailableCollections] = useState(
-    marketPlaceCollections
-  );
+export const GlobalContextProvider = ({ children, client }: Props) => {
+  console.log();
 
+  const { user, chainId } = useConnectionContext()!;
+  const availableCollections = client?.collections;
   const previousCollection = availableCollections.find((collection) => {
     return collection.address == getPreviousCollectionAddress();
   });
@@ -173,7 +173,6 @@ export const GlobalContextProvider = ({ children }: Props) => {
         source,
         collectionChainId,
         availableCollections,
-        setAvailableCollections,
         selectedCollection,
         setSelectedCollection,
         collectionContract,
