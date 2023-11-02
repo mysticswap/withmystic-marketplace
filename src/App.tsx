@@ -25,6 +25,9 @@ function App() {
       .then((result) => {
         setClient(result);
       })
+      .catch(() => {
+        setIsFetchingClient(true);
+      })
       .finally(() => {
         setIsFetchingClient(false);
       });
