@@ -29,7 +29,7 @@
 }
 
 .listing_or_offer_modal_bottom > .input_area:focus-within {
-  border: 1px solid var(--ms-mp-blue);
+  border: 1px solid var(--ms-mp-primary-color);
 }
 
 .duration_area {

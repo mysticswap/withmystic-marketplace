@@ -15,7 +15,7 @@
 }
 
 .control_bar_search:focus-within {
-  border: 2px solid var(--ms-mp-blue);
+  border: 2px solid var(--ms-mp-primary-color);
 }
 
 .control_bar_search input {

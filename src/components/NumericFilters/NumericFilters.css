@@ -31,7 +31,7 @@
 }
 
 .minmax input:focus {
-  border: 1px solid var(--ms-mp-blue);
+  border: 1px solid var(--ms-mp-primary-color);
 }
 
 .minmax[aria-expanded="true"] {

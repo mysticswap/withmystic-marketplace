@@ -16,6 +16,7 @@
   padding: 0.75rem;
   border-radius: var(--ms-mp-large-border-radius);
   cursor: pointer;
+  color: var(--ms-mp-text-color);
 }
 
 .filter_trigger:hover {

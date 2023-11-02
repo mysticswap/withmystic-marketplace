@@ -11,5 +11,5 @@
 
 .user_nft_card.nft_card:hover {
   transform: scale(100%);
-  border-color: var(--ms-mp-blue);
+  border-color: var(--ms-mp-primary-color);
 }

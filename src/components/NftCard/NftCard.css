@@ -70,7 +70,7 @@
   width: 100%;
   padding: 0.4rem;
   border: none;
-  background-color: var(--ms-mp-blue);
+  background-color: var(--ms-mp-primary-color);
   color: white;
   cursor: pointer;
   transition: var(--ms-mp-transition);

@@ -25,7 +25,7 @@
 }
 
 .trait_search:focus-within {
-  border-color: var(--ms-mp-blue);
+  border-color: var(--ms-mp-primary-color);
 }
 
 .trait_search > input {

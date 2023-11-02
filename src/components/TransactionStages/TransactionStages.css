@@ -22,7 +22,7 @@
 }
 
 .twitter_share:hover {
-  color: var(--ms-mp-blue);
+  color: var(--ms-mp-primary-color);
 }
 
 .modal_transaction_button {
@@ -33,11 +33,11 @@
   border: none;
   cursor: pointer;
   margin-top: 1rem;
-  color: var(--ms-mp-blue);
+  color: var(--ms-mp-primary-color);
   font-size: 1rem;
   transition: var(--ms-mp-transition);
 }
 
 .modal_transaction_button:hover {
-  color: var(--ms-mp-blue-2);
+  color: var(--ms-mp-primary-color-dark);
 }

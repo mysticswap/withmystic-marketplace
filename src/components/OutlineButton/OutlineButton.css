@@ -1,10 +1,10 @@
 .outline_button {
   padding: calc(0.75rem - 2px) calc(1rem - 2px);
   border-radius: 32px;
-  border: 2px solid var(--ms-mp-blue);
+  border: 2px solid var(--ms-mp-primary-color);
   box-sizing: border-box;
   cursor: pointer;
-  color: var(--ms-mp-blue);
+  color: var(--ms-mp-primary-color);
   background: white;
   font-weight: 700;
   transition: var(--ms-mp-transition);

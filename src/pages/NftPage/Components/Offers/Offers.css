@@ -29,14 +29,14 @@
 }
 
 .offers_table_item > p:last-of-type {
-  color: var(--ms-mp-blue);
+  color: var(--ms-mp-primary-color);
   width: fit-content;
   cursor: pointer;
   transition: var(--ms-mp-transition);
 }
 
 .offers_table_item > p:last-of-type:hover {
-  color: var(--ms-mp-blue-2);
+  color: var(--ms-mp-primary-color-dark);
 }
 
 .more_offers_btn {
@@ -50,7 +50,7 @@
 }
 
 .more_offers_btn:hover {
-  color: var(--ms-mp-blue);
+  color: var(--ms-mp-primary-color);
 }
 
 .offer_accept_button {

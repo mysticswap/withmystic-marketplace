@@ -41,11 +41,11 @@
 }
 
 .history_row p:not(:first-of-type, :nth-of-type(2)) {
-  color: var(--ms-mp-blue);
+  color: var(--ms-mp-primary-color);
   cursor: pointer;
   transition: var(--ms-mp-transition);
 }
 
 .history_row p:not(:first-of-type, :nth-of-type(2)):hover {
-  color: var(--ms-mp-blue-2);
+  color: var(--ms-mp-primary-color-dark);
 }

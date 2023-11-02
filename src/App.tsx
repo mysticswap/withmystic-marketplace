@@ -31,6 +31,18 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    const rootElement = document.querySelector(":root") as HTMLElement;
+    rootElement.style.setProperty(
+      "--ms-mp-primary-color",
+      client?.styles?.primaryColor
+    );
+    rootElement.style.setProperty(
+      "--ms-mp-primary-color-dark",
+      client?.styles?.primaryDarkShade
+    );
+  }, [client]);
+
   return (
     <>
       {isFetchingClient && <Loading />}
