@@ -47,6 +47,7 @@
   background-color: transparent;
   cursor: pointer;
   transition: var(--ms-mp-transition);
+  color: var(--ms-mp-text-color);
 }
 
 .more_offers_btn:hover {

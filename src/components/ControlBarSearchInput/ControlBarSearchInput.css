@@ -11,7 +11,7 @@
 }
 
 .control_bar_search:hover {
-  border: 2px solid black;
+  border: 2px solid var(--ms-mp-text-color);
 }
 
 .control_bar_search:focus-within {

@@ -4,6 +4,8 @@
   justify-content: space-between;
   padding: 0 1rem;
   height: 6rem;
+  border-bottom: var(--ms-mp-gray-border);
+  border-color: var(--ms-mp-gray-light);
 }
 .navbar a {
   color: unset;
@@ -65,7 +67,7 @@
 .collections_dropdown_list {
   position: absolute;
   top: 150%;
-  background-color: white;
+  background-color: var(--ms-mp-body-background);
   width: 230%;
   z-index: 1;
   padding: 0.75rem;

@@ -27,10 +27,11 @@
   box-sizing: border-box;
   border-radius: 1rem;
   margin-top: 0.5rem;
-  background-color: white;
+  background-color: var(--ms-mp-body-background);
   box-shadow: var(--ms-mp-box-shadow-light);
   padding: 0.5rem;
   z-index: 1;
+  border: var(--ms-mp-gray-border);
 }
 
 .control_dropdown_list button {

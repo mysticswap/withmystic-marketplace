@@ -7,7 +7,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: gray;
+  color: var(--ms-mp-gray-text);
 }
 
 .footer_links_holder {
@@ -31,7 +31,7 @@ footer {
 }
 
 .footer_links_holder > a:hover {
-  color: black;
+  color: var(--ms-mp-primary-color);
 }
 
 .footer_links_holder > div > p {
@@ -46,7 +46,7 @@ footer {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: black;
+  color: var(--ms-mp-text-color);
 }
 
 .socials svg {

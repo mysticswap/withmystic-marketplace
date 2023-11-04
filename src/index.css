@@ -4,6 +4,7 @@
   --ms-mp-poppins: "Poppins", sans-serif;
   --ms-mp-primary-color: #086abc;
   --ms-mp-primary-color-dark: #346beb;
+  --ms-mp-primary-transparent: #086abc50;
   --ms-mp-gray: #d9e0ec;
   --ms-mp-gray-light: #d9e0ec3d;
   --ms-mp-gray-light-alt: #d9e0ec76;
@@ -15,7 +16,7 @@
   --ms-mp-transition: all 0.25s ease-in-out;
   --ms-mp-smooth-transform-transition: transform 0.25s ease-in-out;
   --ms-mp-super-smooth-transition: all 0.5s cubic-bezier(0, 1, 0, 1);
-  --ms-mp-trait-title-color: rgba(38, 57, 237, 1);
+  --ms-mp-trait-title-color: var(--ms-mp-primary-color);
   --ms-mp-trait-background-color: rgba(38, 57, 237, 0.1);
   --ms-mp-trait-border-color: rgba(38, 57, 237, 0.5);
   --ms-mp-trait-hover-color: rgba(38, 57, 237, 0.25);
@@ -91,6 +92,10 @@ body {
   text-align: center;
   font-size: 28px;
   font-weight: 500;
+}
+
+input {
+  color: var(--ms-mp-text-color);
 }
 
 /* Chrome, Safari, Edge, Opera */

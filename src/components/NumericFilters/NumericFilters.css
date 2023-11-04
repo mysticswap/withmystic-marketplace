@@ -27,7 +27,7 @@
 }
 
 .minmax input:hover {
-  border: 1px solid black;
+  border: 1px solid var(--ms-mp-text-color);
 }
 
 .minmax input:focus {
