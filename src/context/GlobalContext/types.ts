@@ -3,7 +3,10 @@ import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.ty
 import { CollectionActivity } from "../../types/reservoir-types/collection-activity.types";
 import { CollectionTraitsV2 } from "../../types/reservoir-types/collection-traits.types";
 import { UserNfts } from "../../types/reservoir-types/user-nfts.types";
-import { MarketplaceClientCollection } from "../../types/dynamic-system.types";
+import {
+  ClientObject,
+  MarketplaceClientCollection,
+} from "../../types/dynamic-system.types";
 
 export type GlobalContextType = {
   userBalance: { [x: string]: string };
@@ -39,4 +42,5 @@ export type GlobalContextType = {
   >;
   collectionContract: string;
   ethValue: number;
+  client: ClientObject;
 };

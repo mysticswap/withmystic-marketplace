@@ -30,6 +30,7 @@
   --ms-mp-box-shadow-light: 0 3px 10px rgba(0, 0, 0, 0.25);
   --ms-mp-body-background: rgba(255, 255, 255, 1);
   --ms-mp-text-color: black;
+  --ms-mp-gray-text: #9ca3af;
 }
 
 * {
@@ -77,7 +78,7 @@ body {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  color: var(--ms-mp-transparent-black);
+  color: var(--ms-mp-gray-text);
   transition: var(--ms-mp-transition);
   cursor: pointer;
 }

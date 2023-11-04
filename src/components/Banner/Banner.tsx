@@ -2,11 +2,15 @@ import "./Banner.css";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import millify from "millify";
 import { collectionNetworkIcon, tabOptions } from "../../constants";
-type Props = { bannerImage: string };
 
-const Banner = ({ bannerImage }: Props) => {
-  const { collectionMetadata, currentTab, setCurrentTab, collectionChainId } =
-    useGlobalContext()!;
+const Banner = () => {
+  const {
+    collectionMetadata,
+    currentTab,
+    setCurrentTab,
+    collectionChainId,
+    client,
+  } = useGlobalContext()!;
 
   const pillData = [
     { title: "Items", value: collectionMetadata?.collections?.[0]?.tokenCount },
@@ -29,7 +33,7 @@ const Banner = ({ bannerImage }: Props) => {
 
   return (
     <div className="banner">
-      <img src={bannerImage} alt="" />
+      <img src={client.bannerUrl} alt="" />
       <div className="banner_details">
         <h1>{collectionMetadata?.collections?.[0]?.name}</h1>
         <div className="collection_pill">

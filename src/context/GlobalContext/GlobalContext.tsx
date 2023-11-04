@@ -39,8 +39,6 @@ type Props = {
 };
 
 export const GlobalContextProvider = ({ children, client }: Props) => {
-  console.log();
-
   const { user, chainId } = useConnectionContext()!;
   const availableCollections = client?.collections;
   const previousCollection = availableCollections.find((collection) => {
@@ -177,6 +175,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
         setSelectedCollection,
         collectionContract,
         ethValue,
+        client,
       }}
     >
       {children}

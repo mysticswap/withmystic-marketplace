@@ -41,6 +41,14 @@ function App() {
       "--ms-mp-primary-color-dark",
       client?.styles?.primaryDarkShade
     );
+    rootElement.style.setProperty(
+      "--ms-mp-text-color",
+      client?.styles?.textColor
+    );
+    rootElement.style.setProperty(
+      "--ms-mp-body-background",
+      client?.styles?.bodyBackground
+    );
   }, [client]);
 
   return (

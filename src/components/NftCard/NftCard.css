@@ -48,7 +48,7 @@
 
 .nft_card_last_sale {
   font-size: 13px;
-  color: var(--ms-mp-transparent-black);
+  color: var(--ms-mp-gray-text);
 }
 
 .nft_card_amount {
@@ -58,7 +58,7 @@
 .nft_card_amount > span {
   font-weight: 400;
   font-size: 13px;
-  color: var(--ms-mp-transparent-black);
+  color: var(--ms-mp-gray-text);
 }
 
 .nft_card_details button {
