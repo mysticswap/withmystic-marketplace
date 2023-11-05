@@ -16,7 +16,7 @@ import { getMarketplaceClient } from "./services/api/dynamic-system";
 import { ClientObject } from "./types/dynamic-system.types";
 import Loading from "./components/Loading/Loading";
 import { changeStyles } from "./utils/dynamic-styles";
-import { getHostName, updateFavicon, updateSiteTitle } from "./utils";
+import { updateFavicon, updateSiteTitle } from "./utils";
 
 function App() {
   const [isFetchingClient, setIsFetchingClient] = useState(true);
@@ -38,8 +38,6 @@ function App() {
     updateFavicon(client.favicon);
     updateSiteTitle(client.htmlTitle);
   }, [client]);
-
-  console.log(getHostName(), "hostname");
 
   return (
     <>

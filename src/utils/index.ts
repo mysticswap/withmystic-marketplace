@@ -75,7 +75,7 @@ export const getHostName = () => {
   switch (hostName) {
     case "localhost":
       return "market.localhost.io";
-    case "https://deploy-preview-6--heroic-duckanoo-b32f52.netlify.app":
+    case "deploy-preview-6--heroic-duckanoo-b32f52.netlify.app":
       return "marketplace.mysticswap.io";
     default:
       return hostName;
