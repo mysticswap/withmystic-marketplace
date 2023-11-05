@@ -72,10 +72,14 @@ export const generateAttributeString = (selectedTraits: SelectedTrait[]) => {
 
 export const getHostName = () => {
   const hostName = window.location.hostname;
-  return hostName.includes("localhost")
-    ? "market.localhost.io"
-    : // ?  "marketplace.mysticswap.io"
-      hostName;
+  switch (hostName) {
+    case "localhost":
+      return "market.localhost.io";
+    case "https://deploy-preview-6--heroic-duckanoo-b32f52.netlify.app/":
+      return "marketplace.mysticswap.io";
+    default:
+      return hostName;
+  }
 };
 
 export const getPreviousCollectionAddress = () => {
