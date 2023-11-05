@@ -71,8 +71,10 @@
   width: 230%;
   z-index: 1;
   padding: 0.75rem;
-  border-radius: var(--ms-mp-card-border-radius);
+  border-radius: 1rem;
   box-shadow: var(--ms-mp-box-shadow);
+  border: var(--ms-mp-gray-border);
+  border-color: var(--ms-mp-gray-light);
 }
 
 .collections_dropdown_list button {

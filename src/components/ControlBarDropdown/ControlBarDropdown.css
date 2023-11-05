@@ -18,7 +18,7 @@
 }
 
 .control_dropdown_trigger:hover {
-  background-color: var(--ms-mp-gray);
+  background-color: var(--ms-mp-controlbar-hover);
 }
 
 .control_dropdown_list {
@@ -32,6 +32,7 @@
   padding: 0.5rem;
   z-index: 1;
   border: var(--ms-mp-gray-border);
+  border-color: var(--ms-mp-gray-light);
 }
 
 .control_dropdown_list button {

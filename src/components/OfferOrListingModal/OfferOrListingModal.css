@@ -22,6 +22,7 @@
   border: none;
   width: 90%;
   box-sizing: border-box;
+  background-color: transparent;
 }
 
 .listing_or_offer_modal_bottom > .input_area:hover {
@@ -56,10 +57,11 @@
   border-radius: var(--ms-mp-large-border-radius);
   cursor: pointer;
   transition: var(--ms-mp-transition);
+  color: var(--ms-mp-text-color);
 }
 
 .duration_trigger:hover {
-  background-color: var(--ms-mp-gray);
+  background-color: var(--ms-mp-gray-light);
 }
 
 .bottom_details {
@@ -87,7 +89,7 @@
 
 .duration_list {
   position: absolute;
-  background-color: white;
+  background-color: var(--ms-mp-body-background);
   width: 100%;
   box-sizing: border-box;
   padding: 0.5rem;
@@ -96,6 +98,9 @@
   z-index: 1;
   max-height: 250px;
   overflow-y: auto;
+  border: var(--ms-mp-gray-border);
+  border-color: var(--ms-mp-gray-light);
+  top: 120%;
 }
 
 .duration_list::-webkit-scrollbar {
@@ -111,6 +116,7 @@
   padding: 0.25rem;
   border-radius: 0.5rem;
   cursor: pointer;
+  color: var(--ms-mp-text-color);
 }
 
 .duration_list > button:hover {

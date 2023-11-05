@@ -53,7 +53,7 @@
 }
 
 .social_modal_link svg:hover {
-  color: black;
+  color: var(--ms-mp-primary-color);
 }
 
 .social_modal_link p {

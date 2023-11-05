@@ -47,6 +47,23 @@ const NftCard = ({ nft }: Props) => {
     </Link>
   );
 
+  const startBuyProcess = () => {
+    const orderId = nft?.market?.floorAsk?.id;
+    const source = getHostName();
+
+    switchChains(chainId, collectionChainId).then(() => {
+      buyListedNft(collectionChainId, orderId, user!, source).then((result) => {
+        setTransactionStage(1);
+        handleBuyOrSellData(
+          result,
+          setTransactionStage,
+          setTransactionHash,
+          setShowConfirmationModal
+        );
+      });
+    });
+  };
+
   const buyNft = async () => {
     const transactionNft: TransactionNft = {
       collectionName: nft?.token?.collection?.name,
@@ -59,23 +76,11 @@ const NftCard = ({ nft }: Props) => {
       tokenId: nftId,
       message: `I’ve just bought ${nft?.token?.name}!`,
     };
-    setTransactionNft(transactionNft);
-    setShowConfirmationModal(true);
-
-    const orderId = nft?.market?.floorAsk?.id;
-    const source = getHostName();
-    !user && connectWallets(setProvider);
-    switchChains(chainId, collectionChainId).then(() => {
-      buyListedNft(collectionChainId, orderId, user!, source).then((result) => {
-        setTransactionStage(1);
-        handleBuyOrSellData(
-          result,
-          setTransactionStage,
-          setTransactionHash,
-          setShowConfirmationModal
-        );
-      });
-    });
+    if (user) {
+      setTransactionNft(transactionNft);
+      setShowConfirmationModal(true);
+      startBuyProcess();
+    } else connectWallets(setProvider);
   };
 
   const userIsOwner = user?.toLowerCase() == nft?.token?.owner?.toLowerCase();
@@ -112,8 +117,12 @@ const NftCard = ({ nft }: Props) => {
         </p>
 
         {currentEthAmount && currentValue && !userIsOwner && (
-          <button onClick={buyNft} disabled={!userCanBuy}>
-            {userCanBuy ? "Buy now" : "Insufficient balance"}
+          <button onClick={buyNft} disabled={(user && !userCanBuy) as boolean}>
+            {userCanBuy
+              ? "Buy now"
+              : !user
+              ? "Buy now"
+              : "Insufficient balance"}
           </button>
         )}
       </div>

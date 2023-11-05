@@ -18,11 +18,11 @@
 }
 
 .connected_wallet_button:hover {
-  background-color: var(--ms-mp-primary-transparent);
+  background-color: var(--ms-mp-controlbar-hover);
 }
 
 .logout_btn:hover {
-  background-color: var(--ms-mp-gray-light);
+  background-color: var(--ms-mp-controlbar-hover);
 }
 
 .logout_btn {
@@ -39,4 +39,6 @@
   transition: var(--ms-mp-transition);
   border-radius: 6px;
   font-size: 14px;
+  border: var(--ms-mp-gray-border);
+  border-color: var(--ms-mp-gray-light);
 }

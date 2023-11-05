@@ -26,5 +26,5 @@
 
 .filter_button:hover,
 .grid_buttons button:hover {
-  background-color: var(--ms-mp-gray);
+  background-color: var(--ms-mp-controlbar-hover);
 }

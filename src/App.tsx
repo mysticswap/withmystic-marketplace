@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { getMarketplaceClient } from "./services/api/dynamic-system";
 import { ClientObject } from "./types/dynamic-system.types";
 import Loading from "./components/Loading/Loading";
-import { addOpacity } from "./utils";
+import { changeStyles } from "./utils/dynamic-styles";
 
 function App() {
   const [isFetchingClient, setIsFetchingClient] = useState(true);
@@ -33,39 +33,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const rootElement = document.querySelector(":root") as HTMLElement;
-    rootElement.style.setProperty(
-      "--ms-mp-primary-color",
-      client?.styles?.primaryColor
-    );
-    rootElement.style.setProperty(
-      "--ms-mp-primary-transparent",
-      addOpacity(client?.styles?.primaryColor, 0.25)
-    );
-    rootElement.style.setProperty(
-      "--ms-mp-primary-color-dark",
-      client?.styles?.primaryDarkShade
-    );
-    rootElement.style.setProperty(
-      "--ms-mp-text-color",
-      client?.styles?.textColor
-    );
-    rootElement.style.setProperty(
-      "--ms-mp-body-background",
-      client?.styles?.bodyBackground
-    );
-    rootElement.style.setProperty(
-      "--ms-mp-trait-background-color",
-      addOpacity(client?.styles?.primaryColor, 0.1)
-    );
-    rootElement.style.setProperty(
-      "--ms-mp-trait-border-color",
-      addOpacity(client?.styles?.primaryColor, 0.5)
-    );
-    rootElement.style.setProperty(
-      "--ms-mp-trait-hover-color",
-      addOpacity(client?.styles?.primaryColor, 0.25)
-    );
+    changeStyles(client);
   }, [client]);
 
   return (

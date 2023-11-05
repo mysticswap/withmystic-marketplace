@@ -22,4 +22,7 @@ export type MarketplaceClientStyles = {
   primaryColor: string;
   primaryDarkShade: string;
   textColor: string;
+  cardBorderColor: string;
+  cardBorderRadius: string;
+  controlBarHoverColor: string;
 };

@@ -32,6 +32,8 @@
   --ms-mp-body-background: rgba(255, 255, 255, 1);
   --ms-mp-text-color: black;
   --ms-mp-gray-text: #9ca3af;
+  --ms-mp-card-border-color: var(--ms-mp-gray);
+  --ms-mp-controlbar-hover: var(--ms-mp-gray);
 }
 
 * {
@@ -70,9 +72,11 @@ body {
 
 .modal_content {
   width: 45%;
-  background-color: white;
+  background-color: var(--ms-mp-body-background);
   border-radius: 11px;
   position: relative;
+  border: var(--ms-mp-gray-border);
+  border-color: var(--ms-mp-gray-light);
 }
 
 .modal_closer {
@@ -85,7 +89,7 @@ body {
 }
 
 .modal_closer:hover {
-  color: black;
+  color: var(--ms-mp-text-color);
 }
 
 .modal_header {

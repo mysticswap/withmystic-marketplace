@@ -80,7 +80,9 @@ export const getHostName = () => {
 
 export const getPreviousCollectionAddress = () => {
   let previousCollectionAddress = localStorage.getItem("current-collection");
-  return previousCollectionAddress && JSON.parse(previousCollectionAddress);
+  if (previousCollectionAddress) {
+    return JSON?.parse(previousCollectionAddress);
+  }
 };
 
 export const copyToClipboard = (text: string) => {
