@@ -1,0 +1,40 @@
+.user_nfts_content {
+  padding: 1rem;
+  position: relative;
+}
+
+.user_nfts_title {
+  font-size: 30px;
+  margin: 0;
+}
+
+.user_nfts_container {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.user_nfts_container::-webkit-scrollbar {
+  display: none;
+}
+
+.user_nfts_load_btn {
+  display: block;
+  margin: 1rem auto auto auto;
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  transition: var(--ms-mp-transition);
+  cursor: pointer;
+}
+
+.user_nfts_load_btn:hover {
+  color: var(--ms-mp-primary-color);
+}
+
+.user_nfts_content > .loader {
+  display: block;
+  margin: 1rem auto auto auto;
+}

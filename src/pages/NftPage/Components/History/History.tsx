@@ -3,11 +3,16 @@ import "./History.css";
 import { TbExternalLink } from "react-icons/tb";
 import CustomTooltip from "../../../../components/CustomTooltip/CustomTooltip";
 import { CollectionActivity as NftActivity } from "../../../../types/reservoir-types/collection-activity.types";
-import { activityRenames, reservoirActivityTypes } from "../../../../constants";
+import {
+  activityRenames,
+  reservoirActivityTypes,
+  scanWebsites,
+} from "../../../../constants";
 import { ActivityRowAddress } from "../../../../components/ActivityRow/ActivityRow";
 import { useState } from "react";
 import { getNftActivity } from "../../../../services/api/marketplace-reservoir-api";
 import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
+import { v4 as uuid } from "uuid";
 
 type Props = {
   nftActivity: NftActivity;
@@ -16,12 +21,12 @@ type Props = {
 };
 
 const History = ({ nftActivity, token, setNftActivity }: Props) => {
-  const { chainId } = useGlobalContext()!;
+  const { collectionChainId } = useGlobalContext()!;
   const [isFetching, setIsFetching] = useState(false);
   const fetchMoreActivity = () => {
     setIsFetching(true);
     getNftActivity(
-      chainId,
+      collectionChainId,
       token,
       reservoirActivityTypes,
       nftActivity.continuation!
@@ -50,8 +55,10 @@ const History = ({ nftActivity, token, setNftActivity }: Props) => {
           {nftActivity?.activities?.map((activity) => {
             const timeStamp = dayjs(activity.timestamp * 1000).fromNow();
             const fullTime = dayjs(activity.timestamp * 1000).toString();
+            const hasTxHas = activity.hasOwnProperty("txHash");
+
             return (
-              <div key={activity?.order?.id} className="history_row">
+              <div key={uuid()} className="history_row">
                 <p>{activityRenames[activity.type]}</p>
                 <p>
                   {activity.price.amount.decimal}{" "}
@@ -63,8 +70,14 @@ const History = ({ nftActivity, token, setNftActivity }: Props) => {
                 />
                 <ActivityRowAddress address={activity.toAddress!} isParagraph />
                 <CustomTooltip text={fullTime}>
-                  <p>
-                    {timeStamp} <TbExternalLink display="block" />
+                  <p
+                    onClick={() =>
+                      window.open(
+                        `${scanWebsites[collectionChainId]}tx/${activity.txHash}`
+                      )
+                    }
+                  >
+                    {timeStamp} {hasTxHas && <TbExternalLink display="block" />}
                   </p>
                 </CustomTooltip>
               </div>

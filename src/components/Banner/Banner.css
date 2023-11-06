@@ -39,7 +39,7 @@
 }
 
 .collection_pill {
-  background-color: white;
+  background-color: var(--ms-mp-body-background);
   padding: 1rem;
   border-radius: var(--ms-mp-large-border-radius);
   display: flex;
@@ -54,12 +54,20 @@
   font-size: 18px;
 }
 
-.pill_item p:first-of-type {
-  font-weight: bold;
+.pill_item > div {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
-.pill_item p:last-of-type {
-  color: var(--ms-mp-transparent-black);
+.pill_item > div p:first-of-type {
+  font-weight: bold;
+  color: var(--ms-mp-text-color);
+}
+
+.pill_item > p {
+  font-weight: 400;
+  color: var(--ms-mp-gray-text);
 }
 
 .tabs {
@@ -78,6 +86,10 @@
   cursor: pointer;
   transition: all 0.25s ease-in-out;
   font-size: 18px;
+}
+
+.tabs button:hover {
+  color: white;
 }
 
 .tabs > .active_tab {
@@ -108,5 +120,8 @@
 
   .pill_item p {
     font-size: 13px;
+  }
+  .banner_pill_icon {
+    max-width: 15px;
   }
 }

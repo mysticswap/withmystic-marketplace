@@ -19,6 +19,7 @@
   border-radius: 6px;
   padding: 1rem;
   transition: var(--ms-mp-transition);
+  cursor: default;
 }
 
 .trait:hover {

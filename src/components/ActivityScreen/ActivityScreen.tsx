@@ -8,14 +8,15 @@ import { getCollectionActivity } from "../../services/api/marketplace-reservoir-
 import FiltersSidebar from "../FiltersSidebar/FiltersSidebar";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
+import { v4 as uuid } from "uuid";
 
 const ActivityScreen = () => {
   const {
     collectionMetadata,
-    chainId,
     collectionActivity,
     setCollectionActivity,
     selectedActivities,
+    collectionChainId,
   } = useGlobalContext()!;
   const { setShowMobileFilters } = useHomeContext()!;
   const [activities, setActivities] = useState(collectionActivity?.activities);
@@ -32,7 +33,7 @@ const ActivityScreen = () => {
     setCanFetch(false);
     setIsFetching(true);
     getCollectionActivity(
-      chainId,
+      collectionChainId,
       collectionMetadata?.collections[0].primaryContract!,
       selectedActivityTypes
     )
@@ -64,7 +65,7 @@ const ActivityScreen = () => {
           <p className="activities_loading">Loading...</p>
         )}
         {activities?.map((activity) => {
-          return <ActivityRow key={activity?.order?.id} activity={activity} />;
+          return <ActivityRow key={uuid()} activity={activity} />;
         })}
         {collectionActivity.continuation && canFetch && (
           <SolidButton text="Show more" onClick={loadMoreHistory} />

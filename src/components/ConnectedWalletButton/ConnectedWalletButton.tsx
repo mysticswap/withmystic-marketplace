@@ -1,13 +1,13 @@
 import { RiArrowDownSLine } from "react-icons/ri";
 import "./ConnectedWalletButton.css";
-import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { truncateAddress } from "../../utils";
 import { useRef, useState } from "react";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 
 const ConnectedWalletButton = () => {
-  const { user, setUser } = useGlobalContext()!;
+  const { user, setUser } = useConnectionContext()!;
   const [logout, setLogout] = useState(false);
   const logoutRef = useRef(null);
   const logoutUser = () => {

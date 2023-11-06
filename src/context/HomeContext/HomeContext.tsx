@@ -1,7 +1,14 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { HomeContextType, SelectedTrait } from "./types";
 import { defaultNumericFilters, dropdownOptions } from "../../constants";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { useGlobalContext } from "../GlobalContext/GlobalContext";
 
 const HomeContext = createContext<HomeContextType | null>(null);
 
@@ -9,7 +16,7 @@ type Props = { children: ReactNode };
 
 export const HomeContextProvider = ({ children }: Props) => {
   const isMobile = useIsMobile();
-  const [minimalCards, setMinimalCards] = useState(true);
+  const { selectedCollection } = useGlobalContext()!;
   const [showFilters, setShowFilters] = useState(true);
   const [selectedTraits, setSelectedTraits] = useState<SelectedTrait[]>([]);
   const [selectedDropdownOption, setSelectedDropdownOption] = useState(
@@ -19,11 +26,16 @@ export const HomeContextProvider = ({ children }: Props) => {
   const [numericFilters, setNumericFilters] = useState(defaultNumericFilters);
   const [showMobileFilters, setShowMobileFilters] = useState(!isMobile);
 
+  useEffect(() => {
+    setSelectedTraits([]);
+    setSelectedDropdownOption(dropdownOptions[0]);
+    setNumericFilters(defaultNumericFilters);
+    setIsFetching(true);
+  }, [selectedCollection]);
+
   return (
     <HomeContext.Provider
       value={{
-        minimalCards,
-        setMinimalCards,
         showFilters,
         setShowFilters,
         selectedTraits,

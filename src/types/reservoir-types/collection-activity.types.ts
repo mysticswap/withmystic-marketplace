@@ -15,6 +15,7 @@ export interface Activity {
   token: ActivityToken;
   collection: ActivityCollection;
   order: Order;
+  txHash?: string;
 }
 
 export interface ActivityCollection {

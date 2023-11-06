@@ -14,10 +14,11 @@
   border: none;
   transition: var(--ms-mp-transition);
   cursor: pointer;
+  color: var(--ms-mp-text-color);
 }
 
 .control_dropdown_trigger:hover {
-  background-color: var(--ms-mp-gray);
+  background-color: var(--ms-mp-controlbar-hover);
 }
 
 .control_dropdown_list {
@@ -26,10 +27,12 @@
   box-sizing: border-box;
   border-radius: 1rem;
   margin-top: 0.5rem;
-  background-color: white;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+  background-color: var(--ms-mp-body-background);
+  box-shadow: var(--ms-mp-box-shadow-light);
   padding: 0.5rem;
   z-index: 1;
+  border: var(--ms-mp-gray-border);
+  border-color: var(--ms-mp-gray-light);
 }
 
 .control_dropdown_list button {
@@ -44,6 +47,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: var(--ms-mp-text-color);
 }
 
 .control_dropdown_list button:hover {

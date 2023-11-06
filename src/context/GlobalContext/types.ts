@@ -1,25 +1,20 @@
-import { ethers } from "ethers";
 import { CollectionMetadataV2 } from "../../types/reservoir-types/collection-metadata.types";
 import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.types";
 import { CollectionActivity } from "../../types/reservoir-types/collection-activity.types";
 import { CollectionTraitsV2 } from "../../types/reservoir-types/collection-traits.types";
+import { UserNfts } from "../../types/reservoir-types/user-nfts.types";
+import {
+  ClientObject,
+  MarketplaceClientCollection,
+} from "../../types/dynamic-system.types";
 
 export type GlobalContextType = {
-  user: string | null;
-  setUser: React.Dispatch<React.SetStateAction<string | null>>;
-  provider: ethers.providers.Web3Provider | null;
-  setProvider: React.Dispatch<
-    React.SetStateAction<ethers.providers.Web3Provider | null>
-  >;
-  chainId: number;
-  setChainId: React.Dispatch<React.SetStateAction<number>>;
-  userBalance: number;
-  setUserBalance: React.Dispatch<React.SetStateAction<number>>;
+  userBalance: { [x: string]: string };
+  setUserBalance: React.Dispatch<React.SetStateAction<{ [x: string]: string }>>;
   currentTab: string;
   setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
-
-  // reservoir
-
+  minimalCards: boolean;
+  setMinimalCards: React.Dispatch<React.SetStateAction<boolean>>;
   collectionMetadata: CollectionMetadataV2 | null;
   setCollectionMetadata: React.Dispatch<
     React.SetStateAction<CollectionMetadataV2 | null>
@@ -36,4 +31,16 @@ export type GlobalContextType = {
   >;
   selectedActivities: string[];
   setSelectedActivities: React.Dispatch<React.SetStateAction<string[]>>;
+  userNfts: UserNfts;
+  setUserNfts: React.Dispatch<React.SetStateAction<UserNfts>>;
+  source: string;
+  collectionChainId: number;
+  availableCollections: MarketplaceClientCollection[];
+  selectedCollection: MarketplaceClientCollection;
+  setSelectedCollection: React.Dispatch<
+    React.SetStateAction<MarketplaceClientCollection>
+  >;
+  collectionContract: string;
+  ethValue: number;
+  client: ClientObject;
 };

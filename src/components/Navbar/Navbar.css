@@ -4,6 +4,8 @@
   justify-content: space-between;
   padding: 0 1rem;
   height: 6rem;
+  border-bottom: var(--ms-mp-gray-border);
+  border-color: var(--ms-mp-gray-light);
 }
 .navbar a {
   color: unset;
@@ -27,6 +29,8 @@
 
 .logo_holder img {
   width: 100%;
+  max-height: 3.5rem;
+  object-fit: contain;
 }
 
 .nav_links {
@@ -47,6 +51,67 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  position: relative;
+}
+
+.collection_dropdown_trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+  color: var(--ms-mp-text-color);
+}
+
+.collection_dropdown_trigger:hover {
+  opacity: 0.5;
+}
+
+.collections_dropdown_list {
+  position: absolute;
+  top: 150%;
+  background-color: var(--ms-mp-body-background);
+  width: 230%;
+  z-index: 1;
+  padding: 0.75rem;
+  border-radius: 1rem;
+  box-shadow: var(--ms-mp-box-shadow);
+  border: var(--ms-mp-gray-border);
+  border-color: var(--ms-mp-gray-light);
+}
+
+.collections_dropdown_list button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: transparent;
+  border: none;
+  border-radius: 8px;
+  transition: var(--ms-mp-transition);
+  cursor: pointer;
+  color: var(--ms-mp-text-color);
+}
+
+.collections_dropdown_list button:hover {
+  background-color: var(--ms-mp-gray-light);
+}
+
+.sell_button {
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+  color: var(--ms-mp-text-color);
+}
+
+.sell_button:hover {
+  opacity: 0.5;
 }
 
 @media screen and (max-width: 600px) {

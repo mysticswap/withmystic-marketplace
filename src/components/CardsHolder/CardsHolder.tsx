@@ -4,16 +4,20 @@ import NftCard from "../NftCard/NftCard";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import SelectedFilter from "../SelectedFilter/SelectedFilter";
 import { useEffect, useRef, useState } from "react";
-import { collectionContract } from "../../config";
 import { BiLoaderCircle } from "react-icons/bi";
 import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-api";
 import { generateAttributeString } from "../../utils";
 
 const CardsHolder = () => {
-  const { chainId, collectionNfts, setCollectionNfts } = useGlobalContext()!;
+  const {
+    collectionNfts,
+    setCollectionNfts,
+    minimalCards,
+    collectionChainId,
+    collectionContract,
+  } = useGlobalContext()!;
   const {
     showFilters,
-    minimalCards,
     selectedTraits,
     setSelectedTraits,
     isFetching,
@@ -58,15 +62,13 @@ const CardsHolder = () => {
 
   const onScroll = () => {
     const { scrollTop, scrollHeight, clientHeight } = cardsHolderRef.current!;
-    // const isAtBottom = scrollTop + clientHeight == scrollHeight;
-    // const isAtBottom = (scrollTop + clientHeight) % scrollHeight < 1;
     const isAtBottom = scrollTop + clientHeight - scrollHeight >= -1;
     const attributeString = generateAttributeString(selectedTraits);
 
     if (isAtBottom && collectionNfts.continuation) {
       setIsFetching(true);
       getCollectionNftsV2(
-        chainId,
+        collectionChainId,
         selectedDropdownOption.value,
         selectedDropdownOption.order,
         collectionContract,
@@ -92,7 +94,7 @@ const CardsHolder = () => {
     setCollectionNfts({ tokens: [], continuation: null });
     setIsFetching(true);
     getCollectionNftsV2(
-      chainId,
+      collectionChainId,
       selectedDropdownOption.value,
       selectedDropdownOption.order,
       collectionContract,
@@ -133,7 +135,7 @@ const CardsHolder = () => {
         </div>
       )}
       {nftsList?.length < 1 && !isFetching && (
-        <p className="no_result">No result</p>
+        <p className="no_result">No results</p>
       )}
     </div>
   );

@@ -6,13 +6,18 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import CustomTooltip from "../CustomTooltip/CustomTooltip";
 import { Link } from "react-router-dom";
 import { Activity } from "../../types/reservoir-types/collection-activity.types";
-import { activityRenames } from "../../constants";
+import { activityRenames, scanWebsites, tabOptions } from "../../constants";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
+import { SiOpensea } from "react-icons/si";
+import x2y2 from "../../assets/x2y2.png";
 
 dayjs.extend(relativeTime);
 
 type Props = { activity: Activity };
 
 const ActivityRow = ({ activity }: Props) => {
+  const { collectionChainId, setCurrentTab } = useGlobalContext()!;
+
   const nftImage = activity?.token?.tokenImage;
   const nftName = activity?.token?.tokenName;
   const collectionImage = activity?.collection?.collectionImage;
@@ -21,29 +26,40 @@ const ActivityRow = ({ activity }: Props) => {
   const fullTime = dayjs(activity?.timestamp * 1000).toString();
   const price = activity?.price?.amount?.decimal;
   const activityType = activity.type;
+  const hasTxHash = activity.hasOwnProperty("txHash");
+  const source = activity?.order?.source?.icon;
+  const tokenId = activity?.token?.tokenId;
+  const contract = activity?.collection?.collectionId;
+  const singlePageLink = `/${contract}/${tokenId}`;
+  const switchTab = () => !tokenId && setCurrentTab(tabOptions[0]);
 
   return (
     <div className="activity_row">
       <>
-        <div>
-          <Link to={`/nft/${activity?.token?.tokenId}`}>
+        <div className="activity_row_type">
+          {!source?.includes("opensea") ? (
+            <img src={source?.includes("x2y2") ? x2y2 : source} alt="" />
+          ) : (
+            <SiOpensea display="block" color="#3498db" size={20} />
+          )}
+          <Link to={tokenId ? singlePageLink : ""} onClick={switchTab}>
             {activityRenames[activityType]}
           </Link>
         </div>
         <div className="activity_row_item">
-          <Link to={`/nft/${activity?.token?.tokenId}`}>
+          <Link to={tokenId ? singlePageLink : ""} onClick={switchTab}>
             <img
               src={nftImage || collectionImage}
               className="activity_row_image"
               alt=""
             />
           </Link>
-          <Link to={`/nft/${activity?.token?.tokenId}`}>
+          <Link to={tokenId ? singlePageLink : ""} onClick={switchTab}>
             <p>{nftName || collectionName}</p>
           </Link>
         </div>
         <div>
-          <Link to={`/nft/${activity?.token?.tokenId}`}>
+          <Link to={tokenId ? singlePageLink : ""} onClick={switchTab}>
             {price} {activity?.price.currency.symbol}
           </Link>
         </div>
@@ -52,8 +68,15 @@ const ActivityRow = ({ activity }: Props) => {
       <ActivityRowAddress address={activity?.toAddress!} isParagraph={false} />
       <div>
         <CustomTooltip text={fullTime}>
-          <p>
-            {timeStamp} <TbExternalLink display="block" />
+          <p
+            onClick={() => {
+              hasTxHash &&
+                window.open(
+                  `${scanWebsites[collectionChainId]}tx/${activity?.txHash}`
+                );
+            }}
+          >
+            {timeStamp} {hasTxHash && <TbExternalLink display="block" />}
           </p>
         </CustomTooltip>
       </div>

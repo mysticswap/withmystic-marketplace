@@ -33,6 +33,11 @@ export const convertDecimalsToReadableNumbers = (
   return result || 0;
 };
 
+export const convertTokenAmountToDecimal = (amount: number) => {
+  return amount * Math.pow(10, 18);
+  // might need to change 18 to dynamic figure
+};
+
 export const metamaskPresent = () => {
   var ethereum = window.ethereum;
   return typeof ethereum !== "undefined" && window.ethereum.isMetaMask;
@@ -63,4 +68,51 @@ export const generateAttributeString = (selectedTraits: SelectedTrait[]) => {
     string += `&attributes[${item.type}]=${item.value}`;
   });
   return string;
+};
+
+export const getHostName = () => {
+  const hostName = window.location.hostname;
+  switch (hostName) {
+    case "localhost":
+      // return "market.roo.io";
+      // return "marketplace.mysticswap.io";
+      return "market.localhost.io";
+    case "deploy-preview-6--heroic-duckanoo-b32f52.netlify.app":
+      return "market.localhost.io";
+    default:
+      return hostName;
+  }
+};
+
+export const getPreviousCollectionAddress = () => {
+  let previousCollectionAddress = localStorage.getItem("current-collection");
+  if (previousCollectionAddress) {
+    return JSON?.parse(previousCollectionAddress);
+  }
+};
+
+export const copyToClipboard = (text: string) => {
+  window.navigator.clipboard.writeText(text);
+};
+
+export const addOpacity = (color: string, opacity: number) => {
+  // coerce values so it is between 0 and 1.
+  const _opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
+  return color + _opacity.toString(16).toUpperCase();
+};
+
+export const updateFavicon = (url: string) => {
+  let link = document.querySelector("link[rel~='icon']");
+  if (!link) {
+    link = document.createElement("link");
+    //@ts-ignore
+    link.rel = "icon";
+    document.getElementsByTagName("head")[0].appendChild(link);
+  }
+  //@ts-ignore
+  link.href = url;
+};
+
+export const updateSiteTitle = (text: string) => {
+  document.title = text || "";
 };

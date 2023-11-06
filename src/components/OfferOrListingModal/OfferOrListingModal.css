@@ -22,14 +22,15 @@
   border: none;
   width: 90%;
   box-sizing: border-box;
+  background-color: transparent;
 }
 
 .listing_or_offer_modal_bottom > .input_area:hover {
-  border: 1px solid black;
+  border: 1px solid var(--ms-mp-text-color);
 }
 
 .listing_or_offer_modal_bottom > .input_area:focus-within {
-  border: 1px solid var(--ms-mp-blue);
+  border: 1px solid var(--ms-mp-primary-color);
 }
 
 .duration_area {
@@ -40,7 +41,7 @@
 }
 
 .duration_container {
-  width: 85%;
+  width: 80%;
   position: relative;
 }
 
@@ -56,10 +57,11 @@
   border-radius: var(--ms-mp-large-border-radius);
   cursor: pointer;
   transition: var(--ms-mp-transition);
+  color: var(--ms-mp-text-color);
 }
 
 .duration_trigger:hover {
-  background-color: var(--ms-mp-gray);
+  background-color: var(--ms-mp-gray-light);
 }
 
 .bottom_details {
@@ -79,7 +81,7 @@
 }
 
 .listing_or_offer_modal_bottom > .solid_button {
-  width: 25%;
+  min-width: 25%;
   display: block;
   margin: auto;
   margin-top: 1rem;
@@ -87,12 +89,22 @@
 
 .duration_list {
   position: absolute;
-  background-color: white;
+  background-color: var(--ms-mp-body-background);
   width: 100%;
   box-sizing: border-box;
   padding: 0.5rem;
   border-radius: 1rem;
-  box-shadow: 0 3px 10px var(--ms-mp-transparent-black);
+  box-shadow: var(--ms-mp-box-shadow);
+  z-index: 1;
+  max-height: 250px;
+  overflow-y: auto;
+  border: var(--ms-mp-gray-border);
+  border-color: var(--ms-mp-gray-light);
+  top: 120%;
+}
+
+.duration_list::-webkit-scrollbar {
+  display: none;
 }
 
 .duration_list > button {
@@ -104,6 +116,7 @@
   padding: 0.25rem;
   border-radius: 0.5rem;
   cursor: pointer;
+  color: var(--ms-mp-text-color);
 }
 
 .duration_list > button:hover {
@@ -112,4 +125,8 @@
 
 .duration_list > button:not(:last-of-type) {
   margin-bottom: 0.5rem;
+}
+
+.listing_or_offer_modal_bottom > .input_area.balance_warning {
+  border-color: red;
 }

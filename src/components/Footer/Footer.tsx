@@ -6,7 +6,7 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 const Footer = () => {
   const { collectionMetadata } = useGlobalContext()!;
 
-  const discordUrl = collectionMetadata?.collections[0].discordUrl;
+  const discordUrl = collectionMetadata?.collections?.[0]?.discordUrl;
   const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
 
   return (
@@ -15,11 +15,15 @@ const Footer = () => {
         <p> © {new Date().getFullYear()} Mystical Wizard Guild</p>
       </section>
       <section className="footer_links_holder">
-        <a>Privacy Policy</a>
-        <a>Terms & Conditions</a>
+        <a href="https://www.withmystic.xyz/privacy-policy" target="_blank">
+          Privacy Policy
+        </a>
+        <a href="https://www.withmystic.xyz/terms-of-service" target="_blank">
+          Terms & Conditions
+        </a>
         <div>
           <p>Powered by</p>
-          <span>
+          <span onClick={() => window.open("https://withmystic.xyz")}>
             <img src={mysticLogo} alt="" />
           </span>
         </div>

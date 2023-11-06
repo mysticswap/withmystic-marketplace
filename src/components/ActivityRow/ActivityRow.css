@@ -48,12 +48,22 @@
 }
 
 .activity_row > div:is(:nth-of-type(4), :nth-of-type(5), :last-of-type) {
-  color: var(--ms-mp-blue);
+  color: var(--ms-mp-primary-color);
   transition: var(--ms-mp-transition);
 }
 
 .activity_row > div:is(:nth-of-type(4), :nth-of-type(5), :last-of-type):hover {
-  color: var(--ms-mp-blue-2);
+  color: var(--ms-mp-primary-color-dark);
+}
+
+.activity_row_type {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.activity_row_type img {
+  max-width: 18px;
 }
 
 @media screen and (max-width: 1024px) {

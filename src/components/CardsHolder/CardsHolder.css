@@ -20,11 +20,11 @@
 }
 
 .small_cards_holder_minmax_v1 {
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
 
 .small_cards_holder_minmax_v2 {
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 
 .selected_traits_holder {
@@ -51,12 +51,11 @@
 }
 
 .loader_holder {
-  border: var(--ms-mp-gray-border);
-  border-radius: var(--ms-mp-card-border-radius);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  grid-column: 1/-1;
 }
 
 .cards_holder .loader {

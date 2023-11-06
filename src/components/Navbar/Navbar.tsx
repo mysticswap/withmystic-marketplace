@@ -7,20 +7,48 @@ import {
 } from "react-icons/ri";
 import SolidButton from "../SolidButton/SolidButton";
 import { Link, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { scrollToTop } from "../../utils";
 import { connectWallets } from "../../services/web3Onboard";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import ConnectedWalletButton from "../ConnectedWalletButton/ConnectedWalletButton";
+import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
+import UserNftsModal from "../UserNftsModal/UserNftsModal";
+import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
+import { BsCheck } from "react-icons/bs";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
+import { tabOptions } from "../../constants";
 import { useIsMobile } from "../../hooks/useIsMobile";
 
 const Navbar = () => {
-  const { setProvider, user, collectionMetadata } = useGlobalContext()!;
-  const [showMenu, setShowMenu] = useState(false);
+  const { setProvider, user } = useConnectionContext()!;
+  const {
+    collectionMetadata,
+    userNfts,
+    availableCollections,
+    selectedCollection,
+    setSelectedCollection,
+    setCurrentTab,
+    client,
+  } = useGlobalContext()!;
+  const { setShowOfferOrListingModal } = useTransactionContext()!;
   const location = useLocation();
   const isMobile = useIsMobile();
 
-  const discordUrl = collectionMetadata?.collections[0].discordUrl;
+  const [showUserNftsModal, setShowUserNftsModal] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const [showDropdownOptions, setShowDropdownOptions] = useState(false);
+
+  useOutsideClick(
+    dropdownRef,
+    setShowDropdownOptions,
+    "collection_dropdown_trigger"
+  );
+
+  const userHasNfts = userNfts?.tokens?.length > 0 && user;
+
+  const discordUrl = collectionMetadata?.collections?.[0]?.discordUrl;
   const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
 
   const connectWallet = () => {
@@ -29,17 +57,15 @@ const Navbar = () => {
 
   useEffect(() => {
     scrollToTop();
+    setShowOfferOrListingModal(false);
   }, [location.pathname]);
 
   return (
     <nav className="navbar">
       <section className="nav_left">
         <div className="logo_holder">
-          <Link to="/">
-            <img
-              src="https://mysticswap.io/static/media/mystWizGuild2.824b89cd.png"
-              alt="collection_logo"
-            />
+          <Link to="/" onClick={() => setCurrentTab(tabOptions[0])}>
+            <img src={client.logoUrl} alt="collection_logo" />
           </Link>
         </div>
 
@@ -52,14 +78,51 @@ const Navbar = () => {
               <RiTwitterXLine size={20} display="block" />
             </a>
           </div>
-
-          <div className="collections_dropdown">
-            Collections <RiArrowDownSLine />
-          </div>
         </div>
+        <div className="collections_dropdown">
+          <button
+            className="collection_dropdown_trigger"
+            onClick={() => setShowDropdownOptions(!showDropdownOptions)}
+          >
+            Collections <RiArrowDownSLine size={20} />
+          </button>
+
+          {showDropdownOptions && (
+            <div className="collections_dropdown_list" ref={dropdownRef}>
+              {availableCollections.map((collection) => {
+                const isSelected =
+                  collection.address == selectedCollection.address;
+
+                return (
+                  <Link key={collection.id} to="/">
+                    <button
+                      onClick={() => {
+                        setSelectedCollection(collection);
+                        setShowDropdownOptions(false);
+                        setCurrentTab(tabOptions[0]);
+                      }}
+                    >
+                      {collection.name}{" "}
+                      {isSelected && <BsCheck size={15} display="block" />}
+                    </button>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {userHasNfts && (
+          <button
+            className="sell_button"
+            onClick={() => setShowUserNftsModal(true)}
+          >
+            Sell
+          </button>
+        )}
       </section>
 
-      <section className="connect_and_menu">
+      <section>
         {!user ? (
           <SolidButton text="Connect Wallet" onClick={connectWallet} />
         ) : (
@@ -69,6 +132,10 @@ const Navbar = () => {
           <RiMenu3Fill className="burger_btn" display="block" size={25} />
         )}
       </section>
+
+      {showUserNftsModal && (
+        <UserNftsModal setShowUserNftsModal={setShowUserNftsModal} />
+      )}
     </nav>
   );
 };

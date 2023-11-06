@@ -25,11 +25,18 @@
 .offers_table_item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .offers_table_item > p:last-of-type {
-  color: var(--ms-mp-blue);
+  color: var(--ms-mp-primary-color);
+  width: fit-content;
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+}
+
+.offers_table_item > p:last-of-type:hover {
+  color: var(--ms-mp-primary-color-dark);
 }
 
 .more_offers_btn {
@@ -40,10 +47,27 @@
   background-color: transparent;
   cursor: pointer;
   transition: var(--ms-mp-transition);
+  color: var(--ms-mp-text-color);
 }
 
 .more_offers_btn:hover {
-  color: var(--ms-mp-blue);
+  color: var(--ms-mp-primary-color);
+}
+
+.offer_accept_button {
+  display: block;
+  margin: auto;
+  cursor: pointer;
+  background-color: transparent;
+  border: var(--ms-mp-gray-border);
+  border-radius: 8px;
+  padding: 8px;
+  transition: var(--ms-mp-transition);
+  color: var(--ms-mp-text-color);
+}
+
+.offer_accept_button:hover {
+  background-color: var(--ms-mp-gray-light);
 }
 
 @media screen and (max-width: 820px) {

@@ -1,13 +1,8 @@
+import { TransactionNft } from "../../context/TransactionContext/types";
 import "./ModalNft.css";
 
 type Props = {
-  nftData: {
-    collectionName: string;
-    nftName: string;
-    nftImage: string;
-    amount: number;
-    price: number;
-  };
+  nftData: TransactionNft;
 };
 
 const ModalNft = ({ nftData }: Props) => {
@@ -22,7 +17,8 @@ const ModalNft = ({ nftData }: Props) => {
       </div>
 
       <p className="modal_nft_value">
-        {nftData.amount} ETH <span>(${Math.ceil(nftData.price)})</span>
+        {nftData.amount || "--"} ETH{" "}
+        <span>(${Math.ceil(nftData.price) || "--"})</span>
       </p>
     </div>
   );

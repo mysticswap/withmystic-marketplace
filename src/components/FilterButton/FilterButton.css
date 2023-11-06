@@ -12,11 +12,12 @@
   transition: var(--ms-mp-transition);
   cursor: pointer;
   position: relative;
+  color: var(--ms-mp-text-color);
 }
 
 .filter_counter {
   position: absolute;
-  background-color: var(--ms-mp-blue);
+  background-color: var(--ms-mp-primary-color);
   color: white;
   width: 20px;
   height: 20px;
