@@ -31,7 +31,7 @@
 }
 
 .user_nfts_load_btn:hover {
-  color: var(--ms-mp-blue);
+  color: var(--ms-mp-primary-color);
 }
 
 .user_nfts_content > .loader {

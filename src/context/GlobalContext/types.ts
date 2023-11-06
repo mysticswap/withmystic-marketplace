@@ -3,6 +3,10 @@ import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.ty
 import { CollectionActivity } from "../../types/reservoir-types/collection-activity.types";
 import { CollectionTraitsV2 } from "../../types/reservoir-types/collection-traits.types";
 import { UserNfts } from "../../types/reservoir-types/user-nfts.types";
+import {
+  ClientObject,
+  MarketplaceClientCollection,
+} from "../../types/dynamic-system.types";
 
 export type GlobalContextType = {
   userBalance: { [x: string]: string };
@@ -31,21 +35,12 @@ export type GlobalContextType = {
   setUserNfts: React.Dispatch<React.SetStateAction<UserNfts>>;
   source: string;
   collectionChainId: number;
-  availableCollections: MarketPlaceCollections[];
-  setAvailableCollections: React.Dispatch<
-    React.SetStateAction<MarketPlaceCollections[]>
-  >;
-  selectedCollection: MarketPlaceCollections;
+  availableCollections: MarketplaceClientCollection[];
+  selectedCollection: MarketplaceClientCollection;
   setSelectedCollection: React.Dispatch<
-    React.SetStateAction<MarketPlaceCollections>
+    React.SetStateAction<MarketplaceClientCollection>
   >;
   collectionContract: string;
   ethValue: number;
-};
-
-export type MarketPlaceCollections = {
-  id: string;
-  name: string;
-  address: string;
-  chainId: number;
+  client: ClientObject;
 };

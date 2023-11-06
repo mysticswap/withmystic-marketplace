@@ -4,6 +4,8 @@
   justify-content: space-between;
   padding: 0 1rem;
   height: 6rem;
+  border-bottom: var(--ms-mp-gray-border);
+  border-color: var(--ms-mp-gray-light);
 }
 .navbar a {
   color: unset;
@@ -55,6 +57,7 @@
   font-size: 1rem;
   cursor: pointer;
   transition: var(--ms-mp-transition);
+  color: var(--ms-mp-text-color);
 }
 
 .collection_dropdown_trigger:hover {
@@ -64,12 +67,14 @@
 .collections_dropdown_list {
   position: absolute;
   top: 150%;
-  background-color: white;
+  background-color: var(--ms-mp-body-background);
   width: 230%;
   z-index: 1;
   padding: 0.75rem;
-  border-radius: var(--ms-mp-card-border-radius);
+  border-radius: 1rem;
   box-shadow: var(--ms-mp-box-shadow);
+  border: var(--ms-mp-gray-border);
+  border-color: var(--ms-mp-gray-light);
 }
 
 .collections_dropdown_list button {
@@ -83,6 +88,7 @@
   border-radius: 8px;
   transition: var(--ms-mp-transition);
   cursor: pointer;
+  color: var(--ms-mp-text-color);
 }
 
 .collections_dropdown_list button:hover {
@@ -95,6 +101,7 @@
   font-size: 1rem;
   cursor: pointer;
   transition: var(--ms-mp-transition);
+  color: var(--ms-mp-text-color);
 }
 
 .sell_button:hover {

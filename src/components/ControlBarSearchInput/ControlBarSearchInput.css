@@ -11,11 +11,11 @@
 }
 
 .control_bar_search:hover {
-  border: 2px solid black;
+  border: 2px solid var(--ms-mp-text-color);
 }
 
 .control_bar_search:focus-within {
-  border: 2px solid var(--ms-mp-blue);
+  border: 2px solid var(--ms-mp-primary-color);
 }
 
 .control_bar_search input {

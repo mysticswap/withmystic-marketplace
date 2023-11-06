@@ -27,6 +27,7 @@ const Navbar = () => {
     selectedCollection,
     setSelectedCollection,
     setCurrentTab,
+    client,
   } = useGlobalContext()!;
   const { setShowOfferOrListingModal } = useTransactionContext()!;
   const location = useLocation();
@@ -61,10 +62,7 @@ const Navbar = () => {
       <section className="nav_left">
         <div className="logo_holder">
           <Link to="/" onClick={() => setCurrentTab(tabOptions[0])}>
-            <img
-              src="https://mysticswap.io/static/media/mystWizGuild2.824b89cd.png"
-              alt="collection_logo"
-            />
+            <img src={client.logoUrl} alt="collection_logo" />
           </Link>
         </div>
 

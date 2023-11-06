@@ -21,11 +21,11 @@
 }
 
 .trait_search:hover {
-  border-color: black;
+  border-color: var(--ms-mp-text-color);
 }
 
 .trait_search:focus-within {
-  border-color: var(--ms-mp-blue);
+  border-color: var(--ms-mp-primary-color);
 }
 
 .trait_search > input {

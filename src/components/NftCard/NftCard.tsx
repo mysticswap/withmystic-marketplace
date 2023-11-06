@@ -15,6 +15,7 @@ import { useTransactionContext } from "../../context/TransactionContext/Transact
 import { TransactionNft } from "../../context/TransactionContext/types";
 import { switchChains } from "../../utils/wallet-connection";
 import { connectWallets } from "../../services/web3Onboard";
+import { balanceChain } from "../../constants";
 
 type Props = { nft: TokenElement };
 
@@ -35,7 +36,7 @@ const NftCard = ({ nft }: Props) => {
   const currentEthAmount = nft?.market?.floorAsk?.price?.amount?.decimal;
   const symbol = nft?.market?.floorAsk?.price?.currency?.symbol;
   const currentValue = Math.ceil(nft?.market?.floorAsk?.price?.amount?.usd);
-  const lastSale = nft?.market?.floorAsk?.price?.amount?.decimal?.toFixed(4);
+  const lastSale = nft?.market?.floorAsk?.price?.amount?.decimal;
   const nftName = nft?.token?.name;
   const nftId = nft?.token?.tokenId;
   const sourceIcon = nft?.market?.floorAsk?.source?.icon;
@@ -47,24 +48,10 @@ const NftCard = ({ nft }: Props) => {
     </Link>
   );
 
-  const buyNft = async () => {
-    const transactionNft: TransactionNft = {
-      collectionName: nft?.token?.collection?.name,
-      nftName,
-      nftImage: nft?.token?.image,
-      amount: Number(currentEthAmount),
-      price: currentValue,
-      isOffer: false,
-      isSale: false,
-      tokenId: nftId,
-      message: `I’ve just bought ${nft?.token?.name}!`,
-    };
-    setTransactionNft(transactionNft);
-    setShowConfirmationModal(true);
-
+  const startBuyProcess = () => {
     const orderId = nft?.market?.floorAsk?.id;
     const source = getHostName();
-    !user && connectWallets(setProvider);
+
     switchChains(chainId, collectionChainId).then(() => {
       buyListedNft(collectionChainId, orderId, user!, source).then((result) => {
         setTransactionStage(1);
@@ -78,8 +65,29 @@ const NftCard = ({ nft }: Props) => {
     });
   };
 
+  const buyNft = async () => {
+    const transactionNft: TransactionNft = {
+      collectionName: nft?.token?.collection?.name,
+      nftName,
+      nftImage: nft?.token?.image,
+      amount: Number(currentEthAmount),
+      price: currentValue,
+      isOffer: false,
+      isSale: false,
+      tokenId: nftId,
+      message: `I’ve just bought ${nft?.token?.name}!`,
+    };
+    if (user) {
+      setTransactionNft(transactionNft);
+      setShowConfirmationModal(true);
+      startBuyProcess();
+    } else connectWallets(setProvider);
+  };
+
   const userIsOwner = user?.toLowerCase() == nft?.token?.owner?.toLowerCase();
-  const userCanBuy = Number(currentEthAmount) <= Number(userBalance.ETH);
+  const userCanBuy =
+    Number(currentEthAmount) <=
+    Number(userBalance?.[balanceChain[collectionChainId]]);
 
   return (
     <div className="nft_card">
@@ -112,8 +120,12 @@ const NftCard = ({ nft }: Props) => {
         </p>
 
         {currentEthAmount && currentValue && !userIsOwner && (
-          <button onClick={buyNft} disabled={!userCanBuy}>
-            {userCanBuy ? "Buy now" : "Insufficient balance"}
+          <button onClick={buyNft} disabled={(user && !userCanBuy) as boolean}>
+            {userCanBuy
+              ? "Buy now"
+              : !user
+              ? "Buy now"
+              : "Insufficient balance"}
           </button>
         )}
       </div>

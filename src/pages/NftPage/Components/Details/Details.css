@@ -26,8 +26,7 @@
 }
 
 .details_table p:first-of-type {
-  color: gray;
-  /* margin: 0; */
+  color: var(--ms-mp-gray-text);
 }
 
 .detail_address:hover {
@@ -36,5 +35,5 @@
 }
 
 .detail_address:hover {
-  color: var(--ms-mp-blue-2);
+  color: var(--ms-mp-primary-color-dark);
 }

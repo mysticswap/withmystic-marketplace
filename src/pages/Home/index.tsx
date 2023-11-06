@@ -20,11 +20,7 @@ const Home = () => {
   const isInItemsSection = currentTab == tabOptions[0];
   return (
     <div>
-      <Banner
-        bannerImage={
-          "https://i.seadn.io/gcs/files/6d4b873bd01107ff35489dbe69e031d1.png?auto=format&dpr=1&w=3840"
-        }
-      />
+      <Banner />
       <ControlBar isInItemsSection={isInItemsSection} />
 
       {isInItemsSection ? <ItemsScreen /> : <ActivityScreen />}

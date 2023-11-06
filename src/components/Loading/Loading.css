@@ -7,7 +7,7 @@
 }
 
 .loader {
-  color: var(--ms-mp-blue);
+  color: var(--ms-mp-primary-color);
   animation: rotate 2s infinite;
 }
 

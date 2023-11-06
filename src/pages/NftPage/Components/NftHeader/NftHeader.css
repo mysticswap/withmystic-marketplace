@@ -9,7 +9,7 @@
 }
 
 .nft_header > a:hover {
-  color: var(--ms-mp-blue-2);
+  color: var(--ms-mp-primary-color-dark);
 }
 
 .nft_header > p {
@@ -31,7 +31,7 @@
 }
 
 .nft_header_owner span:hover {
-  color: var(--ms-mp-blue-2);
+  color: var(--ms-mp-primary-color-dark);
 }
 
 .nft_header_owner > div {
@@ -46,7 +46,7 @@
 }
 
 .nft_header_owner > div > svg:hover {
-  color: var(--ms-mp-blue-2);
+  color: var(--ms-mp-primary-color-dark);
 }
 
 .nft_header_button_holder {

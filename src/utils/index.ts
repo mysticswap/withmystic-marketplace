@@ -72,16 +72,47 @@ export const generateAttributeString = (selectedTraits: SelectedTrait[]) => {
 
 export const getHostName = () => {
   const hostName = window.location.hostname;
-  return hostName.includes("localhost")
-    ? "marketplace.mysticswap.io"
-    : hostName;
+  switch (hostName) {
+    case "localhost":
+      // return "market.roo.io";
+      // return "marketplace.mysticswap.io";
+      return "market.localhost.io";
+    case "deploy-preview-6--heroic-duckanoo-b32f52.netlify.app":
+      return "market.localhost.io";
+    default:
+      return hostName;
+  }
 };
 
 export const getPreviousCollectionAddress = () => {
   let previousCollectionAddress = localStorage.getItem("current-collection");
-  return previousCollectionAddress && JSON.parse(previousCollectionAddress);
+  if (previousCollectionAddress) {
+    return JSON?.parse(previousCollectionAddress);
+  }
 };
 
 export const copyToClipboard = (text: string) => {
   window.navigator.clipboard.writeText(text);
+};
+
+export const addOpacity = (color: string, opacity: number) => {
+  // coerce values so it is between 0 and 1.
+  const _opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
+  return color + _opacity.toString(16).toUpperCase();
+};
+
+export const updateFavicon = (url: string) => {
+  let link = document.querySelector("link[rel~='icon']");
+  if (!link) {
+    link = document.createElement("link");
+    //@ts-ignore
+    link.rel = "icon";
+    document.getElementsByTagName("head")[0].appendChild(link);
+  }
+  //@ts-ignore
+  link.href = url;
+};
+
+export const updateSiteTitle = (text: string) => {
+  document.title = text || "";
 };
