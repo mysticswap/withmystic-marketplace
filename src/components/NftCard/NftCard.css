@@ -81,7 +81,6 @@
 }
 
 .nft_card:hover > .nft_card_details button {
-  /* transform: translateY(-100%); */
   bottom: 0;
   z-index: 1;
 }
