@@ -15,6 +15,7 @@ import { useTransactionContext } from "../../context/TransactionContext/Transact
 import { TransactionNft } from "../../context/TransactionContext/types";
 import { switchChains } from "../../utils/wallet-connection";
 import { connectWallets } from "../../services/web3Onboard";
+import { balanceChain } from "../../constants";
 
 type Props = { nft: TokenElement };
 
@@ -35,7 +36,7 @@ const NftCard = ({ nft }: Props) => {
   const currentEthAmount = nft?.market?.floorAsk?.price?.amount?.decimal;
   const symbol = nft?.market?.floorAsk?.price?.currency?.symbol;
   const currentValue = Math.ceil(nft?.market?.floorAsk?.price?.amount?.usd);
-  const lastSale = nft?.market?.floorAsk?.price?.amount?.decimal?.toFixed(4);
+  const lastSale = nft?.market?.floorAsk?.price?.amount?.decimal;
   const nftName = nft?.token?.name;
   const nftId = nft?.token?.tokenId;
   const sourceIcon = nft?.market?.floorAsk?.source?.icon;
@@ -84,7 +85,9 @@ const NftCard = ({ nft }: Props) => {
   };
 
   const userIsOwner = user?.toLowerCase() == nft?.token?.owner?.toLowerCase();
-  const userCanBuy = Number(currentEthAmount) <= Number(userBalance.ETH);
+  const userCanBuy =
+    Number(currentEthAmount) <=
+    Number(userBalance?.[balanceChain[collectionChainId]]);
 
   return (
     <div className="nft_card">

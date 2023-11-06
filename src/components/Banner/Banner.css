@@ -39,7 +39,7 @@
 }
 
 .collection_pill {
-  background-color: white;
+  background-color: var(--ms-mp-body-background);
   padding: 1rem;
   border-radius: var(--ms-mp-large-border-radius);
   display: flex;
@@ -62,7 +62,7 @@
 
 .pill_item > div p:first-of-type {
   font-weight: bold;
-  color: black;
+  color: var(--ms-mp-text-color);
 }
 
 .pill_item > p {

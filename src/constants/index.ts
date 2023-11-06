@@ -95,3 +95,9 @@ export const collectionNetworkIcon: { [x: number]: string } = {
   5: ethereumIcon,
   137: maticIcon,
 };
+
+export const balanceChain: { [x: number]: string } = {
+  1: "ETH",
+  5: "ETH",
+  137: "WETH",
+};

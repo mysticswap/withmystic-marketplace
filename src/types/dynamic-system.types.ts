@@ -8,6 +8,10 @@ export type ClientObject = {
   collections: MarketplaceClientCollection[];
   styles: MarketplaceClientStyles;
   __v: number;
+  fonts: {
+    fontFamily: string;
+    fontLinks: string;
+  };
 };
 
 export type MarketplaceClientCollection = {
@@ -25,4 +29,5 @@ export type MarketplaceClientStyles = {
   cardBorderColor: string;
   cardBorderRadius: string;
   controlBarHoverColor: string;
+  buttonBorderRadius: string;
 };

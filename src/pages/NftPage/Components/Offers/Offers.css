@@ -63,6 +63,7 @@
   border-radius: 8px;
   padding: 8px;
   transition: var(--ms-mp-transition);
+  color: var(--ms-mp-text-color);
 }
 
 .offer_accept_button:hover {

@@ -4,7 +4,7 @@
 
 .connected_wallet_button {
   padding: 0.75rem 1rem;
-  border-radius: 32px;
+  border-radius: var(--ms-mp-button-border-radius);
   border: none;
   cursor: pointer;
   color: black;

@@ -22,11 +22,20 @@ export const changeStyles = (client: ClientObject) => {
     "--ms-mp-card-border-radius": client?.styles?.cardBorderRadius,
     "--ms-mp-card-border-color": client?.styles?.cardBorderColor,
     "--ms-mp-controlbar-hover": client?.styles?.controlBarHoverColor,
+    "--ms-mp-button-border-radius": client?.styles?.buttonBorderRadius,
+    "--ms-mp-poppins": client?.fonts?.fontFamily,
   };
 
   for (const property in customPropertyMap) {
     if (customPropertyMap[property] !== undefined) {
       rootElement.style.setProperty(property, customPropertyMap[property]);
     }
+  }
+};
+
+export const addLinks = (client: ClientObject) => {
+  const links = client?.fonts?.fontLinks;
+  if (links) {
+    document.head.innerHTML += links;
   }
 };

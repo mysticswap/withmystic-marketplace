@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { getMarketplaceClient } from "./services/api/dynamic-system";
 import { ClientObject } from "./types/dynamic-system.types";
 import Loading from "./components/Loading/Loading";
-import { changeStyles } from "./utils/dynamic-styles";
+import { addLinks, changeStyles } from "./utils/dynamic-styles";
 import { updateFavicon, updateSiteTitle } from "./utils";
 
 function App() {
@@ -34,6 +34,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+    addLinks(client);
     changeStyles(client);
     updateFavicon(client.favicon);
     updateSiteTitle(client.htmlTitle);
