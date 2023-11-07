@@ -79,7 +79,7 @@ export const getHostName = () => {
       return "market.localhost.io";
     case "deploy-preview-6--heroic-duckanoo-b32f52.netlify.app":
       return "market.localhost.io";
-    case "deploy-preview-1--heroic-duckanoo-b32f52.netlify.app/":
+    case "deploy-preview-1--heroic-duckanoo-b32f52.netlify.app":
       return "market.localhost.io";
     default:
       return hostName;
