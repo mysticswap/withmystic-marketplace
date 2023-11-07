@@ -47,6 +47,8 @@
   justify-content: center;
   width: 40%;
   gap: 2rem;
+  border: var(--ms-mp-gray-border);
+  border-color: var(--ms-mp-gray-light);
 }
 
 .pill_item p {
