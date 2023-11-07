@@ -115,12 +115,6 @@
 }
 
 @media screen and (max-width: 600px) {
-  .connect_and_menu {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
   .logo_holder {
     max-width: 100px;
   }
@@ -157,7 +151,7 @@
   .nav_right {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
   }
 
   .collection_dropdown_trigger {
