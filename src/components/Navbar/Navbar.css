@@ -142,6 +142,12 @@
     flex-direction: column;
     padding: 1rem;
     box-sizing: border-box;
+    transform: translateX(100%);
+    transition: var(--ms-mp-transition);
+  }
+
+  .show_nav_main_contents {
+    transform: translateX(0%);
   }
 
   .nav_links {
@@ -166,6 +172,16 @@
 
   .collections_dropdown_list {
     width: 100%;
+    box-sizing: border-box;
     position: static;
+    margin-top: 1rem;
+  }
+
+  .sell_button {
+    margin-right: auto;
+  }
+
+  .collections_dropdown_list button {
+    font-size: 1rem;
   }
 }

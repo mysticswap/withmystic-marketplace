@@ -19,6 +19,7 @@ import { BsCheck } from "react-icons/bs";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { tabOptions } from "../../constants";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { useWindowFreeze } from "../../hooks/useWindowFreeze";
 
 const Navbar = () => {
   const { setProvider, user } = useConnectionContext()!;
@@ -39,6 +40,7 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
 
   const [showDropdownOptions, setShowDropdownOptions] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   useOutsideClick(
     dropdownRef,
@@ -46,6 +48,7 @@ const Navbar = () => {
     "collection_dropdown_trigger"
   );
 
+  useWindowFreeze(showMobileMenu);
   const userHasNfts = userNfts?.tokens?.length > 0 && user;
 
   const discordUrl = collectionMetadata?.collections?.[0]?.discordUrl;
@@ -69,12 +72,16 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <div className="nav_main_contents">
+        <div
+          className={`nav_main_contents ${
+            showMobileMenu ? "show_nav_main_contents" : ""
+          }`}
+        >
           <div className="nav_links">
-            <a href={discordUrl}>
+            <a href={discordUrl} target="_blank">
               <RiDiscordFill size={25} display="block" />
             </a>
-            <a href={twitterUrl}>
+            <a href={twitterUrl} target="_blank">
               <RiTwitterXLine size={20} display="block" />
             </a>
           </div>
@@ -99,6 +106,7 @@ const Navbar = () => {
                           setSelectedCollection(collection);
                           setShowDropdownOptions(false);
                           setCurrentTab(tabOptions[0]);
+                          setShowMobileMenu(false);
                         }}
                       >
                         {collection.name}{" "}
@@ -128,7 +136,12 @@ const Navbar = () => {
           <ConnectedWalletButton />
         )}
         {isMobile && (
-          <RiMenu3Fill className="burger_btn" display="block" size={25} />
+          <RiMenu3Fill
+            onClick={() => setShowMobileMenu(!showMobileMenu)}
+            className="burger_btn"
+            display="block"
+            size={25}
+          />
         )}
       </section>
 
