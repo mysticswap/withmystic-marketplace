@@ -63,6 +63,7 @@
 @media screen and (max-width: 600px) {
   .activity_screen {
     width: 100%;
+    border-left: none;
   }
 
   .sales_table_head {
@@ -73,7 +74,7 @@
     position: fixed;
     bottom: 2rem;
     left: 1rem;
-    background-color: var(--ms-mp-blue);
+    background-color: var(--ms-mp-primary-color);
     color: white;
     padding: 1rem;
     border: none;

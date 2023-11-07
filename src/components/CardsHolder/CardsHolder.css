@@ -38,7 +38,7 @@
 .clear_filters {
   background-color: none;
   border: none;
-  background-color: var(--ms-mp-gray);
+  background-color: var(--ms-mp-controlbar-hover);
   padding: 0.25rem 0.5rem;
   border-radius: 6px;
   font-size: 1rem;

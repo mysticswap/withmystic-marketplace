@@ -25,7 +25,7 @@
     position: fixed;
     inset: 0;
     width: 100%;
-    background-color: white;
+    background-color: var(--ms-mp-body-background);
     min-height: 100vh;
     max-height: 100vh;
     z-index: 1;
@@ -46,7 +46,7 @@
     justify-content: space-between;
     position: sticky;
     top: 0;
-    background-color: white;
+    background-color: var(--ms-mp-body-background);
   }
 
   .filters_header p {
