@@ -1,6 +1,7 @@
 .user_nfts_content {
   padding: 1rem;
   position: relative;
+  box-sizing: border-box;
 }
 
 .user_nfts_title {

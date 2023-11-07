@@ -67,7 +67,13 @@ const Navbar = () => {
     <nav className="navbar">
       <section className="nav_left">
         <div className="logo_holder">
-          <Link to="/" onClick={() => setCurrentTab(tabOptions[0])}>
+          <Link
+            to="/"
+            onClick={() => {
+              setCurrentTab(tabOptions[0]);
+              setShowMobileMenu(false);
+            }}
+          >
             <img src={client.logoUrl} alt="collection_logo" />
           </Link>
         </div>

@@ -10,9 +10,9 @@ const ModalNft = ({ nftData }: Props) => {
     <div className="modal_nft">
       <div className="modal_nft_metadata">
         <img src={nftData.nftImage} alt="" />
-        <div>
-          <p>{nftData.collectionName}</p>
-          <p>{nftData.nftName}</p>
+        <div className="ellipsis">
+          <p className="ellipsis">{nftData.collectionName}</p>
+          <p className="ellipsis">{nftData.nftName}</p>
         </div>
       </div>
 

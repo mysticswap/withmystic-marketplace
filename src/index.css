@@ -20,12 +20,13 @@
   --ms-mp-trait-hover-color: rgba(38, 57, 237, 0.25);
   --ms-mp-gray-border: 1px solid #d9e0ec;
   --ms-mp-transparent-black: rgba(0, 0, 0, 0.5);
+  --ms-mp-transparent-black-2: rgba(0, 0, 0, 0.25);
   --ms-mp-large-border-radius: 64px;
   --ms-mp-card-border-radius: 16px;
   --ms-mp-red: #ed263e;
   --ms-mp-red-light: rgba(237, 38, 62, 0.25);
   --ms-mp-red-super-light: rgba(237, 38, 62, 0.1);
-  --ms-mp-box-shadow: 0 3px 10px var(--ms-mp-transparent-black);
+  --ms-mp-box-shadow: 0 3px 10px var(--ms-mp-transparent-black-2);
   --ms-mp-box-shadow-light: 0 3px 10px rgba(0, 0, 0, 0.25);
   --ms-mp-body-background: rgba(255, 255, 255, 1);
   --ms-mp-text-color: black;
@@ -131,6 +132,12 @@ a {
   display: none;
 }
 
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 @media screen and (max-width: 1024px) {
   .modal_content {
     width: 60%;
@@ -141,9 +148,10 @@ a {
   .modal_content {
     width: 75%;
   }
-  .ellipsis {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 600px) {
+  .modal_content {
+    width: 90%;
   }
 }

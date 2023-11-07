@@ -169,6 +169,8 @@
     box-sizing: border-box;
     position: static;
     margin-top: 1rem;
+    box-shadow: none;
+    border-color: var(--ms-mp-gray);
   }
 
   .sell_button {
