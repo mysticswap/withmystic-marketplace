@@ -122,13 +122,12 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
             );
           })}
         </div>
-
-        {nftOffers.continuation && !isFetching && (
-          <button className="more_offers_btn" onClick={fetchMoreOffers}>
-            Load More
-          </button>
-        )}
       </div>
+      {nftOffers.continuation && !isFetching && (
+        <button className="more_offers_btn" onClick={fetchMoreOffers}>
+          Load More
+        </button>
+      )}
     </div>
   );
 };

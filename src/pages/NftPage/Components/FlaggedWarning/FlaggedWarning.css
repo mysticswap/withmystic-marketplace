@@ -2,6 +2,7 @@
   width: 90%;
   box-sizing: border-box;
   margin: auto;
+  margin-top: 1rem;
   background-color: var(--ms-mp-red-super-light);
   padding: 0.5rem 1rem;
   border: 1px solid var(--ms-mp-red-light);

@@ -15,6 +15,7 @@ import OfferOrListingModal from "../../components/OfferOrListingModal/OfferOrLis
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import SocialShare from "../../components/SocialShare/SocialShare";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 const NftPage = () => {
   const { id } = useParams();
@@ -44,6 +45,8 @@ const NftPage = () => {
   const tokenCount = nftInfo?.collection?.tokenCount;
   const token = `${contractAddress}:${id}`;
 
+  const isMobile = useIsMobile();
+
   if (isLoading) {
     return <Loading />;
   }
@@ -54,17 +57,28 @@ const NftPage = () => {
       <div className="nft_page_top">
         <section className="nft_page_section">
           <img className="nft_image" src={nftImage} alt="" />
+          {isMobile && (
+            <NftHeader
+              nftInfo={nftInfo}
+              nftPriceData={nftPriceData}
+              setShowConfirmationModal={setShowConfirmationModal}
+              setShowOfferOrListingModal={setShowOfferOrListingModal}
+            />
+          )}
+          {isMobile && <CurrentPrice nftPriceData={nftPriceData} />}
           <TraitsHolder attributes={attributes!} tokenCount={tokenCount} />
           <DescriptionHolder description={description} />
         </section>
         <section className="nft_page_section">
-          <NftHeader
-            nftInfo={nftInfo}
-            nftPriceData={nftPriceData}
-            setShowConfirmationModal={setShowConfirmationModal}
-            setShowOfferOrListingModal={setShowOfferOrListingModal}
-          />
-          <CurrentPrice nftPriceData={nftPriceData} />
+          {!isMobile && (
+            <NftHeader
+              nftInfo={nftInfo}
+              nftPriceData={nftPriceData}
+              setShowConfirmationModal={setShowConfirmationModal}
+              setShowOfferOrListingModal={setShowOfferOrListingModal}
+            />
+          )}
+          {!isMobile && <CurrentPrice nftPriceData={nftPriceData} />}
           <Offers
             nftOffers={nftOffers}
             tokenId={id!}

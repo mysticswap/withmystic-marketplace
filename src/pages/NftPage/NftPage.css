@@ -29,3 +29,18 @@
     width: 50%;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .nft_page_top {
+    flex-direction: column;
+  }
+
+  .nft_page_section:first-of-type,
+  .nft_page_section:last-of-type {
+    width: 100%;
+  }
+
+  .nft_image {
+    margin-bottom: 1rem;
+  }
+}
