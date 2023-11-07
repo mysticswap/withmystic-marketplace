@@ -97,6 +97,10 @@
   color: white;
 }
 
+.banner_pill_icon {
+  max-width: 15px;
+}
+
 @media screen and (max-width: 1024px) {
   .collection_pill {
     width: 50%;
@@ -120,8 +124,5 @@
 
   .pill_item p {
     font-size: 13px;
-  }
-  .banner_pill_icon {
-    max-width: 15px;
   }
 }

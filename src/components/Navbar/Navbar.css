@@ -131,13 +131,41 @@
 
   .nav_main_contents {
     position: fixed;
-    background-color: rgba(255, 192, 203, 1);
+    background-color: var(--ms-mp-body-background);
     width: 100%;
-    top: 6rem;
+    top: calc(6rem + 1px);
     bottom: 0;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 1;
+    flex-direction: column;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  .nav_links {
+    order: 3;
+  }
+
+  .nav_right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .collection_dropdown_trigger {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .collections_dropdown {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .collections_dropdown_list {
+    width: 100%;
+    position: static;
   }
 }

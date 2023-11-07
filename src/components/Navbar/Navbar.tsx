@@ -78,51 +78,50 @@ const Navbar = () => {
               <RiTwitterXLine size={20} display="block" />
             </a>
           </div>
-        </div>
-        <div className="collections_dropdown">
-          <button
-            className="collection_dropdown_trigger"
-            onClick={() => setShowDropdownOptions(!showDropdownOptions)}
-          >
-            Collections <RiArrowDownSLine size={20} />
-          </button>
+          <div className="collections_dropdown">
+            <button
+              className="collection_dropdown_trigger"
+              onClick={() => setShowDropdownOptions(!showDropdownOptions)}
+            >
+              Collections <RiArrowDownSLine size={20} />
+            </button>
 
-          {showDropdownOptions && (
-            <div className="collections_dropdown_list" ref={dropdownRef}>
-              {availableCollections.map((collection) => {
-                const isSelected =
-                  collection.address == selectedCollection.address;
+            {showDropdownOptions && (
+              <div className="collections_dropdown_list" ref={dropdownRef}>
+                {availableCollections.map((collection) => {
+                  const isSelected =
+                    collection.address == selectedCollection.address;
 
-                return (
-                  <Link key={collection.id} to="/">
-                    <button
-                      onClick={() => {
-                        setSelectedCollection(collection);
-                        setShowDropdownOptions(false);
-                        setCurrentTab(tabOptions[0]);
-                      }}
-                    >
-                      {collection.name}{" "}
-                      {isSelected && <BsCheck size={15} display="block" />}
-                    </button>
-                  </Link>
-                );
-              })}
-            </div>
+                  return (
+                    <Link key={collection.id} to="/">
+                      <button
+                        onClick={() => {
+                          setSelectedCollection(collection);
+                          setShowDropdownOptions(false);
+                          setCurrentTab(tabOptions[0]);
+                        }}
+                      >
+                        {collection.name}{" "}
+                        {isSelected && <BsCheck size={15} display="block" />}
+                      </button>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+          {userHasNfts && (
+            <button
+              className="sell_button"
+              onClick={() => setShowUserNftsModal(true)}
+            >
+              Sell
+            </button>
           )}
         </div>
-
-        {userHasNfts && (
-          <button
-            className="sell_button"
-            onClick={() => setShowUserNftsModal(true)}
-          >
-            Sell
-          </button>
-        )}
       </section>
 
-      <section>
+      <section className="nav_right">
         {!user ? (
           <SolidButton text="Connect Wallet" onClick={connectWallet} />
         ) : (
