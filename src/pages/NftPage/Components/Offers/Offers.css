@@ -28,7 +28,10 @@
   /* justify-content: space-between; */
 }
 
-.offers_table_item > p:last-of-type {
+.offers_table_item > div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   color: var(--ms-mp-primary-color);
   width: fit-content;
   cursor: pointer;
@@ -76,6 +79,22 @@
   }
 
   .offers_table > div {
-    width: 120%;
+    min-width: 115%;
+  }
+
+  .offers_table_head > p,
+  .offers_table_item > p {
+    width: calc(100% / 2);
+  }
+
+  .offers_table_head > p:not(:last-of-type, :first-of-type),
+  .offers_table_item > p:last-of-type {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .offers_table > div {
+    min-width: 130%;
   }
 }

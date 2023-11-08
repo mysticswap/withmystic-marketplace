@@ -7,7 +7,6 @@ import {
 } from "react";
 import { HomeContextType, SelectedTrait } from "./types";
 import { defaultNumericFilters, dropdownOptions } from "../../constants";
-import { useIsMobile } from "../../hooks/useIsMobile";
 import { useGlobalContext } from "../GlobalContext/GlobalContext";
 
 const HomeContext = createContext<HomeContextType | null>(null);
@@ -15,7 +14,6 @@ const HomeContext = createContext<HomeContextType | null>(null);
 type Props = { children: ReactNode };
 
 export const HomeContextProvider = ({ children }: Props) => {
-  const isMobile = useIsMobile();
   const { selectedCollection } = useGlobalContext()!;
   const [showFilters, setShowFilters] = useState(true);
   const [selectedTraits, setSelectedTraits] = useState<SelectedTrait[]>([]);
@@ -24,7 +22,7 @@ export const HomeContextProvider = ({ children }: Props) => {
   );
   const [isFetching, setIsFetching] = useState(false);
   const [numericFilters, setNumericFilters] = useState(defaultNumericFilters);
-  const [showMobileFilters, setShowMobileFilters] = useState(!isMobile);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   useEffect(() => {
     setSelectedTraits([]);

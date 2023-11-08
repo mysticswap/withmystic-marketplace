@@ -107,17 +107,19 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
                   {price} {symbol}
                 </p>
                 {isExpired ? <p>---</p> : <p>{altTimeStamp || timeStamp}</p>}
-                <p onClick={() => redirectToMSWalletPage(order.maker)}>
-                  {truncateAddress(order.maker, 5, "...")}
-                </p>
-                {isOwner && (
-                  <button
-                    className="offer_accept_button"
-                    onClick={() => acceptBid(price, usd)}
-                  >
-                    Accept
-                  </button>
-                )}
+                <div>
+                  <p onClick={() => redirectToMSWalletPage(order.maker)}>
+                    {truncateAddress(order.maker, 5, "...")}
+                  </p>
+                  {isOwner && (
+                    <button
+                      className="offer_accept_button"
+                      onClick={() => acceptBid(price, usd)}
+                    >
+                      Accept
+                    </button>
+                  )}
+                </div>
               </div>
             );
           })}
