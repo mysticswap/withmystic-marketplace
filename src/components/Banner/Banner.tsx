@@ -19,12 +19,12 @@ const Banner = () => {
       value: collectionMetadata?.collections?.[0]?.ownerCount,
     },
     {
-      title: "Total vol.",
+      title: "Volume",
       value: collectionMetadata?.collections?.[0]?.volume?.allTime,
       icon: collectionNetworkIcon[collectionChainId],
     },
     {
-      title: "Floor price",
+      title: "Floor",
       value:
         collectionMetadata?.collections?.[0]?.floorAsk?.price?.amount?.decimal,
       icon: collectionNetworkIcon[collectionChainId],
