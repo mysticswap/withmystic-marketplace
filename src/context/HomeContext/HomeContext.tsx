@@ -22,6 +22,7 @@ export const HomeContextProvider = ({ children }: Props) => {
   );
   const [isFetching, setIsFetching] = useState(false);
   const [numericFilters, setNumericFilters] = useState(defaultNumericFilters);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   useEffect(() => {
     setSelectedTraits([]);
@@ -43,6 +44,8 @@ export const HomeContextProvider = ({ children }: Props) => {
         setIsFetching,
         numericFilters,
         setNumericFilters,
+        showMobileFilters,
+        setShowMobileFilters,
       }}
     >
       {children}

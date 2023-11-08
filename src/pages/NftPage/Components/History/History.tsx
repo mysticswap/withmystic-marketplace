@@ -44,6 +44,7 @@ const History = ({ nftActivity, token, setNftActivity }: Props) => {
   return (
     <div className="history">
       <div className="history_table">
+        <p className="alt_history_title">History</p>
         <div className="history_table_head">
           <p>History</p>
           <p>Price</p>

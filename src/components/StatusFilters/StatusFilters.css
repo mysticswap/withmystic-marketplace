@@ -47,6 +47,13 @@
 .status_down_arrow {
   transition: var(--ms-mp-smooth-transform-transition);
 }
+
 .status_down_arrow[aria-expanded="true"] {
   transform: rotateZ(180deg);
+}
+
+@media screen and (max-width: 600px) {
+  .status_container {
+    padding: 0.75rem 0 0.75rem 0;
+  }
 }

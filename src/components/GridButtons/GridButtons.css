@@ -28,3 +28,15 @@
 .grid_buttons button:hover {
   background-color: var(--ms-mp-controlbar-hover);
 }
+
+@media screen and (max-width: 820px) {
+  .grid_buttons {
+    width: 15%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .grid_buttons {
+    display: none;
+  }
+}

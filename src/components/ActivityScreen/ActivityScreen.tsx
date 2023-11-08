@@ -6,6 +6,8 @@ import SolidButton from "../SolidButton/SolidButton";
 import { BiLoaderCircle } from "react-icons/bi";
 import { getCollectionActivity } from "../../services/api/marketplace-reservoir-api";
 import FiltersSidebar from "../FiltersSidebar/FiltersSidebar";
+import { useIsMobile } from "../../hooks/useIsMobile";
+import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import { v4 as uuid } from "uuid";
 
 const ActivityScreen = () => {
@@ -16,9 +18,11 @@ const ActivityScreen = () => {
     selectedActivities,
     collectionChainId,
   } = useGlobalContext()!;
+  const { setShowMobileFilters } = useHomeContext()!;
   const [activities, setActivities] = useState(collectionActivity?.activities);
   const [canFetch, setCanFetch] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     setActivities(collectionActivity?.activities);
@@ -67,6 +71,14 @@ const ActivityScreen = () => {
           <SolidButton text="Show more" onClick={loadMoreHistory} />
         )}
         {isFetching && <BiLoaderCircle className="loader" size={50} />}
+        {isMobile && (
+          <button
+            className="mobile_activity_filter_button"
+            onClick={() => setShowMobileFilters(true)}
+          >
+            Activity Filters
+          </button>
+        )}
       </div>
     </div>
   );

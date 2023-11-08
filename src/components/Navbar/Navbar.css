@@ -17,6 +17,12 @@
   gap: 1.5rem;
 }
 
+.nav_main_contents {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
 .logo_holder {
   max-width: 150px;
 }
@@ -106,4 +112,76 @@
 
 .sell_button:hover {
   opacity: 0.5;
+}
+
+@media screen and (max-width: 600px) {
+  .logo_holder {
+    max-width: 100px;
+  }
+
+  .burger_btn {
+    cursor: pointer;
+  }
+
+  .nav_main_contents {
+    position: fixed;
+    background-color: var(--ms-mp-body-background);
+    width: 100%;
+    top: calc(6rem + 1px);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    flex-direction: column;
+    padding: 1rem;
+    box-sizing: border-box;
+    transform: translateX(100%);
+    transition: var(--ms-mp-transition);
+  }
+
+  .show_nav_main_contents {
+    transform: translateX(0%);
+  }
+
+  .nav_links {
+    order: 3;
+  }
+
+  .nav_right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .collection_dropdown_trigger {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .collections_dropdown {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .collections_dropdown_list {
+    width: 100%;
+    box-sizing: border-box;
+    position: static;
+    margin-top: 1rem;
+    box-shadow: none;
+    border-color: var(--ms-mp-gray);
+  }
+
+  .sell_button {
+    margin-right: auto;
+  }
+
+  .collections_dropdown_list button {
+    font-size: 1rem;
+  }
+
+  svg.collection_dropdown_trigger {
+    width: auto;
+  }
 }

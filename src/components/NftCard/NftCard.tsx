@@ -114,7 +114,7 @@ const NftCard = ({ nft }: Props) => {
           </p>
         </Link>
 
-        <p className="nft_card_last_sale">
+        <p className="nft_card_last_sale ellipsis">
           Last sale: {lastSale}
           {symbol} {!lastSale && !symbol && "---"}
         </p>

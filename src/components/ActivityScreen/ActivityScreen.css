@@ -48,3 +48,44 @@
 .activities_loading {
   text-align: center;
 }
+
+@media screen and (max-width: 1024px) {
+  .activity_screen {
+    width: calc(100% - 320px);
+    overflow-x: auto;
+  }
+
+  .sales_table_head {
+    width: 100vw;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .activity_screen {
+    width: 100%;
+    border-left: none;
+  }
+
+  .sales_table_head {
+    width: 230%;
+  }
+
+  .mobile_activity_filter_button {
+    position: fixed;
+    bottom: 2rem;
+    left: 1rem;
+    background-color: var(--ms-mp-primary-color);
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--ms-mp-transition);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .mobile_activity_filter_button:active {
+    transform: scale(0.95);
+  }
+}

@@ -35,3 +35,10 @@
   font-weight: 400;
   color: var(--ms-mp-gray-text);
 }
+
+@media screen and (max-width: 600px) {
+  .modal_nft {
+    flex-direction: column;
+    align-items: normal;
+  }
+}

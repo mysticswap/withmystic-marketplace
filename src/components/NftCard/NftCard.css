@@ -97,3 +97,13 @@
 .source_icon img {
   width: 100%;
 }
+
+@media (max-width: 600px) {
+  .nft_card_details p.nft_card_last_sale {
+    margin-bottom: 1rem;
+  }
+
+  .nft_card_details button {
+    height: 30%;
+  }
+}

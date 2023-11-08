@@ -4,14 +4,27 @@ import NumericFilters from "../NumericFilters/NumericFilters";
 import TraitFilter from "../TraitFilter/TraitFilter";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import ActivityFilters from "../ActivityFilters/ActivityFilters";
+import { useHomeContext } from "../../context/HomeContext/HomeContext";
+import { IoClose } from "react-icons/io5";
 
 type Props = { isForTraits: boolean };
 
 const FiltersSidebar = ({ isForTraits }: Props) => {
   const { collectionAttributes } = useGlobalContext()!;
+  const { showMobileFilters, setShowMobileFilters } = useHomeContext()!;
 
   return (
-    <div className="filters_sidebar">
+    <div
+      className={`filters_sidebar ${showMobileFilters ? "show_sidebar" : ""}`}
+    >
+      <div className="filters_header">
+        <p>Filters</p>
+        <IoClose
+          display="block"
+          size={25}
+          onClick={() => setShowMobileFilters(!showMobileFilters)}
+        />
+      </div>
       {isForTraits ? (
         <>
           <StatusFilters />

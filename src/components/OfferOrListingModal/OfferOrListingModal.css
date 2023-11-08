@@ -130,3 +130,9 @@
 .listing_or_offer_modal_bottom > .input_area.balance_warning {
   border-color: red;
 }
+
+@media screen and (max-width: 600px) {
+  .duration_container {
+    width: 70%;
+  }
+}

@@ -2,12 +2,8 @@
   padding: 0.75rem;
   display: grid;
   gap: 1rem;
-  /* min-height: calc(100vh - 48px - 48px); */
   max-height: calc(100vh - 48px - 48px);
   overflow-y: auto;
-  /* border-left: var(--ms-mp-gray-border); */
-  /* grid-template-rows: minmax(auto, 282.2px); */
-  /* position: relative; */
 }
 
 .cards_holder::-webkit-scrollbar {
@@ -42,7 +38,7 @@
 .clear_filters {
   background-color: none;
   border: none;
-  background-color: var(--ms-mp-gray);
+  background-color: var(--ms-mp-controlbar-hover);
   padding: 0.25rem 0.5rem;
   border-radius: 6px;
   font-size: 1rem;
@@ -70,4 +66,24 @@
   text-align: center;
   grid-column: 1 / -1;
   font-size: 25px;
+}
+
+@media screen and (max-width: 1024px) {
+  .small_cards_holder {
+    width: calc(100% - 320px);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .small_cards_holder {
+    width: 100%;
+  }
+
+  .small_cards_holder_minmax_v1 {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .small_cards_holder_minmax_v2 {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
 }

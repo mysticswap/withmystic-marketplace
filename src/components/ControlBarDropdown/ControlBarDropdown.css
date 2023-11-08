@@ -53,3 +53,26 @@
 .control_dropdown_list button:hover {
   background-color: var(--ms-mp-gray-light);
 }
+
+@media screen and (max-width: 1024px) {
+  .control_dropdown_parent {
+    width: 20%;
+  }
+}
+
+@media screen and (max-width: 820px) {
+  .control_dropdown_parent {
+    width: 25%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .control_dropdown_parent {
+    width: 100%;
+  }
+
+  .control_dropdown_trigger,
+  .control_dropdown_list button {
+    font-size: 14px;
+  }
+}

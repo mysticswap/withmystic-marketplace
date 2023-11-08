@@ -29,3 +29,17 @@
   right: 0;
   font-size: 12px;
 }
+
+@media screen and (max-width: 820px) {
+  .filter_button {
+    width: 15%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .filter_button {
+    width: 100%;
+    padding: calc(0.75rem - 3px);
+    font-size: 14px;
+  }
+}

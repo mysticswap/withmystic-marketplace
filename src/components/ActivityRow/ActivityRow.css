@@ -65,3 +65,19 @@
 .activity_row_type img {
   max-width: 18px;
 }
+
+@media screen and (max-width: 1024px) {
+  .activity_row {
+    width: 100vw;
+  }
+
+  .activity_row {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .activity_row {
+    width: 230%;
+  }
+}

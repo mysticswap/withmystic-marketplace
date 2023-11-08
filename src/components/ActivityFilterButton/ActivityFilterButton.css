@@ -22,3 +22,10 @@
   align-items: center;
   gap: 0.5rem;
 }
+
+@media screen and (max-width: 600px) {
+  .activity_filter_button {
+    padding: 1.5rem 0;
+    font-size: 1rem;
+  }
+}
