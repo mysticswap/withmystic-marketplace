@@ -86,7 +86,12 @@ footer {
 
   .footer_links_holder {
     flex-direction: column;
-    align-items: normal;
+    align-items: center;
+    margin-top: 1rem;
+  }
+
+  .footer_links_holder > p {
+    margin: 0;
   }
 
   footer > section:first-of-type {
@@ -94,6 +99,6 @@ footer {
   }
 
   .socials {
-    margin-left: auto;
+    margin: auto;
   }
 }

@@ -96,7 +96,11 @@ const Navbar = () => {
               className="collection_dropdown_trigger"
               onClick={() => setShowDropdownOptions(!showDropdownOptions)}
             >
-              Collections <RiArrowDownSLine size={20} />
+              Collections{" "}
+              <RiArrowDownSLine
+                size={20}
+                className="collection_dropdown_trigger"
+              />
             </button>
 
             {showDropdownOptions && (
@@ -110,9 +114,7 @@ const Navbar = () => {
                       <button
                         onClick={() => {
                           setSelectedCollection(collection);
-                          setShowDropdownOptions(false);
                           setCurrentTab(tabOptions[0]);
-                          setShowMobileMenu(false);
                         }}
                       >
                         {collection.name}{" "}

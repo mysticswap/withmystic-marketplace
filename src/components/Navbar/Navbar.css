@@ -180,4 +180,8 @@
   .collections_dropdown_list button {
     font-size: 1rem;
   }
+
+  svg.collection_dropdown_trigger {
+    width: auto;
+  }
 }
