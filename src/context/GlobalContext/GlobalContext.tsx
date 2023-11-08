@@ -31,7 +31,7 @@ import { getHostName, getPreviousCollectionAddress } from "../../utils";
 import { getEthPrice } from "../../services/api/coin-gecko.api";
 import { ClientObject } from "../../types/dynamic-system.types";
 
-const GlobalContext = createContext<GlobalContextType | null>(null);
+const GlobalContext = createContext({} as GlobalContextType);
 
 type Props = {
   children: ReactNode;

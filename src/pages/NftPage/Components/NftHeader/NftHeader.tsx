@@ -42,7 +42,7 @@ const NftHeader = ({
   const { user, setProvider } = useConnectionContext()!;
   const { setTransactionNft, setTransactionStage, setTransactionHash } =
     useTransactionContext()!;
-  const { source, collectionChainId } = useGlobalContext()!;
+  const { source, collectionChainId } = useGlobalContext();
   const {
     token,
     setNftDataV2,

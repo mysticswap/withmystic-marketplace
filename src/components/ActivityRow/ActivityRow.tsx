@@ -16,7 +16,7 @@ dayjs.extend(relativeTime);
 type Props = { activity: Activity };
 
 const ActivityRow = ({ activity }: Props) => {
-  const { collectionChainId, setCurrentTab } = useGlobalContext()!;
+  const { collectionChainId, setCurrentTab } = useGlobalContext();
 
   const nftImage = activity?.token?.tokenImage;
   const nftName = activity?.token?.tokenName;

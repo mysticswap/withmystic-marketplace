@@ -21,7 +21,7 @@ type Props = {
 };
 
 const History = ({ nftActivity, token, setNftActivity }: Props) => {
-  const { collectionChainId } = useGlobalContext()!;
+  const { collectionChainId } = useGlobalContext();
   const [isFetching, setIsFetching] = useState(false);
   const fetchMoreActivity = () => {
     setIsFetching(true);

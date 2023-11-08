@@ -11,7 +11,7 @@ import { dropdownOptions } from "../../constants";
 
 const ControlBarDropdown = () => {
   const { setCollectionNfts, collectionChainId, collectionContract } =
-    useGlobalContext()!;
+    useGlobalContext();
   const {
     selectedDropdownOption,
     setSelectedDropdownOption,

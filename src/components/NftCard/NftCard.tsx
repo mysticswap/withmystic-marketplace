@@ -20,8 +20,13 @@ import { balanceChain } from "../../constants";
 type Props = { nft: TokenElement };
 
 const NftCard = ({ nft }: Props) => {
-  const { minimalCards, collectionChainId, collectionContract, userBalance } =
-    useGlobalContext()!;
+  const {
+    minimalCards,
+    collectionChainId,
+    collectionContract,
+    userBalance,
+    client,
+  } = useGlobalContext();
   const { user, chainId, setProvider } = useConnectionContext()!;
   const {
     setShowConfirmationModal,
@@ -41,6 +46,9 @@ const NftCard = ({ nft }: Props) => {
   const nftId = nft?.token?.tokenId;
   const sourceIcon = nft?.market?.floorAsk?.source?.icon;
   const sourceLink = nft?.market?.floorAsk?.source?.url;
+  const sourceDomain = nft?.market?.floorAsk?.source?.domain;
+
+  const isFromCurrentMarketplace = sourceDomain == client.hostname;
 
   const nameLink = (
     <Link to={`/${collectionContract}/${nftId}`}>
@@ -134,7 +142,13 @@ const NftCard = ({ nft }: Props) => {
         <a href={sourceLink}>
           {!sourceLink?.includes("opensea") ? (
             <img
-              src={sourceLink?.includes("x2y2") ? x2y2 : sourceIcon}
+              src={
+                sourceLink?.includes("x2y2")
+                  ? x2y2
+                  : isFromCurrentMarketplace
+                  ? client.favicon
+                  : sourceIcon
+              }
               alt=""
             />
           ) : (

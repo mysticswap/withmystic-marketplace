@@ -14,7 +14,7 @@ const HomeContext = createContext<HomeContextType | null>(null);
 type Props = { children: ReactNode };
 
 export const HomeContextProvider = ({ children }: Props) => {
-  const { selectedCollection } = useGlobalContext()!;
+  const { selectedCollection } = useGlobalContext();
   const [showFilters, setShowFilters] = useState(true);
   const [selectedTraits, setSelectedTraits] = useState<SelectedTrait[]>([]);
   const [selectedDropdownOption, setSelectedDropdownOption] = useState(

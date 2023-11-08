@@ -35,7 +35,7 @@ const NftPage = () => {
     showConfirmationModal,
     setShowConfirmationModal,
   } = useTransactionContext()!;
-  const { collectionContract } = useGlobalContext()!;
+  const { collectionContract } = useGlobalContext();
 
   const contractAddress = collectionContract;
 

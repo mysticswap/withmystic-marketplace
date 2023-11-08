@@ -14,7 +14,7 @@ type Props = {
 const UserNftsModal = ({ setShowUserNftsModal }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const { userNfts, setUserNfts, collectionChainId, collectionContract } =
-    useGlobalContext()!;
+    useGlobalContext();
   const { user } = useConnectionContext()!;
 
   const fetchMore = () => {

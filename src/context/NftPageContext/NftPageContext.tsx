@@ -27,7 +27,7 @@ type Props = {
 export const NftPageContextProvider = ({ children }: Props) => {
   const { id, contract } = useParams();
   const { collectionMetadata, setSelectedCollection, availableCollections } =
-    useGlobalContext()!;
+    useGlobalContext();
 
   const [nftDataV2, setNftDataV2] = useState({} as GetNftsReservoir);
   const [nftOffers, setNftOffers] = useState({} as NftOffers);

@@ -3,7 +3,7 @@ import "./GridButtons.css";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
 const GridButtons = () => {
-  const { setMinimalCards, minimalCards } = useGlobalContext()!;
+  const { setMinimalCards, minimalCards } = useGlobalContext();
   return (
     <div className="grid_buttons">
       <button

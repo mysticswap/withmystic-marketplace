@@ -10,7 +10,7 @@ import { useTransactionContext } from "../../context/TransactionContext/Transact
 import ConfirmPurchaseModal from "../../components/ConfirmPurchaseModal/ConfirmPurchaseModal";
 
 const Home = () => {
-  const { currentTab } = useGlobalContext()!;
+  const { currentTab } = useGlobalContext();
   const {
     showOfferOrListingModal,
     setShowOfferOrListingModal,

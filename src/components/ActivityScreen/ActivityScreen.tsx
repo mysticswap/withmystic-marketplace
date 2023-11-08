@@ -17,7 +17,7 @@ const ActivityScreen = () => {
     setCollectionActivity,
     selectedActivities,
     collectionChainId,
-  } = useGlobalContext()!;
+  } = useGlobalContext();
   const { setShowMobileFilters } = useHomeContext()!;
   const [activities, setActivities] = useState(collectionActivity?.activities);
   const [canFetch, setCanFetch] = useState(true);

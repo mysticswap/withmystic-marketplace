@@ -9,7 +9,7 @@ type Props = {
 };
 
 const Details = ({ nftInfo }: Props) => {
-  const { collectionMetadata, collectionChainId } = useGlobalContext()!;
+  const { collectionMetadata, collectionChainId } = useGlobalContext();
   const Royalties =
     collectionMetadata?.collections?.[0]?.allRoyalties?.opensea?.[0]?.bps;
   const details = [

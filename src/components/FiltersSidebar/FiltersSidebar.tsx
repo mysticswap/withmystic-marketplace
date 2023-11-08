@@ -10,7 +10,7 @@ import { IoClose } from "react-icons/io5";
 type Props = { isForTraits: boolean };
 
 const FiltersSidebar = ({ isForTraits }: Props) => {
-  const { collectionAttributes } = useGlobalContext()!;
+  const { collectionAttributes } = useGlobalContext();
   const { showMobileFilters, setShowMobileFilters } = useHomeContext()!;
 
   return (

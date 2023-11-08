@@ -30,7 +30,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     collectionChainId,
     collectionContract,
     ethValue,
-  } = useGlobalContext()!;
+  } = useGlobalContext();
   const {
     transactionNft,
     transactionStage,

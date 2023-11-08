@@ -9,7 +9,7 @@ import { generateAttributeString, getHostName } from "../../utils";
 
 const StatusFilters = () => {
   const { setCollectionNfts, collectionChainId, collectionContract } =
-    useGlobalContext()!;
+    useGlobalContext();
   const {
     numericFilters,
     setNumericFilters,

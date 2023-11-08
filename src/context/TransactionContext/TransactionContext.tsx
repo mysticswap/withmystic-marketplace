@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const TransactionContextProvider = ({ children }: Props) => {
-  const { userBalance } = useGlobalContext()!;
+  const { userBalance } = useGlobalContext();
 
   const [showOfferOrListingModal, setShowOfferOrListingModal] = useState(false);
   const [transactionNft, setTransactionNft] = useState(defaultOfferOrList);

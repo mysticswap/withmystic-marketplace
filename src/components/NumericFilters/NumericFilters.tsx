@@ -14,7 +14,7 @@ type Props = {
 
 const NumericFilters = ({ title, isRarity }: Props) => {
   const { setCollectionNfts, collectionChainId, collectionContract } =
-    useGlobalContext()!;
+    useGlobalContext();
   const {
     numericFilters,
     setNumericFilters,

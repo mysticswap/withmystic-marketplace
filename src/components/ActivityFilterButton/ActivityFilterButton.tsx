@@ -13,7 +13,7 @@ type Props = {
 };
 
 const ActivityFilterButton = ({ activity }: Props) => {
-  const { selectedActivities, setSelectedActivities } = useGlobalContext()!;
+  const { selectedActivities, setSelectedActivities } = useGlobalContext();
 
   const isSelectedActivity = selectedActivities.some((item) => {
     return item == activity.type;

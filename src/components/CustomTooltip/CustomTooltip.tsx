@@ -7,7 +7,7 @@ type Props = {
 };
 
 const CustomTooltip = ({ text, children }: Props) => {
-  const { client } = useGlobalContext()!;
+  const { client } = useGlobalContext();
   const theme = createTheme({
     components: {
       MuiTooltip: {

@@ -25,7 +25,7 @@ type Props = {
 
 const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
   const { user, chainId } = useConnectionContext()!;
-  const { collectionChainId, collectionContract } = useGlobalContext()!;
+  const { collectionChainId, collectionContract } = useGlobalContext();
   const { nftInfo } = useNftPageContext()!;
   const {
     setTransactionStage,

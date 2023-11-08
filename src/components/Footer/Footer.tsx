@@ -4,7 +4,7 @@ import { RiDiscordFill, RiTwitterXLine } from "react-icons/ri";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
 const Footer = () => {
-  const { collectionMetadata } = useGlobalContext()!;
+  const { collectionMetadata } = useGlobalContext();
 
   const discordUrl = collectionMetadata?.collections?.[0]?.discordUrl;
   const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;

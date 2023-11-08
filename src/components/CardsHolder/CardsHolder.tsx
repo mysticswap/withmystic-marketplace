@@ -15,7 +15,7 @@ const CardsHolder = () => {
     minimalCards,
     collectionChainId,
     collectionContract,
-  } = useGlobalContext()!;
+  } = useGlobalContext();
   const {
     showFilters,
     selectedTraits,

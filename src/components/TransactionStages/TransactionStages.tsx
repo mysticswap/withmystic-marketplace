@@ -14,7 +14,7 @@ type Props = {
 
 const TransactionStages = ({ stage }: Props) => {
   const { transactionHash, transactionNft } = useTransactionContext()!;
-  const { collectionChainId } = useGlobalContext()!;
+  const { collectionChainId } = useGlobalContext();
 
   return (
     <div className="process_component">

@@ -8,7 +8,7 @@ import { useState } from "react";
 
 const ControlBarSearchInput = () => {
   const { setCollectionNfts, collectionMetadata, collectionChainId } =
-    useGlobalContext()!;
+    useGlobalContext();
   const { selectedTraits, setIsFetching, selectedDropdownOption } =
     useHomeContext()!;
   const [inputText, setInputText] = useState("");

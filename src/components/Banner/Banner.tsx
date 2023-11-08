@@ -10,7 +10,7 @@ const Banner = () => {
     setCurrentTab,
     collectionChainId,
     client,
-  } = useGlobalContext()!;
+  } = useGlobalContext();
 
   const pillData = [
     { title: "Items", value: collectionMetadata?.collections?.[0]?.tokenCount },

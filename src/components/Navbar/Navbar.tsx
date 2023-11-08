@@ -31,7 +31,7 @@ const Navbar = () => {
     setSelectedCollection,
     setCurrentTab,
     client,
-  } = useGlobalContext()!;
+  } = useGlobalContext();
   const { setShowOfferOrListingModal } = useTransactionContext()!;
   const location = useLocation();
   const isMobile = useIsMobile();
