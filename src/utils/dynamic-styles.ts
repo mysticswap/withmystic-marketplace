@@ -39,3 +39,10 @@ export const addLinks = (client: ClientObject) => {
     document.head.innerHTML += links;
   }
 };
+
+export const updateMetadata = (client: ClientObject) => {
+  const tags = ` <meta property="og:title" content="${client.htmlTitle}" />
+                  <meta property="og:description" content="${client.htmlTitle}" />
+                  <meta property="og:image" content="${client.logoUrl}" />`;
+  document.head.innerHTML += tags;
+};
