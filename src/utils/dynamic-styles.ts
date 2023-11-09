@@ -41,13 +41,13 @@ export const addLinks = (client: ClientObject) => {
 };
 
 export const updateMetadata = (client: ClientObject) => {
-  const tags = ` <meta property="og:title" content="${client.htmlTitle}" />
-                  <meta property="og:description" content="${client.htmlTitle}" />
-                  <meta property="og:image" content="${client.logoUrl}" />
-                  <meta property="og:url" content="https://${client.hostname}" />
+  const tags = ` <meta property="og:title" content="${client?.htmlTitle}" />
+                  <meta property="og:description" content="${client?.htmlTitle}" />
+                  <meta property="og:image" content="${client?.logoUrl}" />
+                  <meta property="og:url" content="https://${client?.hostname}" />
                   <meta name="twitter:card" content="summary_large_image" />
-                  <meta name="twitter:title" content="${client.htmlTitle}" />
-                  <meta name="twitter:description" content="${client.htmlTitle}" />
-                  <meta name="twitter:image" content="${client.logoUrl}" />`;
+                  <meta name="twitter:title" content="${client?.htmlTitle}" />
+                  <meta name="twitter:description" content="${client?.htmlTitle}" />
+                  <meta name="twitter:image" content="${client?.logoUrl}" />`;
   document.head.innerHTML += tags;
 };
