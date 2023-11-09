@@ -76,7 +76,7 @@ export const getHostName = () => {
     case "localhost":
       return "market.localhost.io";
       return "marketplace.mysticswap.io";
-    // return "market.roo.io";
+      return "market.roo.io";
     case "deploy-preview-7--heroic-duckanoo-b32f52.netlify.app":
       return "marketplace.mysticswap.io";
       return "market.localhost.io";
