@@ -4,7 +4,7 @@ import { RiDiscordFill, RiTwitterXLine } from "react-icons/ri";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
 const Footer = () => {
-  const { collectionMetadata } = useGlobalContext();
+  const { collectionMetadata, client } = useGlobalContext();
 
   const discordUrl = collectionMetadata?.collections?.[0]?.discordUrl;
   const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
@@ -12,7 +12,10 @@ const Footer = () => {
   return (
     <footer>
       <section>
-        <p> © {new Date().getFullYear()} Mystical Wizard Guild</p>
+        <p>
+          {" "}
+          © {new Date().getFullYear()} {client.collections[0].name}
+        </p>
       </section>
       <section className="footer_links_holder">
         <a href="https://www.withmystic.xyz/privacy-policy" target="_blank">
