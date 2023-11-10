@@ -1,5 +1,6 @@
 import { NumericFiltersType } from "../../context/HomeContext/types";
 import { Post } from "../../types/reservoir-types/listing-data.types";
+import { Post as AuthPost } from "../../types/reservoir-types/buy-data.types";
 import { marketplaceInstance } from "../axios";
 
 export const getCollectionMetadata = async (
@@ -114,4 +115,17 @@ export const submitListOrBid = async (chainId: number, data: Post) => {
   });
   const response = request.data;
   return response;
+};
+
+export const authSignature = async (
+  chainId: number,
+  signature: string,
+  data: AuthPost
+) => {
+  const request = await marketplaceInstance.post("/auth-signature", {
+    chainId,
+    signature,
+    data,
+  });
+  return request.data;
 };

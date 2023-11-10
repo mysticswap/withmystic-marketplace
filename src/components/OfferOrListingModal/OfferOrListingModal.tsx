@@ -222,7 +222,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
               <SolidButton
                 className="list_or_bid_submit_btn"
                 text={
-                  isOverBalance ? "Insufficient Funds" : transactionButtonText
+                  isOverBalance ? "Insufficient Balance" : transactionButtonText
                 }
                 onClick={createBidOrList}
                 disabled={transactionButtonIsDisable}
