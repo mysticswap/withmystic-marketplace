@@ -53,4 +53,20 @@ export interface Data {
   to: string;
   data: string;
   value: string;
+  post?: Post;
+  sign?: Sign;
 }
+
+export type Post = {
+  endpoint: string;
+  method: string;
+  body: {
+    id: string;
+    kind: string;
+  };
+};
+
+export type Sign = {
+  message: string;
+  signatureKind: string;
+};

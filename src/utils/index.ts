@@ -77,7 +77,7 @@ export const getHostName = () => {
       return "market.localhost.io";
       return "marketplace.mysticswap.io";
       return "market.roo.io";
-    case "deploy-preview-7--heroic-duckanoo-b32f52.netlify.app":
+    case "deploy-preview-10--heroic-duckanoo-b32f52.netlify.app":
       return "marketplace.mysticswap.io";
       return "market.localhost.io";
     default:
@@ -103,14 +103,12 @@ export const addOpacity = (color: string, opacity: number) => {
 };
 
 export const updateFavicon = (url: string) => {
-  let link = document.querySelector("link[rel~='icon']");
+  let link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
   if (!link) {
     link = document.createElement("link");
-    //@ts-ignore
     link.rel = "icon";
     document.getElementsByTagName("head")[0].appendChild(link);
   }
-  //@ts-ignore
   link.href = url;
 };
 

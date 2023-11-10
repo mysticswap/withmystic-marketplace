@@ -25,6 +25,7 @@ import { LuRefreshCw } from "react-icons/lu";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { reservoirActivityTypes } from "../../../../constants";
 import { Link } from "react-router-dom";
+import { switchChains } from "../../../../utils/wallet-connection";
 
 type Props = {
   nftInfo: TokenToken;
@@ -39,10 +40,10 @@ const NftHeader = ({
   nftInfo,
   nftPriceData,
 }: Props) => {
-  const { user, setProvider } = useConnectionContext()!;
+  const { user, setProvider, chainId } = useConnectionContext()!;
   const { setTransactionNft, setTransactionStage, setTransactionHash } =
     useTransactionContext()!;
-  const { source, collectionChainId } = useGlobalContext();
+  const { source, collectionChainId, userBalance } = useGlobalContext();
   const {
     token,
     setNftDataV2,
@@ -58,6 +59,8 @@ const NftHeader = ({
   const nftName = nftInfo?.name;
   const owner = nftInfo?.owner;
   const orderId = nftPriceData?.floorAsk?.id;
+  const currentEthAmount = nftPriceData?.floorAsk?.price?.amount?.native;
+  const currentUsdValue = nftPriceData?.floorAsk?.price?.amount?.usd;
   const userIsOwner = user?.toLowerCase() == owner?.toLowerCase();
 
   const transactionNft: TransactionNft = {
@@ -81,19 +84,28 @@ const NftHeader = ({
   };
 
   const buyOrList = () => {
-    setTransactionNft(transactionNft);
+    setTransactionNft({
+      ...transactionNft,
+      amount: currentEthAmount,
+      price: currentUsdValue,
+    });
     !userIsOwner
       ? triggerModal(setShowConfirmationModal)
       : triggerModal(setShowOfferOrListingModal);
 
     !userIsOwner &&
-      buyListedNft(collectionChainId, orderId, user!, source).then((result) => {
-        setTransactionStage(1);
-        handleBuyOrSellData(
-          result,
-          setTransactionStage,
-          setTransactionHash,
-          setShowOfferOrListingModal
+      switchChains(chainId, collectionChainId).then(() => {
+        buyListedNft(collectionChainId, orderId, user!, source).then(
+          (result) => {
+            setTransactionStage(1);
+            handleBuyOrSellData(
+              result,
+              setTransactionStage,
+              setTransactionHash,
+              setShowConfirmationModal,
+              collectionChainId
+            );
+          }
         );
       });
   };
@@ -129,6 +141,8 @@ const NftHeader = ({
     }
   }, [hasRefreshed]);
 
+  const userCanBuy = Number(userBalance.ETH) >= currentEthAmount;
+
   return (
     <div className="nft_header">
       <Link to="/">
@@ -156,8 +170,15 @@ const NftHeader = ({
       <div className="nft_header_button_holder">
         {(orderId || userIsOwner) && (
           <SolidButton
-            text={!userIsOwner ? "Buy Now" : "List for Sale"}
+            text={
+              !userIsOwner
+                ? userCanBuy
+                  ? "Buy Now"
+                  : "Insufficient funds"
+                : "List for Sale"
+            }
             onClick={buyOrList}
+            disabled={!userCanBuy && !userIsOwner}
           />
         )}
         {!userIsOwner && (
