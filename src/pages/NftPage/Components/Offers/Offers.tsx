@@ -74,7 +74,8 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
           result,
           setTransactionStage,
           setTransactionHash,
-          setShowConfirmationModal
+          setShowConfirmationModal,
+          collectionChainId
         );
       });
     });

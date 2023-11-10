@@ -67,7 +67,8 @@ const NftCard = ({ nft }: Props) => {
           result,
           setTransactionStage,
           setTransactionHash,
-          setShowConfirmationModal
+          setShowConfirmationModal,
+          collectionChainId
         );
       });
     });
