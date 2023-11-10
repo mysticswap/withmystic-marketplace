@@ -174,7 +174,7 @@ const NftHeader = ({
               !userIsOwner
                 ? userCanBuy
                   ? "Buy Now"
-                  : "Insufficient funds"
+                  : "Insufficient Balance"
                 : "List for Sale"
             }
             onClick={buyOrList}
