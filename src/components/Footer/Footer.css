@@ -25,6 +25,16 @@ footer {
   gap: 0.5rem;
 }
 
+.footer_links_holder > div > span {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.footer_links_holder > div > span > img {
+  width: 35px;
+}
+
 .footer_links_holder > a {
   transition: var(--ms-mp-transition);
   cursor: pointer;
