@@ -16,6 +16,7 @@ import { TransactionNft } from "../../context/TransactionContext/types";
 import { switchChains } from "../../utils/wallet-connection";
 import { connectWallets } from "../../services/web3Onboard";
 import { balanceChain } from "../../constants";
+import { getDiscordEndpointData } from "../../utils/discord-utils";
 
 type Props = { nft: TokenElement };
 
@@ -56,6 +57,8 @@ const NftCard = ({ nft }: Props) => {
     </Link>
   );
 
+  const postData = getDiscordEndpointData(nft, user!, client);
+
   const startBuyProcess = () => {
     const orderId = nft?.market?.floorAsk?.id;
     const source = getHostName();
@@ -68,7 +71,8 @@ const NftCard = ({ nft }: Props) => {
           setTransactionStage,
           setTransactionHash,
           setShowConfirmationModal,
-          collectionChainId
+          collectionChainId,
+          postData
         );
       });
     });
@@ -128,7 +132,7 @@ const NftCard = ({ nft }: Props) => {
           {symbol} {!lastSale && !symbol && "---"}
         </p>
 
-        {currentEthAmount && currentValue && !userIsOwner && (
+        {currentEthAmount && currentValue && !userIsOwner ? (
           <button onClick={buyNft} disabled={(user && !userCanBuy) as boolean}>
             {userCanBuy
               ? "Buy now"
@@ -136,7 +140,7 @@ const NftCard = ({ nft }: Props) => {
               ? "Buy now"
               : "Insufficient balance"}
           </button>
-        )}
+        ) : null}
       </div>
 
       <div className="source_icon">
