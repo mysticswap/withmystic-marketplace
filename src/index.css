@@ -1,5 +1,5 @@
 :root {
-  --ms-mp-poppins: "Poppins", sans-serif;
+  --ms-mp-font-family: "Poppins", sans-serif;
   --ms-mp-primary-color: #086abc;
   --ms-mp-primary-color-dark: #346beb;
   --ms-mp-primary-transparent: #086abc50;
@@ -40,7 +40,7 @@
 }
 
 * {
-  font-family: var(--ms-mp-poppins);
+  font-family: var(--ms-mp-font-family);
   scroll-behavior: smooth;
 }
 
