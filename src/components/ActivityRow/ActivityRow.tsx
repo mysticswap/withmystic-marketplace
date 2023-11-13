@@ -16,7 +16,7 @@ dayjs.extend(relativeTime);
 type Props = { activity: Activity };
 
 const ActivityRow = ({ activity }: Props) => {
-  const { collectionChainId, setCurrentTab } = useGlobalContext();
+  const { collectionChainId, setCurrentTab, client } = useGlobalContext();
 
   const nftImage = activity?.token?.tokenImage;
   const nftName = activity?.token?.tokenName;
@@ -28,17 +28,28 @@ const ActivityRow = ({ activity }: Props) => {
   const activityType = activity.type;
   const hasTxHash = activity.hasOwnProperty("txHash");
   const source = activity?.order?.source?.icon;
+  const sourceDomain = activity?.order?.source?.domain;
   const tokenId = activity?.token?.tokenId;
   const contract = activity?.collection?.collectionId;
   const singlePageLink = `/${contract}/${tokenId}`;
   const switchTab = () => !tokenId && setCurrentTab(tabOptions[0]);
+  const isFromCurrentMarketplace = sourceDomain == client.hostname;
 
   return (
     <div className="activity_row">
       <>
         <div className="activity_row_type">
           {!source?.includes("opensea") ? (
-            <img src={source?.includes("x2y2") ? x2y2 : source} alt="" />
+            <img
+              src={
+                source?.includes("x2y2")
+                  ? x2y2
+                  : isFromCurrentMarketplace
+                  ? client.favicon
+                  : source
+              }
+              alt=""
+            />
           ) : (
             <SiOpensea display="block" color="#3498db" size={20} />
           )}

@@ -16,6 +16,8 @@ import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContex
 import { useTransactionContext } from "../../../../context/TransactionContext/TransactionContext";
 import { switchChains } from "../../../../utils/wallet-connection";
 import { TransactionNft } from "../../../../context/TransactionContext/types";
+import { getDiscordEndpointData } from "../../../../utils/discord-utils";
+import { TokenElement } from "../../../../types/reservoir-types/collection-nfts.types";
 
 type Props = {
   nftOffers: NftOffers;
@@ -25,8 +27,8 @@ type Props = {
 
 const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
   const { user, chainId } = useConnectionContext()!;
-  const { collectionChainId, collectionContract } = useGlobalContext();
-  const { nftInfo } = useNftPageContext()!;
+  const { collectionChainId, collectionContract, client } = useGlobalContext();
+  const { nftInfo, nftPriceData } = useNftPageContext()!;
   const {
     setTransactionStage,
     setTransactionHash,
@@ -52,7 +54,7 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
 
   const isOwner = nftInfo?.owner?.toLowerCase() == user?.toLowerCase();
 
-  const acceptBid = (amount: number, price: number) => {
+  const acceptBid = (amount: number, price: number, offerMaker: string) => {
     const transactionNft: TransactionNft = {
       collectionName: nftInfo?.collection?.name,
       nftName: nftInfo?.name,
@@ -69,13 +71,25 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
     const source = getHostName();
     switchChains(chainId, collectionChainId).then(() => {
       acceptOffer(collectionChainId, user!, token, source).then((result) => {
+        const nft = {
+          token: nftInfo,
+          market: nftPriceData,
+        };
+        const postData = getDiscordEndpointData(
+          nft as TokenElement,
+          offerMaker,
+          client,
+          amount.toString(),
+          price.toString()
+        );
         setTransactionStage(1);
         handleBuyOrSellData(
           result,
           setTransactionStage,
           setTransactionHash,
           setShowConfirmationModal,
-          collectionChainId
+          collectionChainId,
+          postData
         );
       });
     });
@@ -115,7 +129,7 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
                   {isOwner && (
                     <button
                       className="offer_accept_button"
-                      onClick={() => acceptBid(price, usd)}
+                      onClick={() => acceptBid(price, usd, order.maker)}
                     >
                       Accept
                     </button>
