@@ -1,5 +1,5 @@
 import "./Footer.css";
-import mysticLogo from "../../assets/mystic-logo.svg";
+import mysticLogo from "../../assets/mystic_plain.png";
 import { RiDiscordFill, RiTwitterXLine } from "react-icons/ri";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
@@ -28,6 +28,7 @@ const Footer = () => {
           <p>Powered by</p>
           <span onClick={() => window.open("https://withmystic.xyz")}>
             <img src={mysticLogo} alt="" />
+            Mystic
           </span>
         </div>
       </section>
