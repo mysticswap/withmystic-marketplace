@@ -1,0 +1,6 @@
+.not_found {
+  min-height: calc(100vh - 6rem);
+  display: grid;
+  place-content: center;
+  font-size: xx-large;
+}
