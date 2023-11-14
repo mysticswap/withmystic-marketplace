@@ -16,6 +16,7 @@ import { useTransactionContext } from "../../context/TransactionContext/Transact
 import SocialShare from "../../components/SocialShare/SocialShare";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import NotFound from "./Components/NotFound/NotFound";
 
 const NftPage = () => {
   const { id } = useParams();
@@ -28,6 +29,7 @@ const NftPage = () => {
     nftInfo,
     nftPriceData,
     showShareModal,
+    nftDataV2,
   } = useNftPageContext()!;
   const {
     showOfferOrListingModal,
@@ -49,6 +51,10 @@ const NftPage = () => {
 
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (!nftDataV2.tokens.length) {
+    return <NotFound />;
   }
 
   return (
