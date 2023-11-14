@@ -23,7 +23,7 @@ export const changeStyles = (client: ClientObject) => {
     "--ms-mp-card-border-color": client?.styles?.cardBorderColor,
     "--ms-mp-controlbar-hover": client?.styles?.controlBarHoverColor,
     "--ms-mp-button-border-radius": client?.styles?.buttonBorderRadius,
-    "--ms-mp-poppins": client?.fonts?.fontFamily,
+    "--ms-mp-font-family": client?.fonts?.fontFamily,
   };
 
   for (const property in customPropertyMap) {

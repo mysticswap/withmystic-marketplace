@@ -6,6 +6,9 @@
   cursor: pointer;
   transition: var(--ms-mp-transition);
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .nft_card:hover {
@@ -15,6 +18,7 @@
 .nft_card img {
   width: 100%;
   display: block;
+  max-height: 420px;
 }
 
 .nft_card_details {

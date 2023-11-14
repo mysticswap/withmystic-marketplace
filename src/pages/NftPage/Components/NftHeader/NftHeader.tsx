@@ -16,6 +16,7 @@ import { handleBuyOrSellData } from "../../../../services/buy-sale-service";
 import { connectWallets } from "../../../../services/web3Onboard";
 import {
   Market,
+  TokenElement,
   TokenToken,
 } from "../../../../types/reservoir-types/collection-nfts.types";
 import { redirectToMSWalletPage, truncateAddress } from "../../../../utils";
@@ -26,6 +27,7 @@ import { BsCheckCircleFill } from "react-icons/bs";
 import { reservoirActivityTypes } from "../../../../constants";
 import { Link } from "react-router-dom";
 import { switchChains } from "../../../../utils/wallet-connection";
+import { getDiscordEndpointData } from "../../../../utils/discord-utils";
 
 type Props = {
   nftInfo: TokenToken;
@@ -43,7 +45,7 @@ const NftHeader = ({
   const { user, setProvider, chainId } = useConnectionContext()!;
   const { setTransactionNft, setTransactionStage, setTransactionHash } =
     useTransactionContext()!;
-  const { source, collectionChainId, userBalance } = useGlobalContext();
+  const { source, collectionChainId, userBalance, client } = useGlobalContext();
   const {
     token,
     setNftDataV2,
@@ -97,13 +99,23 @@ const NftHeader = ({
       switchChains(chainId, collectionChainId).then(() => {
         buyListedNft(collectionChainId, orderId, user!, source).then(
           (result) => {
+            const nft = {
+              token: nftInfo,
+              market: nftPriceData,
+            };
+            const postData = getDiscordEndpointData(
+              nft as TokenElement,
+              user!,
+              client
+            );
             setTransactionStage(1);
             handleBuyOrSellData(
               result,
               setTransactionStage,
               setTransactionHash,
               setShowConfirmationModal,
-              collectionChainId
+              collectionChainId,
+              postData
             );
           }
         );

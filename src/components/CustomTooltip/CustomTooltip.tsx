@@ -13,21 +13,21 @@ const CustomTooltip = ({ text, children }: Props) => {
       MuiTooltip: {
         styleOverrides: {
           tooltip: {
-            backgroundColor: `white`,
-            color: `${client.styles.primaryColor}`,
+            backgroundColor: client.styles.bodyBackground,
+            color: client.styles.primaryColor,
             fontSize: "18px",
             padding: "10px 20px",
             fontStyle: "normal",
             fontWeight: 400,
             lineHeight: "22px",
-            boxShadow: "0 2px 4px rgba(0,0,0,1)",
-            fontFamily: `${client.fonts.fontFamily}`,
+            fontFamily: client.fonts.fontFamily,
+            border: `1px solid ${client.styles.primaryColor}`,
           },
           arrow: {
-            color: "white",
+            color: client.styles.bodyBackground,
             [`&::before`]: {
-              color: "white",
-              boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+              color: client.styles.bodyBackground,
+              border: `1px solid ${client.styles.primaryColor}`,
             },
           },
         },

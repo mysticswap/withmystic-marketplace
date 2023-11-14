@@ -3,13 +3,16 @@ import { BuyData, Data } from "../types/reservoir-types/buy-data.types";
 import { executeTransactions } from "./seaport";
 import { authSignature } from "./api/marketplace-reservoir-api";
 import { toast } from "react-toastify";
+import { DiscordPostBody } from "../types/discord-post.types";
+import { postSale } from "./api/discord.api";
 
 export const handleBuyOrSellData = async (
   data: BuyData,
   setTransactionStage: React.Dispatch<React.SetStateAction<number>>,
   setTransactionHash: React.Dispatch<React.SetStateAction<string>>,
   modalSetter: React.Dispatch<React.SetStateAction<boolean>>,
-  chainId: number
+  chainId: number,
+  discordData?: DiscordPostBody
 ) => {
   await window.ethereum.enable();
 
@@ -50,6 +53,9 @@ export const handleBuyOrSellData = async (
       .then(async (result) => {
         setTransactionStage(2);
         setTransactionHash(result);
+      })
+      .finally(() => {
+        postSale(discordData!);
       })
       .catch(() => {
         modalSetter(false);
