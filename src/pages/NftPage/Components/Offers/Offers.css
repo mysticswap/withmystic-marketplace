@@ -38,7 +38,11 @@
   transition: var(--ms-mp-transition);
 }
 
-.offers_table_item > p:last-of-type:hover {
+.offers_table_item > div > p {
+  transition: var(--ms-mp-transition);
+}
+
+.offers_table_item > div > p:hover {
   color: var(--ms-mp-primary-color-dark);
 }
 
