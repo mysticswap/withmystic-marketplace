@@ -18,6 +18,7 @@ import { switchChains } from "../../../../utils/wallet-connection";
 import { TransactionNft } from "../../../../context/TransactionContext/types";
 import { getDiscordEndpointData } from "../../../../utils/discord-utils";
 import { TokenElement } from "../../../../types/reservoir-types/collection-nfts.types";
+import { generateActivity } from "../../../../utils/activity-utils";
 
 type Props = {
   nftOffers: NftOffers;
@@ -37,6 +38,7 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
   } = useTransactionContext()!;
   const [isFetching, setIsFetching] = useState(false);
   const token = `${collectionContract}:${tokenId}`;
+  const nft = { token: nftInfo, market: nftPriceData } as TokenElement;
 
   const fetchMoreOffers = () => {
     setIsFetching(true);
@@ -71,16 +73,18 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
     const source = getHostName();
     switchChains(chainId, collectionChainId).then(() => {
       acceptOffer(collectionChainId, user!, token, source).then((result) => {
-        const nft = {
-          token: nftInfo,
-          market: nftPriceData,
-        };
         const postData = getDiscordEndpointData(
-          nft as TokenElement,
+          nft,
           offerMaker,
           client,
           amount.toString(),
           price.toString()
+        );
+        const activityData = generateActivity(
+          nft,
+          "sale",
+          offerMaker,
+          amount.toString()
         );
         setTransactionStage(1);
         handleBuyOrSellData(
@@ -89,7 +93,8 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
           setTransactionHash,
           setShowConfirmationModal,
           collectionChainId,
-          postData
+          postData,
+          activityData
         );
       });
     });

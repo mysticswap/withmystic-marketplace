@@ -17,6 +17,7 @@ import { switchChains } from "../../utils/wallet-connection";
 import { connectWallets } from "../../services/web3Onboard";
 import { balanceChain } from "../../constants";
 import { getDiscordEndpointData } from "../../utils/discord-utils";
+import { generateActivity } from "../../utils/activity-utils";
 
 type Props = { nft: TokenElement };
 
@@ -58,6 +59,7 @@ const NftCard = ({ nft }: Props) => {
   );
 
   const postData = getDiscordEndpointData(nft, user!, client);
+  const activityData = generateActivity(nft, "sale", user!);
 
   const startBuyProcess = () => {
     const orderId = nft?.market?.floorAsk?.id;
@@ -72,7 +74,8 @@ const NftCard = ({ nft }: Props) => {
           setTransactionHash,
           setShowConfirmationModal,
           collectionChainId,
-          postData
+          postData,
+          activityData
         );
       });
     });

@@ -28,6 +28,7 @@ import { reservoirActivityTypes } from "../../../../constants";
 import { Link } from "react-router-dom";
 import { switchChains } from "../../../../utils/wallet-connection";
 import { getDiscordEndpointData } from "../../../../utils/discord-utils";
+import { generateActivity } from "../../../../utils/activity-utils";
 
 type Props = {
   nftInfo: TokenToken;
@@ -85,6 +86,14 @@ const NftHeader = ({
     !user ? connectWallets(setProvider) : setter(true);
   };
 
+  const nft = {
+    token: nftInfo,
+    market: nftPriceData,
+  };
+
+  const postData = getDiscordEndpointData(nft as TokenElement, user!, client);
+  const activityData = generateActivity(nft as TokenElement, "sale", user!);
+
   const buyOrList = () => {
     setTransactionNft({
       ...transactionNft,
@@ -99,15 +108,6 @@ const NftHeader = ({
       switchChains(chainId, collectionChainId).then(() => {
         buyListedNft(collectionChainId, orderId, user!, source).then(
           (result) => {
-            const nft = {
-              token: nftInfo,
-              market: nftPriceData,
-            };
-            const postData = getDiscordEndpointData(
-              nft as TokenElement,
-              user!,
-              client
-            );
             setTransactionStage(1);
             handleBuyOrSellData(
               result,
@@ -115,7 +115,8 @@ const NftHeader = ({
               setTransactionHash,
               setShowConfirmationModal,
               collectionChainId,
-              postData
+              postData,
+              activityData
             );
           }
         );
