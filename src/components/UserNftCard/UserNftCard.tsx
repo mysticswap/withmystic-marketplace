@@ -4,7 +4,7 @@ import "./UserNftCard.css";
 import CustomTooltip from "../CustomTooltip/CustomTooltip";
 import { useIsOverflow } from "../../hooks/useIsOverflow";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
-import { TransactionNft } from "../../context/TransactionContext/types";
+import { getTransactionNft } from "../../utils/transaction-nft.utils";
 
 type Props = {
   nft: UserTokenElement;
@@ -22,18 +22,18 @@ const UserNftCard = ({ nft, setShowUserNftsModal }: Props) => {
 
   const handleClick = () => {
     setShowUserNftsModal(false);
-    const listData: TransactionNft = {
-      collectionName: nft.token.collection.name,
-      nftName,
-      nftImage: nft.token.image,
-      isOffer: false,
-      isSale: false,
-      amount: 0,
-      price: 0,
-      tokenId: nft?.token?.tokenId,
-      message: `I’ve just listed ${nftName} for sale! Any takers?`,
-    };
-    setTransactionNft(listData);
+    const isOffer = false;
+    const isSale = false;
+    const transactionMessage = `I’ve just listed ${nftName} for sale! Any takers?`;
+    const transactionNft = getTransactionNft(
+      nft,
+      isOffer,
+      isSale,
+      transactionMessage,
+      0,
+      0
+    );
+    setTransactionNft(transactionNft);
     setShowOfferOrListingModal(true);
   };
 

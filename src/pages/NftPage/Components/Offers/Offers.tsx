@@ -15,10 +15,10 @@ import { handleBuyOrSellData } from "../../../../services/buy-sale-service";
 import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
 import { useTransactionContext } from "../../../../context/TransactionContext/TransactionContext";
 import { switchChains } from "../../../../utils/wallet-connection";
-import { TransactionNft } from "../../../../context/TransactionContext/types";
 import { getDiscordEndpointData } from "../../../../utils/discord-utils";
 import { TokenElement } from "../../../../types/reservoir-types/collection-nfts.types";
-import { generateActivity } from "../../../../utils/activity-utils";
+import { generateSaleActivity } from "../../../../utils/activity-utils";
+import { getTransactionNft } from "../../../../utils/transaction-nft.utils";
 
 type Props = {
   nftOffers: NftOffers;
@@ -57,18 +57,18 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
   const isOwner = nftInfo?.owner?.toLowerCase() == user?.toLowerCase();
 
   const acceptBid = (amount: number, price: number, offerMaker: string) => {
-    const transactionNft: TransactionNft = {
-      collectionName: nftInfo?.collection?.name,
-      nftName: nftInfo?.name,
-      nftImage: nftInfo?.image,
+    const isOffer = false;
+    const isSale = true;
+    const txMessage = `I’ve just sold ${nftInfo?.name}!`;
+    const txNft = getTransactionNft(
+      nft,
+      isOffer,
+      isSale,
+      txMessage,
       amount,
-      price,
-      isOffer: false,
-      isSale: true,
-      tokenId: nftInfo.tokenId,
-      message: `I’ve just sold ${nftInfo?.name}!`,
-    };
-    setTransactionNft(transactionNft);
+      price
+    );
+    setTransactionNft(txNft);
     setShowConfirmationModal(true);
     const source = getHostName();
     switchChains(chainId, collectionChainId).then(() => {
@@ -80,7 +80,7 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
           amount.toString(),
           price.toString()
         );
-        const activityData = generateActivity(
+        const activityData = generateSaleActivity(
           nft,
           "sale",
           offerMaker,

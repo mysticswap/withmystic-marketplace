@@ -5,7 +5,6 @@ import { useConnectionContext } from "../../../../context/ConnectionContext/Conn
 import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
 import { useNftPageContext } from "../../../../context/NftPageContext/NftPageContext";
 import { useTransactionContext } from "../../../../context/TransactionContext/TransactionContext";
-import { TransactionNft } from "../../../../context/TransactionContext/types";
 import { buyListedNft } from "../../../../services/api/buy-offer-list.api";
 import {
   getNftActivity,
@@ -28,7 +27,8 @@ import { reservoirActivityTypes } from "../../../../constants";
 import { Link } from "react-router-dom";
 import { switchChains } from "../../../../utils/wallet-connection";
 import { getDiscordEndpointData } from "../../../../utils/discord-utils";
-import { generateActivity } from "../../../../utils/activity-utils";
+import { generateSaleActivity } from "../../../../utils/activity-utils";
+import { getTransactionNft } from "../../../../utils/transaction-nft.utils";
 
 type Props = {
   nftInfo: TokenToken;
@@ -66,19 +66,18 @@ const NftHeader = ({
   const currentUsdValue = nftPriceData?.floorAsk?.price?.amount?.usd;
   const userIsOwner = user?.toLowerCase() == owner?.toLowerCase();
 
-  const transactionNft: TransactionNft = {
-    collectionName,
-    nftName,
-    nftImage: nftInfo?.image,
-    isOffer: !userIsOwner,
-    isSale: false,
-    amount: 0,
-    price: 0,
-    tokenId: nftInfo?.tokenId,
-    message: userIsOwner
-      ? `I’ve just listed ${nftName} for sale! Any takers?`
-      : `I’ve just made a bid on ${nftName}!`,
-  };
+  const nft = {
+    token: nftInfo,
+    market: nftPriceData,
+  } as TokenElement;
+
+  const isOffer = !userIsOwner;
+  const isSale = false;
+  const txMessage = userIsOwner
+    ? `I’ve just listed ${nftName} for sale! Any takers?`
+    : `I’ve just made a bid on ${nftName}!`;
+
+  const txNft = getTransactionNft(nft, isOffer, isSale, txMessage, 0, 0);
 
   const triggerModal = (
     setter: React.Dispatch<React.SetStateAction<boolean>>
@@ -86,17 +85,12 @@ const NftHeader = ({
     !user ? connectWallets(setProvider) : setter(true);
   };
 
-  const nft = {
-    token: nftInfo,
-    market: nftPriceData,
-  };
-
-  const postData = getDiscordEndpointData(nft as TokenElement, user!, client);
-  const activityData = generateActivity(nft as TokenElement, "sale", user!);
+  const postData = getDiscordEndpointData(nft, user!, client);
+  const activityData = generateSaleActivity(nft, "sale", user!);
 
   const buyOrList = () => {
     setTransactionNft({
-      ...transactionNft,
+      ...txNft,
       amount: currentEthAmount,
       price: currentUsdValue,
     });
@@ -125,7 +119,7 @@ const NftHeader = ({
 
   const makeOffer = () => {
     triggerModal(setShowOfferOrListingModal);
-    setTransactionNft(transactionNft);
+    setTransactionNft(txNft);
   };
 
   const refreshMetadata = async () => {
