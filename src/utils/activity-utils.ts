@@ -32,9 +32,9 @@ export const generateListOrBidActivity = (
     tokenName: nft.nftName,
     contractAddress: collectionMetadata?.collections[0].primaryContract!,
     tokenId: nft.tokenId,
-    price: nft.amount.toString(),
+    price: nft?.amount?.toString(),
     domain: getHostName(),
-    seller: nft.isOffer ? user : "",
+    seller: nft.nftOwner,
     type: nft.isOffer ? "offer" : "listing",
     ...(nft.isOffer && { buyer: user }),
   };
