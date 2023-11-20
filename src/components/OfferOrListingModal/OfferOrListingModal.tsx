@@ -17,6 +17,7 @@ import { handleListOrBidData } from "../../services/list-bid-service";
 import ProcessComponent from "../TransactionStages/TransactionStages";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import { switchChains } from "../../utils/wallet-connection";
+import { generateListOrBidActivity } from "../../utils/activity-utils";
 
 type Props = {
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -58,6 +59,11 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const [isOverBalance, setIsOverBalance] = useState(false);
 
   useOutsideClick(dropdownRef, setShowDropdown, "duration_trigger");
+  const activity = generateListOrBidActivity(
+    transactionNft,
+    collectionMetadata!,
+    user!
+  );
 
   useEffect(() => {
     const isOverUserBalance = Number(offerAmount) > Number(userBalance.WETH);
@@ -113,7 +119,8 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
             collectionChainId,
             result,
             setTransactionStage,
-            setShowOfferOrListingModal
+            setShowOfferOrListingModal,
+            activity
           );
         });
       } else {
@@ -129,7 +136,8 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
             collectionChainId,
             result,
             setTransactionStage,
-            setShowOfferOrListingModal
+            setShowOfferOrListingModal,
+            activity
           );
         });
       }
