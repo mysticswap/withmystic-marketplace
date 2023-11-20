@@ -56,8 +56,6 @@ export const handleBuyOrSellData = async (
       .then(async (result) => {
         setTransactionStage(2);
         setTransactionHash(result);
-      })
-      .finally(() => {
         postSale(discordData!);
         postActivityToDB(activityData);
       })
