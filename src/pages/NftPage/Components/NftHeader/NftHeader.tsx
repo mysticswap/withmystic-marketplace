@@ -77,7 +77,7 @@ const NftHeader = ({
     ? `I’ve just listed ${nftName} for sale! Any takers?`
     : `I’ve just made a bid on ${nftName}!`;
 
-  const txNft = getTransactionNft(nft, isOffer, isSale, txMessage, 0, 0);
+  const txNft = getTransactionNft(nft, isOffer, isSale, txMessage, user!, 0, 0);
 
   const triggerModal = (
     setter: React.Dispatch<React.SetStateAction<boolean>>

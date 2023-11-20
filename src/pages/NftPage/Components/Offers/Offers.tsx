@@ -65,6 +65,7 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
       isOffer,
       isSale,
       txMessage,
+      user!,
       amount,
       price
     );

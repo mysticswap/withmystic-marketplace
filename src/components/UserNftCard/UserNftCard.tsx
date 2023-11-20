@@ -5,6 +5,7 @@ import CustomTooltip from "../CustomTooltip/CustomTooltip";
 import { useIsOverflow } from "../../hooks/useIsOverflow";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import { getTransactionNft } from "../../utils/transaction-nft.utils";
+import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 
 type Props = {
   nft: UserTokenElement;
@@ -12,6 +13,7 @@ type Props = {
 };
 
 const UserNftCard = ({ nft, setShowUserNftsModal }: Props) => {
+  const { user } = useConnectionContext()!;
   const { setTransactionNft, setShowOfferOrListingModal } =
     useTransactionContext()!;
   const nameRef = useRef(null);
@@ -30,6 +32,7 @@ const UserNftCard = ({ nft, setShowUserNftsModal }: Props) => {
       isOffer,
       isSale,
       transactionMessage,
+      user!,
       0,
       0
     );

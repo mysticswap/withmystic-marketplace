@@ -38,5 +38,6 @@ export const generateListOrBidActivity = (
     type: nft.isOffer ? "offer" : "listing",
     ...(nft.isOffer && { buyer: user }),
   };
+
   return data;
 };

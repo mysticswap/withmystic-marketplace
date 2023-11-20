@@ -84,7 +84,13 @@ const NftCard = ({ nft }: Props) => {
   const buyNft = async () => {
     // tx means transaction
     const transactionMessage = `I’ve just bought ${nft?.token?.name}!`;
-    const txNft = getTransactionNft(nft, false, false, transactionMessage);
+    const txNft = getTransactionNft(
+      nft,
+      false,
+      false,
+      transactionMessage,
+      user!
+    );
     if (user) {
       setTransactionNft(txNft);
       setShowConfirmationModal(true);
