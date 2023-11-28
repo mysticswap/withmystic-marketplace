@@ -1,4 +1,9 @@
-.mystic_sdk_main {
+.styles_page {
+  padding: 2rem 0;
+}
+
+.mystic_sdk_main,
+.mystic_sdk_main input {
   color: var(--ms-mp-text-color) !important;
 }
 
@@ -8,6 +13,10 @@
 .mystic_sdk_help_component,
 .mystic_sdk_request_modal_content {
   /* background-color: #b0c6c0 !important; */
+}
+
+.mystic_sdk_request_modal_content {
+  background-color: var(--ms-mp-body-background) !important;
 }
 
 .mystic_sdk_asset_holder,
@@ -29,7 +38,8 @@
 .mystic_sdk_holder_icon,
 .mystic_sdk_token_selection_modal_body,
 .mystic_sdk_mobile_assets_holder,
-.mystic_sdk_mobile_preview {
+.mystic_sdk_mobile_preview,
+.mystic_sdk_private_input {
   background-color: var(--ms-mp-body-background) !important;
 }
 
@@ -37,7 +47,6 @@
 .mystic_sdk_navbar_option:hover,
 .mystic_sdk_all_swaps_title:hover,
 .mystic_sdk_current_swaps_title {
-  background: #fff !important;
   background: var(--ms-mp-controlbar-hover) !important;
 }
 
@@ -46,20 +55,20 @@
 .mystic_sdk_apply_btn,
 .mystic_sdk_cancel_btn,
 .mystic_sdk_view_offer {
-  border-color: #1d2623 !important;
-  color: #1d2623 !important;
-  background-color: #b0c6c0 !important;
+  border-color: var(--ms-mp-primary-color) !important;
+  color: var(--ms-mp-text-color) !important;
+  background-color: var(--ms-mp-body-background) !important;
 }
 
 .mystic_sdk_asset_search:focus-within,
 .mystic_sdk_token_search_bar:focus-within,
 .mystic_sdk_amount_input_section {
   border: 1px solid !important;
-  border-color: #1d2623 !important;
+  border-color: var(--ms-mp-primary-color) !important;
 }
 
 .mystic_sdk_check-box {
-  background-color: #1d2623 !important;
+  background-color: var(--ms-mp-body-background) !important;
 }
 
 .mystic_sdk_accept_button,
@@ -67,13 +76,19 @@
 .mystic_sdk_create-swap-btn,
 .mystic_sdk_confirm_btn,
 .mystic_sdk_selection_bottom button {
-  background: linear-gradient(180deg, #1d2623, #1d2623 100%), #1d2623 !important;
-  color: #e3f3ea !important;
+  background: linear-gradient(
+      180deg,
+      var(--ms-mp-primary-color),
+      var(--ms-mp-primary-color-dark) 100%
+    ),
+    var(--ms-mp-primary-color-dark) !important;
+  color: var(--ms-mp-text-color) !important;
+  font-family: var(--ms-mp-font-family) !important;
 }
 
 .mystic_sdk_spinner,
 .mystic_sdk_clear_btn {
-  color: #1d2623 !important;
+  color: var(--ms-mp-primary-color) !important;
 }
 
 .mystic_sdk_chosen_closer:hover {
@@ -82,9 +97,45 @@
 
 .mystic_sdk_options_screen > div input:focus,
 .mystic_sdk_blue {
-  border-color: #1d2623 !important;
+  border-color: var(--ms-mp-primary-color) !important;
 }
 
 .mystic_sdk_dropdown {
   padding: 0.5rem !important;
+}
+
+.mystic_sdk_chain_logo_container,
+.mystic_sdk_icon_holder {
+  border-color: var(--ms-mp-primary-color) !important;
+}
+
+.mystic_sdk_no_asset_text {
+  color: var(--ms-mp-text-color) !important;
+  opacity: 0.5;
+}
+
+.mystic_sdk_main li {
+  color: var(--ms-mp-text-color) !important;
+}
+
+.mystic_sdk_trigger_btn p,
+.mystic_sdk_trigger_btn svg,
+.mystic_sdk_nft_card_collection_name p,
+.mystic_sdk_accordion_title p,
+.mystic_sdk_accordion_message,
+.mystic_sdk_blocky_holder p,
+.mystic_sdk_swap_nft_text p {
+  color: var(--ms-mp-text-color) !important;
+}
+
+.mystic_sdk_nft_card_collection_name p {
+  opacity: 0.5 !important;
+}
+
+.mystic_sdk_dropdown p {
+  margin: 0.5rem 0;
+}
+
+.mystic_sdk_listing_screen_swap_icon {
+  border-color: var(--ms-mp-text-color) !important;
 }
