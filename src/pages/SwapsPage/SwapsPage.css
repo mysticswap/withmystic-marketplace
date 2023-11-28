@@ -156,7 +156,8 @@
   border-color: var(--ms-mp-text-color) !important;
 }
 
-.mystic_sdk_tooltip {
+.mystic_sdk_tooltip,
+.css-r8u8y9 {
   background-color: var(--ms-mp-body-background) !important;
   font-family: var(--ms-mp-font-family) !important;
 }
