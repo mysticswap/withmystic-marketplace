@@ -8,14 +8,6 @@
   color: var(--ms-mp-text-color) !important;
 }
 
-.mystic_sdk_listing_screen,
-.mystic_sdk_navbar,
-.mystic_sdk_swaps_component,
-.mystic_sdk_help_component,
-.mystic_sdk_request_modal_content {
-  /* background-color: #b0c6c0 !important; */
-}
-
 .mystic_sdk_request_modal_content {
   background-color: var(--ms-mp-body-background) !important;
 }
@@ -64,6 +56,11 @@
   font-family: var(--ms-mp-font-family) !important;
 }
 
+.mystic_sdk_outlined-btn,
+.mystic_sdk_add_token_button {
+  color: var(--ms-mp-primary-color) !important;
+}
+
 .mystic_sdk_asset_search:focus-within,
 .mystic_sdk_token_search_bar:focus-within,
 .mystic_sdk_amount_input_section {
@@ -73,6 +70,10 @@
 
 .mystic_sdk_check-box {
   background-color: var(--ms-mp-body-background) !important;
+}
+
+.mystic_sdk_check-box svg {
+  color: var(--ms-mp-primary-color) !important;
 }
 
 .mystic_sdk_accept_button,
@@ -86,8 +87,13 @@
       var(--ms-mp-primary-color-dark) 100%
     ),
     var(--ms-mp-primary-color-dark) !important;
-  color: var(--ms-mp-text-color) !important;
   font-family: var(--ms-mp-font-family) !important;
+}
+
+.mystic_sdk_create-swap-btn,
+.mystic_sdk_accept_button,
+.mystic_sdk_cancel_button {
+  border-radius: var(--ms-mp-button-border-radius) !important;
 }
 
 .mystic_sdk_spinner,
@@ -128,7 +134,6 @@
   opacity: 0.5;
 }
 
-.mystic_sdk_main li,
 .mystic_sdk_everyone {
   color: var(--ms-mp-text-color) !important;
 }
@@ -137,6 +142,7 @@
 .mystic_sdk_trigger_btn svg,
 .mystic_sdk_nft_card_collection_name p,
 .mystic_sdk_accordion_title p,
+.mystic_sdk_accordion_title svg,
 .mystic_sdk_accordion_message,
 .mystic_sdk_blocky_holder p,
 .mystic_sdk_swap_nft_text p,
@@ -160,4 +166,15 @@
 .css-r8u8y9 {
   background-color: var(--ms-mp-body-background) !important;
   font-family: var(--ms-mp-font-family) !important;
+}
+
+.mystic_sdk_nft_card {
+  border-radius: var(--ms-mp-card-border-radius) !important;
+  border-color: var(--ms-mp-card-border-color) !important;
+}
+
+@media screen and (max-width: 480px) {
+  .mystic_sdk_swaps_component {
+    background-color: var(--ms-mp-body-background) !important;
+  }
 }
