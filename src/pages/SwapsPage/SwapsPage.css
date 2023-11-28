@@ -109,6 +109,11 @@
   border-color: var(--ms-mp-primary-color) !important;
 }
 
+.css-1ald77x {
+  color: var(--ms-mp-text-color) !important;
+  opacity: 0.6 !important;
+}
+
 .mystic_sdk_chain_logo_container,
 .mystic_sdk_icon_holder {
   border-color: var(--ms-mp-primary-color) !important;
