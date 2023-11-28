@@ -61,6 +61,7 @@
   border-color: var(--ms-mp-primary-color) !important;
   color: var(--ms-mp-text-color) !important;
   background-color: var(--ms-mp-body-background) !important;
+  font-family: var(--ms-mp-font-family) !important;
 }
 
 .mystic_sdk_asset_search:focus-within,
