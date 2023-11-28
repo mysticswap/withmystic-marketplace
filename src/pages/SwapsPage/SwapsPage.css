@@ -3,7 +3,8 @@
 }
 
 .mystic_sdk_main,
-.mystic_sdk_main input {
+.mystic_sdk_main input,
+.css-qiwgdb.css-qiwgdb.css-qiwgdb {
   color: var(--ms-mp-text-color) !important;
 }
 
@@ -102,6 +103,10 @@
 
 .mystic_sdk_dropdown {
   padding: 0.5rem !important;
+}
+
+.mystic_sdk_dates > div {
+  border: 1px solid red !important;
 }
 
 .mystic_sdk_chain_logo_container,
