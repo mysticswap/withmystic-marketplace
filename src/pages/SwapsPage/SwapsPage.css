@@ -95,7 +95,7 @@
 }
 
 .mystic_sdk_chosen_closer:hover {
-  background-color: #1d2623 !important;
+  background-color: var(--ms-mp-primary-color) !important;
 }
 
 .mystic_sdk_options_screen > div input:focus,
