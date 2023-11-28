@@ -139,7 +139,8 @@
 .mystic_sdk_accordion_title p,
 .mystic_sdk_accordion_message,
 .mystic_sdk_blocky_holder p,
-.mystic_sdk_swap_nft_text p {
+.mystic_sdk_swap_nft_text p,
+.mystic_sdk_logout {
   color: var(--ms-mp-text-color) !important;
 }
 
@@ -153,4 +154,9 @@
 
 .mystic_sdk_listing_screen_swap_icon {
   border-color: var(--ms-mp-text-color) !important;
+}
+
+.mystic_sdk_tooltip {
+  background-color: var(--ms-mp-body-background) !important;
+  font-family: var(--ms-mp-font-family) !important;
 }
