@@ -76,7 +76,9 @@
 .mystic_sdk_show_more,
 .mystic_sdk_create-swap-btn,
 .mystic_sdk_confirm_btn,
-.mystic_sdk_selection_bottom button {
+.mystic_sdk_selection_bottom button,
+.mystic_sdk_apply_btn,
+.mystic_sdk_cancel_btn {
   background: linear-gradient(
       180deg,
       var(--ms-mp-primary-color),
