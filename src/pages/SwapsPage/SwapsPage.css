@@ -128,7 +128,8 @@
   opacity: 0.5;
 }
 
-.mystic_sdk_main li {
+.mystic_sdk_main li,
+.mystic_sdk_everyone {
   color: var(--ms-mp-text-color) !important;
 }
 
