@@ -105,8 +105,8 @@
   padding: 0.5rem !important;
 }
 
-.mystic_sdk_dates > div {
-  border: 1px solid red !important;
+.css-igs3ac {
+  border-color: var(--ms-mp-primary-color) !important;
 }
 
 .mystic_sdk_chain_logo_container,
