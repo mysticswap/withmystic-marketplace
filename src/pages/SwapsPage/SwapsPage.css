@@ -68,13 +68,13 @@
   border-color: var(--ms-mp-primary-color) !important;
 }
 
-.mystic_sdk_check-box {
+/* .mystic_sdk_check-box {
   background-color: var(--ms-mp-body-background) !important;
 }
 
 .mystic_sdk_check-box svg {
   color: var(--ms-mp-primary-color) !important;
-}
+} */
 
 .mystic_sdk_accept_button,
 .mystic_sdk_show_more,
@@ -92,7 +92,10 @@
 
 .mystic_sdk_create-swap-btn,
 .mystic_sdk_accept_button,
-.mystic_sdk_cancel_button {
+.mystic_sdk_cancel_button,
+.mystic_sdk_add_token_button,
+.mystic_sdk_show_more,
+.mystic_sdk_outlined-btn {
   border-radius: var(--ms-mp-button-border-radius) !important;
 }
 
@@ -171,6 +174,18 @@
 .mystic_sdk_nft_card {
   border-radius: var(--ms-mp-card-border-radius) !important;
   border-color: var(--ms-mp-card-border-color) !important;
+}
+
+.mystic_sdk_check-box_ticked {
+  background-color: var(--ms-mp-primary-color) !important;
+}
+
+.mystic_sdk_blocky_holder {
+  min-height: 56px;
+}
+
+.mystic_sdk_panel_title {
+  margin: 1rem 0 !important;
 }
 
 @media screen and (max-width: 480px) {

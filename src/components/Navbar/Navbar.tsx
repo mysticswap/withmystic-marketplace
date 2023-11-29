@@ -128,7 +128,7 @@ const Navbar = () => {
           </div>
 
           <Link to="/swaps">
-            <button className="sell_button">Swaps</button>
+            <button className="sell_button">Swap</button>
           </Link>
 
           {userHasNfts && (
