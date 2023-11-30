@@ -1,7 +1,11 @@
 import "./Banner.css";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import millify from "millify";
-import { collectionNetworkIcon, tabOptions } from "../../constants";
+import {
+  collectionNetworkIcon,
+  collectionsWithHiddenNames,
+  tabOptions,
+} from "../../constants";
 
 const Banner = () => {
   const {
@@ -30,12 +34,17 @@ const Banner = () => {
       icon: collectionNetworkIcon[collectionChainId],
     },
   ];
+  const collectionContract =
+    collectionMetadata?.collections?.[0]?.primaryContract;
+  const nameShouldBeHidden = collectionsWithHiddenNames[collectionContract!];
 
   return (
     <div className="banner">
       <img src={client.bannerUrl} alt="" />
       <div className="banner_details">
-        <h1>{collectionMetadata?.collections?.[0]?.name}</h1>
+        {!nameShouldBeHidden && (
+          <h1>{collectionMetadata?.collections?.[0]?.name}</h1>
+        )}
         <div className="collection_pill">
           {pillData.map((item) => {
             return (
