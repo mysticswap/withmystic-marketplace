@@ -19,7 +19,7 @@ export const TransactionContextProvider = ({ children }: Props) => {
   const [transactionHash, setTransactionHash] = useState("");
 
   const userCanCompleteTransaction =
-    Number(userBalance.ETH) >= transactionNft.amount;
+    Number(userBalance?.ETH) >= transactionNft?.amount;
 
   return (
     <TransactionContext.Provider

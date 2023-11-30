@@ -5,12 +5,15 @@ import {
 } from "../types/reservoir-types/listing-data.types";
 import { submitListOrBid } from "./api/marketplace-reservoir-api";
 import { executeTransactions } from "./seaport";
+import { ActivityObject } from "../types/activity.types";
+import { postActivityToDB } from "./api/activity.api";
 
 export const handleListOrBidData = async (
   chainId: number,
   data: ListOrBidData,
   setStage: React.Dispatch<React.SetStateAction<number>>,
-  modalSetter: React.Dispatch<React.SetStateAction<boolean>>
+  modalSetter: React.Dispatch<React.SetStateAction<boolean>>,
+  activityData: ActivityObject
 ) => {
   await window.ethereum.enable();
 
@@ -58,6 +61,7 @@ export const handleListOrBidData = async (
       submitListOrBid(chainId, orderPost).then((result) => {
         if (result?.message == "Success") {
           setStage(2);
+          postActivityToDB(activityData);
         }
       });
     })
