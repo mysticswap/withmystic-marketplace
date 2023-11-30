@@ -10,8 +10,9 @@ const SwapsPage = () => {
     return collection.address;
   });
   const accessToken = client.apiKey || API_KEY;
-  const isPreview = getHostName().includes("netlify.app");
+  const isPreview = getHostName()?.includes("netlify.app");
   console.log(isPreview, "isPreview");
+  console.log(getHostName(), "hostname");
 
   return (
     <div className="styles_page">
