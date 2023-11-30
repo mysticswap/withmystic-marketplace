@@ -30,6 +30,7 @@ import { useConnectionContext } from "../ConnectionContext/ConnectionContext";
 import { getHostName, getPreviousCollectionAddress } from "../../utils";
 import { getEthPrice } from "../../services/api/coin-gecko.api";
 import { ClientObject } from "../../types/dynamic-system.types";
+import { useDisableNumberInputScroll } from "../../hooks/useDisableNumberInputScroll";
 
 const GlobalContext = createContext({} as GlobalContextType);
 
@@ -146,6 +147,8 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
       setEthValue(result.ethereum.usd);
     });
   }, []);
+
+  useDisableNumberInputScroll();
 
   return (
     <GlobalContext.Provider
