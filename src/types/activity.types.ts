@@ -6,6 +6,7 @@ export type ActivityObject = {
   buyer?: string;
   price: string;
   type: ActivityType;
+  image: string;
   domain: string;
 };
 
