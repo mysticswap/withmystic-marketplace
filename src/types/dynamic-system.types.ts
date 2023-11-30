@@ -12,6 +12,7 @@ export type ClientObject = {
     fontFamily: string;
     fontLinks: string;
   };
+  apiKey: string;
 };
 
 export type MarketplaceClientCollection = {

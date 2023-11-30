@@ -18,6 +18,7 @@ export const generateSaleActivity = (
     domain: getHostName(),
     price: price || nft?.market?.floorAsk?.price?.amount?.native.toString(),
     type,
+    image: nft?.token?.image,
     ...(buyer && { buyer }),
   };
   return activityObject;
@@ -36,6 +37,7 @@ export const generateListOrBidActivity = (
     domain: getHostName(),
     seller: nft.nftOwner,
     type: nft.isOffer ? "offer" : "listing",
+    image: nft?.nftImage,
     ...(nft.isOffer && { buyer: user }),
   };
 

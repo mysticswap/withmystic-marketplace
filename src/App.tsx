@@ -17,6 +17,7 @@ import { ClientObject } from "./types/dynamic-system.types";
 import Loading from "./components/Loading/Loading";
 import { addLinks, changeStyles, updateMetadata } from "./utils/dynamic-styles";
 import { updateFavicon, updateSiteTitle } from "./utils";
+import SwapsPage from "./pages/SwapsPage/SwapsPage";
 
 function App() {
   const [isFetchingClient, setIsFetchingClient] = useState(true);
@@ -59,6 +60,7 @@ function App() {
                     path="/:contract/:id"
                     element={<NftPageContextProvider children={<NftPage />} />}
                   />
+                  <Route path="/swaps" element={<SwapsPage />} />
                   <Route path="*" element={<ErrorPage />} />
                 </Routes>
                 <Footer />
