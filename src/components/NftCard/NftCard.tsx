@@ -12,11 +12,12 @@ import { useConnectionContext } from "../../context/ConnectionContext/Connection
 import { getHostName } from "../../utils";
 import { handleBuyOrSellData } from "../../services/buy-sale-service";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
-import { TransactionNft } from "../../context/TransactionContext/types";
 import { switchChains } from "../../utils/wallet-connection";
 import { connectWallets } from "../../services/web3Onboard";
 import { balanceChain } from "../../constants";
 import { getDiscordEndpointData } from "../../utils/discord-utils";
+import { generateSaleActivity } from "../../utils/activity-utils";
+import { getTransactionNft } from "../../utils/transaction-nft.utils";
 
 type Props = { nft: TokenElement };
 
@@ -58,6 +59,7 @@ const NftCard = ({ nft }: Props) => {
   );
 
   const postData = getDiscordEndpointData(nft, user!, client);
+  const activityData = generateSaleActivity(nft, "sale", user!);
 
   const startBuyProcess = () => {
     const orderId = nft?.market?.floorAsk?.id;
@@ -72,26 +74,25 @@ const NftCard = ({ nft }: Props) => {
           setTransactionHash,
           setShowConfirmationModal,
           collectionChainId,
-          postData
+          postData,
+          activityData
         );
       });
     });
   };
 
   const buyNft = async () => {
-    const transactionNft: TransactionNft = {
-      collectionName: nft?.token?.collection?.name,
-      nftName,
-      nftImage: nft?.token?.image,
-      amount: Number(currentEthAmount),
-      price: currentValue,
-      isOffer: false,
-      isSale: false,
-      tokenId: nftId,
-      message: `I’ve just bought ${nft?.token?.name}!`,
-    };
+    // tx means transaction
+    const transactionMessage = `I’ve just bought ${nft?.token?.name}!`;
+    const txNft = getTransactionNft(
+      nft,
+      false,
+      false,
+      transactionMessage,
+      user!
+    );
     if (user) {
-      setTransactionNft(transactionNft);
+      setTransactionNft(txNft);
       setShowConfirmationModal(true);
       startBuyProcess();
     } else connectWallets(setProvider);
