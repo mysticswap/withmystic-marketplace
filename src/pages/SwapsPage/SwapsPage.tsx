@@ -11,6 +11,7 @@ const SwapsPage = () => {
   });
   const accessToken = client.apiKey || API_KEY;
   const isPreview = getHostName().includes("netlify.app");
+  console.log(isPreview, "isPreview");
 
   return (
     <div className="styles_page">
