@@ -15,9 +15,10 @@ import { handleBuyOrSellData } from "../../../../services/buy-sale-service";
 import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
 import { useTransactionContext } from "../../../../context/TransactionContext/TransactionContext";
 import { switchChains } from "../../../../utils/wallet-connection";
-import { TransactionNft } from "../../../../context/TransactionContext/types";
 import { getDiscordEndpointData } from "../../../../utils/discord-utils";
 import { TokenElement } from "../../../../types/reservoir-types/collection-nfts.types";
+import { generateSaleActivity } from "../../../../utils/activity-utils";
+import { getTransactionNft } from "../../../../utils/transaction-nft.utils";
 
 type Props = {
   nftOffers: NftOffers;
@@ -37,6 +38,7 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
   } = useTransactionContext()!;
   const [isFetching, setIsFetching] = useState(false);
   const token = `${collectionContract}:${tokenId}`;
+  const nft = { token: nftInfo, market: nftPriceData } as TokenElement;
 
   const fetchMoreOffers = () => {
     setIsFetching(true);
@@ -55,32 +57,35 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
   const isOwner = nftInfo?.owner?.toLowerCase() == user?.toLowerCase();
 
   const acceptBid = (amount: number, price: number, offerMaker: string) => {
-    const transactionNft: TransactionNft = {
-      collectionName: nftInfo?.collection?.name,
-      nftName: nftInfo?.name,
-      nftImage: nftInfo?.image,
+    const isOffer = false;
+    const isSale = true;
+    const txMessage = `I’ve just sold ${nftInfo?.name}!`;
+    const txNft = getTransactionNft(
+      nft,
+      isOffer,
+      isSale,
+      txMessage,
+      user!,
       amount,
-      price,
-      isOffer: false,
-      isSale: true,
-      tokenId: nftInfo.tokenId,
-      message: `I’ve just sold ${nftInfo?.name}!`,
-    };
-    setTransactionNft(transactionNft);
+      price
+    );
+    setTransactionNft(txNft);
     setShowConfirmationModal(true);
     const source = getHostName();
     switchChains(chainId, collectionChainId).then(() => {
       acceptOffer(collectionChainId, user!, token, source).then((result) => {
-        const nft = {
-          token: nftInfo,
-          market: nftPriceData,
-        };
         const postData = getDiscordEndpointData(
-          nft as TokenElement,
+          nft,
           offerMaker,
           client,
           amount.toString(),
           price.toString()
+        );
+        const activityData = generateSaleActivity(
+          nft,
+          "sale",
+          offerMaker,
+          amount.toString()
         );
         setTransactionStage(1);
         handleBuyOrSellData(
@@ -89,7 +94,8 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
           setTransactionHash,
           setShowConfirmationModal,
           collectionChainId,
-          postData
+          postData,
+          activityData
         );
       });
     });
