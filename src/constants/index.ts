@@ -102,3 +102,8 @@ export const balanceChain: { [x: number]: string } = {
   5: "ETH",
   137: "WETH",
 };
+
+export const collectionsWithHiddenNames: { [x: string]: boolean } = {
+  "0x1c1726327a364e496aa3e7a032b04af265631ded": true,
+  "0x73382b19fe136907e9fd4cb1d55228237566324c": true,
+};
