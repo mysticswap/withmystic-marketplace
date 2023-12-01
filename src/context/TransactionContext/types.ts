@@ -22,4 +22,5 @@ export type TransactionNft = {
   isSale: boolean;
   tokenId: string;
   message: string;
+  nftOwner: string;
 };
