@@ -76,6 +76,7 @@ export const defaultOfferOrList = {
   isSale: false,
   tokenId: "",
   message: "",
+  nftOwner: "",
 };
 
 export const scanWebsites: { [x: number]: string } = {
@@ -100,4 +101,9 @@ export const balanceChain: { [x: number]: string } = {
   1: "ETH",
   5: "ETH",
   137: "WETH",
+};
+
+export const collectionsWithHiddenNames: { [x: string]: boolean } = {
+  "0x1c1726327a364e496aa3e7a032b04af265631ded": true,
+  "0x73382b19fe136907e9fd4cb1d55228237566324c": true,
 };
