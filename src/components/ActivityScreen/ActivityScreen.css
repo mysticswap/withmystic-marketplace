@@ -1,0 +1,91 @@
+.activity_screen_parent {
+  width: 95%;
+  width: 100%;
+  margin: auto;
+  display: flex;
+}
+
+.activity_screen_parent > .filters_sidebar {
+  border: none;
+}
+
+.activity_screen {
+  width: 80%;
+  border-left: var(--ms-mp-gray-border);
+}
+
+.sales_table_head {
+  display: flex;
+  align-items: center;
+  margin: auto;
+}
+
+.sales_table_head > div {
+  padding: 1rem 0;
+}
+
+.sales_table_head > div:first-of-type {
+  width: 10%;
+}
+.sales_table_head > div:nth-of-type(2) {
+  width: 30%;
+}
+.sales_table_head > div:not(:nth-of-type(2), :first-of-type) {
+  width: calc(60% / 4);
+}
+
+.activity_screen .solid_button,
+.activity_screen .loader {
+  display: block;
+  margin: 1rem auto;
+  width: 140px;
+}
+
+.activity_screen .loader {
+  width: unset;
+}
+
+.activities_loading {
+  text-align: center;
+}
+
+@media screen and (max-width: 1024px) {
+  .activity_screen {
+    width: calc(100% - 320px);
+    overflow-x: auto;
+  }
+
+  .sales_table_head {
+    width: 100vw;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .activity_screen {
+    width: 100%;
+    border-left: none;
+  }
+
+  .sales_table_head {
+    width: 230%;
+  }
+
+  .mobile_activity_filter_button {
+    position: fixed;
+    bottom: 2rem;
+    left: 1rem;
+    background-color: var(--ms-mp-primary-color);
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--ms-mp-transition);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .mobile_activity_filter_button:active {
+    transform: scale(0.95);
+  }
+}

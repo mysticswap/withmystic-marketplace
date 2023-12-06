@@ -1,0 +1,11 @@
+.activity_filters > p {
+  border-bottom: var(--ms-mp-gray-border);
+  padding: 1rem 0 1rem 1rem;
+  margin: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .activity_filters > p {
+    display: none;
+  }
+}

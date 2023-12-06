@@ -1,0 +1,187 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  height: 6rem;
+  border-bottom: var(--ms-mp-gray-border);
+  border-color: var(--ms-mp-gray-light);
+}
+.navbar a {
+  color: unset;
+}
+
+.nav_left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav_main_contents {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.logo_holder {
+  max-width: 150px;
+}
+
+.logo_holder img {
+  width: 100%;
+  max-height: 3.5rem;
+  object-fit: contain;
+}
+
+.nav_links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav_links > a > svg {
+  transition: var(--ms-mp-transition);
+}
+
+.nav_links > a > svg:hover {
+  opacity: 0.5;
+}
+
+.collections_dropdown {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.collection_dropdown_trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+  color: var(--ms-mp-text-color);
+}
+
+.collection_dropdown_trigger:hover {
+  opacity: 0.5;
+}
+
+.collections_dropdown_list {
+  position: absolute;
+  top: 150%;
+  background-color: var(--ms-mp-body-background);
+  width: 230%;
+  z-index: 1;
+  padding: 0.75rem;
+  border-radius: 1rem;
+  box-shadow: var(--ms-mp-box-shadow);
+  border: var(--ms-mp-gray-border);
+  border-color: var(--ms-mp-gray-light);
+}
+
+.collections_dropdown_list button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: transparent;
+  border: none;
+  border-radius: 8px;
+  transition: var(--ms-mp-transition);
+  cursor: pointer;
+  color: var(--ms-mp-text-color);
+}
+
+.collections_dropdown_list button:hover {
+  background-color: var(--ms-mp-gray-light);
+}
+
+.sell_button {
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+  color: var(--ms-mp-text-color);
+}
+
+.sell_button:hover {
+  opacity: 0.5;
+}
+
+@media screen and (max-width: 600px) {
+  .logo_holder {
+    max-width: 100px;
+  }
+
+  .burger_btn {
+    cursor: pointer;
+  }
+
+  .nav_main_contents {
+    position: fixed;
+    background-color: var(--ms-mp-body-background);
+    width: 100%;
+    top: calc(6rem + 1px);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    flex-direction: column;
+    padding: 1rem;
+    box-sizing: border-box;
+    transform: translateX(100%);
+    transition: var(--ms-mp-transition);
+  }
+
+  .show_nav_main_contents {
+    transform: translateX(0%);
+  }
+
+  .nav_links {
+    order: 3;
+  }
+
+  .nav_right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .collection_dropdown_trigger {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .collections_dropdown {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .collections_dropdown_list {
+    width: 100%;
+    box-sizing: border-box;
+    position: static;
+    margin-top: 1rem;
+    box-shadow: none;
+    border-color: var(--ms-mp-gray);
+  }
+
+  .sell_button {
+    margin-right: auto;
+  }
+
+  .collections_dropdown_list button {
+    font-size: 1rem;
+  }
+
+  svg.collection_dropdown_trigger {
+    width: auto;
+  }
+}

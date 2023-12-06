@@ -1,0 +1,42 @@
+.grid_buttons {
+  width: 10%;
+  background-color: var(--ms-mp-gray-light);
+  border-radius: var(--ms-mp-large-border-radius);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.grid_buttons button {
+  width: 50%;
+  background-color: transparent;
+  border: none;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+  color: var(--ms-mp-text-color);
+}
+
+.grid_buttons button:first-of-type {
+  border-right: 1px solid var(--ms-mp-gray);
+}
+
+.filter_button:hover,
+.grid_buttons button:hover {
+  background-color: var(--ms-mp-controlbar-hover);
+}
+
+@media screen and (max-width: 820px) {
+  .grid_buttons {
+    width: 15%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .grid_buttons {
+    display: none;
+  }
+}

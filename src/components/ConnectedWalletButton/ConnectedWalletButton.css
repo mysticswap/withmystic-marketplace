@@ -1,0 +1,44 @@
+.connected_button_container {
+  position: relative;
+}
+
+.connected_wallet_button {
+  padding: 0.75rem 1rem;
+  border-radius: var(--ms-mp-button-border-radius);
+  border: none;
+  cursor: pointer;
+  color: black;
+  background: transparent;
+  font-weight: 700;
+  transition: var(--ms-mp-transition);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ms-mp-text-color);
+}
+
+.connected_wallet_button:hover {
+  background-color: var(--ms-mp-controlbar-hover);
+}
+
+.logout_btn:hover {
+  background-color: var(--ms-mp-controlbar-hover);
+}
+
+.logout_btn {
+  position: absolute;
+  right: 1rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: var(--ms-mp-body-background);
+  color: var(--ms-mp-text-color);
+  z-index: 1;
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--ms-mp-box-shadow);
+  transition: var(--ms-mp-transition);
+  border-radius: 6px;
+  font-size: 14px;
+  border: var(--ms-mp-gray-border);
+  border-color: var(--ms-mp-gray-light);
+}

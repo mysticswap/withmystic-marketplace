@@ -1,0 +1,78 @@
+.control_dropdown_parent {
+  width: 15%;
+  position: relative;
+}
+
+.control_dropdown_trigger {
+  background-color: var(--ms-mp-gray-light);
+  padding: 0.75rem;
+  border-radius: var(--ms-mp-large-border-radius);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: none;
+  transition: var(--ms-mp-transition);
+  cursor: pointer;
+  color: var(--ms-mp-text-color);
+}
+
+.control_dropdown_trigger:hover {
+  background-color: var(--ms-mp-controlbar-hover);
+}
+
+.control_dropdown_list {
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 1rem;
+  margin-top: 0.5rem;
+  background-color: var(--ms-mp-body-background);
+  box-shadow: var(--ms-mp-box-shadow-light);
+  padding: 0.5rem;
+  z-index: 1;
+  border: var(--ms-mp-gray-border);
+  border-color: var(--ms-mp-gray-light);
+}
+
+.control_dropdown_list button {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  text-align: left;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--ms-mp-text-color);
+}
+
+.control_dropdown_list button:hover {
+  background-color: var(--ms-mp-gray-light);
+}
+
+@media screen and (max-width: 1024px) {
+  .control_dropdown_parent {
+    width: 20%;
+  }
+}
+
+@media screen and (max-width: 820px) {
+  .control_dropdown_parent {
+    width: 25%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .control_dropdown_parent {
+    width: 100%;
+  }
+
+  .control_dropdown_trigger,
+  .control_dropdown_list button {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,45 @@
+.filter_button {
+  width: 10%;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: var(--ms-mp-large-border-radius);
+  border: none;
+  background-color: var(--ms-mp-gray-light);
+  transition: var(--ms-mp-transition);
+  cursor: pointer;
+  position: relative;
+  color: var(--ms-mp-text-color);
+}
+
+.filter_counter {
+  position: absolute;
+  background-color: var(--ms-mp-primary-color);
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: -8px;
+  right: 0;
+  font-size: 12px;
+}
+
+@media screen and (max-width: 820px) {
+  .filter_button {
+    width: 15%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .filter_button {
+    width: 100%;
+    padding: calc(0.75rem - 3px);
+    font-size: 14px;
+  }
+}

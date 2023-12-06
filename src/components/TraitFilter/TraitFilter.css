@@ -1,0 +1,70 @@
+.trait_filter {
+  padding: 0.75rem;
+  padding-left: 0;
+  border-bottom: var(--ms-mp-gray-border);
+}
+
+.trait_filter:last-of-type {
+  border-bottom: none;
+}
+
+.trait_search {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border-radius: var(--ms-mp-large-border-radius);
+  background-color: var(--ms-mp-gray-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--ms-mp-gray);
+  transition: var(--ms-mp-transition);
+}
+
+.trait_search:hover {
+  border-color: var(--ms-mp-text-color);
+}
+
+.trait_search:focus-within {
+  border-color: var(--ms-mp-primary-color);
+}
+
+.trait_search > input {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  width: 95%;
+}
+
+.trait_container {
+  overflow: hidden;
+  max-height: 10000px;
+  transition: max-height 1s ease-in-out;
+}
+
+.trait_container[aria-expanded="true"] {
+  max-height: 0px;
+  transition: var(--ms-mp-super-smooth-transition);
+  padding: 0;
+  margin-top: 0;
+}
+
+.trait_container .status_list_item {
+  color: gray;
+}
+
+.trait_container .status_list_item > div {
+  width: 85%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trait_container .status_list_item small {
+  font-size: 12px;
+}
+
+@media screen and (max-width: 600px) {
+  .trait_filter {
+    padding: 0.75rem 0 0.75rem 0;
+  }
+}
