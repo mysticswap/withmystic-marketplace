@@ -10,20 +10,20 @@ import {
   getNftActivity,
   getNftOffers,
   getSingleNftV2,
-} from "../../../../services/api/marketplace-reservoir-api";
+} from "../../../../services/api/marketplace-rsv-api";
 import { handleBuyOrSellData } from "../../../../services/buy-sale-service";
 import { connectWallets } from "../../../../services/web3Onboard";
 import {
   Market,
   TokenElement,
   TokenToken,
-} from "../../../../types/reservoir-types/collection-nfts.types";
+} from "../../../../types/rsv-types/collection-nfts.types";
 import { redirectToMSWalletPage, truncateAddress } from "../../../../utils";
 import "./NftHeader.css";
 import { IoShareSocial } from "react-icons/io5";
 import { LuRefreshCw } from "react-icons/lu";
 import { BsCheckCircleFill } from "react-icons/bs";
-import { reservoirActivityTypes } from "../../../../constants";
+import { rsvActivityTypes } from "../../../../constants";
 import { Link } from "react-router-dom";
 import { switchChains } from "../../../../utils/wallet-connection";
 import { getDiscordEndpointData } from "../../../../utils/discord-utils";
@@ -128,7 +128,7 @@ const NftHeader = ({
       getNftOffers(collectionChainId, token).then((result) => {
         setNftOffers(result);
       }),
-      getNftActivity(collectionChainId, token, reservoirActivityTypes).then(
+      getNftActivity(collectionChainId, token, rsvActivityTypes).then(
         (result) => setNftActivity(result)
       ),
       getSingleNftV2(collectionChainId, token).then((result) => {

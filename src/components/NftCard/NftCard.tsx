@@ -1,6 +1,6 @@
 import "./NftCard.css";
 import { Link } from "react-router-dom";
-import { TokenElement } from "../../types/reservoir-types/collection-nfts.types";
+import { TokenElement } from "../../types/rsv-types/collection-nfts.types";
 import { useRef } from "react";
 import CustomTooltip from "../CustomTooltip/CustomTooltip";
 import { SiOpensea } from "react-icons/si";

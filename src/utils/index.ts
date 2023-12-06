@@ -1,8 +1,5 @@
 import { SelectedTrait } from "../context/HomeContext/types";
-import {
-  Market,
-  TokenToken,
-} from "../types/reservoir-types/collection-nfts.types";
+import { Market, TokenToken } from "../types/rsv-types/collection-nfts.types";
 
 export const getQueryString = (params: { [x: string]: any }) => {
   return Object.entries(params)

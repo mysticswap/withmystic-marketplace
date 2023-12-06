@@ -1,4 +1,4 @@
-export interface GetNftsReservoir {
+export interface GetNftsRsv {
   tokens: TokenElement[];
   continuation: string | null;
 }

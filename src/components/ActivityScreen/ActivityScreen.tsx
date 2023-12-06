@@ -4,7 +4,7 @@ import "./ActivityScreen.css";
 import ActivityRow from "../ActivityRow/ActivityRow";
 import SolidButton from "../SolidButton/SolidButton";
 import { BiLoaderCircle } from "react-icons/bi";
-import { getCollectionActivity } from "../../services/api/marketplace-reservoir-api";
+import { getCollectionActivity } from "../../services/api/marketplace-rsv-api";
 import FiltersSidebar from "../FiltersSidebar/FiltersSidebar";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
