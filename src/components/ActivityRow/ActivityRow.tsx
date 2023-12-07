@@ -14,6 +14,7 @@ import { activityRenames, scanWebsites, tabOptions } from "../../constants";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { SiOpensea } from "react-icons/si";
 import x2y2 from "../../assets/x2y2.png";
+import favicon from "../../assets/favicon.png";
 
 dayjs.extend(relativeTime);
 
@@ -49,7 +50,7 @@ const ActivityRow = ({ activity }: Props) => {
                 source?.includes("x2y2")
                   ? x2y2
                   : isFromCurrentMarketplace
-                  ? client.favicon
+                  ? favicon
                   : source
               }
               alt=""

@@ -19,6 +19,7 @@ import { getDiscordEndpointData } from "../../../../utils/discord-utils";
 import { TokenElement } from "../../../../types/rsv-types/collection-nfts.types";
 import { generateSaleActivity } from "../../../../utils/activity-utils";
 import { getTransactionNft } from "../../../../utils/transaction-nft.utils";
+import favicon from "../../../../assets/favicon.png";
 
 type Props = {
   nftOffers: NftOffers;
@@ -28,7 +29,7 @@ type Props = {
 
 const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
   const { user, chainId } = useConnectionContext()!;
-  const { collectionChainId, collectionContract, client } = useGlobalContext();
+  const { collectionChainId, collectionContract } = useGlobalContext();
   const { nftInfo, nftPriceData } = useNftPageContext()!;
   const {
     setTransactionStage,
@@ -77,7 +78,7 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
         const postData = getDiscordEndpointData(
           nft,
           offerMaker,
-          client,
+          favicon,
           amount.toString(),
           price.toString()
         );

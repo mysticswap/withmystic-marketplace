@@ -30,7 +30,6 @@ const Navbar = () => {
     selectedCollection,
     setSelectedCollection,
     setCurrentTab,
-    client,
   } = useGlobalContext();
   const { setShowOfferOrListingModal } = useTransactionContext()!;
   const location = useLocation();
@@ -74,7 +73,10 @@ const Navbar = () => {
               setShowMobileMenu(false);
             }}
           >
-            <img src={client.logoUrl} alt="collection_logo" />
+            <img
+              src="https://mysticswap.io/static/media/mystWizGuild2.824b89cd.png"
+              alt="collection_logo"
+            />
           </Link>
         </div>
 

@@ -29,6 +29,7 @@ import { switchChains } from "../../../../utils/wallet-connection";
 import { getDiscordEndpointData } from "../../../../utils/discord-utils";
 import { generateSaleActivity } from "../../../../utils/activity-utils";
 import { getTransactionNft } from "../../../../utils/transaction-nft.utils";
+import favicon from "../../../../assets/favicon.png";
 
 type Props = {
   nftInfo: TokenToken;
@@ -46,7 +47,7 @@ const NftHeader = ({
   const { user, setProvider, chainId } = useConnectionContext()!;
   const { setTransactionNft, setTransactionStage, setTransactionHash } =
     useTransactionContext()!;
-  const { source, collectionChainId, userBalance, client } = useGlobalContext();
+  const { source, collectionChainId, userBalance } = useGlobalContext();
   const {
     token,
     setNftDataV2,
@@ -85,7 +86,7 @@ const NftHeader = ({
     !user ? connectWallets(setProvider) : setter(true);
   };
 
-  const postData = getDiscordEndpointData(nft, user!, client);
+  const postData = getDiscordEndpointData(nft, user!, favicon);
   const activityData = generateSaleActivity(nft, "sale", user!);
 
   const buyOrList = () => {

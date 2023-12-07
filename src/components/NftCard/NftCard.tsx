@@ -18,17 +18,13 @@ import { balanceChain } from "../../constants";
 import { getDiscordEndpointData } from "../../utils/discord-utils";
 import { generateSaleActivity } from "../../utils/activity-utils";
 import { getTransactionNft } from "../../utils/transaction-nft.utils";
+import favicon from "../../assets/favicon.png";
 
 type Props = { nft: TokenElement };
 
 const NftCard = ({ nft }: Props) => {
-  const {
-    minimalCards,
-    collectionChainId,
-    collectionContract,
-    userBalance,
-    client,
-  } = useGlobalContext();
+  const { minimalCards, collectionChainId, collectionContract, userBalance } =
+    useGlobalContext();
   const { user, chainId, setProvider } = useConnectionContext()!;
   const {
     setShowConfirmationModal,
@@ -50,7 +46,7 @@ const NftCard = ({ nft }: Props) => {
   const sourceLink = nft?.market?.floorAsk?.source?.url;
   const sourceDomain = nft?.market?.floorAsk?.source?.domain;
 
-  const isFromCurrentMarketplace = sourceDomain == client.hostname;
+  const isFromCurrentMarketplace = sourceDomain == getHostName();
 
   const nameLink = (
     <Link to={`/${collectionContract}/${nftId}`}>
@@ -58,7 +54,7 @@ const NftCard = ({ nft }: Props) => {
     </Link>
   );
 
-  const postData = getDiscordEndpointData(nft, user!, client);
+  const postData = getDiscordEndpointData(nft, user!, favicon);
   const activityData = generateSaleActivity(nft, "sale", user!);
 
   const startBuyProcess = () => {
@@ -152,7 +148,7 @@ const NftCard = ({ nft }: Props) => {
                 sourceLink?.includes("x2y2")
                   ? x2y2
                   : isFromCurrentMarketplace
-                  ? client.favicon
+                  ? favicon
                   : sourceIcon
               }
               alt=""
