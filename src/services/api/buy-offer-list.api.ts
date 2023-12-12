@@ -46,13 +46,15 @@ export const buyListedNft = async (
   chainId: number,
   orderId: string,
   taker: string,
-  source: string
+  source: string,
+  collectionRoyaltyRecipient: string
 ) => {
   const request = await marketplaceInstance.post("/buy-nft", {
     chainId,
     orderId,
     taker,
     source,
+    collectionRoyaltyRecipient,
   });
   return request.data;
 };

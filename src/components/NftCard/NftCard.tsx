@@ -28,6 +28,7 @@ const NftCard = ({ nft }: Props) => {
     collectionContract,
     userBalance,
     client,
+    collectionMetadata,
   } = useGlobalContext();
   const { user, chainId, setProvider } = useConnectionContext()!;
   const {
@@ -64,9 +65,18 @@ const NftCard = ({ nft }: Props) => {
   const startBuyProcess = () => {
     const orderId = nft?.market?.floorAsk?.id;
     const source = getHostName();
+    const collectionRoyaltyRecipient = (collectionMetadata?.collections?.[0]
+      ?.royalties.recipient ||
+      "0xa0841eb3387f711D7aAF65C1fDe4B88D15764DFE") as string;
 
     switchChains(chainId, collectionChainId).then(() => {
-      buyListedNft(collectionChainId, orderId, user!, source).then((result) => {
+      buyListedNft(
+        collectionChainId,
+        orderId,
+        user!,
+        source,
+        collectionRoyaltyRecipient
+      ).then((result) => {
         setTransactionStage(1);
         handleBuyOrSellData(
           result,
