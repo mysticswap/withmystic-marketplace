@@ -9,7 +9,7 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { useIsOverflow } from "../../hooks/useIsOverflow";
 import { buyListedNft } from "../../services/api/buy-offer-list.api";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
-import { getHostName } from "../../utils";
+import { getHostName, getOnePercentFee } from "../../utils";
 import { handleBuyOrSellData } from "../../services/buy-sale-service";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import { switchChains } from "../../utils/wallet-connection";
@@ -28,7 +28,6 @@ const NftCard = ({ nft }: Props) => {
     collectionContract,
     userBalance,
     client,
-    collectionMetadata,
   } = useGlobalContext();
   const { user, chainId, setProvider } = useConnectionContext()!;
   const {
@@ -50,6 +49,7 @@ const NftCard = ({ nft }: Props) => {
   const sourceIcon = nft?.market?.floorAsk?.source?.icon;
   const sourceLink = nft?.market?.floorAsk?.source?.url;
   const sourceDomain = nft?.market?.floorAsk?.source?.domain;
+  const onePercentFee = getOnePercentFee(currentEthAmount);
 
   const isFromCurrentMarketplace = sourceDomain == client.hostname;
 
@@ -65,9 +65,7 @@ const NftCard = ({ nft }: Props) => {
   const startBuyProcess = () => {
     const orderId = nft?.market?.floorAsk?.id;
     const source = getHostName();
-    const collectionRoyaltyRecipient = (collectionMetadata?.collections?.[0]
-      ?.royalties.recipient ||
-      "0xa0841eb3387f711D7aAF65C1fDe4B88D15764DFE") as string;
+    const isLocal = sourceDomain == source;
 
     switchChains(chainId, collectionChainId).then(() => {
       buyListedNft(
@@ -75,7 +73,8 @@ const NftCard = ({ nft }: Props) => {
         orderId,
         user!,
         source,
-        collectionRoyaltyRecipient
+        isLocal,
+        onePercentFee
       ).then((result) => {
         setTransactionStage(1);
         handleBuyOrSellData(

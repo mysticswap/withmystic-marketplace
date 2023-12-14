@@ -112,3 +112,9 @@ export const updateFavicon = (url: string) => {
 export const updateSiteTitle = (text: string) => {
   document.title = text || "";
 };
+
+export const getOnePercentFee = (tokenValueDecimals: number) => {
+  return Number(
+    convertTokenAmountToDecimal(tokenValueDecimals * 0.01).toFixed(0)
+  );
+};
