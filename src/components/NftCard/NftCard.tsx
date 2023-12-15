@@ -50,6 +50,8 @@ const NftCard = ({ nft }: Props) => {
   const sourceLink = nft?.market?.floorAsk?.source?.url;
   const sourceDomain = nft?.market?.floorAsk?.source?.domain;
   const onePercentFee = getOnePercentFee(currentEthAmount);
+  const isErc1155 = nft?.token?.kind == "erc1155";
+  const supply = nft?.token?.remainingSupply;
 
   const isFromCurrentMarketplace = sourceDomain == client.hostname;
 
@@ -114,9 +116,15 @@ const NftCard = ({ nft }: Props) => {
 
   return (
     <div className="nft_card">
-      <Link to={`/${collectionContract}/${nftId}`}>
-        <img src={nft?.token?.image} alt="" />
-      </Link>
+      <div className="nft_card_image_area">
+        {isErc1155 && (
+          <div className="nft_card_supply_count">{`x${supply}`}</div>
+        )}
+        <Link to={`/${collectionContract}/${nftId}`}>
+          <img src={nft?.token?.image} alt="" />
+        </Link>
+      </div>
+
       <div className="nft_card_details">
         <div className="card_name">
           {isOverflowing ? (
