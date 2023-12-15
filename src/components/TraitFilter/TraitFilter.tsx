@@ -4,7 +4,7 @@ import { useState } from "react";
 import { IoClose, IoSearchSharp } from "react-icons/io5";
 import StatusListItem from "../StatusListItem/StatusListItem";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
-import { AttributeV2 } from "../../types/reservoir-types/collection-traits.types";
+import { AttributeV2 } from "../../types/rsv-types/collection-traits.types";
 
 type Props = {
   attribute: AttributeV2;
