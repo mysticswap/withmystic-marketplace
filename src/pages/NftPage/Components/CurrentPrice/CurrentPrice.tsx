@@ -1,4 +1,4 @@
-import { Market } from "../../../../types/reservoir-types/collection-nfts.types";
+import { Market } from "../../../../types/rsv-types/collection-nfts.types";
 import "./CurrentPrice.css";
 import { SiOpensea } from "react-icons/si";
 import x2y2 from "../../../../assets/x2y2.png";
