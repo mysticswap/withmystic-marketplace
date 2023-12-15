@@ -41,6 +41,7 @@ export type GlobalContextType = {
     React.SetStateAction<MarketplaceClientCollection>
   >;
   collectionContract: string;
+  activitiesFetching: boolean;
   ethValue: number;
   client: ClientObject;
 };
