@@ -178,6 +178,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
               >
                 <input
                   type="number"
+                  min={0}
                   placeholder={inputPlaceholder}
                   value={offerAmount}
                   onChange={(e) => {
@@ -187,6 +188,15 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                       amount: Number(e.target.value),
                       price: ethValue * Number(e.target.value),
                     });
+
+                    if (e.target.value.includes("-")) {
+                      setOfferAmount("");
+                      setTransactionNft({
+                        ...transactionNft,
+                        amount: Number(""),
+                        price: ethValue * Number(""),
+                      });
+                    }
                   }}
                 />
                 <p>{!isOffer ? "ETH" : "wETH"}</p>
