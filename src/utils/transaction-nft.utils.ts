@@ -1,6 +1,6 @@
 import { TransactionNft } from "../context/TransactionContext/types";
-import { TokenElement } from "../types/reservoir-types/collection-nfts.types";
-import { UserTokenElement } from "../types/reservoir-types/user-nfts.types";
+import { TokenElement } from "../types/rsv-types/collection-nfts.types";
+import { UserTokenElement } from "../types/rsv-types/user-nfts.types";
 
 export const getTransactionNft = (
   nft: TokenElement | UserTokenElement,

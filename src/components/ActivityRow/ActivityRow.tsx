@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import CustomTooltip from "../CustomTooltip/CustomTooltip";
 import { Link } from "react-router-dom";
-import { Activity } from "../../types/reservoir-types/collection-activity.types";
+import { Activity } from "../../types/rsv-types/collection-activity.types";
 import { activityRenames, scanWebsites, tabOptions } from "../../constants";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { SiOpensea } from "react-icons/si";

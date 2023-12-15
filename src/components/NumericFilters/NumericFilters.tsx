@@ -3,7 +3,7 @@ import "./NumericFilters.css";
 import { RiArrowUpSLine } from "react-icons/ri";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import { NumericFiltersType } from "../../context/HomeContext/types";
-import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-api";
+import { getCollectionNftsV2 } from "../../services/api/marketplace-rsv-api";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { generateAttributeString } from "../../utils";
 
