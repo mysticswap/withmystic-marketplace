@@ -1,8 +1,5 @@
 import { SelectedTrait } from "../context/HomeContext/types";
-import {
-  Market,
-  TokenToken,
-} from "../types/reservoir-types/collection-nfts.types";
+import { Market, TokenToken } from "../types/rsv-types/collection-nfts.types";
 
 export const getQueryString = (params: { [x: string]: any }) => {
   return Object.entries(params)
@@ -77,6 +74,7 @@ export const getHostName = () => {
       return "deploy-preview-14--heroic-duckanoo-b32f52.netlify.app";
       return "market.localhost.io";
       return "marketplace.mysticswaplocalhost.io";
+      return "market.localhost.io";
     case "deploy-preview-27--heroic-duckanoo-b32f52.netlify.app":
       return "market.localhost.io";
       return "deploy-preview-26--heroic-duckanoo-b32f52.netlify.app";
@@ -114,4 +112,10 @@ export const updateFavicon = (url: string) => {
 
 export const updateSiteTitle = (text: string) => {
   document.title = text || "";
+};
+
+export const getOnePercentFee = (tokenValueDecimals: number) => {
+  return Number(
+    convertTokenAmountToDecimal(tokenValueDecimals * 0.01).toFixed(0)
+  );
 };

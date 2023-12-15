@@ -1,6 +1,6 @@
 import { NumericFiltersType } from "../../context/HomeContext/types";
-import { Post } from "../../types/reservoir-types/listing-data.types";
-import { Post as AuthPost } from "../../types/reservoir-types/buy-data.types";
+import { Post } from "../../types/rsv-types/listing-data.types";
+import { Post as AuthPost } from "../../types/rsv-types/buy-data.types";
 import { marketplaceInstance } from "../axios";
 
 export const getCollectionMetadata = async (

@@ -1,8 +1,8 @@
 import { getHostName } from ".";
 import { TransactionNft } from "../context/TransactionContext/types";
 import { ActivityObject, ActivityType } from "../types/activity.types";
-import { CollectionMetadataV2 } from "../types/reservoir-types/collection-metadata.types";
-import { TokenElement } from "../types/reservoir-types/collection-nfts.types";
+import { CollectionMetadataV2 } from "../types/rsv-types/collection-metadata.types";
+import { TokenElement } from "../types/rsv-types/collection-nfts.types";
 
 export const generateSaleActivity = (
   nft: TokenElement,
