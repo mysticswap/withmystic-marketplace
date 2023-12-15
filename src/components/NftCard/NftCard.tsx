@@ -9,7 +9,7 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { useIsOverflow } from "../../hooks/useIsOverflow";
 import { buyListedNft } from "../../services/api/buy-offer-list.api";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
-import { getHostName } from "../../utils";
+import { getHostName, getOnePercentFee } from "../../utils";
 import { handleBuyOrSellData } from "../../services/buy-sale-service";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import { switchChains } from "../../utils/wallet-connection";
@@ -49,6 +49,9 @@ const NftCard = ({ nft }: Props) => {
   const sourceIcon = nft?.market?.floorAsk?.source?.icon;
   const sourceLink = nft?.market?.floorAsk?.source?.url;
   const sourceDomain = nft?.market?.floorAsk?.source?.domain;
+  const onePercentFee = getOnePercentFee(currentEthAmount);
+  const isErc1155 = nft?.token?.kind == "erc1155";
+  const supply = nft?.token?.remainingSupply;
 
   const isFromCurrentMarketplace = sourceDomain == client.hostname;
 
@@ -64,9 +67,17 @@ const NftCard = ({ nft }: Props) => {
   const startBuyProcess = () => {
     const orderId = nft?.market?.floorAsk?.id;
     const source = getHostName();
+    const isLocal = sourceDomain == source;
 
     switchChains(chainId, collectionChainId).then(() => {
-      buyListedNft(collectionChainId, orderId, user!, source).then((result) => {
+      buyListedNft(
+        collectionChainId,
+        orderId,
+        user!,
+        source,
+        isLocal,
+        onePercentFee
+      ).then((result) => {
         setTransactionStage(1);
         handleBuyOrSellData(
           result,
@@ -105,9 +116,15 @@ const NftCard = ({ nft }: Props) => {
 
   return (
     <div className="nft_card">
-      <Link to={`/${collectionContract}/${nftId}`}>
-        <img src={nft?.token?.image} alt="" />
-      </Link>
+      <div className="nft_card_image_area">
+        {isErc1155 && (
+          <div className="nft_card_supply_count">{`x${supply}`}</div>
+        )}
+        <Link to={`/${collectionContract}/${nftId}`}>
+          <img src={nft?.token?.image} alt="" />
+        </Link>
+      </div>
+
       <div className="nft_card_details">
         <div className="card_name">
           {isOverflowing ? (
