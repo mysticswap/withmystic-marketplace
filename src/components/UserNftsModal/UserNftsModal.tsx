@@ -3,7 +3,7 @@ import "./UserNftsModal.css";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import UserNftCard from "../UserNftCard/UserNftCard";
 import { useState } from "react";
-import { getUserNfts } from "../../services/api/marketplace-reservoir-api";
+import { getUserNfts } from "../../services/api/marketplace-rsv-api";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 import { BiLoaderCircle } from "react-icons/bi";
 

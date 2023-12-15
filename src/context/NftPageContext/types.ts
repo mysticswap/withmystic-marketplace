@@ -1,14 +1,14 @@
-import { CollectionActivity as NftActivity } from "../../types/reservoir-types/collection-activity.types";
+import { CollectionActivity as NftActivity } from "../../types/rsv-types/collection-activity.types";
 import {
-  GetNftsReservoir,
+  GetNftsRsv,
   Market,
   TokenToken,
-} from "../../types/reservoir-types/collection-nfts.types";
-import { NftOffers } from "../../types/reservoir-types/nft-offers.types";
+} from "../../types/rsv-types/collection-nfts.types";
+import { NftOffers } from "../../types/rsv-types/nft-offers.types";
 
 export type NftPageContextType = {
-  nftDataV2: GetNftsReservoir;
-  setNftDataV2: React.Dispatch<React.SetStateAction<GetNftsReservoir>>;
+  nftDataV2: GetNftsRsv;
+  setNftDataV2: React.Dispatch<React.SetStateAction<GetNftsRsv>>;
   nftOffers: NftOffers;
   setNftOffers: React.Dispatch<React.SetStateAction<NftOffers>>;
   nftActivity: NftActivity;
