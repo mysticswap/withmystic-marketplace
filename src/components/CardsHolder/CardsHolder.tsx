@@ -5,7 +5,7 @@ import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import SelectedFilter from "../SelectedFilter/SelectedFilter";
 import { useEffect, useRef, useState } from "react";
 import { BiLoaderCircle } from "react-icons/bi";
-import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-api";
+import { getCollectionNftsV2 } from "../../services/api/marketplace-rsv-api";
 import { generateAttributeString } from "../../utils";
 
 const CardsHolder = () => {

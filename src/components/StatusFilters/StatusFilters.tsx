@@ -3,7 +3,7 @@ import "./StatusFilters.css";
 import { RiArrowUpSLine } from "react-icons/ri";
 import StatusListItem from "../StatusListItem/StatusListItem";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
-import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-api";
+import { getCollectionNftsV2 } from "../../services/api/marketplace-rsv-api";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { generateAttributeString, getHostName } from "../../utils";
 
