@@ -1,6 +1,6 @@
 import { scanWebsites } from "../../../../constants";
 import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
-import { TokenToken } from "../../../../types/reservoir-types/collection-nfts.types";
+import { TokenToken } from "../../../../types/rsv-types/collection-nfts.types";
 import { truncateAddress } from "../../../../utils";
 import "./Details.css";
 

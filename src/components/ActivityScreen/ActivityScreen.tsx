@@ -4,7 +4,7 @@ import "./ActivityScreen.css";
 import ActivityRow from "../ActivityRow/ActivityRow";
 import SolidButton from "../SolidButton/SolidButton";
 import { BiLoaderCircle } from "react-icons/bi";
-import { getCollectionActivity } from "../../services/api/marketplace-reservoir-api";
+import { getCollectionActivity } from "../../services/api/marketplace-rsv-api";
 import FiltersSidebar from "../FiltersSidebar/FiltersSidebar";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
@@ -17,6 +17,7 @@ const ActivityScreen = () => {
     setCollectionActivity,
     selectedActivities,
     collectionChainId,
+    activitiesFetching,
   } = useGlobalContext();
   const { setShowMobileFilters } = useHomeContext()!;
   const [activities, setActivities] = useState(collectionActivity?.activities);
@@ -61,16 +62,23 @@ const ActivityScreen = () => {
           <div>To</div>
           <div>Time</div>
         </div>
-        {!activities?.length && (
-          <p className="activities_loading">Loading...</p>
+
+        {activitiesFetching && <p className="activities_loading">Loading...</p>}
+
+        {!activities?.length && !activitiesFetching && (
+          <p className="activities_loading">No activities yet.</p>
         )}
+
         {activities?.map((activity) => {
           return <ActivityRow key={uuid()} activity={activity} />;
         })}
+
         {collectionActivity.continuation && canFetch && (
           <SolidButton text="Show more" onClick={loadMoreHistory} />
         )}
+
         {isFetching && <BiLoaderCircle className="loader" size={50} />}
+
         {isMobile && (
           <button
             className="mobile_activity_filter_button"
