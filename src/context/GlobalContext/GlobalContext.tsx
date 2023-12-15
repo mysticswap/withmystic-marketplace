@@ -14,18 +14,18 @@ import {
   getCollectionNftsV2,
   getCollectionTraitsV2,
   getUserNfts,
-} from "../../services/api/marketplace-reservoir-api";
-import { CollectionMetadataV2 } from "../../types/reservoir-types/collection-metadata.types";
-import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.types";
+} from "../../services/api/marketplace-rsv-api";
+import { CollectionMetadataV2 } from "../../types/rsv-types/collection-metadata.types";
+import { GetNftsRsv } from "../../types/rsv-types/collection-nfts.types";
 import {
   defaultSort,
   defaultSortby,
-  reservoirActivityTypes,
+  rsvActivityTypes,
   tabOptions,
 } from "../../constants";
-import { CollectionActivity } from "../../types/reservoir-types/collection-activity.types";
-import { CollectionTraitsV2 } from "../../types/reservoir-types/collection-traits.types";
-import { UserNfts } from "../../types/reservoir-types/user-nfts.types";
+import { CollectionActivity } from "../../types/rsv-types/collection-activity.types";
+import { CollectionTraitsV2 } from "../../types/rsv-types/collection-traits.types";
+import { UserNfts } from "../../types/rsv-types/user-nfts.types";
 import { useConnectionContext } from "../ConnectionContext/ConnectionContext";
 import { getHostName, getPreviousCollectionAddress } from "../../utils";
 import { getEthPrice } from "../../services/api/coin-gecko.api";
@@ -52,7 +52,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
   const [currentTab, setCurrentTab] = useState(tabOptions[0]);
   const [collectionMetadata, setCollectionMetadata] =
     useState<CollectionMetadataV2 | null>(null);
-  const [collectionNfts, setCollectionNfts] = useState({} as GetNftsReservoir);
+  const [collectionNfts, setCollectionNfts] = useState({} as GetNftsRsv);
   const [collectionActivity, setCollectionActivity] = useState(
     {} as CollectionActivity
   );
@@ -64,6 +64,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
   const [userNfts, setUserNfts] = useState({} as UserNfts);
   const [minimalCards, setMinimalCards] = useState(true);
   const [ethValue, setEthValue] = useState(0);
+  const [activitiesFetching, setActivitiesFetching] = useState(false);
 
   const selectedActivityTypes = JSON.stringify(selectedActivities);
   const source = getHostName();
@@ -103,17 +104,17 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
 
   useEffect(() => {
     if (selectedActivities.length < 1) {
-      setSelectedActivities(JSON.parse(reservoirActivityTypes));
+      setSelectedActivities(JSON.parse(rsvActivityTypes));
     }
     setCollectionActivity({} as CollectionActivity);
+    setActivitiesFetching(true);
     getCollectionActivity(
       collectionChainId,
       collectionContract,
-      selectedActivities.length < 1
-        ? reservoirActivityTypes
-        : selectedActivityTypes
+      selectedActivities.length < 1 ? rsvActivityTypes : selectedActivityTypes
     ).then((result) => {
       setCollectionActivity(result);
+      setActivitiesFetching(false);
     });
   }, [selectedActivities]);
 
@@ -177,6 +178,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
         selectedCollection,
         setSelectedCollection,
         collectionContract,
+        activitiesFetching,
         ethValue,
         client,
       }}
