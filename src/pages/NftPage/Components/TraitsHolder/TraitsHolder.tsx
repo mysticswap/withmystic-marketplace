@@ -1,4 +1,4 @@
-import { NftAttributes } from "../../../../types/reservoir-types/collection-nfts.types";
+import { NftAttributes } from "../../../../types/rsv-types/collection-nfts.types";
 import "./TraitsHolder.css";
 
 type Props = { attributes: NftAttributes[] | undefined; tokenCount: number };
