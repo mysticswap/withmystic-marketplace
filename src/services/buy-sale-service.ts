@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
-import { BuyData, Data } from "../types/reservoir-types/buy-data.types";
+import { BuyData, Data } from "../types/rsv-types/buy-data.types";
 import { executeTransactions } from "./seaport";
-import { authSignature } from "./api/marketplace-reservoir-api";
+import { authSignature } from "./api/marketplace-rsv-api";
 import { toast } from "react-toastify";
 import { DiscordPostBody } from "../types/discord-post.types";
 import { postSale } from "./api/discord.api";

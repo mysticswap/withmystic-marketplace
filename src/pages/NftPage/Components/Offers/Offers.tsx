@@ -1,12 +1,12 @@
 import dayjs from "dayjs";
-import { NftOffers } from "../../../../types/reservoir-types/nft-offers.types";
+import { NftOffers } from "../../../../types/rsv-types/nft-offers.types";
 import {
   getHostName,
   redirectToMSWalletPage,
   truncateAddress,
 } from "../../../../utils";
 import "./Offers.css";
-import { getNftOffers } from "../../../../services/api/marketplace-reservoir-api";
+import { getNftOffers } from "../../../../services/api/marketplace-rsv-api";
 import { useState } from "react";
 import { useConnectionContext } from "../../../../context/ConnectionContext/ConnectionContext";
 import { useNftPageContext } from "../../../../context/NftPageContext/NftPageContext";
@@ -16,7 +16,7 @@ import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContex
 import { useTransactionContext } from "../../../../context/TransactionContext/TransactionContext";
 import { switchChains } from "../../../../utils/wallet-connection";
 import { getDiscordEndpointData } from "../../../../utils/discord-utils";
-import { TokenElement } from "../../../../types/reservoir-types/collection-nfts.types";
+import { TokenElement } from "../../../../types/rsv-types/collection-nfts.types";
 import { generateSaleActivity } from "../../../../utils/activity-utils";
 import { getTransactionNft } from "../../../../utils/transaction-nft.utils";
 
