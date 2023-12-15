@@ -5,7 +5,7 @@ import { addDays, addHours, addMonths } from "../utils/date-utils";
 import maticIcon from "../assets/matic-logo.svg";
 import ethereumIcon from "../assets/ethereum-1.svg";
 
-export const reservoirActivityTypes = JSON.stringify([
+export const rsvActivityTypes = JSON.stringify([
   "sale",
   "ask",
   "bid",
