@@ -15,6 +15,19 @@
   transform: scale(103%);
 }
 
+.nft_card_image_area {
+  position: relative;
+}
+
+.nft_card_supply_count {
+  position: absolute;
+  inset: 0.75rem auto auto 0.75rem;
+  padding: 0.25rem;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  backdrop-filter: blur(10px);
+}
+
 .nft_card img {
   width: 100%;
   display: block;
