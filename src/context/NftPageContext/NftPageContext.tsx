@@ -6,16 +6,16 @@ import {
   useState,
 } from "react";
 import { NftPageContextType } from "./types";
-import { NftOffers } from "../../types/reservoir-types/nft-offers.types";
-import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.types";
-import { CollectionActivity as NftActivity } from "../../types/reservoir-types/collection-activity.types";
+import { NftOffers } from "../../types/rsv-types/nft-offers.types";
+import { GetNftsRsv } from "../../types/rsv-types/collection-nfts.types";
+import { CollectionActivity as NftActivity } from "../../types/rsv-types/collection-activity.types";
 import {
   getNftActivity,
   getNftOffers,
   getSingleNftV2,
-} from "../../services/api/marketplace-reservoir-api";
+} from "../../services/api/marketplace-rsv-api";
 import { useGlobalContext } from "../GlobalContext/GlobalContext";
-import { reservoirActivityTypes } from "../../constants";
+import { rsvActivityTypes } from "../../constants";
 import { useParams } from "react-router-dom";
 
 const NftPageContext = createContext<NftPageContextType | null>(null);
@@ -29,7 +29,7 @@ export const NftPageContextProvider = ({ children }: Props) => {
   const { collectionMetadata, setSelectedCollection, availableCollections } =
     useGlobalContext();
 
-  const [nftDataV2, setNftDataV2] = useState({} as GetNftsReservoir);
+  const [nftDataV2, setNftDataV2] = useState({} as GetNftsRsv);
   const [nftOffers, setNftOffers] = useState({} as NftOffers);
   const [nftActivity, setNftActivity] = useState({} as NftActivity);
   const [isLoading, setIsLoading] = useState(true);
@@ -52,7 +52,7 @@ export const NftPageContextProvider = ({ children }: Props) => {
       getNftOffers(collectionChainId, token).then((result) => {
         setNftOffers(result);
       }),
-      getNftActivity(collectionChainId, token, reservoirActivityTypes).then(
+      getNftActivity(collectionChainId, token, rsvActivityTypes).then(
         (result) => setNftActivity(result)
       ),
     ]).then(() => {
