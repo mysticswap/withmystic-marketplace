@@ -42,7 +42,6 @@ const NftPage = () => {
   const contractAddress = collectionContract;
 
   const nftImage = nftInfo?.image;
-  const description = nftInfo?.description;
   const attributes = nftInfo?.attributes;
   const tokenCount = nftInfo?.collection?.tokenCount;
   const token = `${contractAddress}:${id}`;
@@ -73,7 +72,7 @@ const NftPage = () => {
           )}
           {isMobile && <CurrentPrice nftPriceData={nftPriceData} />}
           <TraitsHolder attributes={attributes!} tokenCount={tokenCount} />
-          <DescriptionHolder description={description} />
+          <DescriptionHolder />
         </section>
         <section className="nft_page_section">
           {!isMobile && (
