@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { UserTokenElement } from "../../types/reservoir-types/user-nfts.types";
+import { UserTokenElement } from "../../types/rsv-types/user-nfts.types";
 import "./UserNftCard.css";
 import CustomTooltip from "../CustomTooltip/CustomTooltip";
 import { useIsOverflow } from "../../hooks/useIsOverflow";
