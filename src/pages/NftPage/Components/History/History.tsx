@@ -2,15 +2,15 @@ import dayjs from "dayjs";
 import "./History.css";
 import { TbExternalLink } from "react-icons/tb";
 import CustomTooltip from "../../../../components/CustomTooltip/CustomTooltip";
-import { CollectionActivity as NftActivity } from "../../../../types/reservoir-types/collection-activity.types";
+import { CollectionActivity as NftActivity } from "../../../../types/rsv-types/collection-activity.types";
 import {
   activityRenames,
-  reservoirActivityTypes,
+  rsvActivityTypes,
   scanWebsites,
 } from "../../../../constants";
 import { ActivityRowAddress } from "../../../../components/ActivityRow/ActivityRow";
 import { useState } from "react";
-import { getNftActivity } from "../../../../services/api/marketplace-reservoir-api";
+import { getNftActivity } from "../../../../services/api/marketplace-rsv-api";
 import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
 import { v4 as uuid } from "uuid";
 
@@ -28,7 +28,7 @@ const History = ({ nftActivity, token, setNftActivity }: Props) => {
     getNftActivity(
       collectionChainId,
       token,
-      reservoirActivityTypes,
+      rsvActivityTypes,
       nftActivity.continuation!
     )
       .then((result) => {
