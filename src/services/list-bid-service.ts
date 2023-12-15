@@ -1,9 +1,6 @@
 import { TypedDataField, ethers } from "ethers";
-import {
-  ListOrBidData,
-  Data,
-} from "../types/reservoir-types/listing-data.types";
-import { submitListOrBid } from "./api/marketplace-reservoir-api";
+import { ListOrBidData, Data } from "../types/rsv-types/listing-data.types";
+import { submitListOrBid } from "./api/marketplace-rsv-api";
 import { executeTransactions } from "./seaport";
 import { ActivityObject } from "../types/activity.types";
 import { postActivityToDB } from "./api/activity.api";
