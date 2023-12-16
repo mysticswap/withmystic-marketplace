@@ -18,7 +18,11 @@ import {
   TokenElement,
   TokenToken,
 } from "../../../../types/rsv-types/collection-nfts.types";
-import { redirectToMSWalletPage, truncateAddress } from "../../../../utils";
+import {
+  getOnePercentFee,
+  redirectToMSWalletPage,
+  truncateAddress,
+} from "../../../../utils";
 import "./NftHeader.css";
 import { IoShareSocial } from "react-icons/io5";
 import { LuRefreshCw } from "react-icons/lu";
@@ -65,7 +69,9 @@ const NftHeader = ({
   const orderId = nftPriceData?.floorAsk?.id;
   const currentEthAmount = nftPriceData?.floorAsk?.price?.amount?.native;
   const currentUsdValue = nftPriceData?.floorAsk?.price?.amount?.usd;
+  const sourceDomain = nftPriceData?.floorAsk?.source?.domain;
   const userIsOwner = user?.toLowerCase() == owner?.toLowerCase();
+  const onePercentFee = getOnePercentFee(currentEthAmount);
 
   const nft = {
     token: nftInfo,
@@ -88,6 +94,7 @@ const NftHeader = ({
 
   const postData = getDiscordEndpointData(nft, user!, favicon);
   const activityData = generateSaleActivity(nft, "sale", user!);
+  const isLocal = sourceDomain == source;
 
   const buyOrList = () => {
     setTransactionNft({
@@ -101,20 +108,25 @@ const NftHeader = ({
 
     !userIsOwner &&
       switchChains(chainId, collectionChainId).then(() => {
-        buyListedNft(collectionChainId, orderId, user!, source).then(
-          (result) => {
-            setTransactionStage(1);
-            handleBuyOrSellData(
-              result,
-              setTransactionStage,
-              setTransactionHash,
-              setShowConfirmationModal,
-              collectionChainId,
-              postData,
-              activityData
-            );
-          }
-        );
+        buyListedNft(
+          collectionChainId,
+          orderId,
+          user!,
+          source,
+          isLocal,
+          onePercentFee
+        ).then((result) => {
+          setTransactionStage(1);
+          handleBuyOrSellData(
+            result,
+            setTransactionStage,
+            setTransactionHash,
+            setShowConfirmationModal,
+            collectionChainId,
+            postData,
+            activityData
+          );
+        });
       });
   };
 
