@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { marketplaceInstance } from "../axios";
 
 export const createListing = async (
@@ -9,16 +10,20 @@ export const createListing = async (
   expirationTime: string,
   isListing: boolean = true
 ) => {
-  const request = await marketplaceInstance.post("/create-list-or-bid", {
-    chainId,
-    maker,
-    source,
-    token,
-    weiPrice,
-    expirationTime,
-    isListing,
-  });
-  return request.data;
+  try {
+    const request = await marketplaceInstance.post("/create-list-or-bid", {
+      chainId,
+      maker,
+      source,
+      token,
+      weiPrice,
+      expirationTime,
+      isListing,
+    });
+    return request.data;
+  } catch (error) {
+    toast.error("Something went wrong.");
+  }
 };
 
 export const createBid = async (
@@ -46,13 +51,17 @@ export const buyListedNft = async (
   chainId: number,
   orderId: string,
   taker: string,
-  source: string
+  source: string,
+  isLocal: boolean,
+  onePercentFee: number
 ) => {
   const request = await marketplaceInstance.post("/buy-nft", {
     chainId,
     orderId,
     taker,
     source,
+    isLocal,
+    onePercentFee,
   });
   return request.data;
 };
