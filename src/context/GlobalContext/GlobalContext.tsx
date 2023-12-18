@@ -64,6 +64,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
   const [userNfts, setUserNfts] = useState({} as UserNfts);
   const [minimalCards, setMinimalCards] = useState(true);
   const [ethValue, setEthValue] = useState(0);
+  const [activitiesFetching, setActivitiesFetching] = useState(false);
 
   const selectedActivityTypes = JSON.stringify(selectedActivities);
   const source = getHostName();
@@ -106,12 +107,14 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
       setSelectedActivities(JSON.parse(rsvActivityTypes));
     }
     setCollectionActivity({} as CollectionActivity);
+    setActivitiesFetching(true);
     getCollectionActivity(
       collectionChainId,
       collectionContract,
       selectedActivities.length < 1 ? rsvActivityTypes : selectedActivityTypes
     ).then((result) => {
       setCollectionActivity(result);
+      setActivitiesFetching(false);
     });
   }, [selectedActivities]);
 
@@ -175,6 +178,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
         selectedCollection,
         setSelectedCollection,
         collectionContract,
+        activitiesFetching,
         ethValue,
         client,
       }}
