@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { API_KEY, HARDCODED_MYSTIC_PROD_KEY } from "../../config";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
@@ -18,6 +19,7 @@ const SwapsPage = () => {
 
   return (
     <div className="styles_page">
+      {user ? (
       <MysticSdk
         token={isPreview ? HARDCODED_MYSTIC_PROD_KEY : accessToken}
         favouriteCollections={goldenCollections}
@@ -26,6 +28,9 @@ const SwapsPage = () => {
         hostProvider={provider}
         setHostProvider={setProvider}
       />
+      ) : (
+        <h1>Wallet not connected</h1>
+      )}
     </div>
   );
 };
