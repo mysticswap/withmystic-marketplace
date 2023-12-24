@@ -17,7 +17,7 @@ const ModalNft = ({ nftData }: Props) => {
       </div>
 
       <p className="modal_nft_value">
-        {nftData.amount || "--"} ETH{" "}
+        {nftData.amount || "--"} {nftData.isOffer ? "wETH" : "ETH"}{" "}
         <span>(${Math.ceil(nftData.price) || "--"})</span>
       </p>
     </div>
