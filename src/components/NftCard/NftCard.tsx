@@ -137,7 +137,7 @@ const NftCard = ({ nft }: Props) => {
           <p className="nft_card_amount">
             {currentEthAmount && currentValue ? (
               <>
-                {currentEthAmount} <span>(${currentValue})</span>
+                {`${currentEthAmount} ${symbol}`} <span>(${currentValue})</span>
               </>
             ) : (
               <span>---</span>
