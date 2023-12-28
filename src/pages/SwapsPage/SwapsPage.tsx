@@ -6,8 +6,9 @@ import "./SwapsPage.css";
 import { MysticSdk } from "mystic-sdk-1";
 
 const SwapsPage = () => {
-  const { client } = useGlobalContext();
-  const { user, setUser, provider, setProvider } = useConnectionContext()!;
+  const { client, collectionChainId } = useGlobalContext();
+  const { user, setUser, provider, setProvider, chainId } =
+    useConnectionContext()!;
   const goldenCollections = client.collections.map((collection) => {
     return collection.address;
   });
@@ -25,6 +26,8 @@ const SwapsPage = () => {
         setHostUser={setUser}
         hostProvider={provider}
         setHostProvider={setProvider}
+        supportedChain={collectionChainId}
+        hostUserChain={chainId}
       />
     </div>
   );
