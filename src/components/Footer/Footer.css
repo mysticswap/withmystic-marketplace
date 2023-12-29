@@ -112,3 +112,9 @@ footer {
     margin: auto;
   }
 }
+
+@media screen and (min-width: 1750px) {
+  .footer_links_holder {
+    width: fit-content;
+  }
+}
