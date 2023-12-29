@@ -117,4 +117,9 @@ footer {
   .footer_links_holder {
     width: fit-content;
   }
+
+  .socials {
+    min-width: 215.23px;
+    justify-content: flex-end;
+  }
 }
