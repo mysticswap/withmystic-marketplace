@@ -83,6 +83,10 @@ export const ConnectionContextProvider = ({ children }: Props) => {
       addUser();
     } else {
       // try to detect if address is already connected
+      if(user === null && provider === null){
+        return;
+      }
+      
       setTimeout(function () {
         if (window.ethereum && window.ethereum.selectedAddress) {
           setUser(window.ethereum && window.ethereum.selectedAddress);
@@ -92,6 +96,7 @@ export const ConnectionContextProvider = ({ children }: Props) => {
           setProvider(providerTemp);
         }
       }, 500);
+
     }
   }, [provider, addUser, attachListeners]);
 

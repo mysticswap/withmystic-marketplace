@@ -7,10 +7,11 @@ import { useIsMobile } from "../../hooks/useIsMobile";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 
 const ConnectedWalletButton = () => {
-  const { user, setUser } = useConnectionContext()!;
+  const { user, setUser, setProvider } = useConnectionContext()!;
   const [logout, setLogout] = useState(false);
   const logoutRef = useRef(null);
   const logoutUser = () => {
+    setProvider(null)
     setUser(null);
   };
   const isMobile = useIsMobile();
