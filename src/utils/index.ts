@@ -74,8 +74,10 @@ export const getHostName = () => {
       return "deploy-preview-56--heroic-duckanoo-b32f52.netlify.app";
       return "market.localhost.io";
       return "marketplace.mysticswaplocalhost.io";
-    case "deploy-preview-27--heroic-duckanoo-b32f52.netlify.app":
+      return "deploy-preview-40--heroic-duckanoo-b32f52.netlify.app";
       return "market.localhost.io";
+    case "deploy-preview-53--heroic-duckanoo-b32f52.netlify.app":
+      return "marketplace.mysticswaplocalhost.io";
       return "deploy-preview-26--heroic-duckanoo-b32f52.netlify.app";
     default:
       return hostName;
@@ -111,4 +113,10 @@ export const updateFavicon = (url: string) => {
 
 export const updateSiteTitle = (text: string) => {
   document.title = text || "";
+};
+
+export const getOnePercentFee = (tokenValueDecimals: number) => {
+  return Number(
+    convertTokenAmountToDecimal(tokenValueDecimals * 0.01).toFixed(0)
+  );
 };
