@@ -24,14 +24,18 @@ function App() {
   const [client, setClient] = useState({} as ClientObject);
 
   useEffect(() => {
-    getMarketplaceClient()
-      .then((result) => {
-        setClient(result);
+    const fetchMarketplaceClient = async () => {
+      try {
+        const res = await getMarketplaceClient();
+        setClient(res);
         setIsFetchingClient(false);
-      })
-      .catch(() => {
-        setIsFetchingClient(true);
-      });
+      } catch (error) {
+        setIsFetchingClient(false);
+        console.log(error);
+      }
+    };
+
+    fetchMarketplaceClient();
   }, []);
 
   useEffect(() => {

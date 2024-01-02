@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SelectedTrait } from "../context/HomeContext/types";
 import { Market, TokenToken } from "../types/rsv-types/collection-nfts.types";
 
@@ -36,7 +37,7 @@ export const convertTokenAmountToDecimal = (amount: number) => {
 };
 
 export const metamaskPresent = () => {
-  var ethereum = window.ethereum;
+  const ethereum = window.ethereum;
   return typeof ethereum !== "undefined" && window.ethereum.isMetaMask;
 };
 
@@ -71,7 +72,8 @@ export const getHostName = () => {
   const hostName = window.location.hostname;
   switch (hostName) {
     case "localhost":
-      return "marketplace.mysticswaplocalhost.io";
+      // return "marketplace.mysticswaplocalhost.io";
+      return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
       return "deploy-preview-40--heroic-duckanoo-b32f52.netlify.app";
       return "market.localhost.io";
     case "deploy-preview-53--heroic-duckanoo-b32f52.netlify.app":
@@ -83,7 +85,7 @@ export const getHostName = () => {
 };
 
 export const getPreviousCollectionAddress = () => {
-  let previousCollectionAddress = localStorage.getItem("current-collection");
+  const previousCollectionAddress = localStorage.getItem("current-collection");
   if (previousCollectionAddress) {
     return JSON?.parse(previousCollectionAddress);
   }

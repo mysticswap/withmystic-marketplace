@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-refresh/only-export-components */
 import {
   ReactNode,
   createContext,
@@ -41,7 +43,7 @@ export const ConnectionContextProvider = ({ children }: Props) => {
       const pro = new ethers.providers.Web3Provider(window.ethereum);
       setProvider(pro);
     }
-  }, []);
+  }, [user]);
 
   const attachListeners = useCallback(() => {
     window.ethereum.on("accountsChanged", function (accounts: string[]) {
@@ -83,10 +85,10 @@ export const ConnectionContextProvider = ({ children }: Props) => {
       addUser();
     } else {
       // try to detect if address is already connected
-      if(user === null && provider === null){
+      if (user === null && provider === null) {
         return;
       }
-      
+
       setTimeout(function () {
         if (window.ethereum && window.ethereum.selectedAddress) {
           setUser(window.ethereum && window.ethereum.selectedAddress);
@@ -96,9 +98,8 @@ export const ConnectionContextProvider = ({ children }: Props) => {
           setProvider(providerTemp);
         }
       }, 500);
-
     }
-  }, [provider, addUser, attachListeners]);
+  }, [provider, addUser, attachListeners, user]);
 
   return (
     <ConnectionContext.Provider
@@ -110,5 +111,11 @@ export const ConnectionContextProvider = ({ children }: Props) => {
 };
 
 export const useConnectionContext = () => {
-  return useContext(ConnectionContext);
+  const context = useContext(ConnectionContext);
+
+  if (context === undefined)
+    throw new Error(
+      "ConnectionContext was used outside the ConnectionContextProvider"
+    );
+  return context;
 };
