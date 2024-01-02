@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import {
   ReactNode,
   createContext,
@@ -54,5 +55,9 @@ export const HomeContextProvider = ({ children }: Props) => {
 };
 
 export const useHomeContext = () => {
-  return useContext(HomeContext);
+  const context = useContext(HomeContext);
+
+  if (context === undefined)
+    throw new Error("HomeContext was used outside the HomeContextProvider");
+  return context;
 };

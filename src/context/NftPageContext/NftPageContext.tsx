@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import {
   ReactNode,
   createContext,
@@ -41,25 +42,31 @@ export const NftPageContextProvider = ({ children }: Props) => {
     return collection.address == contract;
   });
 
-  const collectionChainId = requiredCollection?.chainId!;
+  const collectionChainId = requiredCollection?.chainId;
   const token = `${requiredCollection?.address}:${id}`;
 
   useEffect(() => {
     Promise.all([
-      getSingleNftV2(collectionChainId, token).then((result) => {
+      getSingleNftV2(collectionChainId!, token).then((result) => {
         setNftDataV2(result);
       }),
-      getNftOffers(collectionChainId, token).then((result) => {
+      getNftOffers(collectionChainId!, token).then((result) => {
         setNftOffers(result);
       }),
-      getNftActivity(collectionChainId, token, rsvActivityTypes).then(
+      getNftActivity(collectionChainId!, token, rsvActivityTypes).then(
         (result) => setNftActivity(result)
       ),
     ]).then(() => {
       setIsLoading(false);
       setSelectedCollection(requiredCollection!);
     });
-  }, [collectionMetadata]);
+  }, [
+    collectionChainId,
+    collectionMetadata,
+    requiredCollection,
+    setSelectedCollection,
+    token,
+  ]);
 
   return (
     <NftPageContext.Provider
@@ -85,5 +92,11 @@ export const NftPageContextProvider = ({ children }: Props) => {
 };
 
 export const useNftPageContext = () => {
-  return useContext(NftPageContext);
+  const context = useContext(NftPageContext);
+
+  if (context === undefined)
+    throw new Error(
+      "NftPageContext was used outside the NftPageContextProvider"
+    );
+  return context;
 };
