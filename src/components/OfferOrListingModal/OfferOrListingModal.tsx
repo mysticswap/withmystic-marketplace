@@ -68,7 +68,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   useEffect(() => {
     const isOverUserBalance = Number(offerAmount) > Number(userBalance.WETH);
     isOffer && setIsOverBalance(isOverUserBalance);
-  }, [offerAmount, isOffer]);
+  }, [offerAmount, isOffer, userBalance.WETH]);
 
   const offerBottom = (
     <>
