@@ -15,13 +15,15 @@ const Footer = () => {
   window.onscroll = function() {scrollFunction()}
 
   function scrollFunction() {
-      if(document.getElementById('footer')){
-          if (document.body.scrollTop > 70 || document.documentElement.scrollTop > 70) {
-              document.getElementById("footer").classList.add("fixed");
-          }else{
-              document.getElementById("footer").classList.remove("fixed");
-          }
-      }
+    const footerHtml = document?.getElementById('footer')
+    
+    if(footerHtml != null){
+        if (document.body.scrollTop > 70 || document.documentElement.scrollTop > 70) {
+            footerHtml.classList.add("fixed");
+        }else{
+            footerHtml.classList.remove("fixed");
+        }
+    }
   }
 
   return (
