@@ -12,7 +12,7 @@ footer {
 .fixed {
   position: fixed;
   bottom: 0;
-  background-color: var(--ms-mp-primary-color);
+  background-color: var(--ms-mp-body-background);
   width: 100%;
 
 }
