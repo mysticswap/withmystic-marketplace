@@ -3,14 +3,31 @@ import mysticLogo from "../../assets/mystic_plain.png";
 import { RiDiscordFill, RiTwitterXLine } from "react-icons/ri";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
+
+
 const Footer = () => {
   const { collectionMetadata, client } = useGlobalContext();
+
 
   const discordUrl = collectionMetadata?.collections?.[0]?.discordUrl;
   const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
 
+  window.onscroll = function() {scrollFunction()}
+
+  function scrollFunction() {
+      if(document.getElementById('footer')){
+          if (document.body.scrollTop > 70 || document.documentElement.scrollTop > 70) {
+              document.getElementById("footer").classList.add("fixed");
+          }else{
+              document.getElementById("footer").classList.remove("fixed");
+          }
+      }
+  }
+
   return (
-    <footer>
+    <footer 
+    id="footer"
+    >
       <section>
         <p>
           {" "}

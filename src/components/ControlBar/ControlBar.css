@@ -4,6 +4,10 @@
   justify-content: space-between;
   width: 95%;
   margin: 1rem auto;
+  position: sticky;
+  top: 0;
+  height: 10%;
+  z-index: 30;
 }
 
 .control_bar button {
@@ -17,15 +21,15 @@
     gap: 0.5rem;
   }
 
-  .control_bar > .control_bar_search {
+  .control_bar>.control_bar_search {
     grid-column: 2/4;
   }
 
-  .control_bar > .filter_button {
+  .control_bar>.filter_button {
     grid-column: 1/2;
   }
 
-  .control_bar > .control_dropdown_parent {
+  .control_bar>.control_dropdown_parent {
     grid-column: 1/-1;
   }
 }
