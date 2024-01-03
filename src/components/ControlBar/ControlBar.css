@@ -8,6 +8,8 @@
   top: 0;
   height: 10%;
   z-index: 30;
+  background-color: var(--ms-mp-body-background);
+  padding: 10px 0;
 }
 
 .control_bar button {
