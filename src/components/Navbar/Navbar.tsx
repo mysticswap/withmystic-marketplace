@@ -61,7 +61,7 @@ const Navbar = () => {
   useEffect(() => {
     scrollToTop();
     setShowOfferOrListingModal(false);
-  }, [location.pathname]);
+  }, [location.pathname, setShowOfferOrListingModal]);
 
   return (
     <nav className="navbar">

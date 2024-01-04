@@ -46,6 +46,11 @@ img {
   display: block;
 }
 
+/* video {
+  display: block;
+  width: fit-content;
+} */
+
 body {
   margin: 0;
   padding: 0;

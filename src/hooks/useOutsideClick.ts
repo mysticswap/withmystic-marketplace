@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
 
 export const useOutsideClick = (
@@ -17,5 +18,5 @@ export const useOutsideClick = (
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [ref]);
+  }, [exemptedClass, ref, setter]);
 };

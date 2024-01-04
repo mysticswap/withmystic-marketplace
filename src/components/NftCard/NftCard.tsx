@@ -121,7 +121,11 @@ const NftCard = ({ nft }: Props) => {
           <div className="nft_card_supply_count">{`x${supply}`}</div>
         )}
         <Link to={`/${collectionContract}/${nftId}`}>
-          <img src={nft?.token?.image} alt="" />
+          {nft.token.media !== null ? (
+            <video src={nft.token.media} autoPlay loop muted></video>
+          ) : (
+            <img src={nft?.token?.image} alt="" />
+          )}
         </Link>
       </div>
 

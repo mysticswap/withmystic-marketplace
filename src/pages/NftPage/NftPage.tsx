@@ -41,7 +41,6 @@ const NftPage = () => {
 
   const contractAddress = collectionContract;
 
-  const nftImage = nftInfo?.image;
   const attributes = nftInfo?.attributes;
   const tokenCount = nftInfo?.collection?.tokenCount;
   const token = `${contractAddress}:${id}`;
@@ -61,7 +60,15 @@ const NftPage = () => {
       {nftInfo?.isFlagged && <FlaggedWarning />}
       <div className="nft_page_top">
         <section className="nft_page_section">
-          <img className="nft_image" src={nftImage} alt="" />
+          {nftInfo.media !== null ? (
+            <div>
+              <video autoPlay loop muted className="nft_video">
+                <source src={nftInfo.media} type="video/mp4"></source>
+              </video>
+            </div>
+          ) : (
+            <img src={nftInfo.image} alt="" className="nft_image" />
+          )}
           {isMobile && (
             <NftHeader
               nftInfo={nftInfo}

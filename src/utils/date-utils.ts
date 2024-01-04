@@ -11,7 +11,7 @@ export const addMonths = (months: number) => {
 };
 
 export const getEndTime = (value: number, unit: string) => {
-  let date = new Date();
+  const date = new Date();
   switch (unit) {
     case "hours":
       date.setHours(date.getHours() + value);

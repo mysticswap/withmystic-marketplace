@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import {
   ReactNode,
   createContext,
@@ -100,7 +101,12 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
         setCollectionAttributes(result);
       }
     );
-  }, [selectedCollection]);
+  }, [
+    selectedCollection,
+    collectionChainId,
+    collectionContract,
+    selectedActivityTypes,
+  ]);
 
   useEffect(() => {
     if (selectedActivities.length < 1) {
@@ -116,7 +122,12 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
       setCollectionActivity(result);
       setActivitiesFetching(false);
     });
-  }, [selectedActivities]);
+  }, [
+    collectionChainId,
+    collectionContract,
+    selectedActivities,
+    selectedActivityTypes,
+  ]);
 
   useEffect(() => {
     if (user && collectionChainId) {
@@ -126,7 +137,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
         }
       );
     }
-  }, [user, collectionMetadata]);
+  }, [user, collectionMetadata, collectionChainId, collectionContract]);
 
   useEffect(() => {
     if (user) {
@@ -189,5 +200,9 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
 };
 
 export const useGlobalContext = () => {
-  return useContext(GlobalContext);
+  const context = useContext(GlobalContext);
+
+  if (context === undefined)
+    throw new Error("GlobalContext was used outside the GlobalProvider");
+  return context;
 };

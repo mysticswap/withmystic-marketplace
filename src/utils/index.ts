@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SelectedTrait } from "../context/HomeContext/types";
 import { Market, TokenToken } from "../types/rsv-types/collection-nfts.types";
 
@@ -36,7 +37,7 @@ export const convertTokenAmountToDecimal = (amount: number) => {
 };
 
 export const metamaskPresent = () => {
-  var ethereum = window.ethereum;
+  const ethereum = window.ethereum;
   return typeof ethereum !== "undefined" && window.ethereum.isMetaMask;
 };
 
@@ -84,7 +85,7 @@ export const getHostName = () => {
 };
 
 export const getPreviousCollectionAddress = () => {
-  let previousCollectionAddress = localStorage.getItem("current-collection");
+  const previousCollectionAddress = localStorage.getItem("current-collection");
   if (previousCollectionAddress) {
     return JSON?.parse(previousCollectionAddress);
   }
