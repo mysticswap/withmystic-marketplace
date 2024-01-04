@@ -59,7 +59,6 @@ const CardsHolder = () => {
       />
     );
   });
-
   const onScroll = () => {
     const { scrollTop, scrollHeight, clientHeight } = cardsHolderRef.current!;
     const isAtBottom = scrollTop + clientHeight - scrollHeight >= -1;

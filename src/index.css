@@ -52,7 +52,6 @@ body {
   transition: var(--ms-mp-transition);
   background-color: var(--ms-mp-body-background);
   color: var(--ms-mp-text-color);
-  padding-bottom: 6rem;
 }
 
 .hide {

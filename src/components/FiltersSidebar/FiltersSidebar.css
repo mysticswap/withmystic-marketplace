@@ -1,6 +1,6 @@
 .filters_sidebar {
   position: sticky;
-  top: 3rem;
+  top: 3.3rem;
   width: 20%;
   min-height: calc(100vh - 48px - 48px + 1.5rem);
   max-height: calc(100vh - 48px - 48px + 1.5rem);

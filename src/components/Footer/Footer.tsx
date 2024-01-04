@@ -12,23 +12,9 @@ const Footer = () => {
   const discordUrl = collectionMetadata?.collections?.[0]?.discordUrl;
   const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
 
-  window.onscroll = function() {scrollFunction()}
-
-  function scrollFunction() {
-    const footerHtml = document?.getElementById('footer')
-
-    if(footerHtml != null){
-        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-            footerHtml.classList.add("fixed");
-        }else{
-            footerHtml.classList.remove("fixed");
-        }
-    }
-  }
 
   return (
     <footer 
-    id="footer"
     >
       <section>
         <p>

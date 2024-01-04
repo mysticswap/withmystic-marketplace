@@ -1,20 +1,13 @@
 footer {
   height: 6rem;
+  padding: 0 1rem;
   display: flex;
   align-items: center;
   border-top: var(--ms-mp-gray-border);
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   color: var(--ms-mp-gray-text);
-}
-
-.fixed {
-  position: fixed;
-  bottom: 0;
-  background-color: var(--ms-mp-body-background);
-  width: 100%;
-
 }
 
 .footer_links_holder {
