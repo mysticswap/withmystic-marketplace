@@ -48,10 +48,10 @@ img {
   display: block;
 }
 
-video {
+/* video {
   display: block;
   width: fit-content;
-}
+} */
 
 body {
   margin: 0;

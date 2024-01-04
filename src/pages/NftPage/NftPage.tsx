@@ -61,14 +61,10 @@ const NftPage = () => {
       <div className="nft_page_top">
         <section className="nft_page_section">
           {nftInfo.media !== null ? (
-            <div className="nft_video">
-              <video
-                src={nftInfo.media}
-                autoPlay
-                loop
-                muted
-                className="video"
-              ></video>
+            <div>
+              <video autoPlay loop muted className="nft_video">
+                <source src={nftInfo.media} type="video/mp4"></source>
+              </video>
             </div>
           ) : (
             <img src={nftInfo.image} alt="" className="nft_image" />
