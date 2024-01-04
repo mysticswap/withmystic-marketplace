@@ -59,7 +59,9 @@ const CardsHolder = () => {
       />
     );
   });
-  window.onscroll = function() {onScroll()}
+  if(isFetching || collectionNfts.continuation){
+    window.onscroll = function() {onScroll()}
+  }
   const onScroll = () => {
     const { scrollTop, scrollHeight, clientHeight } = cardsHolderRef.current!;
     const isAtBottom = scrollTop + clientHeight - scrollHeight >= -1;
