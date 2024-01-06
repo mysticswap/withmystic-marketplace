@@ -89,8 +89,11 @@ const CardsHolder = () => {
         .finally(() => {
           setIsFetching(false);
         });
-    } else {
+    }
+    if (isAtBottom && !collectionNfts.continuation) {
       useShowComponent("footer");
+    } else {
+      useHideComponent("foter");
     }
   };
 
