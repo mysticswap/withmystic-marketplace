@@ -7,6 +7,8 @@ import { useEffect, useRef, useState } from "react";
 import { BiLoaderCircle } from "react-icons/bi";
 import { getCollectionNftsV2 } from "../../services/api/marketplace-rsv-api";
 import { generateAttributeString } from "../../utils";
+import { useHideComponent } from "../../hooks/useHideComponent";
+import { useShowComponent } from "../../hooks/useShowComponent";
 
 const CardsHolder = () => {
   const {
@@ -59,15 +61,14 @@ const CardsHolder = () => {
       />
     );
   });
-  if(isFetching || collectionNfts.continuation){
-    window.onscroll = function() {onScroll()}
-  }
+
   const onScroll = () => {
     const { scrollTop, scrollHeight, clientHeight } = cardsHolderRef.current!;
     const isAtBottom = scrollTop + clientHeight - scrollHeight >= -1;
     const attributeString = generateAttributeString(selectedTraits);
 
     if (isAtBottom && collectionNfts.continuation) {
+      useHideComponent("footer");
       setIsFetching(true);
       getCollectionNftsV2(
         collectionChainId,
@@ -88,6 +89,8 @@ const CardsHolder = () => {
         .finally(() => {
           setIsFetching(false);
         });
+    } else {
+      useShowComponent("footer");
     }
   };
 

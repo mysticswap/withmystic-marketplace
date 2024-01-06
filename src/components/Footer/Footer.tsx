@@ -3,19 +3,14 @@ import mysticLogo from "../../assets/mystic_plain.png";
 import { RiDiscordFill, RiTwitterXLine } from "react-icons/ri";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
-
-
 const Footer = () => {
   const { collectionMetadata, client } = useGlobalContext();
-
 
   const discordUrl = collectionMetadata?.collections?.[0]?.discordUrl;
   const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
 
-
   return (
-    <footer 
-    >
+    <footer id="footer" className="hide">
       <section>
         <p>
           {" "}
