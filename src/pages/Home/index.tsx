@@ -8,6 +8,8 @@ import { tabOptions } from "../../constants";
 import OfferOrListingModal from "../../components/OfferOrListingModal/OfferOrListingModal";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import ConfirmPurchaseModal from "../../components/ConfirmPurchaseModal/ConfirmPurchaseModal";
+import ReactGA from "react-ga";
+import { useEffect } from "react";
 
 const Home = () => {
   const { currentTab } = useGlobalContext();
@@ -18,6 +20,10 @@ const Home = () => {
     setShowConfirmationModal,
   } = useTransactionContext()!;
   const isInItemsSection = currentTab == tabOptions[0];
+
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname);
+  }, []);
   return (
     <div>
       <Banner />

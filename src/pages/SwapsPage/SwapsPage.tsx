@@ -4,6 +4,8 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { getHostName } from "../../utils";
 import "./SwapsPage.css";
 import { MysticSdk } from "mystic-sdk-1";
+import ReactGA from "react-ga";
+import { useEffect } from "react";
 
 const SwapsPage = () => {
   const { client, collectionChainId } = useGlobalContext();
@@ -16,6 +18,10 @@ const SwapsPage = () => {
   const isPreview =
     getHostName()?.includes("netlify.app") ||
     getHostName()?.includes("localhost");
+
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname);
+  }, []);
 
   return (
     <div className="styles_page">
