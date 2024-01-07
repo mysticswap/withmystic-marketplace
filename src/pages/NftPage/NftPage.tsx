@@ -17,6 +17,8 @@ import SocialShare from "../../components/SocialShare/SocialShare";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import NotFound from "./Components/NotFound/NotFound";
+import { useEffect } from "react";
+import ReactGA from "react-ga";
 
 const NftPage = () => {
   const { id } = useParams();
@@ -46,6 +48,10 @@ const NftPage = () => {
   const token = `${contractAddress}:${id}`;
 
   const isMobile = useIsMobile();
+
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname);
+  }, []);
 
   if (isLoading) {
     return <Loading />;
