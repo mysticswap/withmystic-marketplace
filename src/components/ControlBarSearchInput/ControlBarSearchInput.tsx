@@ -66,8 +66,19 @@ const ControlBarSearchInput = () => {
 
   useEffect(() => {
     const getSearchNft = setTimeout(() => {
-      if (inputText != "" || inputText != null) {
+      if (inputText != "") {
         onSearch(inputText);
+      } else {
+        const attribute = generateAttributeString(selectedTraits);
+
+        getCollectionNftsV2(
+          collectionChainId,
+          selectedDropdownOption.value,
+          selectedDropdownOption.order,
+          contractAddress,
+          undefined,
+          attribute
+        ).then((result) => setCollectionNfts(result));
       }
     }, 700);
 
