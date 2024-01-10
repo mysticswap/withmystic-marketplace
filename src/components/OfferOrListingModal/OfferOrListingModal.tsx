@@ -167,15 +167,13 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
           !isOffer,
           currency
         );
-        console.log(result);
-        const res = await handleListOrBidData(
+        await handleListOrBidData(
           collectionChainId,
           result,
           setTransactionStage,
           setShowOfferOrListingModal,
           activity
         );
-        console.log(res);
       } else {
         const result = await createBid(
           collectionChainId,

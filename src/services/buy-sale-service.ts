@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import { ethers } from "ethers";
 import { BuyData, Data } from "../types/rsv-types/buy-data.types";
 import { executeTransactions } from "./seaport";
