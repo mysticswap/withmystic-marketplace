@@ -122,7 +122,13 @@ const NftCard = ({ nft }: Props) => {
         )}
         <Link to={`/${collectionContract}/${nftId}`}>
           {nft.token.media !== null ? (
-            <video src={nft.token.media} autoPlay loop muted></video>
+            <video
+              poster={nft?.token?.image}
+              src={nft.token.media}
+              autoPlay
+              loop
+              muted
+            ></video>
           ) : (
             <img src={nft?.token?.image} alt="" />
           )}
