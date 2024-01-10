@@ -15,7 +15,8 @@ const Footer = () => {
   const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
 
   if (
-    source == "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app" &&
+    (source == "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app" ||
+      source == "zooverse.withmystic.xyz") &&
     (discordUrl == "" || discordUrl == null)
   ) {
     discordUrl = "https://discord.gg/zooverse";
