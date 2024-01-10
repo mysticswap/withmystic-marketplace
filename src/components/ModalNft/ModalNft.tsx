@@ -8,7 +8,7 @@ type Props = {
   nftData: TransactionNft;
   supportedTokens: SupportedTokens[];
   currentToken: number;
-  offerAmount: string;
+  offerAmount: string | number;
 };
 
 const ModalNft = ({
@@ -23,6 +23,10 @@ const ModalNft = ({
   useEffect(() => {
     setPrice(cryptoValue * Number(offerAmount));
   }, [cryptoValue, currentToken, nftData, offerAmount]);
+  // useEffect(() => {
+  //   // setPrice(cryptoValue * Number(offerAmount));
+  //   setPrice(cryptoValue);
+  // }, [cryptoValue, currentToken, nftData]);
   //
   const cryptoSymbol =
     supportedTokens[currentToken].symbol === "WETH"
