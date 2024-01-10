@@ -76,6 +76,11 @@ export const getHostName = () => {
       return "market.localhost.io";
       return "marketplace.mysticswaplocalhost.io";
       return "market.localhost.io";
+      return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
+      return "deploy-preview-25--heroic-duckanoo-b32f52.netlify.app";
+    case "deploy-preview-66--heroic-duckanoo-b32f52.netlify.app":
+      return "marketplace.mysticswaplocalhost.io";
+      return "market.localhost.io";
     case "deploy-preview-71--heroic-duckanoo-b32f52.netlify.app":
       return "marketplace.mysticswaplocalhost.io";
     // return "deploy-preview-26--heroic-duckanoo-b32f52.netlify.app";
