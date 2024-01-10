@@ -2,15 +2,27 @@ import "./Footer.css";
 import mysticLogo from "../../assets/mystic_plain.png";
 import { RiDiscordFill, RiTwitterXLine } from "react-icons/ri";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
+import { tabOptions } from "../../constants";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const Footer = () => {
-  const { collectionMetadata, client } = useGlobalContext();
+  const { collectionMetadata, client, currentTab } = useGlobalContext();
+  const [hideClass, setHideClass] = useState(false);
+  const location = useLocation();
 
   const discordUrl = collectionMetadata?.collections?.[0]?.discordUrl;
   const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
 
+  useEffect(() => {
+    if (location.pathname == "/" && currentTab == tabOptions[0]) {
+      setHideClass(true);
+    } else {
+      setHideClass(false);
+    }
+  }, [location.pathname, currentTab]);
   return (
-    <footer>
+    <footer id="footer" className={hideClass ? "hide" : ""}>
       <section>
         <p>
           {" "}
