@@ -4,14 +4,14 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { getCollectionNftsV2 } from "../../services/api/marketplace-rsv-api";
 import { generateAttributeString } from "../../utils";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ControlBarSearchInput = () => {
   const { setCollectionNfts, collectionMetadata, collectionChainId } =
     useGlobalContext();
   const { selectedTraits, setIsFetching, selectedDropdownOption } =
     useHomeContext()!;
-  const [inputText, setInputText] = useState("");
+  const [inputText, setInputText] = useState<string>("");
   const contractAddress = collectionMetadata?.collections?.[0]?.primaryContract;
 
   const clearInput = () => {
@@ -32,8 +32,8 @@ const ControlBarSearchInput = () => {
 
   const onSearch = (id: string) => {
     setIsFetching(true);
-    setCollectionNfts({ tokens: [], continuation: null });
 
+    setCollectionNfts({ tokens: [], continuation: null });
     const tokenString = `${contractAddress!}:${id}`;
     const attribute = generateAttributeString(selectedTraits);
 
@@ -46,7 +46,9 @@ const ControlBarSearchInput = () => {
       attribute,
       tokenString
     )
-      .then((result) => setCollectionNfts(result))
+      .then((result) => {
+        setCollectionNfts(result);
+      })
       .catch(() => setCollectionNfts({ tokens: [], continuation: null }))
       .finally(() => setIsFetching(false));
 
@@ -62,16 +64,36 @@ const ControlBarSearchInput = () => {
     }
   };
 
+  useEffect(() => {
+    const getSearchNft = setTimeout(() => {
+      if (inputText != "") {
+        onSearch(inputText);
+      } else {
+        const attribute = generateAttributeString(selectedTraits);
+
+        getCollectionNftsV2(
+          collectionChainId,
+          selectedDropdownOption.value,
+          selectedDropdownOption.order,
+          contractAddress,
+          undefined,
+          attribute
+        ).then((result) => setCollectionNfts(result));
+      }
+    }, 700);
+
+    return () => clearTimeout(getSearchNft);
+  }, [inputText]);
+
   return (
     <div className="control_bar_search">
       <input
         type="number"
         placeholder="Search by Token ID"
+        value={inputText}
         onChange={(e) => {
-          onSearch(e.target.value);
           setInputText(e.target.value);
         }}
-        value={inputText}
       />
       {!inputText ? (
         <IoSearchSharp size={20} />
