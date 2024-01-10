@@ -33,6 +33,7 @@ const ConfirmPurchaseModal = ({ setShowConfirmationModal }: Props) => {
     <div className="modal_parent">
       <div className="modal_content">
         <p className="modal_header">
+          {/* {transactionStage !== 2 ? modalTitle : successMessage} */}
           {transactionStage !== 2 ? modalTitle : successMessage}
         </p>
         <IoClose

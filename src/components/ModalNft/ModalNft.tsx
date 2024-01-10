@@ -27,6 +27,10 @@ const ModalNft = ({
   //   // setPrice(cryptoValue * Number(offerAmount));
   //   setPrice(cryptoValue);
   // }, [cryptoValue, currentToken, nftData]);
+  // useEffect(() => {
+  //   // setPrice(cryptoValue * Number(offerAmount));
+  //   setPrice(cryptoValue);
+  // }, [cryptoValue, currentToken, nftData]);
   //
   const cryptoSymbol =
     supportedTokens[currentToken].symbol === "WETH"

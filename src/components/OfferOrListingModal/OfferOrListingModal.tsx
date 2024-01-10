@@ -250,6 +250,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
               nftData={transactionNft}
               supportedTokens={supportedTokens}
               currentToken={currentToken}
+              // offerAmount={offerAmount}
               offerAmount={offerAmount}
             />
           </div>
