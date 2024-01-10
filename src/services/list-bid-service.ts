@@ -17,7 +17,6 @@ export const handleListOrBidData = async (
 
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
-  console.log(signer);
 
   const requiredApprovals: Data[] = [];
   data.steps.forEach((step) => {
