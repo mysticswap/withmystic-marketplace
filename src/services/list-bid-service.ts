@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import { TypedDataField, ethers } from "ethers";
 import { ListOrBidData, Data } from "../types/rsv-types/listing-data.types";
 import { submitListOrBid } from "./api/marketplace-rsv-api";
