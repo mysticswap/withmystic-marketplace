@@ -28,6 +28,10 @@ function App() {
   const [client, setClient] = useState({} as ClientObject);
 
   useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
+
+  useEffect(() => {
     const fetchMarketplaceClient = async () => {
       try {
         const res = await getMarketplaceClient();
@@ -50,34 +54,33 @@ function App() {
     updateMetadata(client);
   }, [client]);
 
+  if (isFetchingClient) return <Loading />;
+
   return (
     <>
-      {isFetchingClient && <Loading />}
-      {!isFetchingClient && (
-        <ConnectionContextProvider>
-          <GlobalContextProvider client={client}>
-            <TransactionContextProvider>
-              <Router>
-                <Navbar />
-                <Routes>
-                  <Route
-                    path="/"
-                    element={<HomeContextProvider children={<Home />} />}
-                  />
-                  <Route
-                    path="/:contract/:id"
-                    element={<NftPageContextProvider children={<NftPage />} />}
-                  />
-                  <Route path="/swaps" element={<SwapsPage />} />
-                  <Route path="*" element={<ErrorPage />} />
-                </Routes>
-                <Footer />
-                <ToastContainer limit={1} />
-              </Router>
-            </TransactionContextProvider>
-          </GlobalContextProvider>
-        </ConnectionContextProvider>
-      )}
+      <ConnectionContextProvider>
+        <GlobalContextProvider client={client}>
+          <TransactionContextProvider>
+            <Router>
+              <Navbar />
+              <Routes>
+                <Route
+                  path="/"
+                  element={<HomeContextProvider children={<Home />} />}
+                />
+                <Route
+                  path="/:contract/:id"
+                  element={<NftPageContextProvider children={<NftPage />} />}
+                />
+                <Route path="/swaps" element={<SwapsPage />} />
+                <Route path="*" element={<ErrorPage />} />
+              </Routes>
+              <Footer />
+              <ToastContainer limit={1} />
+            </Router>
+          </TransactionContextProvider>
+        </GlobalContextProvider>
+      </ConnectionContextProvider>
     </>
   );
 }
