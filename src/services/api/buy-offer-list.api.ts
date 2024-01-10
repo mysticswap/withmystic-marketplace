@@ -8,7 +8,8 @@ export const createListing = async (
   token: string,
   weiPrice: string,
   expirationTime: string,
-  isListing: boolean = true
+  isListing: boolean = true,
+  currency: string
 ) => {
   try {
     const request = await marketplaceInstance.post("/create-list-or-bid", {
@@ -19,6 +20,7 @@ export const createListing = async (
       weiPrice,
       expirationTime,
       isListing,
+      currency,
     });
     return request.data;
   } catch (error) {

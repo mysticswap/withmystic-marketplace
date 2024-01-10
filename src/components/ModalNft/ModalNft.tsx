@@ -1,11 +1,34 @@
+import { useEffect, useState } from "react";
 import { TransactionNft } from "../../context/TransactionContext/types";
+import { SupportedTokens } from "../../types/dynamic-system.types";
 import "./ModalNft.css";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
 type Props = {
   nftData: TransactionNft;
+  supportedTokens: SupportedTokens[];
+  currentToken: number;
+  offerAmount: string;
 };
 
-const ModalNft = ({ nftData }: Props) => {
+const ModalNft = ({
+  nftData,
+  supportedTokens,
+  currentToken,
+  offerAmount,
+}: Props) => {
+  const [price, setPrice] = useState(0);
+  const { cryptoValue } = useGlobalContext();
+
+  useEffect(() => {
+    setPrice(cryptoValue * Number(offerAmount));
+  }, [cryptoValue, currentToken, nftData, offerAmount]);
+  //
+  const cryptoSymbol =
+    supportedTokens[currentToken].symbol === "WETH"
+      ? "ETH"
+      : supportedTokens[currentToken].symbol;
+
   return (
     <div className="modal_nft">
       <div className="modal_nft_metadata">
@@ -17,8 +40,8 @@ const ModalNft = ({ nftData }: Props) => {
       </div>
 
       <p className="modal_nft_value">
-        {nftData.amount || "--"} {nftData.isOffer ? "wETH" : "ETH"}{" "}
-        <span>(${Math.ceil(nftData.price) || "--"})</span>
+        {nftData.amount || "--"} {nftData.isOffer ? "wETH" : cryptoSymbol}
+        <span>(${price.toFixed(2) || "--"})</span>
       </p>
     </div>
   );
