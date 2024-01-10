@@ -7,12 +7,19 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const Footer = () => {
-  const { collectionMetadata, client, currentTab } = useGlobalContext();
+  const { collectionMetadata, client, currentTab, source } = useGlobalContext();
   const [hideClass, setHideClass] = useState(false);
   const location = useLocation();
 
-  const discordUrl = collectionMetadata?.collections?.[0]?.discordUrl;
+  let discordUrl = collectionMetadata?.collections?.[0]?.discordUrl;
   const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
+
+  if (
+    source == "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app" &&
+    (discordUrl == "" || discordUrl == null)
+  ) {
+    discordUrl = "https://discord.gg/zooverse";
+  }
 
   useEffect(() => {
     if (location.pathname == "/" && currentTab == tabOptions[0]) {
@@ -46,10 +53,10 @@ const Footer = () => {
       </section>
 
       <section className="socials">
-        <a href={discordUrl}>
+        <a href={discordUrl} target="_blank">
           <RiDiscordFill size={30} display="block" />
         </a>
-        <a href={twitterUrl}>
+        <a href={twitterUrl} target="_blank">
           <RiTwitterXLine size={25} display="block" />
         </a>
       </section>
