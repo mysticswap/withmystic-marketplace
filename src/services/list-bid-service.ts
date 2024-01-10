@@ -13,8 +13,6 @@ export const handleListOrBidData = async (
   modalSetter: React.Dispatch<React.SetStateAction<boolean>>,
   activityData: ActivityObject
 ) => {
-  console.log(activityData);
-  console.log(data);
   await window.ethereum.enable();
 
   const provider = new ethers.providers.Web3Provider(window.ethereum);
