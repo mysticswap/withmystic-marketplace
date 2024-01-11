@@ -24,9 +24,10 @@
 }
 
 .chevron-down:hover {
-  background-color: var(--ms-mp-controlbar-hover);
-  border-top-right-radius: 25px;
-  border-bottom-right-radius: 25px;
+  background-color: var(--ms-mp-gray-light);
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
 }
 
 .single-token {
@@ -89,6 +90,14 @@
   background-color: transparent;
   border-right: 1px solid var(--ms-mp-gray);
   padding: 0 1rem;
+}
+
+.listing_or_offer_modal_bottom > .input_area > input:hover {
+  border-right: 1px solid var(--ms-mp-text-color);
+}
+
+.listing_or_offer_modal_bottom > .input_area > input:focus-within {
+  border-right: 1px solid var(--ms-mp-primary-color);
 }
 
 .listing_or_offer_modal_bottom > .input_area .chevron-down {

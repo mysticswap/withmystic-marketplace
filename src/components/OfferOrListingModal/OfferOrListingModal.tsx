@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import SolidButton from "../SolidButton/SolidButton";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
-import { durationOptions } from "../../constants";
+import { durationOptions, wethAddresses } from "../../constants";
 import {
   createBid,
   createListing,
@@ -44,11 +44,12 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const dropdownRef = useRef(null);
 
   const { isOffer, tokenId } = transactionNft;
-  const currency =
+  const currencyIsListing =
     supportedTokens[currentToken].contract ===
     "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
       ? "0x0000000000000000000000000000000000000000"
       : supportedTokens[currentToken].contract;
+  const currency = isOffer ? wethAddresses[collectionChainId] : "";
 
   const headerContent = isOffer ? "Make an offer" : "Create a listing";
   const finalHeader = isOffer ? "Offer completed!" : "Listing completed!";
@@ -165,7 +166,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
           weiPrice,
           expiration,
           !isOffer,
-          currency
+          currencyIsListing
         );
         await handleListOrBidData(
           collectionChainId,
@@ -181,7 +182,9 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
           source,
           token,
           weiPrice,
-          expiration
+          expiration,
+          !isOffer,
+          currency
         );
         await handleListOrBidData(
           collectionChainId,
@@ -306,7 +309,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                             ? supportedTokens![currentToken].symbol
                             : "WETH"
                         }`
-                      : "ETH"}
+                      : "wETH"}
                   </p>
                 </div>
                 {showTokensDropdown && (

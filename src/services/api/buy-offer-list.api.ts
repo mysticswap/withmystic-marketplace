@@ -35,7 +35,8 @@ export const createBid = async (
   token: string,
   weiPrice: string,
   expirationTime: string,
-  isListing: boolean = false
+  isListing: boolean = false,
+  currency?: string
 ) => {
   const request = await marketplaceInstance.post("/create-list-or-bid", {
     chainId,
@@ -45,6 +46,7 @@ export const createBid = async (
     weiPrice,
     expirationTime,
     isListing,
+    currency,
   });
   return request.data;
 };
