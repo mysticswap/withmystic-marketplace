@@ -8,6 +8,17 @@
   transition: var(--ms-mp-transition);
 }
 
+.status_list_item > div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 .status_list_item:hover {
   background-color: var(--ms-mp-gray-light);
+}
+
+.currency_image {
+  width: 20px;
+  height: 20px;
 }

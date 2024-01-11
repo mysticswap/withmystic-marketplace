@@ -6,6 +6,7 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import ActivityFilters from "../ActivityFilters/ActivityFilters";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import { IoClose } from "react-icons/io5";
+import CurrencyFilters from "../StatusFilters/CurrencyFilters";
 
 type Props = { isForTraits: boolean };
 
@@ -28,6 +29,7 @@ const FiltersSidebar = ({ isForTraits }: Props) => {
       {isForTraits ? (
         <>
           <StatusFilters />
+          <CurrencyFilters />
           <NumericFilters title="Price" isRarity={false} />
           <NumericFilters title="Rarity Rank" isRarity={true} />
           {collectionAttributes?.attributes?.map((attribute) => {

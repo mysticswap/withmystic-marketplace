@@ -266,6 +266,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                 <input
                   type="number"
                   min={0}
+                  className={isOffer ? "weth-value-2" : "weth-value"}
                   placeholder={inputPlaceholder}
                   value={offerAmount}
                   onChange={(e) => {
@@ -287,14 +288,14 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                   }}
                 />
                 <div
-                  className="chevron-down"
+                  className={isOffer ? "chevron-down-2" : "chevron-down"}
                   ref={tokenDropDownRef}
                   onClick={() => {
                     if (isOffer) return;
                     setShowTokensDropdown(!showTokensDropdown);
                   }}
                 >
-                  <BsChevronDown />
+                  {!isOffer && <BsChevronDown />}
                   <p>
                     {/* {!isOffer
                       ? "ETH"
