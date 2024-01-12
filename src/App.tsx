@@ -20,8 +20,8 @@ import { updateFavicon, updateSiteTitle } from "./utils";
 import SwapsPage from "./pages/SwapsPage/SwapsPage";
 import ReactGA from "react-ga";
 
-const TRACKING_ID = import.meta.env.VITE_GOOGLE_ANALYTICS as string; // YOUR_OWN_TRACKING_ID
-ReactGA.initialize(TRACKING_ID);
+// const TRACKING_ID = import.meta.env.VITE_GOOGLE_ANALYTICS as string; // YOUR_OWN_TRACKING_ID
+ReactGA.initialize("G-W7NBSJ46LF");
 
 function App() {
   const [isFetchingClient, setIsFetchingClient] = useState(true);

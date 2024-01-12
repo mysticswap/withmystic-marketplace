@@ -227,7 +227,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   // };
 
   const tokenDropDownRef = useRef(null);
-  // useOutsideClick(tokenDropDownRef, setShowTokensDropdown, "chevron-down");
+  useOutsideClick(tokenDropDownRef, setShowTokensDropdown, "chevron-down");
 
   return (
     <div className="modal_parent">
@@ -291,7 +291,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                   className={isOffer ? "chevron-down-2" : "chevron-down"}
                   ref={tokenDropDownRef}
                   onClick={() => {
-                    if (isOffer) return;
+                    if (isOffer || supportedTokens.length === 1) return;
                     setShowTokensDropdown(!showTokensDropdown);
                   }}
                 >
