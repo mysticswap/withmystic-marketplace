@@ -18,6 +18,7 @@ import { balanceChain } from "../../constants";
 import { getDiscordEndpointData } from "../../utils/discord-utils";
 import { generateSaleActivity } from "../../utils/activity-utils";
 import { getTransactionNft } from "../../utils/transaction-nft.utils";
+import { VideoPlayer } from "../VideoPlayer/VideoPlayer";
 
 type Props = { nft: TokenElement };
 
@@ -120,19 +121,16 @@ const NftCard = ({ nft }: Props) => {
         {isErc1155 && (
           <div className="nft_card_supply_count">{`x${supply}`}</div>
         )}
-        <Link to={`/${collectionContract}/${nftId}`}>
-          {nft.token.media !== null ? (
-            <video
-              poster={nft?.token?.image}
-              src={nft.token.media}
-              autoPlay
-              loop
-              muted
-            ></video>
-          ) : (
+        {nft.token.media !== null ? (
+          <VideoPlayer
+            posterUrl={nft?.token?.image}
+            videoUrl={nft?.token?.media}
+          />
+        ) : (
+          <Link to={`/${collectionContract}/${nftId}`}>
             <img src={nft?.token?.image} alt="" />
-          )}
-        </Link>
+          </Link>
+        )}
       </div>
 
       <div className="nft_card_details">

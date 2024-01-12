@@ -1,0 +1,26 @@
+.nft_video_player {
+  height: 400px;
+}
+.nft_video_player video {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  height: 100%;
+}
+
+.play_buttom {
+  position: absolute;
+  margin: auto;
+  bottom: 3px;
+  right: 2px;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  z-index: 9;
+  background-color: var(--ms-mp-gray-light);
+  cursor: pointer;
+  border: none;
+}
+.play_buttom:hover {
+  background-color: var(--ms-mp-gray-light-alt);
+}

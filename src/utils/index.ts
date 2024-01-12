@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SelectedTrait } from "../context/HomeContext/types";
 import { Market, TokenToken } from "../types/rsv-types/collection-nfts.types";
 
@@ -72,15 +71,12 @@ export const getHostName = () => {
   const hostName = window.location.hostname;
   switch (hostName) {
     case "localhost":
+      return "deploy-preview-25--heroic-duckanoo-b32f52.netlify.app";
       return "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app";
       return "marketplace.mysticswaplocalhost.io";
       return "market.localhost.io";
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
-    // return "marketplace.mysticswaplocalhost.io";
-    // return "deploy-preview-58--heroic-duckanoo-b32f52.netlify.app";
-    // return "main--heroic-duckanoo-b32f52.netlify.app/";
-    // return "market.localhost.io";
-    case "deploy-preview-64--heroic-duckanoo-b32f52.netlify.app":
+    case "deploy-preview-74--heroic-duckanoo-b32f52.netlify.app":
       return "deploy-preview-25--heroic-duckanoo-b32f52.netlify.app";
     case "deploy-preview-72--heroic-duckanoo-b32f52.netlify.app":
       return "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app";
