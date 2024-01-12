@@ -5,30 +5,33 @@ import "./StatusListItem.css";
 import { SupportedTokens } from "../../types/dynamic-system.types";
 
 type Props = {
-  handleClick?: (...args: any[]) => void;
+  handleClick: () => void;
+  currency: string | undefined;
   setCurrency: React.Dispatch<React.SetStateAction<string | undefined>>;
   token: SupportedTokens;
+  isClicked: boolean;
+  setIsClicked: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const CurrencyListItem = ({ handleClick, setCurrency, token }: Props) => {
-  const [isClicked, setIsClicked] = useState(false);
-
-  // useEffect(() => {
-  //   if (isForTraits) {
-  //     const isSelected = selectedTraits.some((trait) => {
-  //       return trait.value == text && trait.type == type;
-  //     });
-  //     setIsClicked(isSelected);
-  //   }
-  // }, [selectedTraits]);
-
+const CurrencyListItem = ({
+  handleClick,
+  // currency,
+  setCurrency,
+  token,
+  isClicked,
+  setIsClicked,
+}: Props) => {
+  // console.log({ isClicked });
   return (
     <li
       className="status_list_item"
       onClick={() => {
-        setIsClicked((clicked) => !clicked);
-        handleClick?.();
-        setCurrency(isClicked ? token.contract : undefined);
+        setIsClicked(!isClicked);
+        setCurrency(() => {
+          // Toggle the currency based on the current state
+          return isClicked ? undefined : token.contract;
+        });
+        handleClick();
       }}
     >
       <div>

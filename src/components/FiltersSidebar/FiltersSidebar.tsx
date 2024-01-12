@@ -11,7 +11,7 @@ import CurrencyFilters from "../StatusFilters/CurrencyFilters";
 type Props = { isForTraits: boolean };
 
 const FiltersSidebar = ({ isForTraits }: Props) => {
-  const { collectionAttributes } = useGlobalContext();
+  const { collectionAttributes, supportedTokens } = useGlobalContext();
   const { showMobileFilters, setShowMobileFilters } = useHomeContext()!;
 
   return (
@@ -29,7 +29,8 @@ const FiltersSidebar = ({ isForTraits }: Props) => {
       {isForTraits ? (
         <>
           <StatusFilters />
-          <CurrencyFilters />
+
+          {supportedTokens.length === 1 ? null : <CurrencyFilters />}
           <NumericFilters title="Price" isRarity={false} />
           <NumericFilters title="Rarity Rank" isRarity={true} />
           {collectionAttributes?.attributes?.map((attribute) => {

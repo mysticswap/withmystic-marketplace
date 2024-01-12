@@ -18,6 +18,7 @@ import ProcessComponent from "../TransactionStages/TransactionStages";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import { switchChains } from "../../utils/wallet-connection";
 import { generateListOrBidActivity } from "../../utils/activity-utils";
+import { useOutsideClicks } from "../../hooks/useOutsideClicks";
 
 type Props = {
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -66,6 +67,16 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [offerAmount, setOfferAmount] = useState("");
   const [isOverBalance, setIsOverBalance] = useState(false);
+
+  const [showTokensDropdown, setShowTokensDropdown] = useState(false);
+
+  const closeDropdown = () => {
+    setShowTokensDropdown(false);
+  };
+
+  const ref = useOutsideClicks(() => {
+    closeDropdown();
+  }, false);
 
   useOutsideClick(dropdownRef, setShowDropdown, "duration_trigger");
   const activity = generateListOrBidActivity(
@@ -203,7 +214,6 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const transactionButtonIsDisable =
     Number(offerAmount) <= 0 || (isOffer && isOverBalance);
   const transactionButtonText = isOffer ? "Make Offer" : "Create Listing";
-  const [showTokensDropdown, setShowTokensDropdown] = useState(false);
   // const [currentToken, setCurrentToken] = useState<number>(() =>
   //   supportedTokens!.findIndex((token) => token.symbol === "WETH")
   // );
@@ -225,9 +235,6 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   //     });
   //   }
   // };
-
-  const tokenDropDownRef = useRef(null);
-  useOutsideClick(tokenDropDownRef, setShowTokensDropdown, "chevron-down");
 
   return (
     <div className="modal_parent">
@@ -251,7 +258,6 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
               nftData={transactionNft}
               supportedTokens={supportedTokens}
               currentToken={currentToken}
-              // offerAmount={offerAmount}
               offerAmount={offerAmount}
             />
           </div>
@@ -266,7 +272,16 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                 <input
                   type="number"
                   min={0}
-                  className={isOffer ? "weth-value-2" : "weth-value"}
+                  // className={isOffer ? "weth-value-2" : "weth-value no-right"}
+                  className={
+                    isOffer
+                      ? "weth-value-2"
+                      : `${
+                          supportedTokens.length === 1
+                            ? "weth-value no-right"
+                            : "weth-value"
+                        }`
+                  }
                   placeholder={inputPlaceholder}
                   value={offerAmount}
                   onChange={(e) => {
@@ -288,14 +303,24 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                   }}
                 />
                 <div
-                  className={isOffer ? "chevron-down-2" : "chevron-down"}
-                  ref={tokenDropDownRef}
+                  // className={isOffer ? "chevron-down-2" : "chevron-down"}
+                  className={
+                    isOffer
+                      ? "chevron-down-2"
+                      : `${
+                          supportedTokens.length === 1
+                            ? "chevron-down"
+                            : "chevron-down no-cursor"
+                        }`
+                  }
+                  ref={ref}
                   onClick={() => {
                     if (isOffer || supportedTokens.length === 1) return;
                     setShowTokensDropdown(!showTokensDropdown);
                   }}
                 >
-                  {!isOffer && <BsChevronDown />}
+                  {supportedTokens.length === 1 ||
+                    (!isOffer && <BsChevronDown />)}
                   <p>
                     {/* {!isOffer
                       ? "ETH"
