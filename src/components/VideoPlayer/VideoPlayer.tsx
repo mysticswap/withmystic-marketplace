@@ -6,7 +6,7 @@ type props = { videoUrl: string; posterUrl: string };
 
 export const VideoPlayer = ({ videoUrl, posterUrl }: props) => {
   const [isplaying, setIsplaying] = useState(false);
-  const vidRef = useRef(null);
+  const vidRef = useRef<HTMLVideoElement>(null);
 
   function playVideo() {
     if (isplaying == false) {
