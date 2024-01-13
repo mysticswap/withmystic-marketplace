@@ -333,7 +333,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                       ? `${
                           supportedTokens!.length > 0
                             ? supportedTokens![currentToken].symbol
-                            : "WETH"
+                            : "wETH"
                         }`
                       : "wETH"}
                   </p>

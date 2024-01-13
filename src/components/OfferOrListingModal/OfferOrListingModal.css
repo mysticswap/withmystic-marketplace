@@ -26,6 +26,10 @@
   transition: var(--ms-mp-transition);
 }
 
+.chevron-down-2 p {
+  font-weight: 500;
+}
+
 .chevron-down:hover {
   background-color: var(--ms-mp-gray-light);
   border-top-right-radius: 30px;
@@ -80,7 +84,7 @@
 
 .listing_or_offer_modal_bottom > .input_area > p {
   margin: 0;
-  font-weight: bold;
+  font-weight: 500;
   padding: 0 1rem;
 }
 
@@ -91,7 +95,7 @@
   height: 100%;
   box-sizing: border-box;
   background-color: transparent;
-  border-right: 1.5px solid var(--ms-mp-gray);
+  border-right: 1px solid var(--ms-mp-gray);
   padding: 0 1rem;
 }
 .listing_or_offer_modal_bottom > .input_area > .weth-value.no-right {
@@ -116,7 +120,7 @@
 }
 
 .listing_or_offer_modal_bottom > .input_area > .weth-value:hover {
-  border-right: 1.5px solid var(--ms-mp-text-color);
+  border-right: 1px solid var(--ms-mp-text-color);
 }
 .listing_or_offer_modal_bottom > .input_area > .weth-value.no-right:hover {
   border-right: 0;
@@ -126,7 +130,7 @@
 } */
 
 .listing_or_offer_modal_bottom > .input_area > .weth-value:focus-within {
-  border-right: 1.5px solid var(--ms-mp-primary-color);
+  border-right: 1px solid var(--ms-mp-primary-color);
 }
 .listing_or_offer_modal_bottom
   > .input_area
@@ -224,7 +228,7 @@
 }
 
 .bottom_details > p > span:last-of-type {
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
 }
 

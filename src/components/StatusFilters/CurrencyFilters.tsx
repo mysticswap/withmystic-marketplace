@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./StatusFilters.css";
 import { RiArrowUpSLine } from "react-icons/ri";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
@@ -14,57 +14,93 @@ const CurrencyFilters = () => {
     collectionContract,
     supportedTokens,
   } = useGlobalContext();
-  const { selectedDropdownOption, setIsFetching } = useHomeContext()!;
+  const { setIsFetching } = useHomeContext()!;
   const [showList, setShowlist] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const [currency, setCurrency] = useState<string | undefined>(undefined);
   const tempTokens = [...supportedTokens];
   const newTokens = tempTokens.splice(-1);
-  // console.log({ filter: currency });
+  const [currency, setCurrency] = useState<string | undefined>(
+    isClicked ? newTokens[0].contract : undefined
+  );
 
-  const handleCurrency = async () => {
-    setCollectionNfts({ tokens: [], continuation: null });
-    setIsFetching(true);
-    // getCollectionNftsV2(
-    //   collectionChainId,
-    //   "floorAskPrice",
-    //   "asc",
-    //   collectionContract,
-    //   undefined,
-    //   undefined,
-    //   undefined,
-    //   undefined,
-    //   currency
-    // ).then((result) => {
-    //   setCollectionNfts(result);
-    //   setIsClicked(!isClicked);
-    //   setIsFetching(false);
-    // });
+  const newCurrency = isClicked ? newTokens[0].contract : undefined;
 
-    try {
-      // const updatedCurrency = isClicked ? currency : undefined;
+  // const handleCurrency = async () => {
+  //   setCollectionNfts({ tokens: [], continuation: null });
+  //   setIsFetching(true);
+  //   // getCollectionNftsV2(
+  //   //   collectionChainId,
+  //   //   "floorAskPrice",
+  //   //   "asc",
+  //   //   collectionContract,
+  //   //   undefined,
+  //   //   undefined,
+  //   //   undefined,
+  //   //   undefined,
+  //   //   currency
+  //   // ).then((result) => {
+  //   //   setCollectionNfts(result);
+  //   //   setIsClicked(!isClicked);
+  //   //   setIsFetching(false);
+  //   // });
+
+  //   try {
+  //     // const updatedCurrency = isClicked ? currency : undefined;
+
+  //     const result = await getCollectionNftsV2(
+  //       collectionChainId,
+  //       selectedDropdownOption.value,
+  //       selectedDropdownOption.order,
+  //       collectionContract,
+  //       undefined,
+  //       undefined,
+  //       undefined,
+  //       undefined,
+  //       undefined,
+  //       currency
+  //     );
+
+  //     setCollectionNfts(result);
+  //     // setIsClicked(!isClicked);
+  //     setIsFetching(false);
+  //   } catch (error) {
+  //     // Handle errors here
+  //     console.error("An error occurred:", error);
+  //   }
+  // };
+
+  useEffect(() => {
+    const handleCurrency = async () => {
+      setCollectionNfts({ tokens: [], continuation: null });
+      setIsFetching(true);
 
       const result = await getCollectionNftsV2(
         collectionChainId,
-        selectedDropdownOption.value,
-        selectedDropdownOption.order,
+        "floorAskPrice",
+        "asc",
         collectionContract,
         undefined,
         undefined,
         undefined,
         undefined,
         undefined,
-        currency
+        newCurrency
       );
 
       setCollectionNfts(result);
-      setIsClicked(!isClicked);
       setIsFetching(false);
-    } catch (error) {
-      // Handle errors here
-      console.error("An error occurred:", error);
-    }
-  };
+    };
+
+    handleCurrency();
+  }, [
+    collectionChainId,
+    collectionContract,
+    currency,
+    isClicked,
+    newCurrency,
+    setCollectionNfts,
+    setIsFetching,
+  ]);
 
   return (
     <div className="status_container">
@@ -85,7 +121,7 @@ const CurrencyFilters = () => {
               isClicked={isClicked}
               setIsClicked={setIsClicked}
               setCurrency={setCurrency}
-              handleClick={handleCurrency}
+              // handleClick={handleCurrency}
               token={token}
             />
           );

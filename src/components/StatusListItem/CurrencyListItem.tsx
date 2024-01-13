@@ -5,7 +5,7 @@ import "./StatusListItem.css";
 import { SupportedTokens } from "../../types/dynamic-system.types";
 
 type Props = {
-  handleClick: () => void;
+  // handleClick: () => void;
   currency: string | undefined;
   setCurrency: React.Dispatch<React.SetStateAction<string | undefined>>;
   token: SupportedTokens;
@@ -14,7 +14,7 @@ type Props = {
 };
 
 const CurrencyListItem = ({
-  handleClick,
+  // handleClick,
   // currency,
   setCurrency,
   token,
@@ -26,12 +26,8 @@ const CurrencyListItem = ({
     <li
       className="status_list_item"
       onClick={() => {
-        setIsClicked(!isClicked);
-        setCurrency(() => {
-          // Toggle the currency based on the current state
-          return isClicked ? undefined : token.contract;
-        });
-        handleClick();
+        setIsClicked((isClicked) => !isClicked);
+        setCurrency(isClicked ? token.contract : undefined);
       }}
     >
       <div>
