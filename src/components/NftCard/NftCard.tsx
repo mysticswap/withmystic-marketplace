@@ -123,6 +123,7 @@ const NftCard = ({ nft }: Props) => {
         )}
         {nft.token.media !== null ? (
           <VideoPlayer
+            nftUrl={`/${collectionContract}/${nftId}`}
             posterUrl={nft?.token?.image}
             videoUrl={nft?.token?.media}
           />

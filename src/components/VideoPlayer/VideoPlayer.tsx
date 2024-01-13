@@ -2,9 +2,10 @@ import { useRef, useState } from "react";
 import "./VideoPlayer.css";
 import { CiPause1, CiPlay1 } from "react-icons/ci";
 import { IconContext } from "react-icons";
-type props = { videoUrl: string; posterUrl: string };
+import { Link } from "react-router-dom";
+type props = { videoUrl: string; posterUrl: string; nftUrl: string };
 
-export const VideoPlayer = ({ videoUrl, posterUrl }: props) => {
+export const VideoPlayer = ({ videoUrl, posterUrl, nftUrl }: props) => {
   const [isplaying, setIsplaying] = useState(false);
   const vidRef = useRef<HTMLVideoElement>(null);
 
@@ -19,17 +20,19 @@ export const VideoPlayer = ({ videoUrl, posterUrl }: props) => {
   }
   return (
     <div className="nft_video_player">
-      <video
-        ref={vidRef}
-        poster={posterUrl}
-        controls={isplaying}
-        playsInline
-        loop
-        controlsList="nodownload"
-        preload="metadata"
-      >
-        <source src={videoUrl} type="video/mp4" />
-      </video>
+      <Link to={nftUrl}>
+        <video
+          ref={vidRef}
+          poster={posterUrl}
+          controls={isplaying}
+          playsInline
+          loop
+          controlsList="nodownload"
+          preload="metadata"
+        >
+          <source src={videoUrl} type="video/mp4" />
+        </video>
+      </Link>
       <button
         className="play_buttom"
         onClick={() => {
