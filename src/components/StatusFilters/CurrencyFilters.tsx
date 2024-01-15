@@ -14,7 +14,8 @@ const CurrencyFilters = () => {
     collectionContract,
     supportedTokens,
   } = useGlobalContext();
-  const { setIsFetching } = useHomeContext()!;
+
+  const { setIsFetching, selectedDropdownOption } = useHomeContext()!;
   const [showList, setShowlist] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const tempTokens = [...supportedTokens];
@@ -76,8 +77,8 @@ const CurrencyFilters = () => {
 
       const result = await getCollectionNftsV2(
         collectionChainId,
-        "floorAskPrice",
-        "asc",
+        selectedDropdownOption.value,
+        selectedDropdownOption.order,
         collectionContract,
         undefined,
         undefined,
@@ -98,6 +99,8 @@ const CurrencyFilters = () => {
     currency,
     isClicked,
     newCurrency,
+    selectedDropdownOption.order,
+    selectedDropdownOption.value,
     setCollectionNfts,
     setIsFetching,
   ]);

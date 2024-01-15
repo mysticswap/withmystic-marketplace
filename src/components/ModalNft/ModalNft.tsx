@@ -48,7 +48,7 @@ const ModalNft = ({
       </div>
 
       <p className="modal_nft_value">
-        {nftData.amount || "--"} {nftData.isOffer ? "ETH" : cryptoSymbol}
+        {nftData.amount || "--"} {nftData.isOffer ? "wETH" : cryptoSymbol}
         <span>(${price.toFixed(2) || "--"})</span>
       </p>
     </div>
