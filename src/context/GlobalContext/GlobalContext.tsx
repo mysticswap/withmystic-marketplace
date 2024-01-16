@@ -29,7 +29,7 @@ import { CollectionTraitsV2 } from "../../types/rsv-types/collection-traits.type
 import { UserNfts } from "../../types/rsv-types/user-nfts.types";
 import { useConnectionContext } from "../ConnectionContext/ConnectionContext";
 import { getHostName, getPreviousCollectionAddress } from "../../utils";
-import { getEthPrice } from "../../services/api/coin-gecko.api";
+import { getCryptoPrice } from "../../services/api/coin-gecko.api";
 import { ClientObject } from "../../types/dynamic-system.types";
 import { useDisableNumberInputScroll } from "../../hooks/useDisableNumberInputScroll";
 
@@ -43,6 +43,7 @@ type Props = {
 export const GlobalContextProvider = ({ children, client }: Props) => {
   const { user, chainId } = useConnectionContext()!;
   const availableCollections = client?.collections;
+
   const previousCollection = availableCollections.find((collection) => {
     return collection.address == getPreviousCollectionAddress();
   });
@@ -50,6 +51,20 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
   const [selectedCollection, setSelectedCollection] = useState(
     previousCollection || availableCollections[0]
   );
+
+  const supportedTokens = selectedCollection.supportedTokens!;
+
+  // const [currentToken, setCurrentToken] = useState<number>(() =>
+  //   supportedTokens!.findIndex((token) => token.symbol === "WETH")
+  // );
+
+  const [currentToken, setCurrentToken] = useState<number>(0);
+
+  const cryptoName = supportedTokens[currentToken].name
+    .split(" ")
+    .join("-")
+    .toLowerCase();
+
   const [currentTab, setCurrentTab] = useState(tabOptions[0]);
   const [collectionMetadata, setCollectionMetadata] =
     useState<CollectionMetadataV2 | null>(null);
@@ -64,7 +79,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
   const [userBalance, setUserBalance] = useState({});
   const [userNfts, setUserNfts] = useState({} as UserNfts);
   const [minimalCards, setMinimalCards] = useState(true);
-  const [ethValue, setEthValue] = useState(0);
+  const [cryptoValue, setCryptoValue] = useState(0);
   const [activitiesFetching, setActivitiesFetching] = useState(false);
 
   const selectedActivityTypes = JSON.stringify(selectedActivities);
@@ -155,10 +170,10 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
   }, [selectedCollection]);
 
   useEffect(() => {
-    getEthPrice().then((result) => {
-      setEthValue(result.ethereum.usd);
+    getCryptoPrice(cryptoName).then((result) => {
+      setCryptoValue(result[cryptoName].usd);
     });
-  }, []);
+  }, [cryptoName]);
 
   useDisableNumberInputScroll();
 
@@ -190,8 +205,11 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
         setSelectedCollection,
         collectionContract,
         activitiesFetching,
-        ethValue,
+        cryptoValue,
         client,
+        supportedTokens,
+        currentToken,
+        setCurrentToken,
       }}
     >
       {children}

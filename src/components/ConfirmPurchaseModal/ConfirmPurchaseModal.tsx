@@ -3,6 +3,7 @@ import "./ConfirmPurchaseModal.css";
 import ModalNft from "../ModalNft/ModalNft";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import TransactionStages from "../TransactionStages/TransactionStages";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
 type Props = {
   setShowConfirmationModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,6 +17,10 @@ const ConfirmPurchaseModal = ({ setShowConfirmationModal }: Props) => {
     setTransactionStage,
     userCanCompleteTransaction,
   } = useTransactionContext()!;
+
+  const { currentToken } = useGlobalContext();
+
+  const { supportedTokens } = useGlobalContext();
   const nftData = transactionNft;
   const modalTitle = transactionNft.isSale
     ? "Confirm transaction"
@@ -28,6 +33,7 @@ const ConfirmPurchaseModal = ({ setShowConfirmationModal }: Props) => {
     <div className="modal_parent">
       <div className="modal_content">
         <p className="modal_header">
+          {/* {transactionStage !== 2 ? modalTitle : successMessage} */}
           {transactionStage !== 2 ? modalTitle : successMessage}
         </p>
         <IoClose
@@ -42,7 +48,12 @@ const ConfirmPurchaseModal = ({ setShowConfirmationModal }: Props) => {
         />
         <div className="confirm_purchase_modal">
           <div className="modal_nft_holder">
-            <ModalNft nftData={nftData} />
+            <ModalNft
+              nftData={nftData}
+              supportedTokens={supportedTokens}
+              currentToken={currentToken}
+              offerAmount={nftData.amount}
+            />
           </div>
 
           {userCanCompleteTransaction ? (

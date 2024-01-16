@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SelectedTrait } from "../context/HomeContext/types";
 import { Market, TokenToken } from "../types/rsv-types/collection-nfts.types";
 
@@ -72,17 +73,19 @@ export const getHostName = () => {
   switch (hostName) {
     case "localhost":
       return "marketplace.mysticswaplocalhost.io";
-      return "deploy-preview-25--heroic-duckanoo-b32f52.netlify.app";
+      return "deploy-preview-29--heroic-duckanoo-b32f52.netlify.app";
+      return "market.localhost.io";
       return "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app";
       return "market.localhost.io";
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
-    case "deploy-preview-75--heroic-duckanoo-b32f52.netlify.app":
-      return "marketplace.mysticswaplocalhost.io";
       return "deploy-preview-25--heroic-duckanoo-b32f52.netlify.app";
-    case "deploy-preview-72--heroic-duckanoo-b32f52.netlify.app":
+    case "deploy-preview-69--heroic-duckanoo-b32f52.netlify.app":
       return "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app";
       return "marketplace.mysticswaplocalhost.io";
-      return "deploy-preview-26--heroic-duckanoo-b32f52.netlify.app";
+      return "market.localhost.io";
+    case "deploy-preview-73--heroic-duckanoo-b32f52.netlify.app":
+      return "marketplace.mysticswaplocalhost.io";
+    // return "deploy-preview-26--heroic-duckanoo-b32f52.netlify.app";
     default:
       return hostName;
   }

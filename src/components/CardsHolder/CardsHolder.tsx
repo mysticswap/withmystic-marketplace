@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import "./CardsHolder.css";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import NftCard from "../NftCard/NftCard";

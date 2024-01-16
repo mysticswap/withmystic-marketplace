@@ -31,7 +31,7 @@ export const generateListOrBidActivity = (
 ) => {
   const data: ActivityObject = {
     tokenName: nft.nftName,
-    contractAddress: collectionMetadata?.collections[0].primaryContract!,
+    contractAddress: collectionMetadata?.collections[0].primaryContract,
     tokenId: nft.tokenId,
     price: nft?.amount?.toString(),
     domain: getHostName(),

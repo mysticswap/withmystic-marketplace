@@ -22,7 +22,8 @@ export const getCollectionNftsV2 = async (
   attributes?: string,
   tokens?: string,
   numericFilters?: NumericFiltersType,
-  source?: string
+  source?: string,
+  currencies?: string
 ) => {
   const request = await marketplaceInstance.get("get-nfts-v2", {
     params: {
@@ -35,6 +36,7 @@ export const getCollectionNftsV2 = async (
       ...(tokens && { tokens }),
       ...(numericFilters && { numericFilters }),
       ...(source && { source }),
+      ...(currencies && { currencies }),
     },
   });
   return request.data;
