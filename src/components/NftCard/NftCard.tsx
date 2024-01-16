@@ -129,7 +129,7 @@ const NftCard = ({ nft }: Props) => {
           />
         ) : (
           <Link to={`/${collectionContract}/${nftId}`}>
-            <img src={nft?.token?.image} alt="" />
+            <img loading="lazy" src={nft?.token?.image} alt="" />
           </Link>
         )}
       </div>
