@@ -60,12 +60,12 @@ function App() {
 
   return (
     <>
-      <Suspense fallback={<Loading />}>
-        <ConnectionContextProvider>
-          <GlobalContextProvider client={client}>
-            <TransactionContextProvider>
-              <Router>
-                <Navbar />
+      <ConnectionContextProvider>
+        <GlobalContextProvider client={client}>
+          <TransactionContextProvider>
+            <Router>
+              <Navbar />
+              <Suspense fallback={<Loading />}>
                 <Routes>
                   <Route
                     path="/"
@@ -78,13 +78,13 @@ function App() {
                   <Route path="/swaps" element={<SwapsPage />} />
                   <Route path="*" element={<ErrorPage />} />
                 </Routes>
-                <Footer />
-                <ToastContainer limit={1} />
-              </Router>
-            </TransactionContextProvider>
-          </GlobalContextProvider>
-        </ConnectionContextProvider>
-      </Suspense>
+              </Suspense>
+              <Footer />
+              <ToastContainer limit={1} />
+            </Router>
+          </TransactionContextProvider>
+        </GlobalContextProvider>
+      </ConnectionContextProvider>
     </>
   );
 }
