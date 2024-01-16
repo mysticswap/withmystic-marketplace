@@ -18,13 +18,13 @@ const CurrencyFilters = () => {
   const { setIsFetching, selectedDropdownOption } = useHomeContext()!;
   const [showList, setShowlist] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const tempTokens = [...supportedTokens];
-  const newTokens = tempTokens.splice(-1);
+  const [currentIndex, setCurrentIndex] = useState<number>();
+
   const [currency, setCurrency] = useState<string | undefined>(
-    isClicked ? newTokens[0].contract : undefined
+    supportedTokens[currentIndex!]?.contract ?? undefined
   );
 
-  const newCurrency = isClicked ? newTokens[0].contract : undefined;
+  const newCurrency = supportedTokens[currentIndex!]?.contract;
 
   // const handleCurrency = async () => {
   //   setCollectionNfts({ tokens: [], continuation: null });
@@ -116,7 +116,7 @@ const CurrencyFilters = () => {
         />
       </button>
       <ul className="status_list" aria-expanded={!showList}>
-        {newTokens.map((token, i) => {
+        {supportedTokens.map((token, i) => {
           return (
             <CurrencyListItem
               key={i}
@@ -126,6 +126,9 @@ const CurrencyFilters = () => {
               setCurrency={setCurrency}
               // handleClick={handleCurrency}
               token={token}
+              tokenIndex={i}
+              currentIndex={currentIndex}
+              setCurrentIndex={setCurrentIndex}
             />
           );
         })}

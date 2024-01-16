@@ -24,6 +24,9 @@ type Props = {
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+const WETH_CONTRACT_ADDRESS = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+const ETH_CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000000";
+
 const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const { user, chainId } = useConnectionContext()!;
   const {
@@ -46,10 +49,12 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
   const { isOffer, tokenId } = transactionNft;
   const currencyIsListing =
-    supportedTokens[currentToken].contract ===
-    "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
-      ? "0x0000000000000000000000000000000000000000"
+    supportedTokens[currentToken].contract === WETH_CONTRACT_ADDRESS
+      ? ETH_CONTRACT_ADDRESS
       : supportedTokens[currentToken].contract;
+
+  // const currencyIsListing = supportedTokens[currentToken].contract;
+
   const currency = isOffer ? wethAddresses[collectionChainId] : "";
 
   const headerContent = isOffer ? "Make an offer" : "Create a listing";

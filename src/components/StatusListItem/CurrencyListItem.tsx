@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import { useState } from "react";
-import Checkbox from "../Checkbox/Checkbox";
 import "./StatusListItem.css";
 import { SupportedTokens } from "../../types/dynamic-system.types";
+import CurrencyCheckbox from "../Checkbox/CurrencyCheckbox";
 
 type Props = {
   // handleClick: () => void;
@@ -11,6 +11,9 @@ type Props = {
   token: SupportedTokens;
   isClicked: boolean;
   setIsClicked: React.Dispatch<React.SetStateAction<boolean>>;
+  currentIndex: number | undefined;
+  setCurrentIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
+  tokenIndex: number;
 };
 
 const CurrencyListItem = ({
@@ -20,21 +23,35 @@ const CurrencyListItem = ({
   token,
   isClicked,
   setIsClicked,
+  currentIndex,
+  setCurrentIndex,
+  tokenIndex,
 }: Props) => {
-  // console.log({ isClicked });
+  const handleClick = () => {
+    setCurrency(isClicked ? undefined : token.contract);
+    setIsClicked(!isClicked);
+    setCurrentIndex(() => {
+      if (tokenIndex === currentIndex) {
+        setIsClicked(false);
+        return undefined;
+      } else {
+        setIsClicked(true);
+        return tokenIndex;
+      }
+    });
+  };
+
   return (
-    <li
-      className="status_list_item"
-      onClick={() => {
-        setIsClicked((isClicked) => !isClicked);
-        setCurrency(isClicked ? token.contract : undefined);
-      }}
-    >
+    <li className="status_list_item" onClick={handleClick}>
       <div>
         <img src={token.metadata.image} alt="" className="currency_image" />
         <span>{token.symbol}</span>
       </div>{" "}
-      <Checkbox isClicked={isClicked} />
+      <CurrencyCheckbox
+        isClicked={isClicked}
+        currentIndex={currentIndex}
+        tokenIndex={tokenIndex}
+      />
     </li>
   );
 };

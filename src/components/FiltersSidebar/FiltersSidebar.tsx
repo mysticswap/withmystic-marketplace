@@ -30,7 +30,7 @@ const FiltersSidebar = ({ isForTraits }: Props) => {
         <>
           <StatusFilters />
 
-          {supportedTokens.length === 1 ? null : <CurrencyFilters />}
+          <CurrencyFilters />
           <NumericFilters title="Price" isRarity={false} />
           <NumericFilters title="Rarity Rank" isRarity={true} />
           {collectionAttributes?.attributes?.map((attribute) => {
