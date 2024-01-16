@@ -31,6 +31,7 @@ function App() {
         setIsFetchingClient(false);
       } catch (error) {
         setIsFetchingClient(false);
+        // console.log(error);
         console.log(error);
       }
     };
