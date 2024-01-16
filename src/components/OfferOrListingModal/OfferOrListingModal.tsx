@@ -12,7 +12,7 @@ import {
   createListing,
 } from "../../services/api/buy-offer-list.api";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
-import { convertTokenAmountToDecimal, getHostName } from "../../utils";
+import { convertTokenAmountToDecimals, getHostName } from "../../utils";
 import { handleListOrBidData } from "../../services/list-bid-service";
 import ProcessComponent from "../TransactionStages/TransactionStages";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
@@ -124,9 +124,12 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const createBidOrList = async () => {
     const source = getHostName();
     const token = `${collectionContract}:${tokenId}`;
-    const weiPrice = convertTokenAmountToDecimal(
-      Number(offerAmount)
+
+    const weiPrice = convertTokenAmountToDecimals(
+      Number(offerAmount),
+      supportedTokens[currentToken].decimals
     ).toString();
+
     const expiration = String(selectedDuration.time);
     setTransactionStage(1);
 
@@ -219,27 +222,6 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const transactionButtonIsDisable =
     Number(offerAmount) <= 0 || (isOffer && isOverBalance);
   const transactionButtonText = isOffer ? "Make Offer" : "Create Listing";
-  // const [currentToken, setCurrentToken] = useState<number>(() =>
-  //   supportedTokens!.findIndex((token) => token.symbol === "WETH")
-  // );
-
-  // const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setOfferAmount(e.target.value);
-  //   setTransactionNft({
-  //     ...transactionNft,
-  //     amount: Number(e.target.value),
-  //     price: cryptoValue * Number(e.target.value),
-  //   });
-
-  //   if (e.target.value.includes("-")) {
-  //     setOfferAmount("");
-  //     setTransactionNft({
-  //       ...transactionNft,
-  //       amount: Number(""),
-  //       price: cryptoValue * Number(""),
-  //     });
-  //   }
-  // };
 
   return (
     <div className="modal_parent">
@@ -327,13 +309,6 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                   {supportedTokens.length === 1 ||
                     (!isOffer && <BsChevronDown />)}
                   <p>
-                    {/* {!isOffer
-                      ? "ETH"
-                      : `${
-                          supportedTokens!.length > 0
-                            ? supportedTokens![currentToken].symbol
-                            : "WETH"
-                        }`} */}
                     {!isOffer
                       ? `${
                           supportedTokens!.length > 0

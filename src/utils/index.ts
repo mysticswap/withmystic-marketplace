@@ -35,6 +35,13 @@ export const convertTokenAmountToDecimal = (amount: number) => {
   return amount * Math.pow(10, 18);
   // might need to change 18 to dynamic figure
 };
+export const convertTokenAmountToDecimals = (
+  amount: number,
+  decimal: number
+) => {
+  return amount * Math.pow(10, decimal);
+  // might need to change 18 to dynamic figure
+};
 
 export const metamaskPresent = () => {
   const ethereum = window.ethereum;
