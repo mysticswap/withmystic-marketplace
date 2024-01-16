@@ -60,10 +60,10 @@ function App() {
 
   return (
     <>
-      <ConnectionContextProvider>
-        <GlobalContextProvider client={client}>
-          <TransactionContextProvider>
-            <Suspense fallback={<Loading />}>
+      <Suspense fallback={<Loading />}>
+        <ConnectionContextProvider>
+          <GlobalContextProvider client={client}>
+            <TransactionContextProvider>
               <Router>
                 <Navbar />
                 <Routes>
@@ -81,10 +81,10 @@ function App() {
                 <Footer />
                 <ToastContainer limit={1} />
               </Router>
-            </Suspense>
-          </TransactionContextProvider>
-        </GlobalContextProvider>
-      </ConnectionContextProvider>
+            </TransactionContextProvider>
+          </GlobalContextProvider>
+        </ConnectionContextProvider>
+      </Suspense>
     </>
   );
 }
