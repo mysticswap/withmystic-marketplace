@@ -63,7 +63,7 @@ function App() {
       <ConnectionContextProvider>
         <GlobalContextProvider client={client}>
           <TransactionContextProvider>
-            <Suspense>
+            <Suspense fallback={<Loading />}>
               <Router>
                 <Navbar />
                 <Routes>
