@@ -20,18 +20,15 @@ const ModalNft = ({
   const [price, setPrice] = useState(0);
   const { cryptoValue } = useGlobalContext();
 
+  let collectionName = nftData.collectionName;
+  if (collectionName.length > 23) {
+    collectionName = collectionName.split("", 23).join("") + "...";
+  }
+
   useEffect(() => {
     setPrice(cryptoValue * Number(offerAmount));
   }, [cryptoValue, currentToken, nftData, offerAmount]);
-  // useEffect(() => {
-  //   // setPrice(cryptoValue * Number(offerAmount));
-  //   setPrice(cryptoValue);
-  // }, [cryptoValue, currentToken, nftData]);
-  // useEffect(() => {
-  //   // setPrice(cryptoValue * Number(offerAmount));
-  //   setPrice(cryptoValue);
-  // }, [cryptoValue, currentToken, nftData]);
-  //
+
   const cryptoSymbol =
     supportedTokens[currentToken].symbol === "WETH"
       ? "ETH"
@@ -42,7 +39,7 @@ const ModalNft = ({
       <div className="modal_nft_metadata">
         <img src={nftData.nftImage} alt="" />
         <div className="ellipsis">
-          <p className="ellipsis">{nftData.collectionName}</p>
+          <p className="ellipsis">{collectionName}</p>
           <p className="ellipsis">{nftData.nftName}</p>
         </div>
       </div>
