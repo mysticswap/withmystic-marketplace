@@ -11,7 +11,7 @@ import CurrencyFilters from "../StatusFilters/CurrencyFilters";
 type Props = { isForTraits: boolean };
 
 const FiltersSidebar = ({ isForTraits }: Props) => {
-  const { collectionAttributes, supportedTokens } = useGlobalContext();
+  const { collectionAttributes } = useGlobalContext();
   const { showMobileFilters, setShowMobileFilters } = useHomeContext()!;
 
   return (
