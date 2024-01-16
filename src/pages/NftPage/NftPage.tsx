@@ -67,7 +67,10 @@ const NftPage = () => {
                 autoPlay
                 loop
                 muted
+                controls
                 className="nft_video"
+                controlsList="nodownload"
+                preload="metadata"
               >
                 <source src={nftInfo?.media} type="video/mp4"></source>
               </video>

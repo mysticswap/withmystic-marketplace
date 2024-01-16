@@ -24,6 +24,10 @@ function App() {
   const [client, setClient] = useState({} as ClientObject);
 
   useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
+
+  useEffect(() => {
     const fetchMarketplaceClient = async () => {
       try {
         const res = await getMarketplaceClient();
