@@ -43,7 +43,7 @@ const NftCard = ({ nft }: Props) => {
 
   const currentEthAmount = nft?.market?.floorAsk?.price?.amount?.decimal;
   const symbol = nft?.market?.floorAsk?.price?.currency?.symbol;
-  const currentValue = Math.ceil(nft?.market?.floorAsk?.price?.amount?.usd);
+  const currentValue = Math.round(nft?.market?.floorAsk?.price?.amount?.usd);
   const lastSale = nft?.market?.floorAsk?.price?.amount?.decimal;
   const nftName = nft?.token?.name;
   const nftId = nft?.token?.tokenId;

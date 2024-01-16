@@ -17,6 +17,7 @@ const ModalNft = ({
   currentToken,
   offerAmount,
 }: Props) => {
+  // console.log(nftData);
   const [price, setPrice] = useState(0);
   const { cryptoValue } = useGlobalContext();
 
@@ -29,10 +30,7 @@ const ModalNft = ({
     setPrice(cryptoValue * Number(offerAmount));
   }, [cryptoValue, currentToken, nftData, offerAmount]);
 
-  const cryptoSymbol =
-    supportedTokens[currentToken].symbol === "WETH"
-      ? "ETH"
-      : supportedTokens[currentToken].symbol;
+  const cryptoSymbol = supportedTokens[currentToken].symbol;
 
   return (
     <div className="modal_nft">
@@ -45,7 +43,9 @@ const ModalNft = ({
       </div>
 
       <p className="modal_nft_value">
-        {nftData.amount || "--"} {nftData.isOffer ? "wETH" : cryptoSymbol}
+        {/* {nftData.amount || "--"} {nftData.isOffer ? "wETH" : cryptoSymbol} */}
+        {nftData.amount || "--"}
+        {nftData.isOffer ? "wETH" : cryptoSymbol}
         <span>(${price.toFixed(2) || "--"})</span>
       </p>
     </div>
