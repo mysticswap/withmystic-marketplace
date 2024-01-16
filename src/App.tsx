@@ -15,9 +15,9 @@ import Loading from "./components/Loading/Loading";
 import { addLinks, changeStyles, updateMetadata } from "./utils/dynamic-styles";
 import { updateFavicon, updateSiteTitle } from "./utils";
 import ReactGA from "react-ga";
+import Home from "./pages/Home";
 
 // Lazy Loading
-const Home = lazy(() => import("./pages/Home"));
 const NftPage = lazy(() => import("./pages/NftPage/NftPage"));
 const SwapsPage = lazy(() => import("./pages/SwapsPage/SwapsPage"));
 const ErrorPage = lazy(() => import("./pages/ErrorPage/ErrorPage"));
@@ -65,20 +65,29 @@ function App() {
           <TransactionContextProvider>
             <Router>
               <Navbar />
-              <Suspense fallback={<Loading />}>
-                <Routes>
-                  <Route
-                    path="/"
-                    element={<HomeContextProvider children={<Home />} />}
-                  />
-                  <Route
-                    path="/:contract/:id"
-                    element={<NftPageContextProvider children={<NftPage />} />}
-                  />
-                  <Route path="/swaps" element={<SwapsPage />} />
-                  <Route path="*" element={<ErrorPage />} />
-                </Routes>
-              </Suspense>
+              <Routes>
+                <Route
+                  path="/"
+                  element={<HomeContextProvider children={<Home />} />}
+                />
+                <Route
+                  path="/:contract/:id"
+                  element={
+                    <Suspense fallback={<Loading />}>
+                      <NftPageContextProvider children={<NftPage />} />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/swaps"
+                  element={
+                    <Suspense fallback={<Loading />}>
+                      <SwapsPage />
+                    </Suspense>
+                  }
+                />
+                <Route path="*" element={<ErrorPage />} />
+              </Routes>
               <Footer />
               <ToastContainer limit={1} />
             </Router>
