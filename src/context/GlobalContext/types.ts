@@ -6,7 +6,7 @@ import { UserNfts } from "../../types/rsv-types/user-nfts.types";
 import {
   ClientObject,
   MarketplaceClientCollection,
-  SupportedTokens,
+  SupportedToken,
 } from "../../types/dynamic-system.types";
 
 export type GlobalContextType = {
@@ -45,7 +45,7 @@ export type GlobalContextType = {
   activitiesFetching: boolean;
   cryptoValue: number;
   client: ClientObject;
-  supportedTokens: SupportedTokens[];
+  supportedTokens: SupportedToken[];
   currentToken: number;
   setCurrentToken: React.Dispatch<React.SetStateAction<number>>;
 };

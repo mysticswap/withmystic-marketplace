@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import { useState } from "react";
 import "./StatusListItem.css";
-import { SupportedTokens } from "../../types/dynamic-system.types";
+import { SupportedToken } from "../../types/dynamic-system.types";
 import CurrencyCheckbox from "../Checkbox/CurrencyCheckbox";
 
 type Props = {
   // handleClick: () => void;
   currency: string | undefined;
   setCurrency: React.Dispatch<React.SetStateAction<string | undefined>>;
-  token: SupportedTokens;
+  token: SupportedToken;
   isClicked: boolean;
   setIsClicked: React.Dispatch<React.SetStateAction<boolean>>;
   currentIndex: number | undefined;
@@ -44,7 +44,7 @@ const CurrencyListItem = ({
   return (
     <li className="status_list_item" onClick={handleClick}>
       <div>
-        <img src={token.metadata.image} alt="" className="currency_image" />
+        <img src={token.image} alt="" className="currency_image" />
         <span>{token.symbol}</span>
       </div>{" "}
       <CurrencyCheckbox

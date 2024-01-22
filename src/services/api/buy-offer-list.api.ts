@@ -56,6 +56,24 @@ export const buyListedNft = async (
   orderId: string,
   taker: string,
   source: string,
+  isLocal?: boolean,
+  onePercentFee?: number
+) => {
+  const request = await marketplaceInstance.post("/buy-nft", {
+    chainId,
+    orderId,
+    taker,
+    source,
+    isLocal,
+    onePercentFee,
+  });
+  return request.data;
+};
+export const buyListedNftInOtherToken = async (
+  chainId: number,
+  orderId: string,
+  taker: string,
+  source: string,
   isLocal: boolean,
   onePercentFee: number
 ) => {

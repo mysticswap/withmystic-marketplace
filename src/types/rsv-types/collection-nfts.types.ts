@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface GetNftsRsv {
   tokens: TokenElement[];
   continuation: string | null;

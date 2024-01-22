@@ -135,3 +135,11 @@ export const getOnePercentFee = (tokenValueDecimals: number) => {
     convertTokenAmountToDecimal(tokenValueDecimals * 0.01).toFixed(0)
   );
 };
+export const getOnePercentFeeToken = (
+  tokenValueDecimals: number,
+  decimals: number
+) => {
+  return Number(
+    convertTokenAmountToDecimals(tokenValueDecimals * 0.01, decimals).toFixed(0)
+  );
+};

@@ -23,6 +23,25 @@ export const generateSaleActivity = (
   };
   return activityObject;
 };
+export const generateSaleActivityToken = (
+  nft: TokenElement,
+  type: ActivityType,
+  buyer?: string,
+  price?: string
+) => {
+  const activityObject: ActivityObject = {
+    tokenName: nft?.token?.name,
+    tokenId: nft?.token?.tokenId,
+    contractAddress: nft?.token?.contract,
+    seller: nft?.token.owner,
+    domain: getHostName(),
+    price: price || nft?.market?.floorAsk?.price?.amount?.decimal.toString(),
+    type,
+    image: nft?.token?.image,
+    ...(buyer && { buyer }),
+  };
+  return activityObject;
+};
 
 export const generateListOrBidActivity = (
   nft: TransactionNft,

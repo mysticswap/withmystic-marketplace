@@ -77,6 +77,8 @@ export const defaultOfferOrList = {
   tokenId: "",
   message: "",
   nftOwner: "",
+  symbol: "",
+  isBuyNow: false,
 };
 
 export const scanWebsites: { [x: number]: string } = {

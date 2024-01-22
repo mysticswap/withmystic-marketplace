@@ -25,7 +25,8 @@ type Props = {
 };
 
 const WETH_CONTRACT_ADDRESS = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
-const ETH_CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000000";
+export const ETH_CONTRACT_ADDRESS =
+  "0x0000000000000000000000000000000000000000";
 
 const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const { user, chainId } = useConnectionContext()!;
@@ -331,7 +332,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                           }}
                         >
                           <div className="single-inner-token">
-                            <img src={token.metadata.image} alt="" />
+                            <img src={token.image} alt="" />
                             <p>{token.symbol}</p>
                           </div>
                           {index === currentToken && (

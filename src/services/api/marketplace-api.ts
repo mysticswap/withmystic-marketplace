@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 import { BASE_API } from "../../config";
 import { getQueryString } from "../../utils";
 

@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { ReactNode, createContext, useContext, useState } from "react";
 import { TransactionContextType } from "./types";
 import { defaultOfferOrList } from "../../constants";
@@ -15,11 +16,17 @@ export const TransactionContextProvider = ({ children }: Props) => {
   const [showOfferOrListingModal, setShowOfferOrListingModal] = useState(false);
   const [transactionNft, setTransactionNft] = useState(defaultOfferOrList);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showConfirmationBuyNowModal, setShowConfirmationBuyNowModal] =
+    useState(false);
   const [transactionStage, setTransactionStage] = useState(0);
   const [transactionHash, setTransactionHash] = useState("");
 
+  const tokenSymbol = transactionNft.symbol;
+
+  // const userCanCompleteTransaction =
+  //   Number(userBalance?.ETH) >= transactionNft?.amount;
   const userCanCompleteTransaction =
-    Number(userBalance?.ETH) >= transactionNft?.amount;
+    Number(userBalance?.[tokenSymbol]) >= transactionNft?.amount;
 
   return (
     <TransactionContext.Provider
@@ -35,6 +42,8 @@ export const TransactionContextProvider = ({ children }: Props) => {
         transactionHash,
         setTransactionHash,
         userCanCompleteTransaction,
+        showConfirmationBuyNowModal,
+        setShowConfirmationBuyNowModal,
       }}
     >
       {children}
