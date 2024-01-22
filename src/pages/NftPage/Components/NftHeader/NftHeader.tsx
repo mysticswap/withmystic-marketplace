@@ -65,12 +65,8 @@ const NftHeader = ({
   setShowConfirmationBuyNowModal,
 }: Props) => {
   const { user, setProvider, chainId } = useConnectionContext()!;
-  const {
-    transactionNft,
-    setTransactionNft,
-    setTransactionStage,
-    setTransactionHash,
-  } = useTransactionContext()!;
+  const { setTransactionNft, setTransactionStage, setTransactionHash } =
+    useTransactionContext()!;
   const { source, collectionChainId, userBalance, client } = useGlobalContext();
   const {
     token,
