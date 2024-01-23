@@ -97,6 +97,8 @@ const NftHeader = ({
     currentDecimalToken
   );
 
+  const isOwner = owner.toLowerCase() === user!.toLowerCase();
+
   const isETHModal =
     nftPriceData?.floorAsk?.price?.currency.contract === ETH_CONTRACT_ADDRESS;
 
@@ -252,7 +254,8 @@ const NftHeader = ({
         <p>
           Owned by{" "}
           <span onClick={() => redirectToMSWalletPage(owner)}>
-            {truncateAddress(owner, 5, "...")}
+            {isOwner ? "You" : `${truncateAddress(owner, 5, "...")}`}
+            {/* {truncateAddress(owner, 5, "...")} */}
           </span>
         </p>
         <div>

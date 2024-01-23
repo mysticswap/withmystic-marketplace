@@ -77,8 +77,8 @@ const CurrencyFilters = () => {
 
       const result = await getCollectionNftsV2(
         collectionChainId,
-        selectedDropdownOption.value,
-        selectedDropdownOption.order,
+        "floorAskPrice",
+        "asc",
         collectionContract,
         undefined,
         undefined,
