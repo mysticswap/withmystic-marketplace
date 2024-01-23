@@ -45,6 +45,7 @@ const CardsHolder = () => {
 
   useEffect(() => {
     setNftsTemp(collectionNfts?.tokens);
+    console.log(collectionNfts);
   }, [collectionNfts]);
 
   const nftsList = nftsTemp?.map((nft) => {
