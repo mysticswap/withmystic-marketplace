@@ -1,7 +1,9 @@
 import "./Checkbox.css";
 import { BsCheck } from "react-icons/bs";
 
-type Prop = { isClicked: boolean };
+type Prop = {
+  isClicked: boolean;
+};
 
 const Checkbox = ({ isClicked }: Prop) => {
   return (

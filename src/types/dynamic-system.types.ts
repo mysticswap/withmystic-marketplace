@@ -20,6 +20,15 @@ export type MarketplaceClientCollection = {
   name: string;
   address: string;
   chainId: number;
+  supportedTokens?: SupportedToken[];
+};
+
+export type SupportedToken = {
+  contract: string;
+  name: string;
+  symbol: string;
+  decimals: number;
+  image: string;
 };
 
 export type MarketplaceClientStyles = {

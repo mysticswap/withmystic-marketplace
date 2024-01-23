@@ -18,18 +18,10 @@ import Loading from "./components/Loading/Loading";
 import { addLinks, changeStyles, updateMetadata } from "./utils/dynamic-styles";
 import { updateFavicon, updateSiteTitle } from "./utils";
 import SwapsPage from "./pages/SwapsPage/SwapsPage";
-import ReactGA from "react-ga";
-
-const TRACKING_ID = import.meta.env.VITE_GOOGLE_ANALYTICS as string; // YOUR_OWN_TRACKING_ID
-ReactGA.initialize(TRACKING_ID);
 
 function App() {
   const [isFetchingClient, setIsFetchingClient] = useState(true);
   const [client, setClient] = useState({} as ClientObject);
-
-  useEffect(() => {
-    ReactGA.pageview(window.location.pathname + window.location.search);
-  }, []);
 
   useEffect(() => {
     const fetchMarketplaceClient = async () => {
@@ -39,6 +31,7 @@ function App() {
         setIsFetchingClient(false);
       } catch (error) {
         setIsFetchingClient(false);
+        // console.log(error);
         console.log(error);
       }
     };

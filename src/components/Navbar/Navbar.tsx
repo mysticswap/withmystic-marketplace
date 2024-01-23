@@ -124,6 +124,7 @@ const Navbar = () => {
                         onClick={() => {
                           setSelectedCollection(collection);
                           setCurrentTab(tabOptions[0]);
+                          setShowDropdownOptions(false);
                         }}
                       >
                         {collection.name}{" "}

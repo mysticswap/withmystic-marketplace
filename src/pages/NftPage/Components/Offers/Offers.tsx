@@ -112,8 +112,8 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
         </div>
         <div>
           {nftOffers?.orders?.map((order) => {
-            let timeStamp = dayjs(order?.expiration * 1000).fromNow();
-            let altTimeStamp =
+            const timeStamp = dayjs(order?.expiration * 1000).fromNow();
+            const altTimeStamp =
               timeStamp.startsWith("in") && timeStamp.substring(2);
             const price = order.price.amount.decimal;
             const usd = order.price.amount.usd;

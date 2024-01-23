@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface BuyData {
   requestId: string;
   steps: Step[];
@@ -31,11 +32,12 @@ export interface Step {
 }
 
 export interface Item {
+  kind?: string;
   status: string;
-  orderIds: string[];
+  orderIds?: string[];
   data: Data;
-  check: Check;
-  gasEstimate: number;
+  check?: Check;
+  gasEstimate?: number;
 }
 
 export interface Check {
@@ -52,7 +54,8 @@ export interface Data {
   from: string;
   to: string;
   data: string;
-  value: string;
+  value?: string;
+  check?: Check;
   post?: Post;
   sign?: Sign;
 }
