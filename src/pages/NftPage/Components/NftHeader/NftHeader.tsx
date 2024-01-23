@@ -97,7 +97,7 @@ const NftHeader = ({
     currentDecimalToken
   );
 
-  const isOwner = owner.toLowerCase() === user!.toLowerCase();
+  const isOwner = owner?.toLowerCase() === user?.toLowerCase();
 
   const isETHModal =
     nftPriceData?.floorAsk?.price?.currency.contract === ETH_CONTRACT_ADDRESS;

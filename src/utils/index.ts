@@ -80,6 +80,7 @@ export const getHostName = () => {
   switch (hostName) {
     case "localhost":
       return "marketplace.mysticswaplocalhost.io";
+      return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
       return "deploy-preview-29--heroic-duckanoo-b32f52.netlify.app";
       return "market.localhost.io";
       return "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app";
@@ -90,7 +91,7 @@ export const getHostName = () => {
       return "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app";
       return "marketplace.mysticswaplocalhost.io";
       return "market.localhost.io";
-    case "deploy-preview-78--heroic-duckanoo-b32f52.netlify.app":
+    case "deploy-preview-79--heroic-duckanoo-b32f52.netlify.app":
       return "marketplace.mysticswaplocalhost.io";
     // return "marketplace.mysticswaplocalhost.io";
     // return "deploy-preview-26--heroic-duckanoo-b32f52.netlify.app";
