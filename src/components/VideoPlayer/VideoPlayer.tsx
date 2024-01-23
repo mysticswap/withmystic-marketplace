@@ -35,7 +35,6 @@ export const VideoPlayer = ({ videoUrl, posterUrl, nftUrl }: props) => {
     vidRef.current?.addEventListener(
       "loadeddata",
       function () {
-        console.log(this?.duration);
         if (this.duration <= 15) {
           vidRef.current?.toggleAttribute("autoplay", true);
           buttonRef.current?.classList.toggle("hide", true);
