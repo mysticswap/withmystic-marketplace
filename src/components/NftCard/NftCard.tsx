@@ -185,11 +185,12 @@ const NftCard = ({ nft }: Props) => {
           {!sourceLink?.includes("opensea") ? (
             <img
               src={
-                sourceLink?.includes("x2y2")
-                  ? x2y2
-                  : isFromCurrentMarketplace
-                  ? client.favicon
-                  : sourceIcon
+                // sourceLink?.includes("x2y2")
+                //   ? x2y2
+                //   : isFromCurrentMarketplace
+                //   ? client.favicon
+                //   : sourceIcon
+                client.favicon
               }
               alt=""
             />
