@@ -14,7 +14,6 @@ import { ClientObject } from "./types/dynamic-system.types";
 import Loading from "./components/Loading/Loading";
 import { addLinks, changeStyles, updateMetadata } from "./utils/dynamic-styles";
 import { updateFavicon, updateSiteTitle } from "./utils";
-import ReactGA from "react-ga";
 import Home from "./pages/Home";
 
 // Lazy Loading
@@ -22,9 +21,7 @@ const NftPage = lazy(() => import("./pages/NftPage/NftPage"));
 const SwapsPage = lazy(() => import("./pages/SwapsPage/SwapsPage"));
 const ErrorPage = lazy(() => import("./pages/ErrorPage/ErrorPage"));
 
-const TRACKING_ID = import.meta.env.VITE_GOOGLE_ANALYTICS as string; // YOUR_OWN_TRACKING_ID
-ReactGA.initialize(TRACKING_ID);
-
+//
 
 function App() {
   const [isFetchingClient, setIsFetchingClient] = useState(true);
@@ -39,7 +36,6 @@ function App() {
       } catch (error) {
         setIsFetchingClient(false);
         // console.log(error);
-        console.log(error);
       }
     };
 
