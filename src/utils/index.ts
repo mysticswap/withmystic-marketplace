@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SelectedTrait } from "../context/HomeContext/types";
 import { Market, TokenToken } from "../types/rsv-types/collection-nfts.types";
 
@@ -32,6 +33,13 @@ export const convertDecimalsToReadableNumbers = (
 
 export const convertTokenAmountToDecimal = (amount: number) => {
   return amount * Math.pow(10, 18);
+  // might need to change 18 to dynamic figure
+};
+export const convertTokenAmountToDecimals = (
+  amount: number,
+  decimal: number
+) => {
+  return amount * Math.pow(10, decimal);
   // might need to change 18 to dynamic figure
 };
 
@@ -71,6 +79,7 @@ export const getHostName = () => {
   const hostName = window.location.hostname;
   switch (hostName) {
     case "localhost":
+
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
       return "deploy-preview-25--heroic-duckanoo-b32f52.netlify.app";
       return "deploy-preview-15--heroic-duckanoo-b32f52.netlify.app";
@@ -82,10 +91,14 @@ export const getHostName = () => {
       return "deploy-preview-15--heroic-duckanoo-b32f52.netlify.app";
       return "marketplace.mysticswaplocalhost.io";
       return "deploy-preview-25--heroic-duckanoo-b32f52.netlify.app";
-    case "deploy-preview-72--heroic-duckanoo-b32f52.netlify.app":
+    case "deploy-preview-69--heroic-duckanoo-b32f52.netlify.app":
       return "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app";
       return "marketplace.mysticswaplocalhost.io";
-      return "deploy-preview-26--heroic-duckanoo-b32f52.netlify.app";
+      return "market.localhost.io";
+    case "deploy-preview-79--heroic-duckanoo-b32f52.netlify.app":
+      return "marketplace.mysticswaplocalhost.io";
+    // return "marketplace.mysticswaplocalhost.io";
+    // return "deploy-preview-26--heroic-duckanoo-b32f52.netlify.app";
     default:
       return hostName;
   }
@@ -125,5 +138,13 @@ export const updateSiteTitle = (text: string) => {
 export const getOnePercentFee = (tokenValueDecimals: number) => {
   return Number(
     convertTokenAmountToDecimal(tokenValueDecimals * 0.01).toFixed(0)
+  );
+};
+export const getOnePercentFeeToken = (
+  tokenValueDecimals: number,
+  decimals: number
+) => {
+  return Number(
+    convertTokenAmountToDecimals(tokenValueDecimals * 0.01, decimals).toFixed(0)
   );
 };

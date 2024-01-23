@@ -9,7 +9,9 @@ type Props = { nftPriceData: Market };
 const CurrentPrice = ({ nftPriceData }: Props) => {
   const { client } = useGlobalContext();
   const currentPriceDecimal = nftPriceData?.floorAsk?.price?.amount?.decimal;
-  const currentPriceUsd = Math.ceil(nftPriceData?.floorAsk?.price?.amount?.usd);
+  const currentPriceUsd = Math.round(
+    nftPriceData?.floorAsk?.price?.amount?.usd
+  );
   const symbol = nftPriceData?.floorAsk?.price?.currency.symbol;
   const source = nftPriceData?.floorAsk?.source?.icon;
   const sourceLink = nftPriceData?.floorAsk?.source?.url;

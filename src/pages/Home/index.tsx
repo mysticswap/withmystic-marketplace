@@ -8,8 +8,7 @@ import { tabOptions } from "../../constants";
 import OfferOrListingModal from "../../components/OfferOrListingModal/OfferOrListingModal";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import ConfirmPurchaseModal from "../../components/ConfirmPurchaseModal/ConfirmPurchaseModal";
-import ReactGA from "react-ga";
-import { useEffect } from "react";
+import ConfirmPurchaseBuyNowModal from "../../components/ConfirmPurchaseModal/ConfirmPurchaseBuyNowModal";
 
 const Home = () => {
   const { currentTab } = useGlobalContext();
@@ -18,12 +17,11 @@ const Home = () => {
     setShowOfferOrListingModal,
     showConfirmationModal,
     setShowConfirmationModal,
+    showConfirmationBuyNowModal,
+    setShowConfirmationBuyNowModal,
   } = useTransactionContext()!;
   const isInItemsSection = currentTab == tabOptions[0];
 
-  useEffect(() => {
-    ReactGA.pageview(window.location.pathname);
-  }, []);
   return (
     <div>
       <Banner />
@@ -40,6 +38,11 @@ const Home = () => {
       {showConfirmationModal && (
         <ConfirmPurchaseModal
           setShowConfirmationModal={setShowConfirmationModal}
+        />
+      )}
+      {showConfirmationBuyNowModal && (
+        <ConfirmPurchaseBuyNowModal
+          setShowConfirmationBuyNowModal={setShowConfirmationBuyNowModal}
         />
       )}
     </div>

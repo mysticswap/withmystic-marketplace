@@ -1,15 +1,18 @@
 import { IoClose } from "react-icons/io5";
 import "./ConfirmPurchaseModal.css";
-import ModalNft from "../ModalNft/ModalNft";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import TransactionStages from "../TransactionStages/TransactionStages";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
+import ModalNftBuyNow from "../ModalNft/ModalNftBuyNow";
+// import { useNftPageContext } from "../../context/NftPageContext/NftPageContext";
 
 type Props = {
-  setShowConfirmationModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowConfirmationBuyNowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const ConfirmPurchaseModal = ({ setShowConfirmationModal }: Props) => {
+const ConfirmPurchaseBuyNowModal = ({
+  setShowConfirmationBuyNowModal,
+}: Props) => {
   const {
     transactionNft,
     transactionStage,
@@ -18,16 +21,20 @@ const ConfirmPurchaseModal = ({ setShowConfirmationModal }: Props) => {
     userCanCompleteTransaction,
   } = useTransactionContext()!;
 
-  const { currentToken } = useGlobalContext();
+  // const { currentToken, userBalance, supportedTokens } = useGlobalContext();
+  const { currentToken, supportedTokens } = useGlobalContext();
 
-  const { supportedTokens } = useGlobalContext();
+  // const { nftPriceData } = useNftPageContext()!;
+  // const cryptoSymbol = nftPriceData.floorAsk.price.currency.symbol;
+
   const nftData = transactionNft;
-  const modalTitle = transactionNft.isSale
-    ? "Confirm transaction"
-    : "Confirm purchase";
-  const successMessage = transactionNft.isSale
-    ? "Congratulations on your sale!"
-    : "Congratulations on your purchase!";
+  const modalTitle = transactionNft.isOffer && "Confirm purchase";
+
+  const successMessage =
+    transactionNft.isOffer && "Congratulations on your purchase!";
+
+  // const userCanCompleteTransactionToken =
+  //   Number(userBalance[cryptoSymbol]) >= transactionNft.amount;
 
   return (
     <div className="modal_parent">
@@ -41,14 +48,14 @@ const ConfirmPurchaseModal = ({ setShowConfirmationModal }: Props) => {
           display="block"
           size={25}
           onClick={() => {
-            setShowConfirmationModal(false);
+            setShowConfirmationBuyNowModal(false);
             setTransactionHash("");
             setTransactionStage(0);
           }}
         />
         <div className="confirm_purchase_modal">
           <div className="modal_nft_holder">
-            <ModalNft
+            <ModalNftBuyNow
               nftData={nftData}
               supportedTokens={supportedTokens}
               currentToken={currentToken}
@@ -81,4 +88,4 @@ const ConfirmPurchaseModal = ({ setShowConfirmationModal }: Props) => {
   );
 };
 
-export default ConfirmPurchaseModal;
+export default ConfirmPurchaseBuyNowModal;

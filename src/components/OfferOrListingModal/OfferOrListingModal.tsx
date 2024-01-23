@@ -1,27 +1,32 @@
 import { IoClose } from "react-icons/io5";
 import "./OfferOrListingModal.css";
 import ModalNft from "../ModalNft/ModalNft";
-import { BsCalendar } from "react-icons/bs";
+import { BsCalendar, BsCheck2, BsChevronDown } from "react-icons/bs";
 import { useEffect, useRef, useState } from "react";
 import SolidButton from "../SolidButton/SolidButton";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
-import { durationOptions } from "../../constants";
+import { durationOptions, wethAddresses } from "../../constants";
 import {
   createBid,
   createListing,
 } from "../../services/api/buy-offer-list.api";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
-import { convertTokenAmountToDecimal, getHostName } from "../../utils";
+import { convertTokenAmountToDecimals, getHostName } from "../../utils";
 import { handleListOrBidData } from "../../services/list-bid-service";
 import ProcessComponent from "../TransactionStages/TransactionStages";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import { switchChains } from "../../utils/wallet-connection";
 import { generateListOrBidActivity } from "../../utils/activity-utils";
+import { useOutsideClicks } from "../../hooks/useOutsideClicks";
 
 type Props = {
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
+const WETH_CONTRACT_ADDRESS = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+export const ETH_CONTRACT_ADDRESS =
+  "0x0000000000000000000000000000000000000000";
 
 const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const { user, chainId } = useConnectionContext()!;
@@ -30,7 +35,10 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     collectionMetadata,
     collectionChainId,
     collectionContract,
-    ethValue,
+    cryptoValue,
+    supportedTokens,
+    currentToken,
+    setCurrentToken,
   } = useGlobalContext();
   const {
     transactionNft,
@@ -41,6 +49,14 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const dropdownRef = useRef(null);
 
   const { isOffer, tokenId } = transactionNft;
+  const currencyIsListing =
+    supportedTokens[currentToken].contract === WETH_CONTRACT_ADDRESS
+      ? ETH_CONTRACT_ADDRESS
+      : supportedTokens[currentToken].contract;
+
+  // const currencyIsListing = supportedTokens[currentToken].contract;
+
+  const currency = isOffer ? wethAddresses[collectionChainId] : "";
 
   const headerContent = isOffer ? "Make an offer" : "Create a listing";
   const finalHeader = isOffer ? "Offer completed!" : "Listing completed!";
@@ -48,7 +64,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
   const collectionFloorPrice =
     collectionMetadata?.collections?.[0]?.floorAsk?.price?.amount?.decimal;
-  const Royalties =
+  const royalties =
     Number(
       collectionMetadata?.collections?.[0]?.allRoyalties?.opensea?.[0]?.bps
     ) * 0.01;
@@ -57,6 +73,16 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [offerAmount, setOfferAmount] = useState("");
   const [isOverBalance, setIsOverBalance] = useState(false);
+
+  const [showTokensDropdown, setShowTokensDropdown] = useState(false);
+
+  const closeDropdown = () => {
+    setShowTokensDropdown(false);
+  };
+
+  const ref = useOutsideClicks(() => {
+    closeDropdown();
+  }, false);
 
   useOutsideClick(dropdownRef, setShowDropdown, "duration_trigger");
   const activity = generateListOrBidActivity(
@@ -87,7 +113,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     <>
       <p>
         <span>Creator earnings</span>
-        <span>{Royalties}%</span>
+        <span>{isNaN(royalties) ? "--" : royalties}%</span>
       </p>
       <p>
         <span>Marketplace fee</span>
@@ -96,52 +122,102 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     </>
   );
 
-  const createBidOrList = () => {
+  const createBidOrList = async () => {
     const source = getHostName();
     const token = `${collectionContract}:${tokenId}`;
-    const weiPrice = convertTokenAmountToDecimal(
-      Number(offerAmount)
+
+    const weiPrice = convertTokenAmountToDecimals(
+      Number(offerAmount),
+      supportedTokens[currentToken].decimals
     ).toString();
+
     const expiration = String(selectedDuration.time);
     setTransactionStage(1);
 
-    switchChains(chainId, collectionChainId).then(() => {
+    // switchChains(chainId, collectionChainId).then(() => {
+    //   if (!isOffer) {
+    //     createListing(
+    //       collectionChainId,
+    //       user!,
+    //       source,
+    //       token,
+    //       weiPrice,
+    //       expiration,
+    //       !isOffer,
+    //       currency
+    //     ).then(async (result) => {
+    //       console.log(result);
+    //       handleListOrBidData(
+    //         collectionChainId,
+    //         result,
+    //         setTransactionStage,
+    //         setShowOfferOrListingModal,
+    //         activity
+    //       );
+    //     });
+    //   } else {
+    //     createBid(
+    //       collectionChainId,
+    //       user!,
+    //       source,
+    //       token,
+    //       weiPrice,
+    //       expiration
+    //     ).then((result) => {
+    //       handleListOrBidData(
+    //         collectionChainId,
+    //         result,
+    //         setTransactionStage,
+    //         setShowOfferOrListingModal,
+    //         activity
+    //       );
+    //     });
+    //   }
+    // });
+    try {
+      await switchChains(chainId, collectionChainId);
+
       if (!isOffer) {
-        createListing(
+        const result = await createListing(
           collectionChainId,
           user!,
           source,
           token,
           weiPrice,
-          expiration
-        ).then(async (result) => {
-          handleListOrBidData(
-            collectionChainId,
-            result,
-            setTransactionStage,
-            setShowOfferOrListingModal,
-            activity
-          );
-        });
+          expiration,
+          !isOffer,
+          currencyIsListing
+        );
+        await handleListOrBidData(
+          collectionChainId,
+          result,
+          setTransactionStage,
+          setShowOfferOrListingModal,
+          activity
+        );
       } else {
-        createBid(
+        const result = await createBid(
           collectionChainId,
           user!,
           source,
           token,
           weiPrice,
-          expiration
-        ).then((result) => {
-          handleListOrBidData(
-            collectionChainId,
-            result,
-            setTransactionStage,
-            setShowOfferOrListingModal,
-            activity
-          );
-        });
+          expiration,
+          !isOffer,
+          currency
+        );
+        await handleListOrBidData(
+          collectionChainId,
+          result,
+          setTransactionStage,
+          setShowOfferOrListingModal,
+          activity
+        );
       }
-    });
+    } catch (error) {
+      // Handle errors here
+      console.error(error);
+    }
   };
 
   const transactionButtonIsDisable =
@@ -166,7 +242,12 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
         <div className="listing_or_offer_modal">
           <div className="modal_nft_holder">
-            <ModalNft nftData={transactionNft} />
+            <ModalNft
+              nftData={transactionNft}
+              supportedTokens={supportedTokens}
+              currentToken={currentToken}
+              offerAmount={offerAmount}
+            />
           </div>
 
           {!transactionStage ? (
@@ -179,6 +260,16 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                 <input
                   type="number"
                   min={0}
+                  // className={isOffer ? "weth-value-2" : "weth-value no-right"}
+                  className={
+                    isOffer
+                      ? "weth-value-2"
+                      : `${
+                          supportedTokens.length === 1
+                            ? "weth-value no-right"
+                            : "weth-value"
+                        }`
+                  }
                   placeholder={inputPlaceholder}
                   value={offerAmount}
                   onChange={(e) => {
@@ -186,7 +277,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                     setTransactionNft({
                       ...transactionNft,
                       amount: Number(e.target.value),
-                      price: ethValue * Number(e.target.value),
+                      price: cryptoValue * Number(e.target.value),
                     });
 
                     if (e.target.value.includes("-")) {
@@ -194,12 +285,64 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                       setTransactionNft({
                         ...transactionNft,
                         amount: Number(""),
-                        price: ethValue * Number(""),
+                        price: cryptoValue * Number(""),
                       });
                     }
                   }}
                 />
-                <p>{!isOffer ? "ETH" : "wETH"}</p>
+                <div
+                  // className={isOffer ? "chevron-down-2" : "chevron-down"}
+                  className={
+                    isOffer
+                      ? "chevron-down-2"
+                      : `${
+                          supportedTokens.length === 1
+                            ? "chevron-down"
+                            : "chevron-down no-cursor"
+                        }`
+                  }
+                  ref={ref}
+                  onClick={() => {
+                    if (isOffer || supportedTokens.length === 1) return;
+                    setShowTokensDropdown(!showTokensDropdown);
+                  }}
+                >
+                  {supportedTokens.length === 1 ||
+                    (!isOffer && <BsChevronDown />)}
+                  <p>
+                    {!isOffer
+                      ? `${
+                          supportedTokens!.length > 0
+                            ? supportedTokens![currentToken].symbol
+                            : "wETH"
+                        }`
+                      : "wETH"}
+                  </p>
+                </div>
+                {showTokensDropdown && (
+                  <div className="tokens-dropdown">
+                    {supportedTokens?.map((token, index) => {
+                      return (
+                        <div
+                          className="single-token"
+                          key={token.contract}
+                          onClick={() => {
+                            setCurrentToken(index);
+                            setShowTokensDropdown(false);
+                          }}
+                        >
+                          <div className="single-inner-token">
+                            <img src={token.image} alt="" />
+                            <p>{token.symbol}</p>
+                          </div>
+                          {index === currentToken && (
+                            <BsCheck2 className="token-checkmark" />
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
 
               <div className="duration_area">

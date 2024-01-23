@@ -30,7 +30,7 @@ const Banner = () => {
     {
       title: "Floor",
       value:
-        collectionMetadata?.collections?.[0]?.floorAsk?.price?.amount?.decimal,
+        collectionMetadata?.collections?.[0]?.floorAsk?.price?.amount?.native,
       icon: collectionNetworkIcon[collectionChainId],
     },
   ];

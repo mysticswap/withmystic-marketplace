@@ -8,7 +8,8 @@ export const createListing = async (
   token: string,
   weiPrice: string,
   expirationTime: string,
-  isListing: boolean = true
+  isListing: boolean = true,
+  currency: string
 ) => {
   try {
     const request = await marketplaceInstance.post("/create-list-or-bid", {
@@ -19,6 +20,7 @@ export const createListing = async (
       weiPrice,
       expirationTime,
       isListing,
+      currency,
     });
     return request.data;
   } catch (error) {
@@ -33,7 +35,8 @@ export const createBid = async (
   token: string,
   weiPrice: string,
   expirationTime: string,
-  isListing: boolean = false
+  isListing: boolean = false,
+  currency?: string
 ) => {
   const request = await marketplaceInstance.post("/create-list-or-bid", {
     chainId,
@@ -43,11 +46,30 @@ export const createBid = async (
     weiPrice,
     expirationTime,
     isListing,
+    currency,
   });
   return request.data;
 };
 
 export const buyListedNft = async (
+  chainId: number,
+  orderId: string,
+  taker: string,
+  source: string,
+  isLocal?: boolean,
+  onePercentFee?: number
+) => {
+  const request = await marketplaceInstance.post("/buy-nft", {
+    chainId,
+    orderId,
+    taker,
+    source,
+    isLocal,
+    onePercentFee,
+  });
+  return request.data;
+};
+export const buyListedNftInOtherToken = async (
   chainId: number,
   orderId: string,
   taker: string,

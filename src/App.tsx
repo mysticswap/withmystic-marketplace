@@ -25,13 +25,10 @@ const ErrorPage = lazy(() => import("./pages/ErrorPage/ErrorPage"));
 const TRACKING_ID = import.meta.env.VITE_GOOGLE_ANALYTICS as string; // YOUR_OWN_TRACKING_ID
 ReactGA.initialize(TRACKING_ID);
 
+
 function App() {
   const [isFetchingClient, setIsFetchingClient] = useState(true);
   const [client, setClient] = useState({} as ClientObject);
-
-  useEffect(() => {
-    ReactGA.pageview(window.location.pathname + window.location.search);
-  }, []);
 
   useEffect(() => {
     const fetchMarketplaceClient = async () => {
@@ -41,6 +38,7 @@ function App() {
         setIsFetchingClient(false);
       } catch (error) {
         setIsFetchingClient(false);
+        // console.log(error);
         console.log(error);
       }
     };

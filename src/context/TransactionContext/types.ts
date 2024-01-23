@@ -5,6 +5,8 @@ export type TransactionContextType = {
   setTransactionNft: React.Dispatch<React.SetStateAction<TransactionNft>>;
   showConfirmationModal: boolean;
   setShowConfirmationModal: React.Dispatch<React.SetStateAction<boolean>>;
+  showConfirmationBuyNowModal: boolean;
+  setShowConfirmationBuyNowModal: React.Dispatch<React.SetStateAction<boolean>>;
   transactionStage: number;
   setTransactionStage: React.Dispatch<React.SetStateAction<number>>;
   transactionHash: string;
@@ -23,4 +25,6 @@ export type TransactionNft = {
   tokenId: string;
   message: string;
   nftOwner: string;
+  symbol: string;
+  isBuyNow: boolean;
 };

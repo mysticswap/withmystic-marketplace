@@ -17,8 +17,7 @@ import SocialShare from "../../components/SocialShare/SocialShare";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import NotFound from "./Components/NotFound/NotFound";
-import { useEffect } from "react";
-import ReactGA from "react-ga";
+import ConfirmPurchaseBuyNowModal from "../../components/ConfirmPurchaseModal/ConfirmPurchaseBuyNowModal";
 
 const NftPage = () => {
   const { id } = useParams();
@@ -38,6 +37,8 @@ const NftPage = () => {
     setShowOfferOrListingModal,
     showConfirmationModal,
     setShowConfirmationModal,
+    showConfirmationBuyNowModal,
+    setShowConfirmationBuyNowModal,
   } = useTransactionContext()!;
   const { collectionContract } = useGlobalContext();
 
@@ -48,10 +49,6 @@ const NftPage = () => {
   const token = `${contractAddress}:${id}`;
 
   const isMobile = useIsMobile();
-
-  useEffect(() => {
-    ReactGA.pageview(window.location.pathname);
-  }, []);
 
   if (isLoading) {
     return <Loading />;
@@ -90,6 +87,7 @@ const NftPage = () => {
               nftPriceData={nftPriceData}
               setShowConfirmationModal={setShowConfirmationModal}
               setShowOfferOrListingModal={setShowOfferOrListingModal}
+              setShowConfirmationBuyNowModal={setShowConfirmationBuyNowModal}
             />
           )}
           {isMobile && <CurrentPrice nftPriceData={nftPriceData} />}
@@ -103,6 +101,7 @@ const NftPage = () => {
               nftPriceData={nftPriceData}
               setShowConfirmationModal={setShowConfirmationModal}
               setShowOfferOrListingModal={setShowOfferOrListingModal}
+              setShowConfirmationBuyNowModal={setShowConfirmationBuyNowModal}
             />
           )}
           {!isMobile && <CurrentPrice nftPriceData={nftPriceData} />}
@@ -124,6 +123,12 @@ const NftPage = () => {
       {showConfirmationModal && (
         <ConfirmPurchaseModal
           setShowConfirmationModal={setShowConfirmationModal}
+        />
+      )}
+
+      {showConfirmationBuyNowModal && (
+        <ConfirmPurchaseBuyNowModal
+          setShowConfirmationBuyNowModal={setShowConfirmationBuyNowModal}
         />
       )}
 
