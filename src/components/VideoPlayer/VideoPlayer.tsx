@@ -1,13 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import "./VideoPlayer.css";
 import { CiPause1, CiPlay1 } from "react-icons/ci";
 import { IconContext } from "react-icons";
 import { Link } from "react-router-dom";
-import { useInView } from "react-intersection-observer";
+// import { useInView } from "react-intersection-observer";
 type props = { videoUrl: string; posterUrl: string; nftUrl: string };
 
 export const VideoPlayer = ({ videoUrl, posterUrl, nftUrl }: props) => {
   const [isplaying, setIsplaying] = useState(false);
+  // const [diamondHost, setDiamondHost] = useState(false);
   const vidRef = useRef<HTMLVideoElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -21,37 +22,38 @@ export const VideoPlayer = ({ videoUrl, posterUrl, nftUrl }: props) => {
     }
   }
   // Lazy loading of videos
-  const { ref, inView } = useInView({
-    /* Optional options */
-    threshold: 0,
-  });
-  const lazyLoadVideos = () => {
-    if (inView == true) {
-      vidRef.current?.load();
-    }
-  };
+  // const { ref, inView } = useInView({
+  //   /* Optional options */
+  //   threshold: 0,
+  // });
+  // const lazyLoadVideos = () => {
+  //   if (inView == true) {
+  //     vidRef.current?.toggleAttribute("autoplay", true);
+  //     buttonRef.current?.classList.toggle("hide", true);
+  //     vidRef.current?.load();
+  //   }
+  // };
 
-  const listenLoadedData = () => {
-    vidRef.current?.addEventListener(
-      "loadeddata",
-      function () {
-        if (this.duration <= 15) {
-          vidRef.current?.toggleAttribute("autoplay", true);
-          buttonRef.current?.classList.toggle("hide", true);
-        }
-      },
-      true
-    );
-  };
+  // const listenLoadedData = () => {
+  //   vidRef.current?.addEventListener(
+  //     "loadeddata",
+  //     function () {
+  //       if (this.duration <= 15) {
+  //         vidRef.current?.toggleAttribute("autoplay", true);
+  //         buttonRef.current?.classList.toggle("hide", true);
+  //       }
+  //     },
+  //     true
+  //   );
+  // };
 
-  useEffect(() => {
-    listenLoadedData();
-    lazyLoadVideos();
-    // console.log(inView);
-  }, [vidRef, inView]);
+  // useEffect(() => {
+  //   // lazyLoadVideos();
+  //   // listenLoadedData();
+  // }, [vidRef]);
 
   return (
-    <div ref={ref} className="nft_video_player">
+    <div className="nft_video_player">
       <Link to={nftUrl}>
         <video
           ref={vidRef}
@@ -59,7 +61,7 @@ export const VideoPlayer = ({ videoUrl, posterUrl, nftUrl }: props) => {
           controls={isplaying}
           loop
           controlsList="nodownload"
-          preload="none"
+          preload="auto"
         >
           <source src={videoUrl} type="video/mp4" />
         </video>

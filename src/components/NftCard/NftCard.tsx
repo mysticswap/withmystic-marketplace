@@ -197,6 +197,21 @@ const NftCard = ({ nft }: Props) => {
   const userCanBuyTokenBalance =
     Number(userBalance[currentTokenSymbol]) >= currentTokenAmount;
 
+  const diamondHost = () => {
+    let diamondHost = false;
+    const source = getHostName();
+    if (
+      source == "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app" ||
+      source == "diamondnxt.withmystic.xyz"
+    ) {
+      diamondHost = true;
+    } else {
+      diamondHost = false;
+    }
+    return diamondHost;
+  };
+  const isDiamondHost = diamondHost();
+
   return (
     <div className="nft_card">
       <div className="nft_card_image_area">
@@ -204,11 +219,26 @@ const NftCard = ({ nft }: Props) => {
           <div className="nft_card_supply_count">{`x${supply}`}</div>
         )}
         {nft.token.media !== null ? (
-          <VideoPlayer
-            nftUrl={`/${collectionContract}/${nftId}`}
-            posterUrl={nft?.token?.image}
-            videoUrl={nft?.token?.media}
-          />
+          !isDiamondHost ? (
+            <VideoPlayer
+              nftUrl={`/${collectionContract}/${nftId}`}
+              posterUrl={nft?.token?.image}
+              videoUrl={nft?.token?.media}
+            />
+          ) : (
+            <Link to={`/${collectionContract}/${nftId}`}>
+              <video
+                className="nft_alter_video"
+                poster={nft?.token?.image}
+                src={nft?.token?.media}
+                loop
+                autoPlay
+                muted
+                playsInline
+                controlsList="nodownload"
+              ></video>
+            </Link>
+          )
         ) : (
           <Link to={`/${collectionContract}/${nftId}`}>
             <img
