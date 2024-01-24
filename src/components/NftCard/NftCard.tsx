@@ -211,6 +211,7 @@ const NftCard = ({ nft }: Props) => {
     return diamondHost;
   };
   const isDiamondHost = diamondHost();
+  console.log(sourceLink);
 
   return (
     <div className="nft_card">
@@ -308,6 +309,7 @@ const NftCard = ({ nft }: Props) => {
 
       <div className="source_icon">
         <a href={sourceLink}>
+          {!sourceLink && <img src={client?.favicon} alt="icon" />}
           {!sourceLink?.includes("opensea") ? (
             <img
               src={
