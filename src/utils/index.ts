@@ -117,20 +117,6 @@ export const addOpacity = (color: string, opacity: number) => {
   return color + _opacity.toString(16).toUpperCase();
 };
 
-export const updateFavicon = (url: string) => {
-  let link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
-  if (!link) {
-    link = document.createElement("link");
-    link.rel = "icon";
-    document.getElementsByTagName("head")[0].appendChild(link);
-  }
-  link.href = url;
-};
-
-export const updateSiteTitle = (text: string) => {
-  document.title = text || "";
-};
-
 export const getOnePercentFee = (tokenValueDecimals: number) => {
   return Number(
     convertTokenAmountToDecimal(tokenValueDecimals * 0.01).toFixed(0)
