@@ -1,5 +1,9 @@
 import { TbExternalLink } from "react-icons/tb";
-import { redirectToMSWalletPage, truncateAddress } from "../../utils";
+import {
+  getHostName,
+  redirectToMSWalletPage,
+  truncateAddress,
+} from "../../utils";
 import "./ActivityRow.css";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -10,13 +14,14 @@ import { activityRenames, scanWebsites, tabOptions } from "../../constants";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { SiOpensea } from "react-icons/si";
 import x2y2 from "../../assets/x2y2.png";
+import favicon from "../../assets/favicon.png";
 
 dayjs.extend(relativeTime);
 
 type Props = { activity: Activity };
 
 const ActivityRow = ({ activity }: Props) => {
-  const { collectionChainId, setCurrentTab, client } = useGlobalContext();
+  const { collectionChainId, setCurrentTab } = useGlobalContext();
 
   const nftImage = activity?.token?.tokenImage;
   const nftName = activity?.token?.tokenName;
@@ -33,7 +38,7 @@ const ActivityRow = ({ activity }: Props) => {
   const contract = activity?.collection?.collectionId;
   const singlePageLink = `/${contract}/${tokenId}`;
   const switchTab = () => !tokenId && setCurrentTab(tabOptions[0]);
-  const isFromCurrentMarketplace = sourceDomain == client.hostname;
+  const isFromCurrentMarketplace = sourceDomain == getHostName();
 
   return (
     <div className="activity_row">
@@ -45,7 +50,7 @@ const ActivityRow = ({ activity }: Props) => {
                 source?.includes("x2y2")
                   ? x2y2
                   : isFromCurrentMarketplace
-                  ? client.favicon
+                  ? favicon
                   : source
               }
               alt=""

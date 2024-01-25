@@ -1,15 +1,12 @@
 import { getHostName, truncateAddress } from ".";
-import {
-  DiscordPostBody,
-  DiscordPostBodyToken,
-} from "../types/discord-post.types";
-import { ClientObject } from "../types/dynamic-system.types";
+import { DiscordPostBody } from "../types/discord-post.types";
+
 import { TokenElement } from "../types/rsv-types/collection-nfts.types";
 
 export const getDiscordEndpointData = (
   nft: TokenElement,
   buyer: string,
-  client: ClientObject,
+  favicon: string,
   offeredEth?: string,
   offeredUsd?: string
 ) => {
@@ -23,7 +20,7 @@ export const getDiscordEndpointData = (
     priceUsd:
       offeredUsd || nft?.market?.floorAsk?.price?.amount?.usd.toString(),
     title: `${nft?.token?.name} SOLD!`,
-    favicon: client.favicon,
+    favicon,
   };
   return data;
 };

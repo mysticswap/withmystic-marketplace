@@ -30,20 +30,21 @@ import { UserNfts } from "../../types/rsv-types/user-nfts.types";
 import { useConnectionContext } from "../ConnectionContext/ConnectionContext";
 import { getHostName, getPreviousCollectionAddress } from "../../utils";
 import { getCryptoPrice } from "../../services/api/coin-gecko.api";
-import { ClientObject } from "../../types/dynamic-system.types";
+import { getEthPrice } from "../../services/api/coin-gecko.api";
+
 import { useDisableNumberInputScroll } from "../../hooks/useDisableNumberInputScroll";
+import { marketPlaceCollections } from "../../constants/hard-coded-collections";
 
 const GlobalContext = createContext({} as GlobalContextType);
 
 type Props = {
   children: ReactNode;
-  client: ClientObject;
 };
-// Manage the api calls
-export const GlobalContextProvider = ({ children, client }: Props) => {
-  const { user, chainId } = useConnectionContext()!;
-  const availableCollections = client?.collections;
 
+// Manage the api calls
+export const GlobalContextProvider = ({ children }: Props) => {
+  const { user, chainId } = useConnectionContext()!;
+  const availableCollections = marketPlaceCollections;
   const previousCollection = availableCollections.find((collection) => {
     return collection.address == getPreviousCollectionAddress();
   });
@@ -204,12 +205,8 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
         selectedCollection,
         setSelectedCollection,
         collectionContract,
-        activitiesFetching,
-        cryptoValue,
-        client,
-        supportedTokens,
-        currentToken,
-        setCurrentToken,
+        ethValue,
+
       }}
     >
       {children}

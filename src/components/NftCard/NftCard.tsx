@@ -27,23 +27,17 @@ import {
   getDiscordEndpointDataToken,
 } from "../../utils/discord-utils";
 import { generateSaleActivity } from "../../utils/activity-utils";
-import {
-  getTransactionNft,
-  getTransactionNftToken,
-} from "../../utils/transaction-nft.utils";
+
 import { VideoPlayer } from "../VideoPlayer/VideoPlayer";
-import { ETH_CONTRACT_ADDRESS } from "../OfferOrListingModal/OfferOrListingModal";
+import { getTransactionNft } from "../../utils/transaction-nft.utils";
+import favicon from "../../assets/favicon.png";
+
 
 type Props = { nft: TokenElement };
 
 const NftCard = ({ nft }: Props) => {
-  const {
-    minimalCards,
-    collectionChainId,
-    collectionContract,
-    userBalance,
-    client,
-  } = useGlobalContext();
+  const { minimalCards, collectionChainId, collectionContract, userBalance } =
+    useGlobalContext();
   const { user, chainId, setProvider } = useConnectionContext()!;
   const {
     setShowConfirmationModal,
@@ -65,23 +59,8 @@ const NftCard = ({ nft }: Props) => {
   const sourceIcon = nft?.market?.floorAsk?.source?.icon;
   const sourceLink = nft?.market?.floorAsk?.source?.url;
   const sourceDomain = nft?.market?.floorAsk?.source?.domain;
+  const isFromCurrentMarketplace = sourceDomain == getHostName();
   const onePercentFee = getOnePercentFee(currentEthAmount);
-  const isErc1155 = nft?.token?.kind == "erc1155";
-  const supply = nft?.token?.remainingSupply;
-
-  const currentTokenAmount = nft.market?.floorAsk?.price?.amount?.decimal;
-  const currentUsdValue = nft.market?.floorAsk?.price?.amount?.usd;
-  const currentTokenSymbol = nft.market?.floorAsk?.price?.currency?.symbol;
-
-  const isFromCurrentMarketplace = sourceDomain == client.hostname;
-  const currentDecimalToken = nft?.market?.floorAsk?.price?.currency?.decimals;
-  const isETHModal =
-    nft?.market?.floorAsk?.price?.currency.contract === ETH_CONTRACT_ADDRESS;
-
-  const onePercentFeeToken = getOnePercentFeeToken(
-    currentTokenAmount,
-    currentDecimalToken
-  );
 
   const nameLink = (
     <Link to={`/${collectionContract}/${nftId}`}>
@@ -89,7 +68,7 @@ const NftCard = ({ nft }: Props) => {
     </Link>
   );
 
-  const postData = getDiscordEndpointData(nft, user!, client);
+  const postData = getDiscordEndpointData(nft, user!, favicon);
   const activityData = generateSaleActivity(nft, "sale", user!);
   const postDataToken = getDiscordEndpointDataToken(nft, user!, client);
 
@@ -275,7 +254,7 @@ const NftCard = ({ nft }: Props) => {
                 sourceLink?.includes("x2y2")
                   ? x2y2
                   : isFromCurrentMarketplace
-                  ? client.favicon
+                  ? favicon
                   : sourceIcon
               }
               alt=""

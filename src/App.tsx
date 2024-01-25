@@ -11,37 +11,14 @@ import { ConnectionContextProvider } from "./context/ConnectionContext/Connectio
 import { TransactionContextProvider } from "./context/TransactionContext/TransactionContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect, useState } from "react";
-import { getMarketplaceClient } from "./services/api/dynamic-system";
-import { ClientObject } from "./types/dynamic-system.types";
-import Loading from "./components/Loading/Loading";
+
 import SwapsPage from "./pages/SwapsPage/SwapsPage";
 
 function App() {
-  const [isFetchingClient, setIsFetchingClient] = useState(true);
-  const [client, setClient] = useState({} as ClientObject);
-
-  useEffect(() => {
-    // Get the marketplace client from Backend
-    const fetchMarketplaceClient = async () => {
-      try {
-        const res = await getMarketplaceClient();
-        setClient(res);
-        setIsFetchingClient(false);
-      } catch (error) {
-        setIsFetchingClient(false);
-      }
-    };
-
-    fetchMarketplaceClient();
-  }, []);
-
-  if (isFetchingClient) return <Loading />;
-
   return (
     <>
       <ConnectionContextProvider>
-        <GlobalContextProvider client={client}>
+        <GlobalContextProvider>
           <TransactionContextProvider>
             <Router>
               <Navbar />

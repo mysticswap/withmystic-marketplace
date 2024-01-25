@@ -7,9 +7,8 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const Footer = () => {
-  const { collectionMetadata, client, currentTab, source } = useGlobalContext();
-  const [hideClass, setHideClass] = useState(false);
-  const location = useLocation();
+  const { collectionMetadata } = useGlobalContext();
+
 
   let discordUrl = collectionMetadata?.collections?.[0]?.discordUrl;
   const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
@@ -32,10 +31,7 @@ const Footer = () => {
   return (
     <footer id="footer" className={hideClass ? "hide" : ""}>
       <section>
-        <p>
-          {" "}
-          © {new Date().getFullYear()} {client.collections[0].name}
-        </p>
+        <p> © {new Date().getFullYear()} "Mystical Wizards Guild"</p>
       </section>
       <section className="footer_links_holder">
         <a href="https://www.withmystic.xyz/privacy-policy" target="_blank">

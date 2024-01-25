@@ -8,13 +8,8 @@ import {
 } from "../../constants";
 
 const Banner = () => {
-  const {
-    collectionMetadata,
-    currentTab,
-    setCurrentTab,
-    collectionChainId,
-    client,
-  } = useGlobalContext();
+  const { collectionMetadata, currentTab, setCurrentTab, collectionChainId } =
+    useGlobalContext();
 
   const pillData = [
     { title: "Items", value: collectionMetadata?.collections?.[0]?.tokenCount },
@@ -40,7 +35,10 @@ const Banner = () => {
 
   return (
     <div className="banner">
-      <img src={client.bannerUrl} alt="" />
+      <img
+        src="https://i.seadn.io/gcs/files/6d4b873bd01107ff35489dbe69e031d1.png?auto=format&dpr=1&w=3840"
+        alt=""
+      />
       <div className="banner_details">
         {!nameShouldBeHidden && (
           <h1>{collectionMetadata?.collections?.[0]?.name}</h1>

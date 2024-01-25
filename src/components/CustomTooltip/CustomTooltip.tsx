@@ -1,33 +1,31 @@
 import { Tooltip, createTheme, ThemeProvider } from "@mui/material";
 import { ReactElement } from "react";
-import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 type Props = {
   text: string;
   children: ReactElement;
 };
 
 const CustomTooltip = ({ text, children }: Props) => {
-  const { client } = useGlobalContext();
   const theme = createTheme({
     components: {
       MuiTooltip: {
         styleOverrides: {
           tooltip: {
-            backgroundColor: client.styles.bodyBackground,
-            color: client.styles.primaryColor,
+            backgroundColor: "#ffffff",
+            color: "#086abc",
             fontSize: "18px",
             padding: "10px 20px",
             fontStyle: "normal",
             fontWeight: 400,
             lineHeight: "22px",
-            fontFamily: client.fonts.fontFamily,
-            border: `1px solid ${client.styles.primaryColor}`,
+            fontFamily: "Poppins",
+            border: `1px solid #086abc`,
           },
           arrow: {
-            color: client.styles.bodyBackground,
+            color: "#ffffff",
             [`&::before`]: {
-              color: client.styles.bodyBackground,
-              border: `1px solid ${client.styles.primaryColor}`,
+              color: "#ffffff",
+              border: `1px solid #086abc`,
             },
           },
         },
