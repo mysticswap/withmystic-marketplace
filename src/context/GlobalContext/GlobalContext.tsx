@@ -39,7 +39,7 @@ type Props = {
   children: ReactNode;
   client: ClientObject;
 };
-
+// Manage the api calls
 export const GlobalContextProvider = ({ children, client }: Props) => {
   const { user, chainId } = useConnectionContext()!;
   const availableCollections = client?.collections;

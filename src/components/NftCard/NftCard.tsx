@@ -93,11 +93,12 @@ const NftCard = ({ nft }: Props) => {
   const activityData = generateSaleActivity(nft, "sale", user!);
   const postDataToken = getDiscordEndpointDataToken(nft, user!, client);
 
+  // All buy nfts logic
   const startBuyProcess = () => {
     const orderId = nft?.market?.floorAsk?.id;
     const source = getHostName();
     const isLocal = sourceDomain == source;
-
+    // Send the nft data to start the transaction
     switchChains(chainId, collectionChainId).then(() => {
       buyListedNft(
         collectionChainId,

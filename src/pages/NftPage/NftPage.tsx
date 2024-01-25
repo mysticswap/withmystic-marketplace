@@ -19,6 +19,7 @@ import { useIsMobile } from "../../hooks/useIsMobile";
 import NotFound from "./Components/NotFound/NotFound";
 import ConfirmPurchaseBuyNowModal from "../../components/ConfirmPurchaseModal/ConfirmPurchaseBuyNowModal";
 
+// Display all details of the nft
 const NftPage = () => {
   const { id } = useParams();
   const {

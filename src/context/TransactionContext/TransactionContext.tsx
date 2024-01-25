@@ -9,7 +9,7 @@ const TransactionContext = createContext<TransactionContextType | null>(null);
 type Props = {
   children: ReactNode;
 };
-
+// Manage all related with the transactions of nfts
 export const TransactionContextProvider = ({ children }: Props) => {
   const { userBalance } = useGlobalContext();
 

@@ -23,7 +23,7 @@ const ConnectionContext = createContext<ConnectionContextType | null>(null);
 type Props = {
   children: ReactNode;
 };
-
+// Manage all related with the wallet connection
 export const ConnectionContextProvider = ({ children }: Props) => {
   const [user, setUser] = useState<string | null>(null);
   const [provider, setProvider] =

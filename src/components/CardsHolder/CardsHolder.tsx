@@ -10,7 +10,7 @@ import { getCollectionNftsV2 } from "../../services/api/marketplace-rsv-api";
 import { generateAttributeString } from "../../utils";
 import { useHideComponent } from "../../hooks/useHideComponent";
 import { useShowComponent } from "../../hooks/useShowComponent";
-
+// Get the collection Nfts data and display it in the app
 const CardsHolder = () => {
   const {
     collectionNfts,

@@ -19,6 +19,7 @@ const SwapsPage = () => {
 
   return (
     <div className="styles_page">
+      {/* SDK component that allow make swaps between nfts */}
       <MysticSdk
         token={isPreview ? HARDCODED_MYSTIC_PROD_KEY : accessToken}
         favouriteCollections={goldenCollections}
