@@ -13,7 +13,9 @@ function AutoPlayer({ videoUrl, posterUrl, nftUrl }: props) {
 
   const { ref, inView } = useInView({
     /* Optional options */
-    threshold: 0,
+    threshold: 0.8,
+    trackVisibility: true,
+    delay: 2000,
   });
 
   useEffect(() => {
@@ -24,12 +26,14 @@ function AutoPlayer({ videoUrl, posterUrl, nftUrl }: props) {
 
   // console.log(cacheUrl);
   useEffect(() => {
+    if (inView != true) {
+      autoVidRef.current?.pause();
+    }
     const lazyLoadVideos = () => {
-      if (inView == true) {
+      if (inView || (inView && cacheUrl != "")) {
+        console.log(inView && cacheUrl != "");
         autoVidRef.current?.play();
         crateVideoCache(videoUrl);
-      } else {
-        autoVidRef.current?.pause();
       }
     };
     lazyLoadVideos();
