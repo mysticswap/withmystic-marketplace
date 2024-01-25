@@ -9,29 +9,16 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { useIsOverflow } from "../../hooks/useIsOverflow";
 import { buyListedNft } from "../../services/api/buy-offer-list.api";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
-import {
-  getHostName,
-  getOnePercentFee,
-  getOnePercentFeeToken,
-} from "../../utils";
-import {
-  handleBuyOrSellData,
-  handleBuyOrSellDataToken,
-} from "../../services/buy-sale-service";
+import { getHostName, getOnePercentFee } from "../../utils";
+import { handleBuyOrSellData } from "../../services/buy-sale-service";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import { switchChains } from "../../utils/wallet-connection";
 import { connectWallets } from "../../services/web3Onboard";
 import { balanceChain } from "../../constants";
-import {
-  getDiscordEndpointData,
-  getDiscordEndpointDataToken,
-} from "../../utils/discord-utils";
+import { getDiscordEndpointData } from "../../utils/discord-utils";
 import { generateSaleActivity } from "../../utils/activity-utils";
-
-import { VideoPlayer } from "../VideoPlayer/VideoPlayer";
 import { getTransactionNft } from "../../utils/transaction-nft.utils";
 import favicon from "../../assets/favicon.png";
-
 
 type Props = { nft: TokenElement };
 
@@ -44,7 +31,6 @@ const NftCard = ({ nft }: Props) => {
     setTransactionNft,
     setTransactionStage,
     setTransactionHash,
-    setShowConfirmationBuyNowModal,
   } = useTransactionContext()!;
 
   const nameRef = useRef(null);
@@ -52,13 +38,14 @@ const NftCard = ({ nft }: Props) => {
 
   const currentEthAmount = nft?.market?.floorAsk?.price?.amount?.decimal;
   const symbol = nft?.market?.floorAsk?.price?.currency?.symbol;
-  const currentValue = Math.round(nft?.market?.floorAsk?.price?.amount?.usd);
+  const currentValue = Math.ceil(nft?.market?.floorAsk?.price?.amount?.usd);
   const lastSale = nft?.market?.floorAsk?.price?.amount?.decimal;
   const nftName = nft?.token?.name;
   const nftId = nft?.token?.tokenId;
   const sourceIcon = nft?.market?.floorAsk?.source?.icon;
   const sourceLink = nft?.market?.floorAsk?.source?.url;
   const sourceDomain = nft?.market?.floorAsk?.source?.domain;
+
   const isFromCurrentMarketplace = sourceDomain == getHostName();
   const onePercentFee = getOnePercentFee(currentEthAmount);
 
@@ -70,14 +57,12 @@ const NftCard = ({ nft }: Props) => {
 
   const postData = getDiscordEndpointData(nft, user!, favicon);
   const activityData = generateSaleActivity(nft, "sale", user!);
-  const postDataToken = getDiscordEndpointDataToken(nft, user!, client);
 
-  // All buy nfts logic
   const startBuyProcess = () => {
     const orderId = nft?.market?.floorAsk?.id;
     const source = getHostName();
     const isLocal = sourceDomain == source;
-    // Send the nft data to start the transaction
+
     switchChains(chainId, collectionChainId).then(() => {
       buyListedNft(
         collectionChainId,
@@ -111,61 +96,10 @@ const NftCard = ({ nft }: Props) => {
       transactionMessage,
       user!
     );
-
     if (user) {
       setTransactionNft(txNft);
       setShowConfirmationModal(true);
       startBuyProcess();
-    } else connectWallets(setProvider);
-  };
-
-  const startBuyProcessToken = () => {
-    const orderId = nft?.market?.floorAsk?.id;
-    const source = getHostName();
-    const isLocal = sourceDomain == source;
-
-    switchChains(chainId, collectionChainId).then(() => {
-      buyListedNft(
-        collectionChainId,
-        orderId,
-        user!,
-        source,
-        isLocal,
-        onePercentFeeToken
-      ).then((result) => {
-        setTransactionStage(1);
-        handleBuyOrSellDataToken(
-          result,
-          setTransactionStage,
-          setTransactionHash,
-          setShowConfirmationBuyNowModal,
-          collectionChainId,
-          postDataToken,
-          activityData
-        );
-      });
-    });
-  };
-
-  const buyNftToken = async () => {
-    // tx means transaction
-    const transactionMessage = `I’ve just bought ${nft?.token?.name}!`;
-    const txNft = getTransactionNftToken(
-      nft,
-      false,
-      false,
-      transactionMessage,
-      user!
-    );
-    if (user) {
-      setTransactionNft({
-        ...txNft,
-        amount: currentTokenAmount,
-        price: currentUsdValue,
-        symbol: nft.market.floorAsk.price.currency.symbol,
-      });
-      setShowConfirmationModal(true);
-      startBuyProcessToken();
     } else connectWallets(setProvider);
   };
 
@@ -174,28 +108,11 @@ const NftCard = ({ nft }: Props) => {
     Number(currentEthAmount) <=
     Number(userBalance?.[balanceChain[collectionChainId]]);
 
-  const userCanBuyTokenBalance =
-    Number(userBalance[currentTokenSymbol]) >= currentTokenAmount;
-
   return (
     <div className="nft_card">
-      <div className="nft_card_image_area">
-        {isErc1155 && (
-          <div className="nft_card_supply_count">{`x${supply}`}</div>
-        )}
-        {nft.token.media !== null ? (
-          <VideoPlayer
-            nftUrl={`/${collectionContract}/${nftId}`}
-            posterUrl={nft?.token?.image}
-            videoUrl={nft?.token?.media}
-          />
-        ) : (
-          <Link to={`/${collectionContract}/${nftId}`}>
-            <img src={nft?.token?.image} alt="" />
-          </Link>
-        )}
-      </div>
-
+      <Link to={`/${collectionContract}/${nftId}`}>
+        <img src={nft?.token?.image} alt="" />
+      </Link>
       <div className="nft_card_details">
         <div className="card_name">
           {isOverflowing ? (
@@ -208,7 +125,7 @@ const NftCard = ({ nft }: Props) => {
           <p className="nft_card_amount">
             {currentEthAmount && currentValue ? (
               <>
-                {`${currentEthAmount} ${symbol}`} <span>(${currentValue})</span>
+                {currentEthAmount} <span>(${currentValue})</span>
               </>
             ) : (
               <span>---</span>
@@ -221,23 +138,9 @@ const NftCard = ({ nft }: Props) => {
           {symbol} {!lastSale && !symbol && "---"}
         </p>
 
-        {currentEthAmount && currentValue && !userIsOwner && isETHModal ? (
+        {currentEthAmount && currentValue && !userIsOwner ? (
           <button onClick={buyNft} disabled={(user && !userCanBuy) as boolean}>
             {userCanBuy
-              ? "Buy now"
-              : !user
-              ? "Buy now"
-              : "Insufficient balance"}
-          </button>
-        ) : null}
-
-        {currentTokenAmount && currentValue && !userIsOwner && !isETHModal ? (
-          <button
-            onClick={buyNftToken}
-            disabled={(user && !userCanBuyTokenBalance) as boolean}
-            // disabled={true}
-          >
-            {userCanBuyTokenBalance
               ? "Buy now"
               : !user
               ? "Buy now"

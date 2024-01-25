@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import {
   ReactNode,
   createContext,
@@ -29,9 +28,7 @@ import { CollectionTraitsV2 } from "../../types/rsv-types/collection-traits.type
 import { UserNfts } from "../../types/rsv-types/user-nfts.types";
 import { useConnectionContext } from "../ConnectionContext/ConnectionContext";
 import { getHostName, getPreviousCollectionAddress } from "../../utils";
-import { getCryptoPrice } from "../../services/api/coin-gecko.api";
 import { getEthPrice } from "../../services/api/coin-gecko.api";
-
 import { useDisableNumberInputScroll } from "../../hooks/useDisableNumberInputScroll";
 import { marketPlaceCollections } from "../../constants/hard-coded-collections";
 
@@ -41,7 +38,6 @@ type Props = {
   children: ReactNode;
 };
 
-// Manage the api calls
 export const GlobalContextProvider = ({ children }: Props) => {
   const { user, chainId } = useConnectionContext()!;
   const availableCollections = marketPlaceCollections;
@@ -52,20 +48,6 @@ export const GlobalContextProvider = ({ children }: Props) => {
   const [selectedCollection, setSelectedCollection] = useState(
     previousCollection || availableCollections[0]
   );
-
-  const supportedTokens = selectedCollection.supportedTokens!;
-
-  // const [currentToken, setCurrentToken] = useState<number>(() =>
-  //   supportedTokens!.findIndex((token) => token.symbol === "WETH")
-  // );
-
-  const [currentToken, setCurrentToken] = useState<number>(0);
-
-  const cryptoName = supportedTokens[currentToken].name
-    .split(" ")
-    .join("-")
-    .toLowerCase();
-
   const [currentTab, setCurrentTab] = useState(tabOptions[0]);
   const [collectionMetadata, setCollectionMetadata] =
     useState<CollectionMetadataV2 | null>(null);
@@ -80,8 +62,7 @@ export const GlobalContextProvider = ({ children }: Props) => {
   const [userBalance, setUserBalance] = useState({});
   const [userNfts, setUserNfts] = useState({} as UserNfts);
   const [minimalCards, setMinimalCards] = useState(true);
-  const [cryptoValue, setCryptoValue] = useState(0);
-  const [activitiesFetching, setActivitiesFetching] = useState(false);
+  const [ethValue, setEthValue] = useState(0);
 
   const selectedActivityTypes = JSON.stringify(selectedActivities);
   const source = getHostName();
@@ -117,33 +98,21 @@ export const GlobalContextProvider = ({ children }: Props) => {
         setCollectionAttributes(result);
       }
     );
-  }, [
-    selectedCollection,
-    collectionChainId,
-    collectionContract,
-    selectedActivityTypes,
-  ]);
+  }, [selectedCollection]);
 
   useEffect(() => {
     if (selectedActivities.length < 1) {
       setSelectedActivities(JSON.parse(rsvActivityTypes));
     }
     setCollectionActivity({} as CollectionActivity);
-    setActivitiesFetching(true);
     getCollectionActivity(
       collectionChainId,
       collectionContract,
       selectedActivities.length < 1 ? rsvActivityTypes : selectedActivityTypes
     ).then((result) => {
       setCollectionActivity(result);
-      setActivitiesFetching(false);
     });
-  }, [
-    collectionChainId,
-    collectionContract,
-    selectedActivities,
-    selectedActivityTypes,
-  ]);
+  }, [selectedActivities]);
 
   useEffect(() => {
     if (user && collectionChainId) {
@@ -153,7 +122,7 @@ export const GlobalContextProvider = ({ children }: Props) => {
         }
       );
     }
-  }, [user, collectionMetadata, collectionChainId, collectionContract]);
+  }, [user, collectionMetadata]);
 
   useEffect(() => {
     if (user) {
@@ -171,10 +140,10 @@ export const GlobalContextProvider = ({ children }: Props) => {
   }, [selectedCollection]);
 
   useEffect(() => {
-    getCryptoPrice(cryptoName).then((result) => {
-      setCryptoValue(result[cryptoName].usd);
+    getEthPrice().then((result) => {
+      setEthValue(result.ethereum.usd);
     });
-  }, [cryptoName]);
+  }, []);
 
   useDisableNumberInputScroll();
 
@@ -206,7 +175,6 @@ export const GlobalContextProvider = ({ children }: Props) => {
         setSelectedCollection,
         collectionContract,
         ethValue,
-
       }}
     >
       {children}
@@ -215,9 +183,5 @@ export const GlobalContextProvider = ({ children }: Props) => {
 };
 
 export const useGlobalContext = () => {
-  const context = useContext(GlobalContext);
-
-  if (context === undefined)
-    throw new Error("GlobalContext was used outside the GlobalProvider");
-  return context;
+  return useContext(GlobalContext);
 };

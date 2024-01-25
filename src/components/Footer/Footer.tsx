@@ -2,34 +2,15 @@ import "./Footer.css";
 import mysticLogo from "../../assets/mystic_plain.png";
 import { RiDiscordFill, RiTwitterXLine } from "react-icons/ri";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
-import { tabOptions } from "../../constants";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 
 const Footer = () => {
   const { collectionMetadata } = useGlobalContext();
 
-
-  let discordUrl = collectionMetadata?.collections?.[0]?.discordUrl;
+  const discordUrl = collectionMetadata?.collections?.[0]?.discordUrl;
   const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
 
-  if (
-    (source == "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app" ||
-      source == "zooverse.withmystic.xyz") &&
-    (discordUrl == "" || discordUrl == null)
-  ) {
-    discordUrl = "https://discord.gg/zooverse";
-  }
-
-  useEffect(() => {
-    if (location.pathname == "/" && currentTab == tabOptions[0]) {
-      setHideClass(true);
-    } else {
-      setHideClass(false);
-    }
-  }, [location.pathname, currentTab]);
   return (
-    <footer id="footer" className={hideClass ? "hide" : ""}>
+    <footer>
       <section>
         <p> © {new Date().getFullYear()} "Mystical Wizards Guild"</p>
       </section>
@@ -50,10 +31,10 @@ const Footer = () => {
       </section>
 
       <section className="socials">
-        <a href={discordUrl} target="_blank">
+        <a href={discordUrl}>
           <RiDiscordFill size={30} display="block" />
         </a>
-        <a href={twitterUrl} target="_blank">
+        <a href={twitterUrl}>
           <RiTwitterXLine size={25} display="block" />
         </a>
       </section>

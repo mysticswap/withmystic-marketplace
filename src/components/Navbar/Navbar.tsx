@@ -49,15 +49,7 @@ const Navbar = () => {
 
   useWindowFreeze(showMobileMenu);
   const userHasNfts = userNfts?.tokens?.length > 0 && user;
-  let discordUrl = collectionMetadata?.collections?.[0]?.discordUrl;
-
-  if (
-    (source == "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app" ||
-      source == "zooverse.withmystic.xyz") &&
-    (discordUrl == "" || discordUrl == null)
-  ) {
-    discordUrl = "https://discord.gg/zooverse";
-  }
+  const discordUrl = collectionMetadata?.collections?.[0]?.discordUrl;
 
   const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
 
