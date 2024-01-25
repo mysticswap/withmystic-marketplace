@@ -61,7 +61,7 @@ export const VideoPlayer = ({ videoUrl, posterUrl, nftUrl }: props) => {
           controls={isplaying}
           loop
           controlsList="nodownload"
-          preload="auto"
+          preload="metadata"
         >
           <source src={videoUrl} type="video/mp4" />
         </video>

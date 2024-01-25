@@ -33,6 +33,7 @@ import {
 } from "../../utils/transaction-nft.utils";
 import { VideoPlayer } from "../VideoPlayer/VideoPlayer";
 import { ETH_CONTRACT_ADDRESS } from "../OfferOrListingModal/OfferOrListingModal";
+import AutoPlayer from "../AutoPlayer/AutoPlayer";
 
 type Props = { nft: TokenElement };
 
@@ -211,7 +212,6 @@ const NftCard = ({ nft }: Props) => {
     return diamondHost;
   };
   const isDiamondHost = diamondHost();
-  console.log(sourceLink);
 
   return (
     <div className="nft_card">
@@ -227,32 +227,29 @@ const NftCard = ({ nft }: Props) => {
               videoUrl={nft?.token?.media}
             />
           ) : (
-            <Link to={`/${collectionContract}/${nftId}`}>
-              <video
-                className="nft_alter_video"
-                poster={nft?.token?.image}
-                src={nft?.token?.media}
-                loop
-                autoPlay
-                muted
-                playsInline
-                controlsList="nodownload"
-              ></video>
-            </Link>
+            <AutoPlayer
+              nftUrl={`/${collectionContract}/${nftId}`}
+              posterUrl={nft?.token?.image}
+              videoUrl={nft?.token?.media}
+            />
           )
         ) : (
           <Link to={`/${collectionContract}/${nftId}`}>
-            <img
-              loading="lazy"
-              decoding="async"
-              srcSet={`${nft?.token?.imageLarge} 1000w, 
-              ${nft?.token.imageSmall} 250, 
-              ${nft?.token?.image} 512w`}
-              sizes="(max-width: 400px) 200px, (max-width: 800px) 100vw, 50vw"
-              src={nft?.token?.image}
-              alt={`${nft?.token?.name}`}
-              role="img"
-            />
+            <picture>
+              <source
+                srcSet={` ${nft?.token.imageSmall} 250w, 
+              ${nft?.token?.image} 512w, 
+              ${nft?.token?.imageLarge} 1000w`}
+                sizes="250px"
+              />
+              <img
+                loading="lazy"
+                decoding="async"
+                src={nft?.token?.image}
+                alt={`${nft?.token?.name}`}
+                role="img"
+              />
+            </picture>
           </Link>
         )}
       </div>
@@ -309,8 +306,9 @@ const NftCard = ({ nft }: Props) => {
 
       <div className="source_icon">
         <a href={sourceLink}>
-          {!sourceLink && <img src={client?.favicon} alt="icon" />}
-          {!sourceLink?.includes("opensea") ? (
+          {!sourceLink ? (
+            <img src={client?.favicon} alt="icon" />
+          ) : !sourceLink?.includes("opensea") ? (
             <img
               src={
                 sourceLink?.includes("x2y2")

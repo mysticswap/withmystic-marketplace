@@ -1,0 +1,12 @@
+.nft_auto_player {
+  height: 400px;
+}
+.nft_auto_player a {
+  height: 400px;
+}
+.nft_auto_player video {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  height: 100%;
+}
