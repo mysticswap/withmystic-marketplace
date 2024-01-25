@@ -6,8 +6,8 @@ export const postActivityToDB = async (activityObject: ActivityObject) => {
     "/post-activity",
     activityObject
   );
-  if (request.status === 201) {
-    window.location.reload();
-  }
+  // if (request.status === 201) {
+  //   window.location.reload();
+  // }
   return request.data;
 };
