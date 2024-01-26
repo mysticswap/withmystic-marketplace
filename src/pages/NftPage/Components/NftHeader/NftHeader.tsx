@@ -64,7 +64,8 @@ const NftHeader = ({
   nftPriceData,
   setShowConfirmationBuyNowModal,
 }: Props) => {
-  const { user, setProvider, chainId } = useConnectionContext()!;
+  const { user, setProvider, chainId, setUser, setChainId } =
+    useConnectionContext()!;
   const { setTransactionNft, setTransactionStage, setTransactionHash } =
     useTransactionContext()!;
   const { source, collectionChainId, userBalance, client } = useGlobalContext();
@@ -132,7 +133,7 @@ const NftHeader = ({
   const triggerModal = (
     setter: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
-    !user ? connectWallets(setProvider) : setter(true);
+    !user ? connectWallets(setUser, setProvider, setChainId) : setter(true);
   };
 
   const postData = getDiscordEndpointData(nft, user!, client);

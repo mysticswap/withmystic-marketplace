@@ -5,14 +5,14 @@ import { useRef, useState } from "react";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
+import { disconnectWallets } from "../../services/web3Onboard";
 
 const ConnectedWalletButton = () => {
-  const { user, setUser, setProvider } = useConnectionContext()!;
+  const { user, setUser, setProvider, setChainId } = useConnectionContext()!;
   const [logout, setLogout] = useState(false);
   const logoutRef = useRef(null);
   const logoutUser = () => {
-    setProvider(null)
-    setUser(null);
+    disconnectWallets(setUser, setProvider, setChainId);
   };
   const isMobile = useIsMobile();
   useOutsideClick(logoutRef, setLogout, "connected_wallet_button");

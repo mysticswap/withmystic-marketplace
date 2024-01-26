@@ -44,7 +44,8 @@ const NftCard = ({ nft }: Props) => {
     userBalance,
     client,
   } = useGlobalContext();
-  const { user, chainId, setProvider } = useConnectionContext()!;
+  const { user, chainId, setProvider, setUser, setChainId } =
+    useConnectionContext()!;
   const {
     setShowConfirmationModal,
     setTransactionNft,
@@ -136,7 +137,7 @@ const NftCard = ({ nft }: Props) => {
       setTransactionNft(txNft);
       setShowConfirmationModal(true);
       startBuyProcess();
-    } else connectWallets(setProvider);
+    } else connectWallets(setUser, setProvider, setChainId);
   };
 
   const startBuyProcessToken = () => {
@@ -186,7 +187,7 @@ const NftCard = ({ nft }: Props) => {
       });
       setShowConfirmationModal(true);
       startBuyProcessToken();
-    } else connectWallets(setProvider);
+    } else connectWallets(setUser, setProvider, setChainId);
   };
 
   const userIsOwner = user?.toLowerCase() == nft?.token?.owner?.toLowerCase();

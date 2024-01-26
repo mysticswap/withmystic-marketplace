@@ -22,7 +22,7 @@ import { useIsMobile } from "../../hooks/useIsMobile";
 import { useWindowFreeze } from "../../hooks/useWindowFreeze";
 
 const Navbar = () => {
-  const { setProvider, user } = useConnectionContext()!;
+  const { setProvider, user, setUser, setChainId } = useConnectionContext()!;
   const {
     collectionMetadata,
     userNfts,
@@ -64,7 +64,7 @@ const Navbar = () => {
   const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
 
   const connectWallet = () => {
-    connectWallets(setProvider);
+    connectWallets(setUser, setProvider, setChainId);
   };
 
   useEffect(() => {

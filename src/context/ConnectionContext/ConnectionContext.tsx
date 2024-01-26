@@ -10,7 +10,6 @@ import {
 } from "react";
 import { ConnectionContextType } from "./types";
 import { ethers } from "ethers";
-import { metamaskPresent } from "../../utils";
 
 declare global {
   interface Window {
@@ -30,40 +29,24 @@ export const ConnectionContextProvider = ({ children }: Props) => {
     useState<ethers.providers.Web3Provider | null>(null);
   const [chainId, setChainId] = useState(5);
 
-  useEffect(() => {
-    if (provider) {
-      provider.getNetwork().then((network) => {
-        setChainId(network.chainId);
-      });
-    }
-  }, [provider]);
-
-  useEffect(() => {
-    if (!user && metamaskPresent()) {
-      const pro = new ethers.providers.Web3Provider(window.ethereum);
-      setProvider(pro);
-    }
-  }, [user]);
-
   const attachListeners = useCallback(() => {
-    window.ethereum.on("accountsChanged", function (accounts: string[]) {
-      if (accounts.length > 0) {
-        setUser(ethers.utils.getAddress(accounts[0]));
-        window.location.reload();
-      } else {
-        setUser(null);
-      }
-    });
+    // window.ethereum.on("accountsChanged", function (accounts: string[]) {
+    //   if (accounts.length > 0) {
+    //     //Persist connectiion
+    //   } else {
+    //     disconnectWallets(setUser, setProvider, setChainId);
+    //   }
+    // });
 
     window.ethereum.on("chainChanged", (Id: string) => {
-      // window.location.reload();
       const chainId = parseInt(Id, 16);
       setChainId(chainId);
     });
 
     window.ethereum.on("disconnect", () => {
+      setUser?.("");
       setProvider(null);
-      setUser(null);
+      setChainId?.(0);
     });
 
     provider!.on("error", () => {
@@ -72,34 +55,11 @@ export const ConnectionContextProvider = ({ children }: Props) => {
     });
   }, [provider]);
 
-  const addUser = useCallback(async () => {
-    if (provider) {
-      const acc = await provider!.listAccounts(); // provider! due to if (provider) being used in useEffect
-      acc.length > 0 && setUser(ethers.utils.getAddress(acc[0]));
-    }
-  }, [provider]);
-
   useEffect(() => {
     if (provider) {
       attachListeners();
-      addUser();
-    } else {
-      // try to detect if address is already connected
-      if (user === null && provider === null) {
-        return;
-      }
-
-      setTimeout(function () {
-        if (window.ethereum && window.ethereum.selectedAddress) {
-          setUser(window.ethereum && window.ethereum.selectedAddress);
-          const providerTemp = new ethers.providers.Web3Provider(
-            window.ethereum
-          );
-          setProvider(providerTemp);
-        }
-      }, 500);
     }
-  }, [provider, addUser, attachListeners, user]);
+  }, [provider, attachListeners]);
 
   return (
     <ConnectionContext.Provider
