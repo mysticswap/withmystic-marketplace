@@ -15,6 +15,7 @@ export type HomeContextType = {
   setNumericFilters: React.Dispatch<React.SetStateAction<NumericFiltersType>>;
   showMobileFilters: boolean;
   setShowMobileFilters: React.Dispatch<React.SetStateAction<boolean>>;
+  diamondHost: boolean;
 };
 
 export type SelectedTrait = { type: string; value: string };
