@@ -1,0 +1,50 @@
+.nft_filter_slider {
+  width: 95%;
+  padding: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1;
+}
+.nft_filter_slider input[type="range"] {
+  -webkit-appearance: none !important;
+  appearance: none;
+  width: 90%;
+  border-radius: 16px;
+  border: none;
+  outline: none;
+}
+.nft_filter_slider p {
+  width: 10%;
+}
+/* Track: webkit browsers */
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 15px;
+  background: var(--ms-mp-card-border-color);
+  border-radius: 16px;
+}
+/* Track: Mozilla Firefox */
+input[type="range"]::-moz-range-track {
+  height: 15px;
+  background: var(--ms-mp-card-border-color);
+  border-radius: 16px;
+}
+
+.nft_filter_slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: var(--w3o-text-color);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.nft_filter_slider input[type="range"]::-moz-range-thumb {
+  -webkit-appearance: none !important;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: var(--w3o-text-color);
+  border-radius: 50%;
+  cursor: pointer;
+}

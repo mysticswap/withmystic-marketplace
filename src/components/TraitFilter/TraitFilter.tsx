@@ -1,10 +1,11 @@
 import { RiArrowUpSLine } from "react-icons/ri";
 import "./TraitFilter.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoClose, IoSearchSharp } from "react-icons/io5";
 import StatusListItem from "../StatusListItem/StatusListItem";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import { AttributeV2 } from "../../types/rsv-types/collection-traits.types";
+import RangeFilter from "../RangeFilter/RangeFilter";
 
 type Props = {
   attribute: AttributeV2;
@@ -16,6 +17,7 @@ const TraitFilter = ({ attribute }: Props) => {
   const traitValues = attribute.values;
   const [traitValuesTemp, setTraitValuesTemp] = useState(traitValues);
   const [inputValue, setInputValue] = useState("");
+  const [isNumeric, setIsNumeric] = useState(false);
 
   const selectTrait = (isClicked: boolean, trait: string) => {
     if (!isClicked) {
@@ -28,6 +30,20 @@ const TraitFilter = ({ attribute }: Props) => {
         return !(item.type == attribute.key && item.value == trait);
       });
       setSelectedTraits(updatedSelection);
+    }
+  };
+
+  const selectTraitNumeric = (isClicked: boolean, trait: string) => {
+    if (isClicked) {
+      const updatedSelection = selectedTraits.filter((item) => {
+        return !(item.type == attribute.key && item.value == trait);
+      });
+      setSelectedTraits(updatedSelection);
+
+      setSelectedTraits([
+        ...selectedTraits,
+        { type: attribute.key, value: trait },
+      ]);
     }
   };
 
@@ -45,6 +61,18 @@ const TraitFilter = ({ attribute }: Props) => {
     setTraitValuesTemp(traitValues);
   };
 
+  const checkIsNumeric = (value: string) => {
+    const regex = new RegExp(/^\d{1,4}(\.\d+)?$/);
+    if (regex.test(value)) {
+      setIsNumeric(true);
+    }
+  };
+
+  useEffect(() => {
+    const firstValue = attribute.values[0].value;
+    checkIsNumeric(firstValue);
+  }, []);
+
   return (
     <div className="trait_filter">
       <button className="filter_trigger" onClick={() => setShowlist(!showList)}>
@@ -57,32 +85,45 @@ const TraitFilter = ({ attribute }: Props) => {
       </button>
 
       <div className="trait_container" aria-expanded={!showList}>
-        <div className="trait_search">
-          <input
-            type="text"
-            placeholder="Search"
-            onChange={(e) => onSearch(e.target.value)}
-            value={inputValue}
-          />
-          {!inputValue ? (
-            <IoSearchSharp size={20} color="gray" />
-          ) : (
-            <IoClose size={20} className="input_closer" onClick={clearInput} />
-          )}
-        </div>
-        <div>
-          {traitValuesTemp?.map((value) => {
-            return (
-              <StatusListItem
-                key={value.value}
-                text={value.value}
-                subtext={value.count}
-                handleClick={selectTrait}
-                isForTraits={true}
-                type={attribute.key}
+        {!isNumeric && (
+          <div className="trait_search">
+            <input
+              type="text"
+              placeholder="Search"
+              onChange={(e) => onSearch(e.target.value)}
+              value={inputValue}
+            />
+            {!inputValue ? (
+              <IoSearchSharp size={20} color="gray" />
+            ) : (
+              <IoClose
+                size={20}
+                className="input_closer"
+                onClick={clearInput}
               />
-            );
-          })}
+            )}
+          </div>
+        )}
+        <div>
+          {isNumeric ? (
+            <RangeFilter
+              attData={traitValuesTemp}
+              handleClick={selectTraitNumeric}
+            />
+          ) : (
+            traitValuesTemp?.map((value) => {
+              return (
+                <StatusListItem
+                  key={value.value}
+                  text={value.value}
+                  subtext={value.count}
+                  handleClick={selectTrait}
+                  isForTraits={true}
+                  type={attribute.key}
+                />
+              );
+            })
+          )}
         </div>
       </div>
     </div>
