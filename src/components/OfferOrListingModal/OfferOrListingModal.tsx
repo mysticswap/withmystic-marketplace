@@ -91,6 +91,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     collectionMetadata!,
     user!
   );
+  console.log(activity);
 
   useEffect(() => {
     const isOverUserBalance = Number(offerAmount) > Number(userBalance.WETH);
