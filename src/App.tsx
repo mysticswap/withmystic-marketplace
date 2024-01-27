@@ -1,23 +1,27 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { GlobalContextProvider } from "./context/GlobalContext/GlobalContext";
-import Home from "./pages/Home";
 import { HomeContextProvider } from "./context/HomeContext/HomeContext";
-import NftPage from "./pages/NftPage/NftPage";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
-import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import { NftPageContextProvider } from "./context/NftPageContext/NftPageContext";
 import { ConnectionContextProvider } from "./context/ConnectionContext/ConnectionContext";
 import { TransactionContextProvider } from "./context/TransactionContext/TransactionContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { getMarketplaceClient } from "./services/api/dynamic-system";
 import { ClientObject } from "./types/dynamic-system.types";
 import Loading from "./components/Loading/Loading";
 import { addLinks, changeStyles, updateMetadata } from "./utils/dynamic-styles";
 import { updateFavicon, updateSiteTitle } from "./utils";
-import SwapsPage from "./pages/SwapsPage/SwapsPage";
+import Home from "./pages/Home";
+
+// Lazy Loading
+const NftPage = lazy(() => import("./pages/NftPage/NftPage"));
+const SwapsPage = lazy(() => import("./pages/SwapsPage/SwapsPage"));
+const ErrorPage = lazy(() => import("./pages/ErrorPage/ErrorPage"));
+
+//
 
 function App() {
   const [isFetchingClient, setIsFetchingClient] = useState(true);
@@ -32,7 +36,6 @@ function App() {
       } catch (error) {
         setIsFetchingClient(false);
         // console.log(error);
-        console.log(error);
       }
     };
 
@@ -63,9 +66,20 @@ function App() {
                 />
                 <Route
                   path="/:contract/:id"
-                  element={<NftPageContextProvider children={<NftPage />} />}
+                  element={
+                    <Suspense fallback={<Loading />}>
+                      <NftPageContextProvider children={<NftPage />} />
+                    </Suspense>
+                  }
                 />
-                <Route path="/swaps" element={<SwapsPage />} />
+                <Route
+                  path="/swaps"
+                  element={
+                    <Suspense fallback={<Loading />}>
+                      <SwapsPage />
+                    </Suspense>
+                  }
+                />
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
               <Footer />

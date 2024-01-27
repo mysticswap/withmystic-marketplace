@@ -27,11 +27,20 @@
   border-radius: 4px;
   backdrop-filter: blur(10px);
 }
+.nft_alter_video {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  height: 100%;
+}
 
 .nft_card img {
   width: 100%;
+  height: auto;
+  aspect-ratio: 3/4;
   display: block;
   max-height: 420px;
+  object-fit: cover;
 }
 
 .nft_card_details {
