@@ -83,9 +83,9 @@ export const getHostName = () => {
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
       // SteadyStack host
       return "deploy-preview-15--heroic-duckanoo-b32f52.netlify.app";
+      return "marketplace.mysticswaplocalhost.io";
       return "deploy-preview-25--heroic-duckanoo-b32f52.netlify.app";
       return "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app";
-      return "marketplace.mysticswaplocalhost.io";
       return "market.localhost.io";
     case "deploy-preview-77--heroic-duckanoo-b32f52.netlify.app":
       return "deploy-preview-15--heroic-duckanoo-b32f52.netlify.app";
