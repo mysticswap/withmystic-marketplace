@@ -14,7 +14,6 @@ export const handleListOrBidData = async (
   activityData: ActivityObject
 ) => {
   await window.ethereum.enable();
-  console.log(data);
 
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
@@ -56,7 +55,6 @@ export const handleListOrBidData = async (
           },
         },
       };
-      console.log(orderPost);
 
       submitListOrBid(chainId, orderPost).then((result) => {
         if (result?.message == "Success") {

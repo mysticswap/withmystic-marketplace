@@ -53,7 +53,6 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     supportedTokens[currentToken].contract === WETH_CONTRACT_ADDRESS
       ? ETH_CONTRACT_ADDRESS
       : supportedTokens[currentToken].contract;
-  console.log(currentToken, currencyIsListing);
 
   // const currencyIsListing = supportedTokens[currentToken].contract;
 
@@ -91,7 +90,6 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     collectionMetadata!,
     user!
   );
-  console.log(activity);
 
   useEffect(() => {
     const isOverUserBalance = Number(offerAmount) > Number(userBalance.WETH);
