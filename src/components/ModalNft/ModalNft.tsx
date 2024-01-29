@@ -19,6 +19,7 @@ const ModalNft = ({
 }: Props) => {
   const [price, setPrice] = useState(0);
   const { cryptoValue } = useGlobalContext();
+  console.log(nftData);
 
   let collectionName = nftData.collectionName;
   if (collectionName.length > 23) {
@@ -54,7 +55,7 @@ const ModalNft = ({
 
       <p className="modal_nft_value">
         {nftData.amount || "--"} {nftData.isOffer || (nftData.isSale && "wETH")}{" "}
-        {!nftData.isOffer && tokenSymbol}
+        {!nftData.isOffer && !nftData.isSale && tokenSymbol}
         <span>(${price.toFixed(2) || "--"})</span>
       </p>
     </div>

@@ -16,6 +16,8 @@ const ModalNftBuyNow = ({
 // currentToken,
 // offerAmount,
 Props) => {
+  console.log(nftData);
+  console.log("Modal NFT Buy now");
   let collectionName = nftData.collectionName;
   if (collectionName.length > 23) {
     collectionName = collectionName.split("", 23).join("") + "...";

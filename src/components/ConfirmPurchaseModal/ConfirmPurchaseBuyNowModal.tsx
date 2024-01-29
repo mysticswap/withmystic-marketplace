@@ -28,6 +28,7 @@ const ConfirmPurchaseBuyNowModal = ({
   // const cryptoSymbol = nftPriceData.floorAsk.price.currency.symbol;
 
   const nftData = transactionNft;
+  console.log(nftData);
   const modalTitle = transactionNft.isOffer && "Confirm purchase";
 
   const successMessage =
