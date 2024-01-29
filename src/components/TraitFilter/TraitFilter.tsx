@@ -33,18 +33,16 @@ const TraitFilter = ({ attribute }: Props) => {
     }
   };
 
-  const selectTraitNumeric = (isClicked: boolean, trait: string) => {
-    if (isClicked) {
-      const updatedSelection = selectedTraits.filter((item) => {
-        return !(item.type == attribute.key && item.value == trait);
-      });
-      setSelectedTraits(updatedSelection);
+  const selectTraitNumeric = (trait: string) => {
+    const updatedSelection = selectedTraits.filter((item) => {
+      return !(item.type == attribute.key && item.value == trait);
+    });
+    setSelectedTraits(updatedSelection);
 
-      setSelectedTraits([
-        ...selectedTraits,
-        { type: attribute.key, value: trait },
-      ]);
-    }
+    setSelectedTraits([
+      ...selectedTraits,
+      { type: attribute.key, value: trait },
+    ]);
   };
 
   const onSearch = (text: string) => {

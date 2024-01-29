@@ -7,7 +7,6 @@ type Props = {
   handleClick?: (...args: any[]) => void;
 };
 const RangeFilter = ({ attData, handleClick }: Props) => {
-  const [isClicked, setIsClicked] = useState(false);
   const [arrayValues, setArrayValues] = useState<string[]>();
   const [inputValue, setInputValue] = useState<number>(0);
   const [maxValue, setMaxValue] = useState<number>();
@@ -40,8 +39,7 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
         max={maxValue}
         onChange={(e) => currentValue(e.target.value)}
         onClick={() => {
-          setIsClicked(true);
-          handleClick?.(isClicked, arrayValues?.[inputValue!]);
+          handleClick?.(arrayValues?.[inputValue!]);
         }}
         // onMouseDown={}
       ></input>
