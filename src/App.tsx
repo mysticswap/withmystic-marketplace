@@ -15,9 +15,9 @@ import Loading from "./components/Loading/Loading";
 import { addLinks, changeStyles, updateMetadata } from "./utils/dynamic-styles";
 import { updateFavicon, updateSiteTitle } from "./utils";
 import Home from "./pages/Home";
+import NftPage from "./pages/NftPage/NftPage";
 
 // Lazy Loading
-const NftPage = lazy(() => import("./pages/NftPage/NftPage"));
 const SwapsPage = lazy(() => import("./pages/SwapsPage/SwapsPage"));
 const ErrorPage = lazy(() => import("./pages/ErrorPage/ErrorPage"));
 
@@ -66,11 +66,7 @@ function App() {
                 />
                 <Route
                   path="/:contract/:id"
-                  element={
-                    <Suspense fallback={<Loading />}>
-                      <NftPageContextProvider children={<NftPage />} />
-                    </Suspense>
-                  }
+                  element={<NftPageContextProvider children={<NftPage />} />}
                 />
                 <Route
                   path="/swaps"
