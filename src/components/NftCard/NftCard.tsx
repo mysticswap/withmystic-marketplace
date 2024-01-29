@@ -232,14 +232,18 @@ const NftCard = ({ nft }: Props) => {
                 {`${currentEthAmount} ${symbol}`} <span>(${currentValue})</span>
               </>
             ) : (
-              <span>---</span>
+              <span></span>
             )}
           </p>
         </Link>
 
         <p className="nft_card_last_sale ellipsis">
-          Last sale: {lastSale}
-          {symbol} {!lastSale && !symbol && "---"}
+          {lastSale && (
+            <>
+              Last sale: {lastSale}
+              {symbol} {!lastSale && !symbol && "---"}
+            </>
+          )}
         </p>
 
         {currentEthAmount && currentValue && !userIsOwner && isETHModal ? (
