@@ -7,9 +7,9 @@ type Props = {
   handleClick?: (...args: any[]) => void;
 };
 const RangeFilter = ({ attData, handleClick }: Props) => {
-  const [arrayValues, setArrayValues] = useState<string[]>();
-  const [inputValue, setInputValue] = useState<number>(0);
-  const [maxValue, setMaxValue] = useState<number>();
+  // const [arrayValues, setArrayValues] = useState<string[]>();
+  const [minValue, setMinValue] = useState<string>();
+  const [maxValue, setMaxValue] = useState<string>();
 
   const getNumbersArray = () => {
     const arrayNumbers: string[] = [];
@@ -18,33 +18,57 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
     });
 
     arrayNumbers.sort();
-    setArrayValues(arrayNumbers);
+    const length = arrayNumbers.length - 1;
 
-    setMaxValue(arrayNumbers.length - 1);
+    setMinValue(arrayNumbers?.[0]);
+    setMaxValue(arrayNumbers?.[length]);
   };
 
-  const currentValue = (e: string) => {
-    setInputValue(parseInt(e));
+  const handleChange = (isMin: boolean, e: string) => {
+    if (isMin) {
+      setMinValue(e);
+    } else {
+      setMaxValue(e);
+    }
+  };
+  const fetchMinAndMax = () => {
+    handleClick!(minValue, maxValue);
   };
 
   useEffect(() => {
     getNumbersArray();
   }, [attData]);
 
+  useEffect(() => {
+    handleClick;
+  }, [minValue, maxValue]);
+
   return (
-    <div className="nft_filter_slider">
-      <input
-        type="range"
-        value={inputValue}
-        max={maxValue}
-        onChange={(e) => currentValue(e.target.value)}
+    <>
+      <div className="nft_filter_range">
+        <input
+          type="number"
+          placeholder="Min"
+          value={minValue}
+          onChange={(e) => handleChange(true, e.target.value)}
+        />
+        <p>to</p>
+        <input
+          type="number"
+          placeholder="Max"
+          value={maxValue}
+          onChange={(e) => handleChange(false, e.target.value)}
+        />
+      </div>
+      <button
         onClick={() => {
-          handleClick?.(arrayValues?.[inputValue!]);
+          fetchMinAndMax();
         }}
-        // onMouseDown={}
-      ></input>
-      <p>{arrayValues?.[inputValue!]}</p>
-    </div>
+        className="nft_filter_button"
+      >
+        apply
+      </button>
+    </>
   );
 };
 export default RangeFilter;

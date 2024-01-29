@@ -33,15 +33,20 @@ const TraitFilter = ({ attribute }: Props) => {
     }
   };
 
-  const selectTraitNumeric = (trait: string) => {
+  const selectTraitNumeric = (minTrait: string, maxTrait: string) => {
     const updatedSelection = selectedTraits.filter((item) => {
-      return !(item.type == attribute.key && item.value == trait);
+      return !(
+        item.type == attribute.key &&
+        item.value == minTrait &&
+        item.value == maxTrait
+      );
     });
     setSelectedTraits(updatedSelection);
 
     setSelectedTraits([
       ...selectedTraits,
-      { type: attribute.key, value: trait },
+      { type: attribute.key, value: minTrait },
+      { type: attribute.key, value: maxTrait },
     ]);
   };
 

@@ -17,6 +17,7 @@
 
 .minmax input {
   width: 40%;
+  text-align: center;
   outline: none;
   border: 1px solid transparent;
   transition: var(--ms-mp-transition);
