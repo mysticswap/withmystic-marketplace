@@ -9,6 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+  "homepage": "/",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -37,11 +38,14 @@
     "axios": "^1.5.1",
     "dayjs": "^1.11.10",
     "ethers": "^5.7.2",
+    "i": "^0.3.7",
     "millify": "^6.1.0",
     "mystic-sdk-1": "^1.7.2",
+    "npm": "^10.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
+    "react-intersection-observer": "^9.5.3",
     "react-router-dom": "^6.16.0",
     "react-share": "^4.4.1",
     "react-toastify": "^9.1.3",

@@ -33,6 +33,7 @@ import {
 } from "../../utils/transaction-nft.utils";
 import { VideoPlayer } from "../VideoPlayer/VideoPlayer";
 import { ETH_CONTRACT_ADDRESS } from "../OfferOrListingModal/OfferOrListingModal";
+import AutoPlayer from "../AutoPlayer/AutoPlayer";
 
 type Props = { nft: TokenElement };
 
@@ -198,6 +199,21 @@ const NftCard = ({ nft }: Props) => {
   const userCanBuyTokenBalance =
     Number(userBalance[currentTokenSymbol]) >= currentTokenAmount;
 
+  const diamondHost = () => {
+    let diamondHost = false;
+    const source = getHostName();
+    if (
+      source == "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app" ||
+      source == "diamondnxt.withmystic.xyz"
+    ) {
+      diamondHost = true;
+    } else {
+      diamondHost = false;
+    }
+    return diamondHost;
+  };
+  const isDiamondHost = diamondHost();
+
   return (
     <div className="nft_card">
       <div className="nft_card_image_area">
@@ -205,14 +221,36 @@ const NftCard = ({ nft }: Props) => {
           <div className="nft_card_supply_count">{`x${supply}`}</div>
         )}
         {nft.token.media !== null ? (
-          <VideoPlayer
-            nftUrl={`/${collectionContract}/${nftId}`}
-            posterUrl={nft?.token?.image}
-            videoUrl={nft?.token?.media}
-          />
+          !isDiamondHost ? (
+            <VideoPlayer
+              nftUrl={`/${collectionContract}/${nftId}`}
+              posterUrl={nft?.token?.image}
+              videoUrl={nft?.token?.media}
+            />
+          ) : (
+            <AutoPlayer
+              nftUrl={`/${collectionContract}/${nftId}`}
+              posterUrl={nft?.token?.image}
+              videoUrl={nft?.token?.media}
+            />
+          )
         ) : (
           <Link to={`/${collectionContract}/${nftId}`}>
-            <img src={nft?.token?.image} alt="" />
+            <picture>
+              <source
+                srcSet={` ${nft?.token.imageSmall} 250w, 
+              ${nft?.token?.image} 512w, 
+              ${nft?.token?.imageLarge} 1000w`}
+                sizes="250px"
+              />
+              <img
+                loading="lazy"
+                decoding="async"
+                src={nft?.token?.image}
+                alt={`${nft?.token?.name}`}
+                role="img"
+              />
+            </picture>
           </Link>
         )}
       </div>
@@ -273,13 +311,15 @@ const NftCard = ({ nft }: Props) => {
 
       <div className="source_icon">
         <a href={sourceLink}>
-          {!sourceLink?.includes("opensea") ? (
+          {!sourceLink ? (
+            <img src={client?.favicon} alt="icon" />
+          ) : !sourceLink?.includes("opensea") ? (
             <img
               src={
                 sourceLink?.includes("x2y2")
                   ? x2y2
                   : isFromCurrentMarketplace
-                  ? client.favicon
+                  ? client?.favicon
                   : sourceIcon
               }
               alt=""

@@ -18,6 +18,8 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import NotFound from "./Components/NotFound/NotFound";
 import ConfirmPurchaseBuyNowModal from "../../components/ConfirmPurchaseModal/ConfirmPurchaseBuyNowModal";
+import { useEffect, useState } from "react";
+import { getVideoCache } from "../../utils/videoCache-utils";
 
 const NftPage = () => {
   const { id } = useParams();
@@ -48,7 +50,13 @@ const NftPage = () => {
   const tokenCount = nftInfo?.collection?.tokenCount;
   const token = `${contractAddress}:${id}`;
 
+  const [cacheUrl, setCacheUrl] = useState("");
   const isMobile = useIsMobile();
+  useEffect(() => {
+    getVideoCache(nftInfo?.media).then((res) => {
+      if (res) setCacheUrl(res);
+    });
+  }, []);
 
   if (isLoading) {
     return <Loading />;
@@ -75,7 +83,10 @@ const NftPage = () => {
                 controlsList="nodownload"
                 preload="metadata"
               >
-                <source src={nftInfo?.media} type="video/mp4"></source>
+                <source
+                  src={cacheUrl != "" ? cacheUrl : nftInfo?.media}
+                  type="video/mp4"
+                ></source>
               </video>
             </div>
           ) : (
