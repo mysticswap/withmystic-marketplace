@@ -29,14 +29,22 @@ export const HomeContextProvider = ({ children }: Props) => {
 
   const detectHost = () => {
     const hostName = getHostName();
-    switch (hostName) {
-      case "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app":
-        return setDiamondHost(true);
-      case "diamondnxt.withmystic.xyz":
-        return setDiamondHost(true);
-      default:
-        return setDiamondHost(false);
+    if (
+      hostName === "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app" ||
+      hostName === "diamondnxt.withmystic.xyz"
+    ) {
+      setDiamondHost(true);
+    } else {
+      setDiamondHost(false);
     }
+    // switch (hostName) {
+    //   case "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app":
+    //     return setDiamondHost(true);
+    //   case "diamondnxt.withmystic.xyz":
+    //     return setDiamondHost(true);
+    //   default:
+    //     return setDiamondHost(false);
+    // }
   };
 
   useEffect(() => {
