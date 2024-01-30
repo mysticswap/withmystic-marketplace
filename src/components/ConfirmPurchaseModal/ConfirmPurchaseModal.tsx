@@ -56,7 +56,7 @@ const ConfirmPurchaseModal = ({ setShowConfirmationModal }: Props) => {
             />
           </div>
 
-          {userCanCompleteTransaction ? (
+          {userCanCompleteTransaction || nftData.isSale ? (
             <>
               {!transactionStage ? (
                 <div className="confirm_purchase_modal_buttom">
