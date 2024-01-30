@@ -34,7 +34,7 @@ const Footer = () => {
       <section>
         <p>
           {" "}
-          © {new Date().getFullYear()} {client.collections[0].name}
+          © {new Date().getFullYear()} {client.collections?.[0].name}
         </p>
       </section>
       <section className="footer_links_holder">

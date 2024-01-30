@@ -42,17 +42,17 @@ type Props = {
 
 export const GlobalContextProvider = ({ children, client }: Props) => {
   const { user, chainId } = useConnectionContext()!;
-  const availableCollections = client?.collections;
+  const availableCollections = client?.collections || [];
 
   const previousCollection = availableCollections.find((collection) => {
     return collection.address == getPreviousCollectionAddress();
   });
 
   const [selectedCollection, setSelectedCollection] = useState(
-    previousCollection || availableCollections[0]
+    previousCollection || availableCollections?.[0]
   );
 
-  const supportedTokens = selectedCollection.supportedTokens!;
+  const supportedTokens = selectedCollection.supportedTokens! || [];
 
   // const [currentToken, setCurrentToken] = useState<number>(() =>
   //   supportedTokens!.findIndex((token) => token.symbol === "WETH")
@@ -60,10 +60,10 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
 
   const [currentToken, setCurrentToken] = useState<number>(0);
 
-  const cryptoName = supportedTokens[currentToken].name
-    .split(" ")
-    .join("-")
-    .toLowerCase();
+  const cryptoName = supportedTokens?.[currentToken]?.name
+    ?.split(" ")
+    ?.join("-")
+    ?.toLowerCase();
 
   const [currentTab, setCurrentTab] = useState(tabOptions[0]);
   const [collectionMetadata, setCollectionMetadata] =

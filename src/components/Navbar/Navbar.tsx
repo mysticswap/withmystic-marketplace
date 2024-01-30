@@ -61,7 +61,7 @@ const Navbar = () => {
     discordUrl = "https://discord.gg/zooverse";
   }
 
-  const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
+  const twitterUrl = `https://twitter.com/${collectionMetadata?.collections?.[0]?.twitterUsername}`;
 
   const connectWallet = () => {
     connectWallets(setUser, setProvider, setChainId);

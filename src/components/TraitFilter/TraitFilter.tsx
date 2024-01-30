@@ -72,7 +72,7 @@ const TraitFilter = ({ attribute }: Props) => {
   };
 
   useEffect(() => {
-    const firstValue = attribute.values[0].value;
+    const firstValue = attribute.values?.[0]?.value;
     checkIsNumeric(firstValue);
   }, []);
 
