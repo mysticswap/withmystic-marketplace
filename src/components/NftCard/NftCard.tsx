@@ -61,7 +61,7 @@ const NftCard = ({ nft }: Props) => {
   const nameRef = useRef(null);
   const isOverflowing = useIsOverflow(nameRef, minimalCards);
 
-  const saleActivity = collectionActivity.activities.filter(
+  const saleActivity = collectionActivity?.activities?.filter(
     ({ type, token }) => {
       return type == "sale" && token?.tokenName == nft?.token?.name;
     }
