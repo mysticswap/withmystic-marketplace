@@ -46,6 +46,7 @@
 .nft_card_details {
   padding: 1rem;
   position: relative;
+  height: 3rem;
 }
 
 .nft_card_details p {

@@ -67,7 +67,6 @@ const NftCard = ({ nft }: Props) => {
     }
   );
   const priceSale = saleActivity?.[0]?.price;
-  // console.log(saleActivity[0]?.token?.tokenId);
 
   const currentEthAmount = priceSale?.amount?.decimal;
   // const currentEthAmount = nft?.market?.floorAsk?.price?.amount?.decimal;
