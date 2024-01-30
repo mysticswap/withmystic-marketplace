@@ -66,7 +66,7 @@ const NftCard = ({ nft }: Props) => {
       return type == "sale" && token?.tokenName == nft?.token?.name;
     }
   );
-  const priceSale = saleActivity[0]?.price;
+  const priceSale = saleActivity?.[0]?.price;
   // console.log(saleActivity[0]?.token?.tokenId);
 
   const currentEthAmount = priceSale?.amount?.decimal;
