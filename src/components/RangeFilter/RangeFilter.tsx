@@ -7,8 +7,8 @@ type Props = {
   handleClick?: (...args: any[]) => void;
 };
 const RangeFilter = ({ attData, handleClick }: Props) => {
-  const [isError, setIsError] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const [isError, setIsError] = useState(false);
   const [minValue, setMinValue] = useState<string>();
   const [maxValue, setMaxValue] = useState<string>();
 
@@ -23,6 +23,7 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
 
     setMinValue(arrayNumbers?.[0]);
     setMaxValue(arrayNumbers?.[length]);
+    return { arrayNumbers, length };
   };
 
   const handleChange = (isMin: boolean, e: string) => {
@@ -33,7 +34,11 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
     }
   };
   const fetchMinAndMax = () => {
-    handleClick!(minValue, maxValue);
+    const { arrayNumbers, length } = getNumbersArray();
+
+    if (minValue != arrayNumbers?.[0] && maxValue != arrayNumbers?.[length]) {
+      handleClick!(minValue, maxValue);
+    }
   };
 
   useEffect(() => {
@@ -41,11 +46,12 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
   }, [attData]);
 
   useEffect(() => {
-    if (minValue! > maxValue!) {
+    if (parseInt(minValue!) > parseInt(maxValue!)) {
       setIsError(true);
       buttonRef.current?.toggleAttribute("disabled", true);
     } else {
       setIsError(false);
+      buttonRef.current?.toggleAttribute("disabled", false);
     }
   }, [minValue, maxValue]);
 
