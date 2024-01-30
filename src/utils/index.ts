@@ -70,7 +70,11 @@ export const redirectToMSWalletPage = (address: string) => {
 export const generateAttributeString = (selectedTraits: SelectedTrait[]) => {
   let string = "";
   selectedTraits.forEach((item) => {
-    string += `&attributes[${item.type}]=${item.value}`;
+    if (item.value) {
+      string += `&attributes[${item.type}]=${item.value}`;
+    } else {
+      string += `&attributeKey=${item.type}&includeAttributes=true`;
+    }
   });
   return string;
 };

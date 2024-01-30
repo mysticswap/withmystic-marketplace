@@ -10,6 +10,7 @@ import { getCollectionNftsV2 } from "../../services/api/marketplace-rsv-api";
 import { generateAttributeString } from "../../utils";
 import { useHideComponent } from "../../hooks/useHideComponent";
 import { useShowComponent } from "../../hooks/useShowComponent";
+import { GetNftsRsv } from "../../types/rsv-types/collection-nfts.types";
 
 const CardsHolder = () => {
   const {
@@ -99,6 +100,24 @@ const CardsHolder = () => {
       useHideComponent("foter");
     }
   };
+  const filterMinMax = (results: GetNftsRsv) => {
+    const lastTrait = selectedTraits?.[selectedTraits.length - 1];
+    const rangeNfts = results?.tokens?.filter(({ token }) => {
+      if (token.attributes) {
+        const attribute = token.attributes.filter(({ key }) => {
+          return key == lastTrait.type;
+        });
+
+        return (
+          attribute?.[0].value >= lastTrait.min! &&
+          attribute?.[0].value <= lastTrait.max!
+        );
+      }
+    });
+
+    setNftsTemp(rangeNfts);
+  };
+  console.log(nftsTemp);
 
   useEffect(() => {
     const attributeString = generateAttributeString(selectedTraits);
@@ -114,8 +133,13 @@ const CardsHolder = () => {
       undefined,
       numericFilters
     ).then((result) => {
-      setCollectionNfts(result);
-      setIsFetching(false);
+      if (attributeString.includes("&includeAttributes=true")) {
+        filterMinMax(result);
+        setIsFetching(false);
+      } else {
+        setCollectionNfts(result);
+        setIsFetching(false);
+      }
     });
   }, [selectedTraits]);
 
