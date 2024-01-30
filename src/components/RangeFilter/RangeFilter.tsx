@@ -66,7 +66,7 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
         }}
         className="nft_filter_button"
       >
-        apply
+        Apply
       </button>
     </>
   );
