@@ -38,3 +38,7 @@
   color: var(--ms-mp-text-color);
   transition: var(--ms-mp-transition);
 }
+
+.nft_filter_button:hover {
+  opacity: 0.9;
+}
