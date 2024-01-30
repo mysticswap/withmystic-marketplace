@@ -34,8 +34,8 @@ export const handleListOrBidData = async (
 
   executeTransactions(requiredApprovals, signer)
     .then(async () => {
-      const signTypedMessage = orderSignatureStep?.items[0].data.sign;
-      let orderPost = orderSignatureStep?.items[0].data.post;
+      const signTypedMessage = orderSignatureStep?.items?.[0]?.data?.sign;
+      let orderPost = orderSignatureStep?.items?.[0]?.data?.post;
       const signature = await signer._signTypedData(
         signTypedMessage?.domain!,
         signTypedMessage?.types as unknown as Record<

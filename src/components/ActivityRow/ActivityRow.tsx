@@ -32,7 +32,7 @@ const ActivityRow = ({ activity }: Props) => {
   const tokenId = activity?.token?.tokenId;
   const contract = activity?.collection?.collectionId;
   const singlePageLink = `/${contract}/${tokenId}`;
-  const switchTab = () => !tokenId && setCurrentTab(tabOptions[0]);
+  const switchTab = () => !tokenId && setCurrentTab(tabOptions?.[0]);
   const isFromCurrentMarketplace = sourceDomain == client.hostname;
 
   return (

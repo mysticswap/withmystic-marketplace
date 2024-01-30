@@ -42,8 +42,8 @@ export const handleBuyOrSellData = async (
   });
 
   const handleAuth = async () => {
-    const authSign = authStep?.items[0].data.sign;
-    const authPost = authStep?.items[0].data.post;
+    const authSign = authStep?.items?.[0]?.data?.sign;
+    const authPost = authStep?.items?.[0]?.data.post;
     const signature = await signer.signMessage(authSign?.message!);
     const auth = await authSignature(chainId!, signature, authPost!);
     if (auth?.auth) {
@@ -104,8 +104,8 @@ export const handleBuyOrSellDataToken = async (
   const authStep = data.steps.find((step) => step.id === "auth");
 
   const handleAuth = async () => {
-    const authSign = authStep?.items[0].data.sign;
-    const authPost = authStep?.items[0].data.post;
+    const authSign = authStep?.items?.[0]?.data?.sign;
+    const authPost = authStep?.items?.[0]?.data?.post;
     const signature = await signer.signMessage(authSign?.message!);
     const auth = await authSignature(chainId!, signature, authPost!);
     if (auth?.auth) {
