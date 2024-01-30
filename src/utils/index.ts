@@ -80,8 +80,8 @@ export const getHostName = () => {
   switch (hostName) {
     case "localhost":
       //DiamondNXT-NFT host
-      return "marketplace.mysticswaplocalhost.io";
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
+      return "marketplace.mysticswaplocalhost.io";
       // SteadyStack host
       return "deploy-preview-15--heroic-duckanoo-b32f52.netlify.app";
       return "deploy-preview-25--heroic-duckanoo-b32f52.netlify.app";
@@ -97,9 +97,9 @@ export const getHostName = () => {
       return "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app";
       return "marketplace.mysticswaplocalhost.io";
       return "market.localhost.io";
-    case "deploy-preview-82--heroic-duckanoo-b32f52.netlify.app":
-      return "marketplace.mysticswaplocalhost.io";
+    case "deploy-preview-83--heroic-duckanoo-b32f52.netlify.app":
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
+      return "marketplace.mysticswaplocalhost.io";
     // return "marketplace.mysticswaplocalhost.io";
     // return "deploy-preview-26--heroic-duckanoo-b32f52.netlify.app";
     default:
