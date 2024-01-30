@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Value } from "../../types/rsv-types/collection-traits.types";
 import "./RangeFilter.css";
 type Props = {
@@ -7,7 +7,8 @@ type Props = {
   handleClick?: (...args: any[]) => void;
 };
 const RangeFilter = ({ attData, handleClick }: Props) => {
-  // const [arrayValues, setArrayValues] = useState<string[]>();
+  const [isError, setIsError] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const [minValue, setMinValue] = useState<string>();
   const [maxValue, setMaxValue] = useState<string>();
 
@@ -39,6 +40,15 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
     getNumbersArray();
   }, [attData]);
 
+  useEffect(() => {
+    if (minValue! > maxValue!) {
+      setIsError(true);
+      buttonRef.current?.toggleAttribute("disabled", true);
+    } else {
+      setIsError(false);
+    }
+  }, [minValue, maxValue]);
+
   return (
     <>
       <div className="nft_filter_range">
@@ -61,9 +71,13 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
           fetchMinAndMax();
         }}
         className="nft_filter_button"
+        ref={buttonRef}
       >
         Apply
       </button>
+      {isError && (
+        <p className="max_error">Minimum must be less than maximum</p>
+      )}
     </>
   );
 };

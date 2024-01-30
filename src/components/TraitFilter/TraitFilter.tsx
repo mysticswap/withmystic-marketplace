@@ -44,10 +44,7 @@ const TraitFilter = ({ attribute }: Props) => {
     });
     setSelectedTraits(updatedSelection);
 
-    setSelectedTraits([
-      ...selectedTraits,
-      { type: attribute.key, min: minTrait, max: maxTrait },
-    ]);
+    setSelectedTraits([{ type: attribute.key, min: minTrait, max: maxTrait }]);
   };
 
   const onSearch = (text: string) => {
