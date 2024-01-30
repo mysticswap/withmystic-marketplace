@@ -216,7 +216,6 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
       }
     } catch (error) {
       // Handle errors here
-      console.error(error);
     }
   };
 

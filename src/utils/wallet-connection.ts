@@ -10,8 +10,8 @@ export const switchChains = async (
         method: "wallet_switchEthereumChain",
         params: [{ chainId: chainIdsMap[collectionChain] }],
       });
-    } catch (switchError) {
-      console.log("Failed to switch to the network");
+    } catch {
+      // handle errors
     }
   }
 

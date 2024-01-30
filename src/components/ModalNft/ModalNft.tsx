@@ -19,7 +19,6 @@ const ModalNft = ({
 }: Props) => {
   const [price, setPrice] = useState(0);
   const { cryptoValue } = useGlobalContext();
-  console.log(nftData);
 
   let collectionName = nftData.collectionName;
   if (collectionName.length > 23) {
