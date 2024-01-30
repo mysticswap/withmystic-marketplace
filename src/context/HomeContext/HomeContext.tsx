@@ -34,6 +34,8 @@ export const HomeContextProvider = ({ children }: Props) => {
         return setDiamondHost(true);
       case "diamondnxt.withmystic.xyz":
         return setDiamondHost(true);
+      default:
+        return setDiamondHost(false);
     }
   };
 
