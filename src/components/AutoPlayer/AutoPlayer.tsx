@@ -31,7 +31,6 @@ function AutoPlayer({ videoUrl, posterUrl, nftUrl }: props) {
     }
     const lazyLoadVideos = () => {
       if (inView || (inView && cacheUrl != "")) {
-        console.log(inView && cacheUrl != "");
         autoVidRef.current?.play();
         crateVideoCache(videoUrl);
       }

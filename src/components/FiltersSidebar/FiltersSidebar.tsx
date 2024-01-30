@@ -12,7 +12,8 @@ type Props = { isForTraits: boolean };
 
 const FiltersSidebar = ({ isForTraits }: Props) => {
   const { collectionAttributes, supportedTokens } = useGlobalContext();
-  const { showMobileFilters, setShowMobileFilters } = useHomeContext()!;
+  const { showMobileFilters, setShowMobileFilters, diamondHost } =
+    useHomeContext()!;
 
   return (
     <div
@@ -32,7 +33,9 @@ const FiltersSidebar = ({ isForTraits }: Props) => {
 
           {supportedTokens.length == 1 ? null : <CurrencyFilters />}
           <NumericFilters title="Price" isRarity={false} />
-          <NumericFilters title="Rarity Rank" isRarity={true} />
+          {!diamondHost && (
+            <NumericFilters title="Rarity Rank" isRarity={true} />
+          )}
           {collectionAttributes?.attributes?.map((attribute) => {
             return <TraitFilter key={attribute.key} attribute={attribute} />;
           })}

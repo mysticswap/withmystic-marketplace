@@ -34,6 +34,7 @@ import {
 import { VideoPlayer } from "../VideoPlayer/VideoPlayer";
 import { ETH_CONTRACT_ADDRESS } from "../OfferOrListingModal/OfferOrListingModal";
 import AutoPlayer from "../AutoPlayer/AutoPlayer";
+import { useHomeContext } from "../../context/HomeContext/HomeContext";
 
 type Props = { nft: TokenElement };
 
@@ -44,8 +45,10 @@ const NftCard = ({ nft }: Props) => {
     collectionContract,
     userBalance,
     client,
+    collectionActivity,
   } = useGlobalContext();
-  const { user, chainId, setProvider } = useConnectionContext()!;
+  const { user, chainId, setProvider, setUser, setChainId } =
+    useConnectionContext()!;
   const {
     setShowConfirmationModal,
     setTransactionNft,
@@ -54,13 +57,26 @@ const NftCard = ({ nft }: Props) => {
     setShowConfirmationBuyNowModal,
   } = useTransactionContext()!;
 
+  const { diamondHost } = useHomeContext()!;
   const nameRef = useRef(null);
   const isOverflowing = useIsOverflow(nameRef, minimalCards);
 
-  const currentEthAmount = nft?.market?.floorAsk?.price?.amount?.decimal;
-  const symbol = nft?.market?.floorAsk?.price?.currency?.symbol;
-  const currentValue = Math.round(nft?.market?.floorAsk?.price?.amount?.usd);
-  const lastSale = nft?.market?.floorAsk?.price?.amount?.decimal;
+  const saleActivity = collectionActivity?.activities?.filter(
+    ({ type, token }) => {
+      return type == "sale" && token?.tokenName == nft?.token?.name;
+    }
+  );
+  const priceSale = saleActivity[0]?.price;
+  // console.log(saleActivity[0]?.token?.tokenId);
+
+  const currentEthAmount = priceSale?.amount?.decimal;
+  // const currentEthAmount = nft?.market?.floorAsk?.price?.amount?.decimal;
+  const saleSymbol = priceSale?.currency?.symbol;
+  // const symbol = nft?.market?.floorAsk?.price?.currency?.symbol;
+  const currentValue = Math.round(priceSale?.amount?.usd);
+  // const currentValue = Math.round(nft?.market?.floorAsk?.price?.amount?.usd);
+  const lastSale = priceSale?.amount?.decimal;
+  // const lastSale = nft?.market?.floorAsk?.price?.amount?.decimal;
   const nftName = nft?.token?.name;
   const nftId = nft?.token?.tokenId;
   const sourceIcon = nft?.market?.floorAsk?.source?.icon;
@@ -70,12 +86,16 @@ const NftCard = ({ nft }: Props) => {
   const isErc1155 = nft?.token?.kind == "erc1155";
   const supply = nft?.token?.remainingSupply;
 
-  const currentTokenAmount = nft.market?.floorAsk?.price?.amount?.decimal;
-  const currentUsdValue = nft.market?.floorAsk?.price?.amount?.usd;
-  const currentTokenSymbol = nft.market?.floorAsk?.price?.currency?.symbol;
+  const currentTokenAmount = priceSale?.amount?.decimal;
+  // const currentTokenAmount = nft.market?.floorAsk?.price?.amount?.decimal;
+  const currentUsdValue = priceSale?.amount?.usd;
+  // const currentUsdValue = nft.market?.floorAsk?.price?.amount?.usd;
+  const currentTokenSymbol = priceSale?.currency?.symbol;
+  // const currentTokenSymbol = nft.market?.floorAsk?.price?.currency?.symbol;
 
   const isFromCurrentMarketplace = sourceDomain == client.hostname;
-  const currentDecimalToken = nft?.market?.floorAsk?.price?.currency?.decimals;
+  const currentDecimalToken = priceSale?.currency?.decimals;
+  // const currentDecimalToken = nft?.market?.floorAsk?.price?.currency?.decimals;
   const isETHModal =
     nft?.market?.floorAsk?.price?.currency.contract === ETH_CONTRACT_ADDRESS;
 
@@ -137,7 +157,7 @@ const NftCard = ({ nft }: Props) => {
       setTransactionNft(txNft);
       setShowConfirmationModal(true);
       startBuyProcess();
-    } else connectWallets(setProvider);
+    } else connectWallets(setUser, setProvider, setChainId);
   };
 
   const startBuyProcessToken = () => {
@@ -187,7 +207,7 @@ const NftCard = ({ nft }: Props) => {
       });
       setShowConfirmationModal(true);
       startBuyProcessToken();
-    } else connectWallets(setProvider);
+    } else connectWallets(setUser, setProvider, setChainId);
   };
 
   const userIsOwner = user?.toLowerCase() == nft?.token?.owner?.toLowerCase();
@@ -198,21 +218,6 @@ const NftCard = ({ nft }: Props) => {
   const userCanBuyTokenBalance =
     Number(userBalance[currentTokenSymbol]) >= currentTokenAmount;
 
-  const diamondHost = () => {
-    let diamondHost = false;
-    const source = getHostName();
-    if (
-      source == "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app" ||
-      source == "diamondnxt.withmystic.xyz"
-    ) {
-      diamondHost = true;
-    } else {
-      diamondHost = false;
-    }
-    return diamondHost;
-  };
-  const isDiamondHost = diamondHost();
-
   return (
     <div className="nft_card">
       <div className="nft_card_image_area">
@@ -220,7 +225,7 @@ const NftCard = ({ nft }: Props) => {
           <div className="nft_card_supply_count">{`x${supply}`}</div>
         )}
         {nft.token.media !== null ? (
-          !isDiamondHost ? (
+          !diamondHost ? (
             <VideoPlayer
               nftUrl={`/${collectionContract}/${nftId}`}
               posterUrl={nft?.token?.image}
@@ -264,19 +269,24 @@ const NftCard = ({ nft }: Props) => {
         </div>
         <Link to={`/${collectionContract}/${nftId}`}>
           <p className="nft_card_amount">
-            {currentEthAmount && currentValue ? (
+            {priceSale ? (
               <>
-                {`${currentEthAmount} ${symbol}`} <span>(${currentValue})</span>
+                {`${currentEthAmount} ${saleSymbol}`}{" "}
+                <span>(${currentValue})</span>
               </>
             ) : (
-              <span>---</span>
+              <span></span>
             )}
           </p>
         </Link>
 
         <p className="nft_card_last_sale ellipsis">
-          Last sale: {lastSale}
-          {symbol} {!lastSale && !symbol && "---"}
+          {priceSale && (
+            <>
+              Last sale: {lastSale}
+              {saleSymbol} {!lastSale && !saleSymbol && "---"}
+            </>
+          )}
         </p>
 
         {currentEthAmount && currentValue && !userIsOwner && isETHModal ? (

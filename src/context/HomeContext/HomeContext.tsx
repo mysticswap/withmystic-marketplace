@@ -9,6 +9,7 @@ import {
 import { HomeContextType, SelectedTrait } from "./types";
 import { defaultNumericFilters, dropdownOptions } from "../../constants";
 import { useGlobalContext } from "../GlobalContext/GlobalContext";
+import { getHostName } from "../../utils";
 
 const HomeContext = createContext<HomeContextType | null>(null);
 
@@ -24,8 +25,20 @@ export const HomeContextProvider = ({ children }: Props) => {
   const [isFetching, setIsFetching] = useState(false);
   const [numericFilters, setNumericFilters] = useState(defaultNumericFilters);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [diamondHost, setDiamondHost] = useState(false);
+
+  const detectHost = () => {
+    const hostName = getHostName();
+    switch (hostName) {
+      case "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app":
+        return setDiamondHost(true);
+      case "diamondnxt.withmystic.xyz":
+        return setDiamondHost(true);
+    }
+  };
 
   useEffect(() => {
+    detectHost();
     setSelectedTraits([]);
     setSelectedDropdownOption(dropdownOptions[0]);
     setNumericFilters(defaultNumericFilters);
@@ -47,6 +60,7 @@ export const HomeContextProvider = ({ children }: Props) => {
         setNumericFilters,
         showMobileFilters,
         setShowMobileFilters,
+        diamondHost,
       }}
     >
       {children}

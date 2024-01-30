@@ -29,12 +29,14 @@ const CurrentPrice = ({ nftPriceData }: Props) => {
         <span>Listed on</span>
         <a href={sourceLink}>
           {!source?.includes("opensea") ? (
+            <img src={client?.favicon} alt="icon" />
+          ) : !sourceLink?.includes("opensea") ? (
             <img
               src={
-                source?.includes("x2y2")
+                sourceLink?.includes("x2y2")
                   ? x2y2
                   : isFromCurrentMarketplace
-                  ? client.favicon
+                  ? client?.favicon
                   : source
               }
               alt=""
