@@ -56,7 +56,9 @@ const CardsHolder = () => {
     return (
       <SelectedFilter
         key={index}
-        trait={trait.value}
+        trait={trait.value!}
+        min={trait.min!}
+        max={trait.max!}
         traitType={trait.type}
         handleClick={removeSelectedFilter}
       />

@@ -13,6 +13,7 @@ type Props = {
 
 const TraitFilter = ({ attribute }: Props) => {
   const { selectedTraits, setSelectedTraits } = useHomeContext()!;
+
   const [showList, setShowlist] = useState(false);
   const traitValues = attribute.values;
   const [traitValuesTemp, setTraitValuesTemp] = useState(traitValues);
@@ -33,20 +34,19 @@ const TraitFilter = ({ attribute }: Props) => {
     }
   };
 
-  const selectTraitNumeric = (minTrait: string, maxTrait: string) => {
+  const selectTraitRange = (minTrait: string, maxTrait: string) => {
     const updatedSelection = selectedTraits.filter((item) => {
       return !(
         item.type == attribute.key &&
-        item.value == minTrait &&
-        item.value == maxTrait
+        item.min == minTrait &&
+        item.max == maxTrait
       );
     });
     setSelectedTraits(updatedSelection);
 
     setSelectedTraits([
       ...selectedTraits,
-      { type: attribute.key, value: minTrait },
-      { type: attribute.key, value: maxTrait },
+      { type: attribute.key, min: minTrait, max: maxTrait },
     ]);
   };
 
@@ -64,7 +64,7 @@ const TraitFilter = ({ attribute }: Props) => {
     setTraitValuesTemp(traitValues);
   };
 
-  const checkIsNumeric = (value: string) => {
+  const checkIsRange = (value: string) => {
     const regex = new RegExp(/^\d{1,4}(\.\d+)?$/);
     if (regex.test(value)) {
       setIsNumeric(true);
@@ -72,9 +72,9 @@ const TraitFilter = ({ attribute }: Props) => {
   };
 
   useEffect(() => {
-    const firstValue = attribute.values?.[0]?.value;
-    checkIsNumeric(firstValue);
-  }, []);
+    const firstValue = attribute?.values?.[0]?.value;
+    checkIsRange(firstValue);
+  }, [attribute]);
 
   return (
     <div className="trait_filter">
@@ -111,7 +111,7 @@ const TraitFilter = ({ attribute }: Props) => {
           {isNumeric ? (
             <RangeFilter
               attData={traitValuesTemp}
-              handleClick={selectTraitNumeric}
+              handleClick={selectTraitRange}
             />
           ) : (
             traitValuesTemp?.map((value) => {

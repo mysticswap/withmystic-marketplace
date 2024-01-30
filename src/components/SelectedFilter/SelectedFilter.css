@@ -7,6 +7,9 @@
   border-radius: 6px;
   transition: var(--ms-mp-transition);
 }
+.selected_filter p {
+  margin: 0;
+}
 
 .selected_filter:hover {
   background-color: var(--ms-mp-gray-light-alt);

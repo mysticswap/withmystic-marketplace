@@ -39,10 +39,6 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
     getNumbersArray();
   }, [attData]);
 
-  useEffect(() => {
-    handleClick;
-  }, [minValue, maxValue]);
-
   return (
     <>
       <div className="nft_filter_range">
