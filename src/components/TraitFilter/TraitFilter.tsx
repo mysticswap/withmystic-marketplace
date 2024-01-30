@@ -35,16 +35,32 @@ const TraitFilter = ({ attribute }: Props) => {
   };
 
   const selectTraitRange = (minTrait: string, maxTrait: string) => {
-    const updatedSelection = selectedTraits.filter((item) => {
-      return !(
-        item.type == attribute.key &&
-        item.min == minTrait &&
-        item.max == maxTrait
-      );
+    // const updatedSelection = selectedTraits.filter((item) => {
+    //   return !(
+    //     item.type == attribute.key &&
+    //     item.min == minTrait &&
+    //     item.max == maxTrait
+    //   );
+    // });
+    // setSelectedTraits(updatedSelection);
+    const currentTrait = selectedTraits.find(({ type }) => {
+      return type == attribute.key;
     });
-    setSelectedTraits(updatedSelection);
+    if (!currentTrait) {
+      setSelectedTraits([
+        ...selectedTraits,
+        { type: attribute.key, min: minTrait, max: maxTrait },
+      ]);
+    } else {
+      selectedTraits.forEach((value) => {
+        if (value.type == attribute.key) {
+          value.min = minTrait;
+          value.max = maxTrait;
+        }
+      });
 
-    setSelectedTraits([{ type: attribute.key, min: minTrait, max: maxTrait }]);
+      setSelectedTraits([...selectedTraits]);
+    }
   };
 
   const onSearch = (text: string) => {

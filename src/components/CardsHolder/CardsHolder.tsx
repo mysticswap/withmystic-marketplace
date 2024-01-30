@@ -117,7 +117,7 @@ const CardsHolder = () => {
 
     setNftsTemp(rangeNfts);
   };
-  console.log(nftsTemp);
+  // console.log(nftsTemp);
 
   useEffect(() => {
     const attributeString = generateAttributeString(selectedTraits);

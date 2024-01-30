@@ -21,8 +21,6 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
     arrayNumbers.sort();
     const length = arrayNumbers.length - 1;
 
-    setMinValue(arrayNumbers?.[0]);
-    setMaxValue(arrayNumbers?.[length]);
     return { arrayNumbers, length };
   };
 
@@ -36,13 +34,15 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
   const fetchMinAndMax = () => {
     const { arrayNumbers, length } = getNumbersArray();
 
-    if (minValue != arrayNumbers?.[0] && maxValue != arrayNumbers?.[length]) {
+    if (minValue != arrayNumbers?.[0] || maxValue != arrayNumbers?.[length]) {
       handleClick!(minValue, maxValue);
     }
   };
 
   useEffect(() => {
-    getNumbersArray();
+    const { arrayNumbers, length } = getNumbersArray();
+    setMinValue(arrayNumbers?.[0]);
+    setMaxValue(arrayNumbers?.[length]);
   }, [attData]);
 
   useEffect(() => {
