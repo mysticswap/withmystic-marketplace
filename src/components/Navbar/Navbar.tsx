@@ -141,7 +141,7 @@ const Navbar = () => {
             <button className="sell_button">Swap</button>
           </Link>
 
-          {userHasNfts && (
+          {userHasNfts && location.pathname !== "/swaps" && (
             <button
               className="sell_button"
               onClick={() => setShowUserNftsModal(true)}

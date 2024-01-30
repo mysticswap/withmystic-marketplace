@@ -171,7 +171,11 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
 
   useEffect(() => {
     getCryptoPrice(cryptoName).then((result) => {
-      setCryptoValue(result[cryptoName].usd);
+      if (Object.keys(result).length !== 0) {
+        setCryptoValue(result[cryptoName].usd);
+      } else {
+        setCryptoValue(0);
+      }
     });
   }, [cryptoName]);
 
