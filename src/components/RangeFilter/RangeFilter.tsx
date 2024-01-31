@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Value } from "../../types/rsv-types/collection-traits.types";
 import "./RangeFilter.css";
 type Props = {
@@ -7,7 +7,8 @@ type Props = {
   handleClick?: (...args: any[]) => void;
 };
 const RangeFilter = ({ attData, handleClick }: Props) => {
-  // const [arrayValues, setArrayValues] = useState<string[]>();
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [isError, setIsError] = useState(false);
   const [minValue, setMinValue] = useState<string>();
   const [maxValue, setMaxValue] = useState<string>();
 
@@ -20,8 +21,7 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
     arrayNumbers.sort();
     const length = arrayNumbers.length - 1;
 
-    setMinValue(arrayNumbers?.[0]);
-    setMaxValue(arrayNumbers?.[length]);
+    return { arrayNumbers, length };
   };
 
   const handleChange = (isMin: boolean, e: string) => {
@@ -32,15 +32,27 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
     }
   };
   const fetchMinAndMax = () => {
-    handleClick!(minValue, maxValue);
+    const { arrayNumbers, length } = getNumbersArray();
+
+    if (minValue != arrayNumbers?.[0] || maxValue != arrayNumbers?.[length]) {
+      handleClick!(minValue, maxValue);
+    }
   };
 
   useEffect(() => {
-    getNumbersArray();
+    const { arrayNumbers, length } = getNumbersArray();
+    setMinValue(arrayNumbers?.[0]);
+    setMaxValue(arrayNumbers?.[length]);
   }, [attData]);
 
   useEffect(() => {
-    handleClick;
+    if (parseInt(minValue!) > parseInt(maxValue!)) {
+      setIsError(true);
+      buttonRef.current?.toggleAttribute("disabled", true);
+    } else {
+      setIsError(false);
+      buttonRef.current?.toggleAttribute("disabled", false);
+    }
   }, [minValue, maxValue]);
 
   return (
@@ -65,9 +77,13 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
           fetchMinAndMax();
         }}
         className="nft_filter_button"
+        ref={buttonRef}
       >
         Apply
       </button>
+      {isError && (
+        <p className="max_error">Minimum must be less than maximum</p>
+      )}
     </>
   );
 };

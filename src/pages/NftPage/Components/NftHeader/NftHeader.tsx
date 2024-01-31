@@ -327,6 +327,7 @@ const NftHeader = ({
         {!userIsOwner && (
           <OutlineButton text="Make Offer" onClick={makeOffer} />
         )}
+        {userIsOwner && <OutlineButton text="Edit List" onClick={buyOrList} />}
       </div>
     </div>
   );

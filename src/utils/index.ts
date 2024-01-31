@@ -68,9 +68,13 @@ export const redirectToMSWalletPage = (address: string) => {
 };
 
 export const generateAttributeString = (selectedTraits: SelectedTrait[]) => {
-  let string = "";
+  let string = "&includeAttributes=true";
   selectedTraits.forEach((item) => {
-    string += `&attributes[${item.type}]=${item.value}`;
+    if (item.value) {
+      string += `&attributes[${item.type}]=${item.value}`;
+    } else {
+      string += `&attributeKey=${item.type}`;
+    }
   });
   return string;
 };
@@ -87,9 +91,9 @@ export const getHostName = () => {
       return "deploy-preview-25--heroic-duckanoo-b32f52.netlify.app";
       return "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app";
       return "market.localhost.io";
-    case "deploy-preview-77--heroic-duckanoo-b32f52.netlify.app":
-      return "deploy-preview-15--heroic-duckanoo-b32f52.netlify.app";
+    case "deploy-preview-87--heroic-duckanoo-b32f52.netlify.app":
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
+      return "deploy-preview-15--heroic-duckanoo-b32f52.netlify.app";
       return "marketplace.mysticswaplocalhost.io";
       return "deploy-preview-25--heroic-duckanoo-b32f52.netlify.app";
     case "deploy-preview-81--heroic-duckanoo-b32f52.netlify.app":

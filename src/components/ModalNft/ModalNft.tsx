@@ -6,7 +6,7 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
 type Props = {
   nftData: TransactionNft;
-  supportedTokens: SupportedToken[];
+  supportedTokens?: SupportedToken[];
   currentToken: number;
   offerAmount: string | number;
 };
@@ -19,7 +19,6 @@ const ModalNft = ({
 }: Props) => {
   const [price, setPrice] = useState(0);
   const { cryptoValue } = useGlobalContext();
-  console.log(nftData);
 
   let collectionName = nftData.collectionName;
   if (collectionName.length > 23) {
@@ -38,7 +37,7 @@ const ModalNft = ({
   if (nftData.isBuyNow) {
     tokenSymbol = nftData.symbol;
   } else {
-    tokenSymbol = supportedTokens[currentToken].symbol;
+    tokenSymbol = supportedTokens?.[currentToken].symbol;
   }
 
   // const cryptoSymbol = supportedTokens[currentToken].symbol;

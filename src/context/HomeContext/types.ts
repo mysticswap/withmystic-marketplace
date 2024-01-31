@@ -18,7 +18,13 @@ export type HomeContextType = {
   diamondHost: boolean;
 };
 
-export type SelectedTrait = { type: string; value: string };
+export type SelectedTrait = {
+  type: string;
+  value?: string;
+  min?: string;
+  max?: string;
+};
+
 export type DropdownOption = {
   title: string;
   value: string;

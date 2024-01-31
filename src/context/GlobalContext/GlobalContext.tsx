@@ -75,7 +75,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
   const [collectionAttributes, setCollectionAttributes] = useState(
     {} as CollectionTraitsV2
   );
-  const [selectedActivities, setSelectedActivities] = useState(["sale"]);
+  const [selectedActivities, setSelectedActivities] = useState(["sale", "ask"]);
   const [userBalance, setUserBalance] = useState({});
   const [userNfts, setUserNfts] = useState({} as UserNfts);
   const [minimalCards, setMinimalCards] = useState(true);

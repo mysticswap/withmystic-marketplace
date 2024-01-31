@@ -13,6 +13,7 @@ type Props = {
 
 const TraitFilter = ({ attribute }: Props) => {
   const { selectedTraits, setSelectedTraits } = useHomeContext()!;
+
   const [showList, setShowlist] = useState(false);
   const traitValues = attribute.values;
   const [traitValuesTemp, setTraitValuesTemp] = useState(traitValues);
@@ -33,21 +34,33 @@ const TraitFilter = ({ attribute }: Props) => {
     }
   };
 
-  const selectTraitNumeric = (minTrait: string, maxTrait: string) => {
-    const updatedSelection = selectedTraits.filter((item) => {
-      return !(
-        item.type == attribute.key &&
-        item.value == minTrait &&
-        item.value == maxTrait
-      );
+  const selectTraitRange = (minTrait: string, maxTrait: string) => {
+    // const updatedSelection = selectedTraits.filter((item) => {
+    //   return !(
+    //     item.type == attribute.key &&
+    //     item.min == minTrait &&
+    //     item.max == maxTrait
+    //   );
+    // });
+    // setSelectedTraits(updatedSelection);
+    const currentTrait = selectedTraits.find(({ type }) => {
+      return type == attribute.key;
     });
-    setSelectedTraits(updatedSelection);
+    if (!currentTrait) {
+      setSelectedTraits([
+        ...selectedTraits,
+        { type: attribute.key, min: minTrait, max: maxTrait },
+      ]);
+    } else {
+      selectedTraits.forEach((value) => {
+        if (value.type == attribute.key) {
+          value.min = minTrait;
+          value.max = maxTrait;
+        }
+      });
 
-    setSelectedTraits([
-      ...selectedTraits,
-      { type: attribute.key, value: minTrait },
-      { type: attribute.key, value: maxTrait },
-    ]);
+      setSelectedTraits([...selectedTraits]);
+    }
   };
 
   const onSearch = (text: string) => {
@@ -64,7 +77,7 @@ const TraitFilter = ({ attribute }: Props) => {
     setTraitValuesTemp(traitValues);
   };
 
-  const checkIsNumeric = (value: string) => {
+  const checkIsRange = (value: string) => {
     const regex = new RegExp(/^\d{1,4}(\.\d+)?$/);
     if (regex.test(value)) {
       setIsNumeric(true);
@@ -72,9 +85,9 @@ const TraitFilter = ({ attribute }: Props) => {
   };
 
   useEffect(() => {
-    const firstValue = attribute.values?.[0]?.value;
-    checkIsNumeric(firstValue);
-  }, []);
+    const firstValue = attribute?.values?.[0]?.value;
+    checkIsRange(firstValue);
+  }, [attribute]);
 
   return (
     <div className="trait_filter">
@@ -111,7 +124,7 @@ const TraitFilter = ({ attribute }: Props) => {
           {isNumeric ? (
             <RangeFilter
               attData={traitValuesTemp}
-              handleClick={selectTraitNumeric}
+              handleClick={selectTraitRange}
             />
           ) : (
             traitValuesTemp?.map((value) => {

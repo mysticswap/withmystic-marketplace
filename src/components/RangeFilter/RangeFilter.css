@@ -42,3 +42,9 @@
 .nft_filter_button:hover {
   opacity: 0.9;
 }
+.nft_filter_button:disabled {
+  opacity: 0.3;
+}
+.max_error {
+  color: var(--ms-mp-red);
+}
