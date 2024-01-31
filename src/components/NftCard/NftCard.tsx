@@ -241,15 +241,15 @@ const NftCard = ({ nft }: Props) => {
           <Link to={`/${collectionContract}/${nftId}`}>
             <picture>
               <source
-                srcSet={` ${nft?.token.imageSmall} 250w, 
-              ${nft?.token?.image} 512w, 
+                srcSet={` ${nft?.token.imageSmall} 250w,
+              ${nft?.token?.image} 512w,
               ${nft?.token?.imageLarge} 1000w`}
                 sizes="250px"
               />
               <img
                 loading="lazy"
                 decoding="async"
-                src={nft?.token?.image}
+                src={nft?.token?.optImage || nft?.token?.image}
                 alt={`${nft?.token?.name}`}
                 role="img"
               />

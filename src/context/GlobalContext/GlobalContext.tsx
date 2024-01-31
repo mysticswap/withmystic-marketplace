@@ -52,7 +52,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
     previousCollection || availableCollections?.[0]
   );
 
-  const supportedTokens = selectedCollection!.supportedTokens! || [];
+  const supportedTokens = selectedCollection?.supportedTokens! || [];
 
   // const [currentToken, setCurrentToken] = useState<number>(() =>
   //   supportedTokens!.findIndex((token) => token.symbol === "WETH")

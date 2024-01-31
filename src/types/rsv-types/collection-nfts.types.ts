@@ -57,6 +57,7 @@ export interface TokenToken {
   name: string;
   description: string;
   image: string;
+  optImage?: string;
   imageSmall: string;
   imageLarge: string;
   metadata: Metadata;

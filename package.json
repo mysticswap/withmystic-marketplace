@@ -16,6 +16,7 @@
     "@mui/material": "^5.14.10",
     "@safe-global/safe-apps-provider": "^0.17.1",
     "@safe-global/safe-apps-sdk": "^8.1.0",
+    "@types/react-toastify": "^4.1.0",
     "@types/uuid": "^9.0.6",
     "@web3-onboard/blocto": "^2.0.0",
     "@web3-onboard/coinbase": "^2.2.5",
