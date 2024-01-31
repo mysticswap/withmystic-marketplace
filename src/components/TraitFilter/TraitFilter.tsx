@@ -18,7 +18,7 @@ const TraitFilter = ({ attribute }: Props) => {
   const traitValues = attribute.values;
   const [traitValuesTemp, setTraitValuesTemp] = useState(traitValues);
   const [inputValue, setInputValue] = useState("");
-  const [isNumeric, setIsNumeric] = useState(false);
+  const [isRange, setIsRange] = useState(false);
 
   const selectTrait = (isClicked: boolean, trait: string) => {
     if (!isClicked) {
@@ -80,7 +80,7 @@ const TraitFilter = ({ attribute }: Props) => {
   const checkIsRange = (value: string) => {
     const regex = new RegExp(/^\d{1,4}(\.\d+)?$/);
     if (regex.test(value)) {
-      setIsNumeric(true);
+      setIsRange(true);
     }
   };
 
@@ -101,7 +101,7 @@ const TraitFilter = ({ attribute }: Props) => {
       </button>
 
       <div className="trait_container" aria-expanded={!showList}>
-        {!isNumeric && (
+        {!isRange && (
           <div className="trait_search">
             <input
               type="text"
@@ -121,7 +121,7 @@ const TraitFilter = ({ attribute }: Props) => {
           </div>
         )}
         <div>
-          {isNumeric ? (
+          {isRange ? (
             <RangeFilter
               attData={traitValuesTemp}
               handleClick={selectTraitRange}
