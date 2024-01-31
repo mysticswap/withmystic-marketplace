@@ -61,18 +61,28 @@ const NftCard = ({ nft }: Props) => {
   const nameRef = useRef(null);
   const isOverflowing = useIsOverflow(nameRef, minimalCards);
 
+  const listActivity = collectionActivity?.activities?.filter(
+    ({ type, token }) => {
+      return type == "ask" && token?.tokenName == nft?.token?.name;
+    }
+  );
   const saleActivity = collectionActivity?.activities?.filter(
     ({ type, token }) => {
       return type == "sale" && token?.tokenName == nft?.token?.name;
     }
   );
   const priceSale = saleActivity?.[0]?.price;
+  const priceList = listActivity?.[0]?.price;
 
-  const currentEthAmount = priceSale?.amount?.decimal;
+  const timeSale = saleActivity?.[0]?.timestamp || 0;
+  const timeList = listActivity?.[0]?.timestamp || 0;
+
+  const currentEthAmount = priceList?.amount?.decimal;
   // const currentEthAmount = nft?.market?.floorAsk?.price?.amount?.decimal;
   const saleSymbol = priceSale?.currency?.symbol;
+  const listSymbol = priceList?.currency?.symbol;
   // const symbol = nft?.market?.floorAsk?.price?.currency?.symbol;
-  const currentValue = Math.round(priceSale?.amount?.usd);
+  const currentValue = Math.round(priceList?.amount?.usd);
   // const currentValue = Math.round(nft?.market?.floorAsk?.price?.amount?.usd);
   const lastSale = priceSale?.amount?.decimal;
   // const lastSale = nft?.market?.floorAsk?.price?.amount?.decimal;
@@ -268,9 +278,9 @@ const NftCard = ({ nft }: Props) => {
         </div>
         <Link to={`/${collectionContract}/${nftId}`}>
           <p className="nft_card_amount">
-            {priceSale ? (
+            {priceList && timeList > timeSale ? (
               <>
-                {`${currentEthAmount} ${saleSymbol}`}{" "}
+                {`${currentEthAmount} ${listSymbol}`}{" "}
                 <span>(${currentValue})</span>
               </>
             ) : (
