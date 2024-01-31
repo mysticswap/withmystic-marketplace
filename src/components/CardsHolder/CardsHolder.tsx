@@ -133,7 +133,7 @@ const CardsHolder = () => {
       undefined,
       numericFilters
     ).then((result) => {
-      if (attributeString.includes("&includeAttributes=true")) {
+      if (attributeString.includes("&attributeKey=")) {
         filterMinMax(result);
         setIsFetching(false);
       } else {

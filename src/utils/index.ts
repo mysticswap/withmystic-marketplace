@@ -68,12 +68,12 @@ export const redirectToMSWalletPage = (address: string) => {
 };
 
 export const generateAttributeString = (selectedTraits: SelectedTrait[]) => {
-  let string = "";
+  let string = "&includeAttributes=true";
   selectedTraits.forEach((item) => {
     if (item.value) {
       string += `&attributes[${item.type}]=${item.value}`;
     } else {
-      string += `&attributeKey=${item.type}&includeAttributes=true`;
+      string += `&attributeKey=${item.type}`;
     }
   });
   return string;
