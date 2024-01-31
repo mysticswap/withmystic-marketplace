@@ -50,7 +50,7 @@ const ConfirmPurchaseModal = ({ setShowConfirmationModal }: Props) => {
           <div className="modal_nft_holder">
             <ModalNft
               nftData={nftData}
-              supportedTokens={supportedTokens}
+              supportedTokens={supportedTokens!}
               currentToken={currentToken}
               offerAmount={nftData.amount}
             />
