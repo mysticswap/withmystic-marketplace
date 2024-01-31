@@ -109,8 +109,8 @@ const CardsHolder = () => {
         });
 
         return (
-          attribute?.[0].value >= lastTrait.min! &&
-          attribute?.[0].value <= lastTrait.max!
+          parseInt(attribute?.[0].value) >= parseInt(lastTrait.min!) &&
+          parseInt(attribute?.[0].value) <= parseInt(lastTrait.max!)
         );
       }
     });
