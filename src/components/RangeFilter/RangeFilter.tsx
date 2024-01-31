@@ -9,8 +9,8 @@ type Props = {
 const RangeFilter = ({ attData, handleClick }: Props) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [isError, setIsError] = useState(false);
-  const [minValue, setMinValue] = useState<string>();
-  const [maxValue, setMaxValue] = useState<string>();
+  const [minValue, setMinValue] = useState<string>("0");
+  const [maxValue, setMaxValue] = useState<string>("1");
 
   const getNumbersArray = () => {
     const arrayNumbers: string[] = [];
