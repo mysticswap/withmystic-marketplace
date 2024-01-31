@@ -89,7 +89,6 @@ const TraitFilter = ({ attribute }: Props) => {
     checkIsRange(firstValue);
   }, [attribute]);
 
-  console.log(isRange);
   return (
     <div className="trait_filter">
       <button className="filter_trigger" onClick={() => setShowlist(!showList)}>
