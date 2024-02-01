@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ReactNode,
   createContext,
@@ -26,6 +27,7 @@ export const ConnectionContextProvider = ({ children }: Props) => {
   const [user, setUser] = useState<string | null>(null);
   const [provider, setProvider] =
     useState<ethers.providers.Web3Provider | null>(null);
+  console.log(provider);
   const [chainId, setChainId] = useState(5);
 
   useEffect(() => {
@@ -41,7 +43,7 @@ export const ConnectionContextProvider = ({ children }: Props) => {
       const pro = new ethers.providers.Web3Provider(window.ethereum);
       setProvider(pro);
     }
-  }, []);
+  }, [user]);
 
   const attachListeners = useCallback(() => {
     window.ethereum.on("accountsChanged", function (accounts: string[]) {
@@ -104,6 +106,13 @@ export const ConnectionContextProvider = ({ children }: Props) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useConnectionContext = () => {
-  return useContext(ConnectionContext);
+  const context = useContext(ConnectionContext);
+
+  if (context === undefined)
+    throw new Error(
+      "ConnectionContext was used outside the ConnectionProvider"
+    );
+  return context;
 };

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SelectedTrait } from "../context/HomeContext/types";
 import {
   Market,
@@ -5,6 +6,7 @@ import {
 } from "../types/reservoir-types/collection-nfts.types";
 
 export const getQueryString = (params: { [x: string]: any }) => {
+  // console.log(params);
   return Object.entries(params)
     .map(
       ([key, value]) =>
@@ -39,7 +41,7 @@ export const convertTokenAmountToDecimal = (amount: number) => {
 };
 
 export const metamaskPresent = () => {
-  var ethereum = window.ethereum;
+  const ethereum = window.ethereum;
   return typeof ethereum !== "undefined" && window.ethereum.isMetaMask;
 };
 
@@ -72,11 +74,12 @@ export const generateAttributeString = (selectedTraits: SelectedTrait[]) => {
 
 export const getHostName = () => {
   const hostName = window.location.hostname;
+  // return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app"
   switch (hostName) {
     case "localhost":
+      return "marketplace.mysticswaplocalhost.io";
       return "deploy-preview-24--heroic-duckanoo-b32f52.netlify.app";
       return "market.localhost.io";
-      return "marketplace.mysticswaplocalhost.io";
     case "deploy-preview-27--heroic-duckanoo-b32f52.netlify.app":
       return "market.localhost.io";
       return "deploy-preview-26--heroic-duckanoo-b32f52.netlify.app";
@@ -86,7 +89,7 @@ export const getHostName = () => {
 };
 
 export const getPreviousCollectionAddress = () => {
-  let previousCollectionAddress = localStorage.getItem("current-collection");
+  const previousCollectionAddress = localStorage.getItem("current-collection");
   if (previousCollectionAddress) {
     return JSON?.parse(previousCollectionAddress);
   }
@@ -114,4 +117,19 @@ export const updateFavicon = (url: string) => {
 
 export const updateSiteTitle = (text: string) => {
   document.title = text || "";
+};
+
+export const convertToIPFSImage = (image: string) => {
+  if (image === undefined) return "";
+  const imageUrl = image.replace("ipfs://", "https://ipfs.io/ipfs/");
+  return imageUrl;
+};
+export const GWEI = 1_000_000_000_000_000_000;
+
+export const convertToETH = (amount: string) => {
+  if (amount === "0") {
+    return 0;
+  }
+  const newAmount = Number(amount);
+  return newAmount / GWEI;
 };

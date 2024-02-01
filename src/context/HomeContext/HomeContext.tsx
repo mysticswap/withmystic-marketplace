@@ -54,5 +54,9 @@ export const HomeContextProvider = ({ children }: Props) => {
 };
 
 export const useHomeContext = () => {
-  return useContext(HomeContext);
+  const context = useContext(HomeContext);
+
+  if (context === undefined)
+    throw new Error("HomeContext was used outside the HomeProvider");
+  return context;
 };

@@ -1,30 +1,23 @@
-import { NftAttributes } from "../../../../types/reservoir-types/collection-nfts.types";
+import { Attribute } from "../../../../types/alchemy.types";
 import "./TraitsHolder.css";
 
 // type Props = { attributes: NftAttributes[] | undefined; tokenCount: number };
 
 // Props for the TraitsHolder component
 interface Props {
-  attributes: NftAttributes[];
-  tokenCount: number;
+  attributes: Attribute[];
 }
 
-const TraitsHolder = ({ attributes, tokenCount }: Props) => {
+const TraitsHolderOS = ({ attributes }: Props) => {
   const traitList = attributes?.map((trait) => {
     // Handle different types of attributes
-    const traitKey = trait.key;
+    const traitKey = trait.trait_type;
     const traitValue = trait.value;
 
-    const traitPercentage = (trait.tokenCount / tokenCount) * 100;
-    const formattedTraitPercentage =
-      traitPercentage % 1 > 0
-        ? traitPercentage.toFixed(1)
-        : traitPercentage.toFixed(0);
     return (
       <div className="trait" key={traitKey}>
         <p>{traitKey}</p>
         <p>{traitValue}</p>
-        <p>{formattedTraitPercentage}% have this trait</p>
       </div>
     );
   });
@@ -36,4 +29,4 @@ const TraitsHolder = ({ attributes, tokenCount }: Props) => {
   );
 };
 
-export default TraitsHolder;
+export default TraitsHolderOS;

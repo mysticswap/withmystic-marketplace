@@ -14,10 +14,16 @@ const Banner = () => {
     setCurrentTab,
     collectionChainId,
     client,
+    collectionMetadataOS,
   } = useGlobalContext();
 
   const pillData = [
-    { title: "Items", value: collectionMetadata?.collections?.[0]?.tokenCount },
+    {
+      title: "Items",
+      value:
+        collectionMetadata?.collections?.[0]?.tokenCount ||
+        collectionMetadataOS?.totalSupply,
+    },
     {
       title: "Owners",
       value: collectionMetadata?.collections?.[0]?.ownerCount,
@@ -30,7 +36,8 @@ const Banner = () => {
     {
       title: "Floor",
       value:
-        collectionMetadata?.collections?.[0]?.floorAsk?.price?.amount?.decimal,
+        collectionMetadata?.collections?.[0]?.floorAsk?.price?.amount
+          ?.decimal || collectionMetadataOS?.openSea.floorPrice,
       icon: collectionNetworkIcon[collectionChainId],
     },
   ];
@@ -43,7 +50,10 @@ const Banner = () => {
       <img src={client.bannerUrl} alt="" />
       <div className="banner_details">
         {!nameShouldBeHidden && (
-          <h1>{collectionMetadata?.collections?.[0]?.name}</h1>
+          <h1>
+            {collectionMetadata?.collections?.[0]?.name ||
+              collectionMetadataOS?.openSea.collectionName}
+          </h1>
         )}
         <div className="collection_pill">
           {pillData.map((item) => {

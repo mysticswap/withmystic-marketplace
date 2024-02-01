@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 import { BASE_API } from "../../config";
 import { getQueryString } from "../../utils";
 
@@ -7,6 +8,7 @@ const makeApiRequest = async (
   bearerToken: string
 ) => {
   const queryString = getQueryString(queryParams);
+  // console.log(queryString);
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${bearerToken}`,

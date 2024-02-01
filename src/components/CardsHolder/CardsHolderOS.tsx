@@ -8,8 +8,9 @@ import { useEffect, useRef, useState } from "react";
 import { BiLoaderCircle } from "react-icons/bi";
 import { getCollectionNftsV2 } from "../../services/api/marketplace-reservoir-api";
 import { generateAttributeString } from "../../utils";
+import NftCardOS from "../NftCard/NftCardOS";
 
-const CardsHolder = () => {
+const CardsHolderOS = () => {
   const {
     collectionNfts,
     setCollectionNfts,
@@ -20,7 +21,6 @@ const CardsHolder = () => {
     // setNftsInCollection,
   } = useGlobalContext();
   console.log(nftsInCollectionOS);
-  console.log(collectionNfts);
   const {
     showFilters,
     selectedTraits,
@@ -37,6 +37,7 @@ const CardsHolder = () => {
   //   collectionChainId === 1 ? nftsInCollection.nfts : collectionNfts.tokens;
 
   const [nftsTemp, setNftsTemp] = useState(collectionNfts.tokens);
+  console.log(nftsTemp);
   const [nftsTempOS, setNftsTempOS] = useState(nftsInCollectionOS.nfts);
   console.log(nftsTempOS);
 
@@ -62,17 +63,29 @@ const CardsHolder = () => {
     if (collectionNfts.tokens) {
       setNftsTemp(collectionNfts.tokens);
     }
-    if (nftsInCollectionOS.nfts) {
-      setNftsTempOS(nftsInCollectionOS.nfts);
-    }
-  }, [collectionNfts, nftsInCollectionOS]);
+    // if (nftsInCollection.nfts) {
+    //   setNewNftTemp(nftsInCollection.nfts);
+    // }
+  }, [collectionNfts]);
+
+  // let nftsList;
+
+  // if (collectionChainId === 1) {
+  //   nftsList = nftsTemp?.map((nft) => {
+  //     return <NftCard key={nft?.token?.tokenId} nft={nft} />;
+  //   });
+  // } else {
+  //   nftsList = nftsTempOS?.map((nft) => {
+  //     return <NftCardOS key={nft.tokenId} nft={nft} />;
+  //   });
+  // }
 
   const nftsList = nftsTemp?.map((nft) => {
     return <NftCard key={nft?.token?.tokenId} nft={nft} />;
   });
-  // const nftsList2 = newNftsTemp?.map((nft) => {
-  //   return <NftCard2 key={nft.tokenId} nft={nft} />;
-  // });
+  const nftsList2 = nftsTempOS?.map((nft) => {
+    return <NftCardOS key={nft.tokenId} nft={nft} />;
+  });
 
   const selectedTraitList = selectedTraits.map((trait, index) => {
     return (
@@ -154,7 +167,8 @@ const CardsHolder = () => {
         </div>
       )}
 
-      {nftsTemp?.length > 0 && nftsList}
+      {nftsTemp?.length > 0 && collectionChainId !== 1 && nftsList}
+      {nftsTempOS?.length > 0 && collectionChainId === 1 && nftsList2}
 
       {isFetching && (
         <div className="loader_holder">
@@ -168,4 +182,4 @@ const CardsHolder = () => {
   );
 };
 
-export default CardsHolder;
+export default CardsHolderOS;

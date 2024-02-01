@@ -30,7 +30,7 @@ function App() {
         setIsFetchingClient(false);
       })
       .catch(() => {
-        setIsFetchingClient(true);
+        setIsFetchingClient(false);
       });
   }, []);
 

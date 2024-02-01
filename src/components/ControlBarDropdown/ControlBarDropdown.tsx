@@ -34,20 +34,20 @@ const ControlBarDropdown = () => {
     const attribute = generateAttributeString(selectedTraits);
     setCollectionNfts({ tokens: [], continuation: null });
     setIsFetching(true);
-    getCollectionNftsV2(
-      collectionChainId,
-      selectedDropdownOption.value,
-      selectedDropdownOption.order,
-      collectionContract,
-      undefined,
-      undefined,
-      attribute,
-      numericFilters
-    )
-      .then((result) => setCollectionNfts(result))
-      .finally(() => {
-        setIsFetching(false);
-      });
+    // getCollectionNftsV2(
+    //   collectionChainId,
+    //   selectedDropdownOption.value,
+    //   selectedDropdownOption.order,
+    //   collectionContract,
+    //   undefined,
+    //   undefined,
+    //   attribute,
+    //   numericFilters
+    // )
+    //   .then((result) => setCollectionNfts(result))
+    //   .finally(() => {
+    //     setIsFetching(false);
+    //   });
   }, [selectedDropdownOption]);
 
   return (

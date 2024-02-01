@@ -1,6 +1,6 @@
 import "./NftCard.css";
 import { Link } from "react-router-dom";
-import { TokenElement } from "../../types/reservoir-types/collection-nfts.types";
+import { Nft } from "../../types/reservoir-types/collection-nfts.types";
 import { useRef } from "react";
 import CustomTooltip from "../CustomTooltip/CustomTooltip";
 import { SiOpensea } from "react-icons/si";
@@ -9,7 +9,7 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { useIsOverflow } from "../../hooks/useIsOverflow";
 import { buyListedNft } from "../../services/api/buy-offer-list.api";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
-import { getHostName } from "../../utils";
+import { convertToIPFSImage, getHostName } from "../../utils";
 import { handleBuyOrSellData } from "../../services/buy-sale-service";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import { switchChains } from "../../utils/wallet-connection";
@@ -19,9 +19,9 @@ import { getDiscordEndpointData } from "../../utils/discord-utils";
 import { generateSaleActivity } from "../../utils/activity-utils";
 import { getTransactionNft } from "../../utils/transaction-nft.utils";
 
-type Props = { nft: TokenElement };
+type Props = { nft: Nft };
 
-const NftCard = ({ nft }: Props) => {
+const NftCardOS = ({ nft }: Props) => {
   const {
     minimalCards,
     collectionChainId,
@@ -40,17 +40,18 @@ const NftCard = ({ nft }: Props) => {
   const nameRef = useRef(null);
   const isOverflowing = useIsOverflow(nameRef, minimalCards);
 
-  const currentEthAmount = nft?.market?.floorAsk?.price?.amount?.decimal;
-  const symbol = nft?.market?.floorAsk?.price?.currency?.symbol;
-  const currentValue = Math.ceil(nft?.market?.floorAsk?.price?.amount?.usd);
-  const lastSale = nft?.market?.floorAsk?.price?.amount?.decimal;
-  const nftName = nft?.token?.name;
-  const nftId = nft?.token?.tokenId;
-  const sourceIcon = nft?.market?.floorAsk?.source?.icon;
-  const sourceLink = nft?.market?.floorAsk?.source?.url;
-  const sourceDomain = nft?.market?.floorAsk?.source?.domain;
+  const nftName = nft?.rawMetadata?.name;
 
-  const isFromCurrentMarketplace = sourceDomain == client.hostname;
+  const currentEthAmount = nft?.contract.openSea.floorPrice;
+  const symbol = "ETH";
+  // const currentValue = Math.ceil(nft?.market?.floorAsk?.price?.amount?.usd);
+  // const lastSale = nft?.market?.floorAsk?.price?.amount?.decimal;
+  const nftId = nft?.tokenId;
+  // const sourceIcon = nft?.market?.floorAsk?.source?.icon;
+  // const sourceLink = nft?.market?.floorAsk?.source?.url;
+  // const sourceDomain = nft?.market?.floorAsk?.source?.domain;
+
+  // const isFromCurrentMarketplace = sourceDomain == client.hostname;
 
   const nameLink = (
     <Link to={`/${collectionContract}/${nftId}`}>
@@ -58,48 +59,46 @@ const NftCard = ({ nft }: Props) => {
     </Link>
   );
 
-  const postData = getDiscordEndpointData(nft, user!, client);
-  // console.log(postData);
-  const activityData = generateSaleActivity(nft, "sale", user!);
+  // const postData = getDiscordEndpointData(nft, user!, client);
+  // const activityData = generateSaleActivity(nft, "sale", user!);
 
   const startBuyProcess = () => {
-    const orderId = nft?.market?.floorAsk?.id;
-    const source = getHostName();
-
-    switchChains(chainId, collectionChainId).then(() => {
-      buyListedNft(collectionChainId, orderId, user!, source).then((result) => {
-        setTransactionStage(1);
-        handleBuyOrSellData(
-          result,
-          setTransactionStage,
-          setTransactionHash,
-          setShowConfirmationModal,
-          collectionChainId,
-          postData,
-          activityData
-        );
-      });
-    });
+    // const orderId = nft?.market?.floorAsk?.id;
+    // const source = getHostName();
+    // switchChains(chainId, collectionChainId).then(() => {
+    //   buyListedNft(collectionChainId, orderId, user!, source).then((result) => {
+    //     setTransactionStage(1);
+    //     handleBuyOrSellData(
+    //       result,
+    //       setTransactionStage,
+    //       setTransactionHash,
+    //       setShowConfirmationModal,
+    //       collectionChainId,
+    //       postData,
+    //       activityData
+    //     );
+    //   });
+    // });
   };
 
   const buyNft = async () => {
     // tx means transaction
-    const transactionMessage = `I’ve just bought ${nft?.token?.name}!`;
-    const txNft = getTransactionNft(
-      nft,
-      false,
-      false,
-      transactionMessage,
-      user!
-    );
-    if (user) {
-      setTransactionNft(txNft);
-      setShowConfirmationModal(true);
-      startBuyProcess();
-    } else connectWallets(setProvider);
+    // const transactionMessage = `I’ve just bought ${nft?.rawMetadata?.name}!`;
+    // const txNft = getTransactionNft(
+    //   nft,
+    //   false,
+    //   false,
+    //   transactionMessage,
+    //   user!
+    // );
+    // if (user) {
+    //   setTransactionNft(txNft);
+    //   setShowConfirmationModal(true);
+    //   startBuyProcess();
+    // } else connectWallets(setProvider);
   };
 
-  const userIsOwner = user?.toLowerCase() == nft?.token?.owner?.toLowerCase();
+  // const userIsOwner = user?.toLowerCase() == nft?.token?.owner?.toLowerCase();
   const userCanBuy =
     Number(currentEthAmount) <=
     Number(userBalance?.[balanceChain[collectionChainId]]);
@@ -107,7 +106,7 @@ const NftCard = ({ nft }: Props) => {
   return (
     <div className="nft_card">
       <Link to={`/${collectionContract}/${nftId}`}>
-        <img src={nft?.token?.image} alt="" />
+        <img src={convertToIPFSImage(nft?.rawMetadata.image)} alt="" />
       </Link>
       <div className="nft_card_details">
         <div className="card_name">
@@ -117,7 +116,7 @@ const NftCard = ({ nft }: Props) => {
             <>{nameLink}</>
           )}
         </div>
-        <Link to={`/${collectionContract}/${nftId}`}>
+        {/* <Link to={`/${collectionContract}/${nftId}`}>
           <p className="nft_card_amount">
             {currentEthAmount && currentValue ? (
               <>
@@ -127,14 +126,14 @@ const NftCard = ({ nft }: Props) => {
               <span>---</span>
             )}
           </p>
-        </Link>
+        </Link> */}
 
-        <p className="nft_card_last_sale ellipsis">
+        {/* <p className="nft_card_last_sale ellipsis">
           Last sale: {lastSale}
           {symbol} {!lastSale && !symbol && "---"}
-        </p>
+        </p> */}
 
-        {currentEthAmount && currentValue && !userIsOwner ? (
+        {/* {currentEthAmount && currentValue && !userIsOwner ? (
           <button onClick={buyNft} disabled={(user && !userCanBuy) as boolean}>
             {userCanBuy
               ? "Buy now"
@@ -142,10 +141,19 @@ const NftCard = ({ nft }: Props) => {
               ? "Buy now"
               : "Insufficient balance"}
           </button>
-        ) : null}
+        ) : null} */}
+        {/* {currentEthAmount && currentValue ? (
+          <button onClick={buyNft} disabled={(user && !userCanBuy) as boolean}>
+            {userCanBuy
+              ? "Buy now"
+              : !user
+              ? "Buy now"
+              : "Insufficient balance"}
+          </button>
+        ) : null} */}
       </div>
 
-      <div className="source_icon">
+      {/* <div className="source_icon">
         <a href={sourceLink}>
           {!sourceLink?.includes("opensea") ? (
             <img
@@ -162,9 +170,9 @@ const NftCard = ({ nft }: Props) => {
             <SiOpensea display="block" color="#3498db" size={20} />
           )}
         </a>
-      </div>
+      </div> */}
     </div>
   );
 };
 
-export default NftCard;
+export default NftCardOS;

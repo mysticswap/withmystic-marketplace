@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface GetNftsReservoir {
   tokens: TokenElement[];
   continuation: string | null;
@@ -119,4 +120,74 @@ export interface NftAttributes {
   floorAskPrice: number;
   topBidValue: null;
   createdAt: Date;
+}
+
+// New
+export interface INFT {
+  nfts: SingleNftOS[];
+  pageKey: string;
+}
+
+export interface SingleNftOS {
+  contract: Contract;
+  tokenId: string;
+  tokenType: string;
+  title: string;
+  description: string;
+  timeLastUpdated: string;
+  rawMetadata: RawMetadata;
+  tokenUri: TokenUri;
+  media: Medum[];
+  metadataError?: string;
+}
+
+export interface Contract {
+  address: string;
+  name: string;
+  symbol: string;
+  tokenType: string;
+  openSea: OpenSea;
+  contractDeployer: string;
+  deployedBlockNumber: number;
+}
+
+export interface OpenSea {
+  floorPrice: number;
+  collectionName: string;
+  safelistRequestStatus: string;
+  imageUrl: string;
+  description: string;
+  externalUrl: string;
+  twitterUsername: string;
+  discordUrl: string;
+  lastIngestedAt: string;
+}
+
+export interface RawMetadata {
+  name: string;
+  image: string;
+  edition: string;
+  attributes: Attribute[];
+}
+
+export interface Attribute {
+  value: string;
+  trait_type: string;
+}
+
+export interface TokenUri {
+  gateway: string;
+  raw: string;
+}
+
+export interface Medum {
+  gateway: string;
+  thumbnail?: string;
+  raw: string;
+  format?: string;
+  bytes?: number;
+}
+
+export interface OwnerNFT {
+  owners: string[];
 }

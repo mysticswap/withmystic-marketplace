@@ -25,6 +25,7 @@ export type MarketplaceClientCollection = {
 export type MarketplaceClientStyles = {
   bodyBackground: string;
   primaryColor: string;
+  secondaryColor: string;
   primaryDarkShade: string;
   textColor: string;
   cardBorderColor: string;

@@ -117,3 +117,54 @@ export interface SingleNftHistory {
   tokenMetada: SingleNftData;
   transactions: NftSale[];
 }
+
+export interface NFTHistory {
+  transactions: Transaction[];
+}
+
+export interface Transaction {
+  marketplace: string;
+  contractAddress: string;
+  tokenId: string;
+  quantity: string;
+  buyerAddress: string;
+  sellerAddress: string;
+  taker: string;
+  sellerFee: SellerFee;
+  marketplaceFee: MarketplaceFee;
+  protocolFee: ProtocolFee;
+  royaltyFee: RoyaltyFee;
+  blockNumber: number;
+  logIndex: number;
+  bundleIndex: number;
+  transactionHash: string;
+  timestamp: number;
+}
+
+export interface SellerFee {
+  amount: string;
+  tokenAddress: string;
+  symbol: string;
+  decimals: number;
+}
+
+export interface MarketplaceFee {
+  amount: string;
+  tokenAddress: string;
+  symbol: string;
+  decimals: number;
+}
+
+export interface ProtocolFee {
+  amount: string;
+  tokenAddress: string;
+  symbol: string;
+  decimals: number;
+}
+
+export interface RoyaltyFee {
+  amount: string;
+  tokenAddress: string;
+  symbol: string;
+  decimals: number;
+}

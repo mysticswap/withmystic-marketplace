@@ -43,5 +43,11 @@ export const TransactionContextProvider = ({ children }: Props) => {
 };
 
 export const useTransactionContext = () => {
-  return useContext(TransactionContext);
+  const context = useContext(TransactionContext);
+
+  if (context === undefined)
+    throw new Error(
+      "TransactionContext was used outside the TransactionContextProvider"
+    );
+  return context;
 };

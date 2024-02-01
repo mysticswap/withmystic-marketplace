@@ -1,6 +1,11 @@
 /* eslint-disable no-prototype-builtins */
 import { TbExternalLink } from "react-icons/tb";
-import { redirectToMSWalletPage, truncateAddress } from "../../utils";
+import {
+  convertToETH,
+  convertToIPFSImage,
+  redirectToMSWalletPage,
+  truncateAddress,
+} from "../../utils";
 import "./ActivityRow.css";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -11,36 +16,39 @@ import { activityRenames, scanWebsites, tabOptions } from "../../constants";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { SiOpensea } from "react-icons/si";
 import x2y2 from "../../assets/x2y2.png";
+import { NftSale } from "../../types/alchemy.types";
 
 dayjs.extend(relativeTime);
 
-type Props = { activity: Activity };
+type Props = { activity: NftSale };
 
-const ActivityRow = ({ activity }: Props) => {
+const ActivityRowOS = ({ activity }: Props) => {
   const { collectionChainId, setCurrentTab, client } = useGlobalContext();
 
-  const nftImage = activity?.token?.tokenImage;
-  const nftName = activity?.token?.tokenName;
-  const collectionImage = activity?.collection?.collectionImage;
-  const collectionName = activity?.collection?.collectionName;
+  const nftImage = convertToIPFSImage(
+    activity?.tokenMetadata.rawMetadata.image
+  );
+  const nftName = activity?.tokenMetadata.title;
+  // const collectionImage = activity?.collection?.collectionImage;
+  // const collectionName = activity?.collection?.collectionName;
   const timeStamp = dayjs(activity?.timestamp * 1000).fromNow();
   const fullTime = dayjs(activity?.timestamp * 1000).toString();
-  const price = activity?.price?.amount?.decimal;
-  const activityType = activity.type;
-  const hasTxHash = activity?.hasOwnProperty("txHash");
-  const source = activity?.order?.source?.icon;
-  const sourceDomain = activity?.order?.source?.domain;
-  const tokenId = activity?.token?.tokenId;
-  const contract = activity?.collection?.collectionId;
+  const price = convertToETH(activity?.sellerFee.amount);
+  // const activityType = activity.type;
+  const hasTxHash = activity?.hasOwnProperty("transactionHash");
+  // const source = activity?.order?.source?.icon;
+  // const sourceDomain = activity?.order?.source?.domain;
+  const tokenId = activity?.tokenId;
+  const contract = activity?.contractAddress;
   const singlePageLink = `/${contract}/${tokenId}`;
   const switchTab = () => !tokenId && setCurrentTab(tabOptions[0]);
-  const isFromCurrentMarketplace = sourceDomain == client.hostname;
+  // const isFromCurrentMarketplace = sourceDomain == client.hostname;
 
   return (
     <div className="activity_row">
       <>
         <div className="activity_row_type">
-          {!source?.includes("opensea") ? (
+          {/* {!source?.includes("opensea") ? (
             <img
               src={
                 source?.includes("x2y2")
@@ -51,40 +59,43 @@ const ActivityRow = ({ activity }: Props) => {
               }
               alt=""
             />
-          ) : (
-            <SiOpensea display="block" color="#3498db" size={20} />
-          )}
+          ) : ( */}
+          <SiOpensea display="block" color="#3498db" size={20} />
+          {/* )} */}
           <Link to={tokenId ? singlePageLink : ""} onClick={switchTab}>
-            {activityRenames[activityType]}
+            {/* {activityRenames[activityType]} */}
+            Sale
           </Link>
         </div>
         <div className="activity_row_item">
           <Link to={tokenId ? singlePageLink : ""} onClick={switchTab}>
-            <img
-              src={nftImage || collectionImage}
-              className="activity_row_image"
-              alt=""
-            />
+            <img src={nftImage} className="activity_row_image" alt="" />
           </Link>
           <Link to={tokenId ? singlePageLink : ""} onClick={switchTab}>
-            <p>{nftName || collectionName}</p>
+            <p>{nftName}</p>
           </Link>
         </div>
         <div>
           <Link to={tokenId ? singlePageLink : ""} onClick={switchTab}>
-            {price} {activity?.price.currency.symbol}
+            {price < 0 ? "---" : price} {activity?.sellerFee.symbol || "ETH"}
           </Link>
         </div>
       </>
-      <ActivityRowAddress address={activity?.fromAddress} isParagraph={false} />
-      <ActivityRowAddress address={activity!.toAddress!} isParagraph={false} />
+      <ActivityRowAddress
+        address={activity?.sellerAddress}
+        isParagraph={false}
+      />
+      <ActivityRowAddress
+        address={activity!.buyerAddress!}
+        isParagraph={false}
+      />
       <div>
         <CustomTooltip text={fullTime}>
           <p
             onClick={() => {
               hasTxHash &&
                 window.open(
-                  `${scanWebsites[collectionChainId]}tx/${activity?.txHash}`
+                  `${scanWebsites[collectionChainId]}tx/${activity?.transactionHash}`
                 );
             }}
           >
@@ -96,7 +107,7 @@ const ActivityRow = ({ activity }: Props) => {
   );
 };
 
-export default ActivityRow;
+export default ActivityRowOS;
 
 type AddressRowProps = { address: string; isParagraph: boolean };
 

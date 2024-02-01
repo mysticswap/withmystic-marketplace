@@ -6,6 +6,7 @@ export const changeStyles = (client: ClientObject) => {
 
   const customPropertyMap: { [x: string]: string } = {
     "--ms-mp-primary-color": client?.styles?.primaryColor,
+    "--ms-mp-secondary-color": client?.styles?.secondaryColor,
     "--ms-mp-primary-transparent": addOpacity(
       client?.styles?.primaryColor,
       0.25

@@ -5,7 +5,12 @@ import {
   useEffect,
   useState,
 } from "react";
-import { getUserBalance } from "../../services/api/marketplace-api";
+import {
+  getCollection,
+  getCollectionHistory,
+  getCollectionNfts,
+  getUserBalance,
+} from "../../services/api/marketplace-api";
 import { API_KEY } from "../../config";
 import { GlobalContextType } from "./types";
 import {
@@ -16,7 +21,10 @@ import {
   getUserNfts,
 } from "../../services/api/marketplace-reservoir-api";
 import { CollectionMetadataV2 } from "../../types/reservoir-types/collection-metadata.types";
-import { GetNftsReservoir } from "../../types/reservoir-types/collection-nfts.types";
+import {
+  GetNftsReservoir,
+  INFT,
+} from "../../types/reservoir-types/collection-nfts.types";
 import {
   defaultSort,
   defaultSortby,
@@ -31,6 +39,10 @@ import { getHostName, getPreviousCollectionAddress } from "../../utils";
 import { getEthPrice } from "../../services/api/coin-gecko.api";
 import { ClientObject } from "../../types/dynamic-system.types";
 import { useDisableNumberInputScroll } from "../../hooks/useDisableNumberInputScroll";
+import {
+  CollectionHistory,
+  CollectionMetaData,
+} from "../../types/alchemy.types";
 
 const GlobalContext = createContext({} as GlobalContextType);
 
@@ -42,6 +54,7 @@ type Props = {
 export const GlobalContextProvider = ({ children, client }: Props) => {
   const { user, chainId } = useConnectionContext()!;
   const availableCollections = client?.collections;
+  // console.log(client);
   const previousCollection = availableCollections.find((collection) => {
     return collection.address == getPreviousCollectionAddress();
   });
@@ -52,10 +65,18 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
   const [currentTab, setCurrentTab] = useState(tabOptions[0]);
   const [collectionMetadata, setCollectionMetadata] =
     useState<CollectionMetadataV2 | null>(null);
+  const [collectionMetadataOS, setCollectionMetadataOS] =
+    useState<CollectionMetaData | null>(null);
+
   const [collectionNfts, setCollectionNfts] = useState({} as GetNftsReservoir);
+  const [nftsInCollectionOS, setNftsInCollectionOS] = useState({} as INFT);
+
   const [collectionActivity, setCollectionActivity] = useState(
     {} as CollectionActivity
   );
+  const [collectionActivityOS, setCollectionActivityOS] =
+    useState<CollectionHistory | null>({} as CollectionHistory);
+
   const [collectionAttributes, setCollectionAttributes] = useState(
     {} as CollectionTraitsV2
   );
@@ -66,56 +87,128 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
   const [ethValue, setEthValue] = useState(0);
 
   const selectedActivityTypes = JSON.stringify(selectedActivities);
+  console.log(selectedActivities, selectedActivityTypes);
   const source = getHostName();
   const collectionChainId = selectedCollection.chainId;
   const collectionContract = selectedCollection.address;
+  // const collectionContract = "0x74cb5611e89078b2e5cb638a873cf7bddc588659";
 
   useEffect(() => {
-    getCollectionMetadata(collectionChainId, collectionContract).then(
-      (result) => {
-        setCollectionMetadata(result);
-      }
-    );
+    const getCollectionOS = async () => {
+      const res: CollectionMetaData = await getCollection(
+        collectionContract,
+        collectionChainId,
+        client?.apiKey
+      );
+      setCollectionMetadataOS(res);
+    };
 
-    getCollectionNftsV2(
-      collectionChainId,
-      defaultSort,
-      defaultSortby,
-      collectionContract
-    ).then((result) => {
-      setCollectionNfts(result);
-    });
+    const fetchCollectionActivityOS = async () => {
+      const res: CollectionHistory = await getCollectionHistory(
+        collectionContract,
+        collectionChainId,
+        client?.apiKey
+      );
+      setCollectionActivityOS(res);
+      console.log("Activity");
+    };
 
-    getCollectionActivity(
-      collectionChainId,
-      collectionContract,
-      selectedActivityTypes
-    ).then((result) => {
-      setCollectionActivity(result);
-    });
+    const fetchNftsInCollectionOS = async () => {
+      const res: INFT = await getCollectionNfts(
+        collectionContract,
+        collectionChainId,
+        "1",
+        client?.apiKey
+      );
+      setNftsInCollectionOS(res);
+      console.log(res);
+    };
+
+    if (collectionChainId === 5) {
+      getCollectionOS();
+      fetchCollectionActivityOS();
+      // getCollectionNfts(
+      //   collectionContract,
+      //   collectionChainId,
+      //   "1",
+      //   API_KEY
+      // ).then((result) => {
+      //   setNftsInCollectionOS(result);
+      //   // setCollectionNfts(result);
+      // });
+
+      fetchNftsInCollectionOS();
+    } else {
+      getCollectionNftsV2(
+        collectionChainId,
+        defaultSort,
+        defaultSortby,
+        collectionContract
+      ).then((result) => {
+        setCollectionNfts(result);
+      });
+      getCollectionMetadata(collectionChainId, collectionContract).then(
+        (result) => {
+          setCollectionMetadata(result);
+        }
+      );
+      getCollectionActivity(
+        collectionChainId,
+        collectionContract,
+        selectedActivityTypes
+      ).then((result) => {
+        setCollectionActivity(result);
+      });
+    }
 
     getCollectionTraitsV2(collectionChainId, collectionContract).then(
       (result) => {
         setCollectionAttributes(result);
       }
     );
-  }, [selectedCollection]);
+  }, [
+    selectedCollection,
+    collectionChainId,
+    collectionContract,
+    selectedActivityTypes,
+    client?.apiKey,
+  ]);
 
   useEffect(() => {
     if (selectedActivities.length < 1) {
       setSelectedActivities(JSON.parse(reservoirActivityTypes));
     }
     setCollectionActivity({} as CollectionActivity);
-    getCollectionActivity(
-      collectionChainId,
-      collectionContract,
-      selectedActivities.length < 1
-        ? reservoirActivityTypes
-        : selectedActivityTypes
-    ).then((result) => {
-      setCollectionActivity(result);
-    });
-  }, [selectedActivities]);
+
+    const fetchCollectionActivityOS = async () => {
+      const res: CollectionHistory = await getCollectionHistory(
+        collectionContract,
+        collectionChainId,
+        client?.apiKey
+      );
+      setCollectionActivityOS(res);
+    };
+
+    if (collectionChainId === 1) {
+      fetchCollectionActivityOS();
+    } else {
+      getCollectionActivity(
+        collectionChainId,
+        collectionContract,
+        selectedActivities.length < 1
+          ? reservoirActivityTypes
+          : selectedActivityTypes
+      ).then((result) => {
+        setCollectionActivity(result);
+      });
+    }
+  }, [
+    selectedActivities,
+    collectionChainId,
+    collectionContract,
+    selectedActivityTypes,
+    client.apiKey,
+  ]);
 
   useEffect(() => {
     if (user && collectionChainId) {
@@ -125,7 +218,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
         }
       );
     }
-  }, [user, collectionMetadata]);
+  }, [user, collectionMetadata, collectionChainId, collectionContract]);
 
   useEffect(() => {
     if (user) {
@@ -179,6 +272,12 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
         collectionContract,
         ethValue,
         client,
+        nftsInCollectionOS,
+        setNftsInCollectionOS,
+        collectionMetadataOS,
+        setCollectionMetadataOS,
+        collectionActivityOS,
+        setCollectionActivityOS,
       }}
     >
       {children}
@@ -187,5 +286,9 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
 };
 
 export const useGlobalContext = () => {
-  return useContext(GlobalContext);
+  const context = useContext(GlobalContext);
+
+  if (context === undefined)
+    throw new Error("GlobalContext was used outside the GlobalProvider");
+  return context;
 };

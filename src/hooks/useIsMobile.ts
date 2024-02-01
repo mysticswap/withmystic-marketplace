@@ -13,7 +13,7 @@ export const useIsMobile = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [window.innerWidth]);
+  }, []);
 
   return isMobile;
 };

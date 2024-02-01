@@ -142,9 +142,12 @@ const NftHeader = ({
 
   useEffect(() => {
     if (hasRefreshed) {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setHasRefreshed(false);
       }, 3000);
+      return () => {
+        clearTimeout(timer);
+      };
     }
   }, [hasRefreshed]);
 

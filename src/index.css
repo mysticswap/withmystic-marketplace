@@ -1,6 +1,7 @@
 :root {
   --ms-mp-font-family: "Poppins", sans-serif;
   --ms-mp-primary-color: #086abc;
+  /* --ms-mp-secondary-color: #086abc; */
   --ms-mp-primary-color-dark: #346beb;
   --ms-mp-primary-transparent: #086abc50;
   --ms-mp-gray: #d9e0ec;
