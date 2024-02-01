@@ -15,7 +15,7 @@ const TraitFilter = ({ attribute }: Props) => {
   const { selectedTraits, setSelectedTraits } = useHomeContext()!;
 
   const [showList, setShowlist] = useState(false);
-  const traitValues = attribute.values;
+  const traitValues = attribute.values!;
   const [traitValuesTemp, setTraitValuesTemp] = useState(traitValues);
   const [inputValue, setInputValue] = useState("");
   const [isRange, setIsRange] = useState(false);
@@ -77,16 +77,18 @@ const TraitFilter = ({ attribute }: Props) => {
     setTraitValuesTemp(traitValues);
   };
 
-  const checkIsRange = (value: string) => {
-    const regex = new RegExp(/^\d{1,4}(\.\d+)?$/);
-    if (regex.test(value)) {
-      setIsRange(true);
-    }
-  };
+  // const checkIsRange = (value: string) => {
+  //   const regex = new RegExp(/^\d{1,4}(\.\d+)?$/);
+  //   if (regex.test(value)) {
+  //     setIsRange(true);
+  //   }
+  // };
 
   useEffect(() => {
-    const firstValue = attribute?.values?.[0]?.value;
-    checkIsRange(firstValue);
+    const kindValue = attribute?.kind;
+    if (kindValue == "number") {
+      setIsRange(true);
+    }
   }, [attribute]);
 
   return (
@@ -122,10 +124,7 @@ const TraitFilter = ({ attribute }: Props) => {
         )}
         <div>
           {isRange ? (
-            <RangeFilter
-              attData={traitValuesTemp}
-              handleClick={selectTraitRange}
-            />
+            <RangeFilter attData={attribute} handleClick={selectTraitRange} />
           ) : (
             traitValuesTemp?.map((value) => {
               return (

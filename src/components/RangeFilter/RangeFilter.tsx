@@ -1,27 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from "react";
-import { Value } from "../../types/rsv-types/collection-traits.types";
+import { AttributeV2 } from "../../types/rsv-types/collection-traits.types";
 import "./RangeFilter.css";
 type Props = {
-  attData: Value[];
-  handleClick?: (...args: any[]) => void;
+  attData: AttributeV2;
+  handleClick: (minTrat: string, maxTrait: string) => void;
 };
 const RangeFilter = ({ attData, handleClick }: Props) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [isError, setIsError] = useState(false);
   const [minValue, setMinValue] = useState<string>("0");
-  const [maxValue, setMaxValue] = useState<string>("1");
+  const [maxValue, setMaxValue] = useState<string>("0");
 
-  const getNumbersArray = () => {
-    const arrayNumbers: string[] = [];
-    attData.map(({ value }) => {
-      arrayNumbers.push(value);
-    });
-
-    arrayNumbers.sort();
-    const length = arrayNumbers.length - 1;
-
-    return { arrayNumbers, length };
+  const getMinandMax = () => {
+    const minData = attData.minRange!.toString();
+    const maxData = attData.maxRange!.toString();
+    return { minData, maxData };
   };
 
   const handleChange = (isMin: boolean, e: string) => {
@@ -32,17 +26,17 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
     }
   };
   const fetchMinAndMax = () => {
-    const { arrayNumbers, length } = getNumbersArray();
+    const { minData, maxData } = getMinandMax();
 
-    if (minValue != arrayNumbers?.[0] || maxValue != arrayNumbers?.[length]) {
-      handleClick!(minValue, maxValue);
+    if (minValue != minData && maxValue != maxData) {
+      handleClick(minValue, maxValue);
     }
   };
 
   useEffect(() => {
-    const { arrayNumbers, length } = getNumbersArray();
-    setMinValue(arrayNumbers?.[0]);
-    setMaxValue(arrayNumbers?.[length]);
+    const { minData, maxData } = getMinandMax();
+    setMinValue(minData);
+    setMaxValue(maxData);
   }, [attData]);
 
   useEffect(() => {
