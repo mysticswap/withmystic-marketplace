@@ -35,14 +35,6 @@ const TraitFilter = ({ attribute }: Props) => {
   };
 
   const selectTraitRange = (minTrait: string, maxTrait: string) => {
-    // const updatedSelection = selectedTraits.filter((item) => {
-    //   return !(
-    //     item.type == attribute.key &&
-    //     item.min == minTrait &&
-    //     item.max == maxTrait
-    //   );
-    // });
-    // setSelectedTraits(updatedSelection);
     const currentTrait = selectedTraits.find(({ type }) => {
       return type == attribute.key;
     });
@@ -76,13 +68,6 @@ const TraitFilter = ({ attribute }: Props) => {
     setInputValue("");
     setTraitValuesTemp(traitValues);
   };
-
-  // const checkIsRange = (value: string) => {
-  //   const regex = new RegExp(/^\d{1,4}(\.\d+)?$/);
-  //   if (regex.test(value)) {
-  //     setIsRange(true);
-  //   }
-  // };
 
   useEffect(() => {
     const kindValue = attribute?.kind;
