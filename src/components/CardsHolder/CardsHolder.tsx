@@ -109,7 +109,7 @@ const CardsHolder = () => {
         });
 
         return (
-          parseInt(attribute?.[0].value) >= parseInt(lastTrait.min!) ||
+          parseInt(attribute?.[0].value) >= parseInt(lastTrait.min!) &&
           parseInt(attribute?.[0].value) <= parseInt(lastTrait.max!)
         );
       }

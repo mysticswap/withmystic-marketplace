@@ -28,7 +28,7 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
   const fetchMinAndMax = () => {
     const { minData, maxData } = getMinandMax();
 
-    if (minValue != minData && maxValue != maxData) {
+    if (minValue != minData || maxValue != maxData) {
       handleClick(minValue, maxValue);
     }
   };
