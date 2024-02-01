@@ -6,7 +6,9 @@ export interface AttributeV2 {
   key: string;
   attributeCount: number;
   kind: string;
-  values: Value[];
+  values?: Value[];
+  maxRange?: number;
+  minRange?: number;
 }
 
 export interface Value {

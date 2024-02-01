@@ -161,6 +161,12 @@
   justify-content: space-around;
   flex: 1;
 }
+.listing_or_offer_modal_bottom > .input_area .chevron-down.no-cursor:hover {
+  background-color: var(--ms-mp-gray-light);
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+}
 
 .listing_or_offer_modal_bottom > .input_area .chevron-down p {
   font-weight: 500;
