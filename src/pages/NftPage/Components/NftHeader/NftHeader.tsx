@@ -140,7 +140,7 @@ const NftHeader = ({
   const activityData = generateSaleActivity(nft, "sale", user!);
 
   const nftMarketUrl = window.location.href;
-  console.log(nftMarketUrl);
+  // console.log(nftMarketUrl);
   const postDataToken = getDiscordEndpointDataToken(
     nft,
     user!,
@@ -334,7 +334,9 @@ const NftHeader = ({
         {!userIsOwner && (
           <OutlineButton text="Make Offer" onClick={makeOffer} />
         )}
-        {userIsOwner && <OutlineButton text="Edit List" onClick={buyOrList} />}
+        {userIsOwner && (
+          <OutlineButton text="Edit Listing" onClick={buyOrList} />
+        )}
       </div>
     </div>
   );
