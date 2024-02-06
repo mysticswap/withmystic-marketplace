@@ -88,6 +88,7 @@ export const getHostName = () => {
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
       // SteadyStack host
       return "deploy-preview-15--heroic-duckanoo-b32f52.netlify.app";
+      return "Goldfinch.withmystic.xyz";
       return "deploy-preview-25--heroic-duckanoo-b32f52.netlify.app";
       return "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app";
       return "market.localhost.io";
