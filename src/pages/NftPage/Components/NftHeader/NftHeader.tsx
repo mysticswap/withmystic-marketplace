@@ -139,7 +139,14 @@ const NftHeader = ({
   const postData = getDiscordEndpointData(nft, user!, client);
   const activityData = generateSaleActivity(nft, "sale", user!);
 
-  const postDataToken = getDiscordEndpointDataToken(nft, user!, client);
+  const nftMarketUrl = window.location.href;
+  console.log(nftMarketUrl);
+  const postDataToken = getDiscordEndpointDataToken(
+    nft,
+    user!,
+    client,
+    nftMarketUrl
+  );
   const activityDataToken = generateSaleActivityToken(nft, "sale", user!);
   const isLocal = sourceDomain == source;
 
