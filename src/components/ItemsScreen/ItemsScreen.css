@@ -3,8 +3,6 @@
   margin: auto;
   display: flex;
   align-items: start;
-  position: sticky;
-  top: 0;
 }
 @media screen and (max-width: 600px) {
   .items_screen {

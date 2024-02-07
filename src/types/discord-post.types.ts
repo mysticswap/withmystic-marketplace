@@ -10,6 +10,7 @@ export type DiscordPostBody = {
 };
 export type DiscordPostBodyToken = {
   title: string;
+  url: string;
   tokenPrice: string;
   priceUsd: string;
   seller: string;

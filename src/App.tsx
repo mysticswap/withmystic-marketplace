@@ -8,7 +8,7 @@ import { ConnectionContextProvider } from "./context/ConnectionContext/Connectio
 import { TransactionContextProvider } from "./context/TransactionContext/TransactionContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Suspense, lazy, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getMarketplaceClient } from "./services/api/dynamic-system";
 import { ClientObject } from "./types/dynamic-system.types";
 import Loading from "./components/Loading/Loading";
@@ -16,12 +16,8 @@ import { addLinks, changeStyles, updateMetadata } from "./utils/dynamic-styles";
 import { updateFavicon, updateSiteTitle } from "./utils";
 import Home from "./pages/Home";
 import NftPage from "./pages/NftPage/NftPage";
-
-// Lazy Loading
-const SwapsPage = lazy(() => import("./pages/SwapsPage/SwapsPage"));
-const ErrorPage = lazy(() => import("./pages/ErrorPage/ErrorPage"));
-
-//
+import SwapsPage from "./pages/SwapsPage/SwapsPage";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 
 function App() {
   const [isFetchingClient, setIsFetchingClient] = useState(true);
@@ -68,14 +64,7 @@ function App() {
                   path="/:contract/:id"
                   element={<NftPageContextProvider children={<NftPage />} />}
                 />
-                <Route
-                  path="/swaps"
-                  element={
-                    <Suspense fallback={<Loading />}>
-                      <SwapsPage />
-                    </Suspense>
-                  }
-                />
+                <Route path="/swaps" element={<SwapsPage />} />
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
               <Footer />

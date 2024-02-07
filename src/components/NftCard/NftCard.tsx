@@ -46,6 +46,7 @@ const NftCard = ({ nft }: Props) => {
     userBalance,
     client,
     collectionActivity,
+    source,
   } = useGlobalContext();
   const { user, chainId, setProvider, setUser, setChainId } =
     useConnectionContext()!;
@@ -121,7 +122,14 @@ const NftCard = ({ nft }: Props) => {
 
   const postData = getDiscordEndpointData(nft, user!, client);
   const activityData = generateSaleActivity(nft, "sale", user!);
-  const postDataToken = getDiscordEndpointDataToken(nft, user!, client);
+  const nftMarketUrl = `${source}/${collectionContract}/${nftId}`;
+  // console.log(nftMarketUrl);
+  const postDataToken = getDiscordEndpointDataToken(
+    nft,
+    user!,
+    client,
+    nftMarketUrl
+  );
 
   const startBuyProcess = () => {
     const orderId = nft?.market?.floorAsk?.id;

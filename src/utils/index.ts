@@ -83,18 +83,19 @@ export const getHostName = () => {
   const hostName = window.location.hostname;
   switch (hostName) {
     case "localhost":
+      return "marketplace.mysticswaplocalhost.io";
+      return "goldfinch.withmystic.xyz";
       //DiamondNXT-NFT host
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
-      return "marketplace.mysticswaplocalhost.io";
       // SteadyStack host
       return "deploy-preview-15--heroic-duckanoo-b32f52.netlify.app";
       return "deploy-preview-25--heroic-duckanoo-b32f52.netlify.app";
       return "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app";
       return "market.localhost.io";
-    case "deploy-preview-90--heroic-duckanoo-b32f52.netlify.app":
+    case "deploy-preview-92--heroic-duckanoo-b32f52.netlify.app":
+      return "marketplace.mysticswaplocalhost.io";
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
       return "deploy-preview-15--heroic-duckanoo-b32f52.netlify.app";
-      return "marketplace.mysticswaplocalhost.io";
       return "deploy-preview-25--heroic-duckanoo-b32f52.netlify.app";
     case "deploy-preview-81--heroic-duckanoo-b32f52.netlify.app":
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
