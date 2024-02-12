@@ -122,7 +122,7 @@ const NftCard = ({ nft }: Props) => {
 
   const postData = getDiscordEndpointData(nft, user!, client);
   const activityData = generateSaleActivity(nft, "sale", user!);
-  const nftMarketUrl = `${source}/${collectionContract}/${nftId}`;
+  const nftMarketUrl = `https://${source}/${collectionContract}/${nftId}`;
   // console.log(nftMarketUrl);
   const postDataToken = getDiscordEndpointDataToken(
     nft,
