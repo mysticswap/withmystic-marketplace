@@ -64,7 +64,8 @@ export const formatOnlyDecimals = (x: number) => {
 };
 
 export const redirectToMSWalletPage = (address: string) => {
-  address && window.open(`https://mysticswap.io/wallet-view/${address}`);
+  // address && window.open(`https://mysticswap.io/wallet-view/${address}`);
+  address && window.open(`https://opensea.io/${address}`);
 };
 
 export const generateAttributeString = (selectedTraits: SelectedTrait[]) => {
