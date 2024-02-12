@@ -13,8 +13,7 @@ type Props = {
 
 const ModalNft = ({
   nftData,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  supportedTokens,
+  // supportedTokens,
   currentToken,
   offerAmount,
 }: Props) => {
