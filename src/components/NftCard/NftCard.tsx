@@ -64,12 +64,12 @@ const NftCard = ({ nft }: Props) => {
 
   const listActivity = collectionActivity?.activities?.filter(
     ({ type, token }) => {
-      return type == "ask" && token?.tokenName == nft?.token?.name;
+      return type == "ask" && token?.tokenId == nft?.token?.tokenId;
     }
   );
   const saleActivity = collectionActivity?.activities?.filter(
     ({ type, token }) => {
-      return type == "sale" && token?.tokenName == nft?.token?.name;
+      return type == "sale" && token?.tokenId == nft?.token?.tokenId;
     }
   );
   const priceSale = saleActivity?.[0]?.price;
