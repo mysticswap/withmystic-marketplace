@@ -77,7 +77,7 @@ export const getCollection = async (
 export const getCollectionNfts = async (
   contractAddress: string,
   chainId: number,
-  page: string,
+  page: number = 1,
   bearerToken: string
 ) => {
   const queryParams = { contractAddress, chainId, page };
@@ -156,6 +156,21 @@ export const getCollectionHistory = async (
   );
 };
 
+export const getAllSwaps = async (
+  creatorAddress: string,
+  chainId: number,
+  bearerToken: string,
+  page: number = 1,
+  limit: number = 10,
+) => {
+  const queryParams = { creatorAddress, chainId, page, limit };
+  return makeApiRequest(
+    "/marketplace-api/all-swaps",
+    queryParams,
+    bearerToken
+  );
+};
+
 export const getNftHistory = async (
   contractAddress: string,
   tokenId: string,
@@ -178,6 +193,20 @@ export const getUserBalance = async (
   const queryParams = { address, chainId };
   return makeApiRequest(
     "/marketplace-api/get-balance",
+    queryParams,
+    bearerToken
+  );
+};
+
+export const getUserNFTs = async (
+  address: string,
+  chainId: number,
+  contractAddresses: string,
+  bearerToken: string
+) => {
+  const queryParams = { address, chainId, contractAddresses };
+  return makeApiRequest(
+    "/marketplace-api/get-nfts",
     queryParams,
     bearerToken
   );
@@ -223,20 +252,62 @@ export const validateSwap = async (
 
 export const acceptSwap = async (
   swapId: string,
-  signature: string,
+  takerAddress: string,
   bearerToken: string
 ) => {
   const bodyParams = {
     swapId,
-    signature,
+    takerAddress,
   };
   return makeApiPostRequest(
-    "/marketplace-api/validate-swap",
+    "/marketplace-api/accept-swap",
     bodyParams,
     bearerToken
   );
 };
 
+export const cancelSwap = async (
+  swapId: string,
+  bearerToken: string
+) => {
+  const bodyParams = {
+    swapId,
+  };
+  return makeApiPostRequest(
+    "/marketplace-api/cancel-swap",
+    bodyParams,
+    bearerToken
+  );
+};
+
+
+export const verifyAcceptedSwap = async (
+  swapId: string,
+  bearerToken: string
+) => {
+  const bodyParams = {
+    swapId,
+  };
+  return makeApiPostRequest(
+    "/marketplace-api/verify-accepted",
+    bodyParams,
+    bearerToken
+  );
+};
+
+export const verifyCancelledSwap = async (
+  swapId: string,
+  bearerToken: string
+) => {
+  const bodyParams = {
+    swapId,
+  };
+  return makeApiPostRequest(
+    "/marketplace-api/verify-cancelled",
+    bodyParams,
+    bearerToken
+  );
+};
 // create swap
 // validate swap
 // accept swap
