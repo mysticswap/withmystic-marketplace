@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-catch */
 import { BASE_API } from "../../config";
+import { ListOrOfferType } from "../../types/market-schemas.types";
 import { getQueryString } from "../../utils";
 
 const makeApiRequest = async (
@@ -16,6 +17,40 @@ const makeApiRequest = async (
 
   try {
     const response = await fetch(url, { method: "GET", headers });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  } catch (error) {
+    // Handle the error appropriately (e.g., log it, throw a custom error, etc.)
+    throw error;
+  }
+};
+
+const makeApiPostRequest = async (
+  endpoint: string,
+  bodyParams: Record<string, any>, // Allow varying types
+  bearerToken: string
+) => {
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${bearerToken}`,
+  };
+  const url = `${BASE_API}${endpoint}`;
+
+  try {
+    let requestBody;
+    if (typeof bodyParams === "object") {
+      requestBody = JSON.stringify(bodyParams);
+    } else {
+      requestBody = bodyParams;
+    }
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers,
+      body: requestBody,
+    });
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -147,3 +182,69 @@ export const getUserBalance = async (
     bearerToken
   );
 };
+
+export const createSwap = async (
+  swapData: ListOrOfferType,
+  bearerToken: string
+) => {
+  const bodyParams = {
+    chainId: swapData.chainId,
+    offerer: swapData.offerer,
+    consideration: swapData.consideration,
+    offer: swapData.offer,
+    ...(swapData.takerAddress && { takerAddress: swapData.takerAddress }),
+    ...(swapData.type && { type: swapData.type }),
+    ...(swapData.domain && { domain: swapData.domain }),
+    ...(swapData.fees && { fees: swapData.fees }),
+    ...(swapData.endTime && { endTime: swapData.endTime }),
+  };
+  return makeApiPostRequest(
+    "/marketplace-api/create-swap",
+    bodyParams,
+    bearerToken
+  );
+};
+
+export const validateSwap = async (
+  swapId: string,
+  signature: string,
+  bearerToken: string
+) => {
+  const bodyParams = {
+    swapId,
+    signature,
+  };
+  return makeApiPostRequest(
+    "/marketplace-api/validate-swap",
+    bodyParams,
+    bearerToken
+  );
+};
+
+export const acceptSwap = async (
+  swapId: string,
+  signature: string,
+  bearerToken: string
+) => {
+  const bodyParams = {
+    swapId,
+    signature,
+  };
+  return makeApiPostRequest(
+    "/marketplace-api/validate-swap",
+    bodyParams,
+    bearerToken
+  );
+};
+
+// create swap
+// validate swap
+// accept swap
+// verify swap acceptance
+// cancel swap,
+// verify swap cancellation
+// get all swaps
+// get swaps
+// get nft other blockchains
+// get metadata
+// get nfts
