@@ -23,3 +23,5 @@ export const supportedChains = [
     rpcUrl: "https://rpc-mainnet.matic.network",
   },
 ];
+
+export const otherChains = ["7001", "7000"]

@@ -23,9 +23,9 @@ export type PayloadVerify = {
   swapId: any;
 };
 
-interface AcceptSwapDto {
+export interface AcceptSwapDto {
   swapId: string;
   takerAddress: string;
-  offerCriteria?: InputCriteria[];
-  considerationCriteria?: InputCriteria[];
+  // offerCriteria?: any[];
+  // considerationCriteria?: InputCriteria[];
 }
