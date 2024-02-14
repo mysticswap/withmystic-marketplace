@@ -4,9 +4,11 @@ export type ListOrOfferType = {
   offerer: string;
   offer: Items[];
   consideration: Items[];
-  takerAddress: string;
+  takerAddress?: string;
   creatorAddress: string;
   type: "Swap" | "Listing" | "offer";
+  domain?: string;
+  fees?: string;
 };
 
 type Items = {
@@ -20,3 +22,10 @@ export type PayloadVerify = {
   signature: string;
   swapId: any;
 };
+
+interface AcceptSwapDto {
+  swapId: string;
+  takerAddress: string;
+  offerCriteria?: InputCriteria[];
+  considerationCriteria?: InputCriteria[];
+}
