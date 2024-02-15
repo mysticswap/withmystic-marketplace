@@ -1,5 +1,6 @@
 export type DiscordPostBody = {
   title: string;
+  url: string;
   priceEth: string;
   priceUsd: string;
   seller: string;

@@ -10,6 +10,7 @@ export const getDiscordEndpointData = (
   nft: TokenElement,
   buyer: string,
   client: ClientObject,
+  url: string,
   offeredEth?: string,
   offeredUsd?: string
 ) => {
@@ -23,6 +24,7 @@ export const getDiscordEndpointData = (
     priceUsd:
       offeredUsd || nft?.market?.floorAsk?.price?.amount?.usd.toString(),
     title: `${nft?.token?.name} SOLD!`,
+    url: url,
     favicon: client.favicon,
   };
   return data;

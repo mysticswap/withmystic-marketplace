@@ -136,10 +136,10 @@ const NftHeader = ({
     !user ? connectWallets(setUser, setProvider, setChainId) : setter(true);
   };
 
-  const postData = getDiscordEndpointData(nft, user!, client);
+  const nftMarketUrl = window.location.href;
+  const postData = getDiscordEndpointData(nft, user!, client, nftMarketUrl);
   const activityData = generateSaleActivity(nft, "sale", user!);
 
-  const nftMarketUrl = window.location.href;
   // console.log(nftMarketUrl);
   const postDataToken = getDiscordEndpointDataToken(
     nft,
