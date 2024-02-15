@@ -39,6 +39,7 @@ const ModalNft = ({
   // } else {
   //   tokenSymbol = supportedTokens?.[currentToken].symbol;
   // }
+  console.log(nftData);
 
   return (
     <div className="modal_nft">
@@ -53,7 +54,7 @@ const ModalNft = ({
       <p className="modal_nft_value">
         {nftData.amount || "--"} {nftData.isOffer || (nftData.isSale && "wETH")}{" "}
         {!nftData.isOffer && !nftData.isSale && tokenSymbol}
-        {!nftData.isBuyNow && tokenSymbol}
+        {/* {!nftData.isBuyNow && tokenSymbol} */}
         <span>({cryptoValue > 0 ? `$${price.toFixed(2)}` : "--"})</span>
       </p>
     </div>
