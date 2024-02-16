@@ -1,9 +1,8 @@
 import "./ControlBar.css";
-// import GridButtons from "../GridButtons/GridButtons";
-// import ControlBarDropdown from "../ControlBarDropdown/ControlBarDropdown";
+import GridButtons from "../GridButtons/GridButtons";
+import WalletControlBarDropdown from "../ControlBarDropdown/WalletControlBarDropdown";
 import WalletFilterButton from "../FilterButton/WalletFilterButton";
 import WalletControlBarSearchInput from "../ControlBarSearchInput/WalletControlBarSearchInput";
-// import WalletFilterButton from "";
 
 type Props = {
   hide?: boolean;
@@ -15,8 +14,8 @@ const WalletControlBar = ({ hide = false }: Props) => {
     <div className={`control_bar ${hide ? "hide" : ""}`}>
       <WalletFilterButton />
       <WalletControlBarSearchInput />
-      {/* <ControlBarDropdown /> */}
-      {/* <GridButtons /> */}
+      <WalletControlBarDropdown />
+      <GridButtons />
     </div>
   );
 };
