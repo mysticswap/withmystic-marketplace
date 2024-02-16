@@ -1,7 +1,8 @@
-
 export type WalletContextType = {
   showFilters: boolean;
   setShowFilters: React.Dispatch<React.SetStateAction<boolean>>;
+  tokenId: string;
+  setTokenId: React.Dispatch<React.SetStateAction<string>>;
   selectedDropdownOption: DropdownOption;
   setSelectedDropdownOption: React.Dispatch<
     React.SetStateAction<DropdownOption>
@@ -12,7 +13,6 @@ export type WalletContextType = {
   setNumericFilters: React.Dispatch<React.SetStateAction<NumericFiltersType>>;
   showMobileFilters: boolean;
   setShowMobileFilters: React.Dispatch<React.SetStateAction<boolean>>;
-  diamondHost: boolean;
 };
 
 export type SelectedTrait = {

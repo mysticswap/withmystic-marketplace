@@ -1,7 +1,8 @@
-import CardsHolder from "../../components/CardsHolder/CardsHolder";
-import ControlBar from "../../components/ControlBar/ControlBar";
-import FiltersSidebar from "../../components/FiltersSidebar/FiltersSidebar";
-import { useHomeContext } from "../../context/HomeContext/HomeContext";
+// import CardsHolder from "../../components/CardsHolder/CardsHolder";
+// import ControlBar from "../../components/ControlBar/ControlBar";
+// import FiltersSidebar from "../../components/FiltersSidebar/FiltersSidebar";
+import { useWalletContext } from "../../context/WalletContext/WalletContext";
+import WalletControlBar from "../../components/ControlBar/WalletControlBar";
 import "./WalletPage.css";
 
 // TODO
@@ -13,15 +14,20 @@ import "./WalletPage.css";
 //     the rendering and behavioural logics
 
 const WalletPage = () => {
-  const { showFilters } = useHomeContext()!;
+  const { showFilters, tokenId } = useWalletContext()!;
 
   return (
     <div className="styles_page">
       <h1>Wallet page!!!</h1>
-      <ControlBar isInItemsSection={true} />
+      <ul>
+        <li>showFilters:  {showFilters ? 'True' : 'False'}</li>
+        <li>tokenId: {tokenId}</li>
+      </ul>
+      <WalletControlBar/>
+      {/* <ControlBar isInItemsSection={true} /> */}
       <div className="items_screen">
-        {showFilters && <FiltersSidebar isForTraits={true} />}
-        <CardsHolder />
+        {/* {showFilters && <FiltersSidebar isForTraits={true} />}
+        <CardsHolder /> */}
       </div>
     </div>
   );

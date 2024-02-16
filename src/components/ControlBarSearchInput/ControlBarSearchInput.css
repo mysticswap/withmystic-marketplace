@@ -25,6 +25,10 @@
   border: none;
 }
 
+.input_closer {
+  cursor: pointer;
+}
+
 @media screen and (max-width: 1024px) {
   .control_bar_search {
     width: 50%;
@@ -44,8 +48,5 @@
 
   .control_bar_search input::placeholder {
     font-size: 14px;
-  }
-  .input_closer {
-    cursor: pointer;
   }
 }

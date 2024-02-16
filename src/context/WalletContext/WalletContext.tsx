@@ -9,7 +9,6 @@ import {
 import { WalletContextType } from "./types";
 import { defaultNumericFilters, dropdownOptions } from "../../constants";
 import { useGlobalContext } from "../GlobalContext/GlobalContext";
-import { getHostName } from "../../utils";
 
 const WalletContext = createContext<WalletContextType | null>(null);
 
@@ -21,36 +20,14 @@ export const WalletContextProvider = ({ children }: Props) => {
   // Not reusing the HomeContext filters because
   // we may not want both filters to interfere with each other
   const [showFilters, setShowFilters] = useState(true);
+  const [tokenId, setTokenId] = useState<string>("");
   const [selectedDropdownOption, setSelectedDropdownOption] = useState(
     dropdownOptions[0]
   );
   const [isFetching, setIsFetching] = useState(false);
   const [numericFilters, setNumericFilters] = useState(defaultNumericFilters);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-  const [diamondHost, setDiamondHost] = useState(false);
-
-  const detectHost = () => {
-    const hostName = getHostName();
-    if (
-      hostName === "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app" ||
-      hostName === "diamondnxt.withmystic.xyz"
-    ) {
-      setDiamondHost(true);
-    } else {
-      setDiamondHost(false);
-    }
-    // switch (hostName) {
-    //   case "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app":
-    //     return setDiamondHost(true);
-    //   case "diamondnxt.withmystic.xyz":
-    //     return setDiamondHost(true);
-    //   default:
-    //     return setDiamondHost(false);
-    // }
-  };
-
   useEffect(() => {
-    detectHost();
     setSelectedDropdownOption(dropdownOptions[0]);
     setNumericFilters(defaultNumericFilters);
     setIsFetching(true);
@@ -61,6 +38,8 @@ export const WalletContextProvider = ({ children }: Props) => {
       value={{
         showFilters,
         setShowFilters,
+        tokenId,
+        setTokenId,
         selectedDropdownOption,
         setSelectedDropdownOption,
         isFetching,
@@ -69,7 +48,6 @@ export const WalletContextProvider = ({ children }: Props) => {
         setNumericFilters,
         showMobileFilters,
         setShowMobileFilters,
-        diamondHost,
       }}
     >
       {children}

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { GlobalContextProvider } from "./context/GlobalContext/GlobalContext";
 import { HomeContextProvider } from "./context/HomeContext/HomeContext";
+import { WalletContextProvider } from "./context/WalletContext/WalletContext";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import { NftPageContextProvider } from "./context/NftPageContext/NftPageContext";
@@ -66,7 +67,7 @@ function App() {
                   element={<NftPageContextProvider children={<NftPage />} />}
                 />
                 <Route path="/swaps" element={<SwapsPage />} />
-                <Route path="/account" element={<HomeContextProvider children={<WalletPage />} />} />
+                <Route path="/account" element={<WalletContextProvider children={<WalletPage />} />} />
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
               <Footer />
