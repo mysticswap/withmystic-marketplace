@@ -140,6 +140,9 @@ const Navbar = () => {
           <Link to="/swaps">
             <button className="sell_button">Swap</button>
           </Link>
+          <Link to="/account">
+            <button className="sell_button">My Wallet</button>
+          </Link>
 
           {userHasNfts && location.pathname !== "/swaps" && (
             <button
