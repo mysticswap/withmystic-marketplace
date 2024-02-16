@@ -66,7 +66,7 @@ function App() {
                   element={<NftPageContextProvider children={<NftPage />} />}
                 />
                 <Route path="/swaps" element={<SwapsPage />} />
-                <Route path="/my_wallet" element={<WalletPage />} />
+                <Route path="/account" element={<HomeContextProvider children={<WalletPage />} />} />
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
               <Footer />

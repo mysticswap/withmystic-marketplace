@@ -1,10 +1,28 @@
+import CardsHolder from "../../components/CardsHolder/CardsHolder";
+import ControlBar from "../../components/ControlBar/ControlBar";
+import FiltersSidebar from "../../components/FiltersSidebar/FiltersSidebar";
+import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import "./WalletPage.css";
 
+// TODO
+// 1. Load data from backend
+// 2. Control which fields appear on the filters side bar
+// 3. Avoid duplicating the types from HomeContextProvider
+// 3.1 When I tried to create a WalletContext, the components that used the
+//     homeContext stopped working. Maybe we should find a way to separate
+//     the rendering and behavioural logics
+
 const WalletPage = () => {
+  const { showFilters } = useHomeContext()!;
 
   return (
     <div className="styles_page">
       <h1>Wallet page!!!</h1>
+      <ControlBar isInItemsSection={true} />
+      <div className="items_screen">
+        {showFilters && <FiltersSidebar isForTraits={true} />}
+        <CardsHolder />
+      </div>
     </div>
   );
 };
