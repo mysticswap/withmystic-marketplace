@@ -140,7 +140,6 @@ const NftHeader = ({
   const postData = getDiscordEndpointData(nft, user!, client, nftMarketUrl);
   const activityData = generateSaleActivity(nft, "sale", user!);
 
-  // console.log(nftMarketUrl);
   const postDataToken = getDiscordEndpointDataToken(
     nft,
     user!,
@@ -304,32 +303,6 @@ const NftHeader = ({
             disabled={!userCanBuyTokenBalance && !userIsOwner}
           />
         )}
-
-        {/* {orderId || userIsOwner ? (
-          <SolidButton
-            text={
-              !userIsOwner
-                ? userCanBuyTokenBalance
-                  ? "Buy Nows"
-                  : "Insufficient Balance"
-                : null
-            }
-            onClick={buyOrList}
-            disabled={!userCanBuyTokenBalance && !userIsOwner}
-          />
-        ) : isETHModal ? (
-          <SolidButton
-            text={
-              !userIsOwner
-                ? userCanBuy
-                  ? "Buy Now"
-                  : "Insufficient Balance"
-                : null
-            }
-            onClick={buyOrList}
-            disabled={!userCanBuy && !userIsOwner}
-          />
-        ) : null} */}
 
         {!userIsOwner && (
           <OutlineButton text="Make Offer" onClick={makeOffer} />
