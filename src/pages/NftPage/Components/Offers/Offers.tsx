@@ -38,6 +38,8 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
   } = useTransactionContext()!;
   const [isFetching, setIsFetching] = useState(false);
   const token = `${collectionContract}:${tokenId}`;
+  const nftMarketUrl = window.location.href;
+  console.log("offurl", nftMarketUrl);
   const nft = { token: nftInfo, market: nftPriceData } as TokenElement;
 
   const fetchMoreOffers = () => {
@@ -78,6 +80,7 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
           nft,
           offerMaker,
           client,
+          nftMarketUrl,
           amount.toString(),
           price.toString()
         );
