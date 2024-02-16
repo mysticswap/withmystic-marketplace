@@ -17,6 +17,7 @@ import { updateFavicon, updateSiteTitle } from "./utils";
 import Home from "./pages/Home";
 import NftPage from "./pages/NftPage/NftPage";
 import SwapsPage from "./pages/SwapsPage/SwapsPage";
+import WalletPage from "./pages/WalletPage/WalletPage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 
 function App() {
@@ -65,6 +66,7 @@ function App() {
                   element={<NftPageContextProvider children={<NftPage />} />}
                 />
                 <Route path="/swaps" element={<SwapsPage />} />
+                <Route path="/my_wallet" element={<WalletPage />} />
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
               <Footer />
