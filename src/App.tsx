@@ -13,11 +13,12 @@ import { getMarketplaceClient } from "./services/api/dynamic-system";
 import { ClientObject } from "./types/dynamic-system.types";
 import Loading from "./components/Loading/Loading";
 import { addLinks, changeStyles, updateMetadata } from "./utils/dynamic-styles";
-import { updateFavicon, updateSiteTitle } from "./utils";
+import { updateFavicon, updateSiteTitle, getHostName } from "./utils";
 import Home from "./pages/Home";
 import NftPage from "./pages/NftPage/NftPage";
 import SwapsPage from "./pages/SwapsPage/SwapsPage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
+import CollectionsPage from './pages/CollectionsPage/CollectionsPage';
 
 function App() {
   const [isFetchingClient, setIsFetchingClient] = useState(true);
@@ -65,6 +66,8 @@ function App() {
                   element={<NftPageContextProvider children={<NftPage />} />}
                 />
                 <Route path="/swaps" element={<SwapsPage />} />
+                
+                {getHostName() === "marketplace.mysticswaplocalhost.io" ?<Route path="/collections" element={<CollectionsPage/>} />:''}
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
               <Footer />

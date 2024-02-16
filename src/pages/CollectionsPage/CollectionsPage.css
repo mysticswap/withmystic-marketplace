@@ -1,0 +1,7 @@
+.tabs_container {
+  display: flex;
+}
+.collections_page_container {
+  box-sizing: border-box;
+  padding: 3rem;
+}

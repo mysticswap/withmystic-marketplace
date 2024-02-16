@@ -24,7 +24,7 @@ const Home = () => {
 
   return (
     <div>
-      <Banner />
+      <Banner details={true} activity={true} />
       <ControlBar isInItemsSection={isInItemsSection} />
 
       {isInItemsSection ? <ItemsScreen /> : <ActivityScreen />}

@@ -1,0 +1,14 @@
+.tab_container {
+  padding: 1rem;
+  font-size: 1.5rem;
+}
+.tab_container:hover {
+  cursor: pointer;
+}
+.tab_selected {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.tab_not_selected {
+  border: none;
+}

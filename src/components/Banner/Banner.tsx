@@ -7,7 +7,12 @@ import {
   tabOptions,
 } from "../../constants";
 
-const Banner = () => {
+type IProps = {
+  details: boolean
+  activity: boolean
+}
+
+const Banner = ({details, activity}:IProps) => {
   const {
     collectionMetadata,
     currentTab,
@@ -41,7 +46,7 @@ const Banner = () => {
   return (
     <div className="banner">
       <img src={client.bannerUrl} alt="" />
-      <div className="banner_details">
+      {details && <div className="banner_details">
         {!nameShouldBeHidden && (
           <h1>{collectionMetadata?.collections?.[0]?.name}</h1>
         )}
@@ -66,8 +71,8 @@ const Banner = () => {
             );
           })}
         </div>
-      </div>
-      <div className="tabs">
+      </div>}
+      {activity && <div className="tabs">
         {tabOptions.map((item) => {
           return (
             <button
@@ -81,7 +86,7 @@ const Banner = () => {
             </button>
           );
         })}
-      </div>
+      </div>}
     </div>
   );
 };
