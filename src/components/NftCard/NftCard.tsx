@@ -66,6 +66,7 @@ const NftCard = ({ nft }: Props) => {
 
   const timeSale = nft?.token?.lastSale?.timestamp || 0;
   const timeList = nft?.market?.floorAsk?.validUntil || 0;
+  const validFrom = nft?.market?.floorAsk?.validFrom || 0;
 
   const currentEthAmount = priceList?.amount?.decimal;
   const saleSymbol = priceSale?.currency?.symbol;
@@ -271,7 +272,7 @@ const NftCard = ({ nft }: Props) => {
         </div>
         <Link to={`/${collectionContract}/${nftId}`}>
           <p className="nft_card_amount">
-            {priceList && timeList > timeSale ? (
+            {priceList && (timeList > timeSale || validFrom > timeSale) ? (
               <>
                 {`${currentEthAmount} ${listSymbol}`}{" "}
                 <span>(${currentValue})</span>
