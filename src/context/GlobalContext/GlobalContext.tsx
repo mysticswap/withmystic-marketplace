@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import { getUserBalance } from "../../services/api/marketplace-api";
-import { API_KEY } from "../../config";
+// import { API_KEY } from "../../config";
 import { GlobalContextType } from "./types";
 import {
   getCollectionActivity,
@@ -156,7 +156,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
 
   useEffect(() => {
     if (user) {
-      getUserBalance(user!, collectionChainId, API_KEY).then((result) => {
+      getUserBalance(user!, collectionChainId).then((result) => {
         setUserBalance(result);
       });
     }

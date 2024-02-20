@@ -191,10 +191,11 @@ export const getNeededSwaps = async (
     "/marketplace-api/filtered-swaps",
     queryParams
   );
-  swaps = swaps.data.filter((i: signedOrderToMongo) => i.type == swapType);
-  // .filter((i: signedOrderToMongo) =>
-  //   i.orderComponents.offer.map((j) => j.token).includes(token)
-  // );
+  swaps = swaps.data
+    .filter((i: signedOrderToMongo) => i.type == swapType)
+    .filter((i: signedOrderToMongo) =>
+      i.orderComponents.offer.map((j) => j.token).includes(token)
+    );
   return SwapApiToReservoirApi(swaps);
 };
 
