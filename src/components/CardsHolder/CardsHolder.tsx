@@ -5,12 +5,13 @@ import NftCard from "../NftCard/NftCard";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
 import SelectedFilter from "../SelectedFilter/SelectedFilter";
 import { useEffect, useRef, useState } from "react";
-import { BiLoaderCircle } from "react-icons/bi";
+// import { BiLoaderCircle } from "react-icons/bi";
 import { getCollectionNftsV2 } from "../../services/api/marketplace-rsv-api";
 import { generateAttributeString } from "../../utils";
 import { useHideComponent } from "../../hooks/useHideComponent";
 import { useShowComponent } from "../../hooks/useShowComponent";
 import { GetNftsRsv } from "../../types/rsv-types/collection-nfts.types";
+import CardSkeleton from "../CardSkeleton/CardSkeleton";
 
 const CardsHolder = () => {
   const {
@@ -162,11 +163,13 @@ const CardsHolder = () => {
           </button>
         </div>
       )}
+
       {nftsList}
       {isFetching && (
-        <div className="loader_holder">
-          <BiLoaderCircle className="loader" size={50} />
-        </div>
+        <CardSkeleton cards={9} />
+        // <div className="loader_holder">
+        //   <BiLoaderCircle className="loader" size={50} />
+        // </div>
       )}
       {nftsList?.length < 1 && !isFetching && (
         <p className="no_result">No results</p>
