@@ -8,7 +8,7 @@ type props = {
 const CardSkeleton = ({ cards }: props) => {
   return Array(cards)
     .fill(0)
-    .map((item, index) => (
+    .map((_item, index) => (
       <div className="nft_card_skeleton" key={index}>
         <Skeleton className="skeleton_img" />
         <Skeleton className="text_skeleton" width={"90%"} />
