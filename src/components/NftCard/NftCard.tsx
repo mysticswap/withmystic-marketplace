@@ -67,6 +67,7 @@ const NftCard = ({ nft }: Props) => {
       return type == "ask" && token?.tokenId == nft?.token?.tokenId;
     }
   );
+
   const saleActivity = collectionActivity?.activities?.filter(
     ({ type, token }) => {
       return type == "sale" && token?.tokenId == nft?.token?.tokenId;

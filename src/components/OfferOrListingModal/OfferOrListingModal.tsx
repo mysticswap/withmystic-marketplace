@@ -50,9 +50,9 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
   const { isOffer, tokenId } = transactionNft;
   const currencyIsListing =
-    supportedTokens[currentToken].contract === WETH_CONTRACT_ADDRESS
+    supportedTokens[currentToken]?.contract === WETH_CONTRACT_ADDRESS
       ? ETH_CONTRACT_ADDRESS
-      : supportedTokens[currentToken].contract;
+      : supportedTokens[currentToken]?.contract;
 
   // const currencyIsListing = supportedTokens[currentToken].contract;
 
@@ -128,7 +128,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
     const weiPrice = convertTokenAmountToDecimals(
       Number(offerAmount),
-      supportedTokens[currentToken].decimals
+      supportedTokens[currentToken]?.decimals
     ).toString();
 
     const expiration = String(selectedDuration.time);
@@ -325,7 +325,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                       return (
                         <div
                           className="single-token"
-                          key={token.contract}
+                          key={token?.contract}
                           onClick={() => {
                             setCurrentToken(index);
                             setShowTokensDropdown(false);

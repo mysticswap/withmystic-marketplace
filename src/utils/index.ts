@@ -157,3 +157,9 @@ export const getOnePercentFeeToken = (
     convertTokenAmountToDecimals(tokenValueDecimals * 0.01, decimals).toFixed(0)
   );
 };
+
+export const convertToIPFSImage = (image: string) => {
+  if (image === undefined) return "";
+  const imageUrl = image.replace("ipfs://", "https://ipfs.io/ipfs/");
+  return imageUrl;
+};

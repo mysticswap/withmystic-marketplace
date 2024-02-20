@@ -22,6 +22,24 @@ export const supportedChains = [
     label: "Polygon Mainnet",
     rpcUrl: "https://rpc-mainnet.matic.network",
   },
+  {
+    id: "0x1b59",
+    token: "ZETA",
+    label: "Zeta Testnet",
+    rpcUrl: "https://zetachain-athens-evm.blockpi.network/v1/rpc/public	",
+  },
+  {
+    id: "0x1b58",
+    token: "ZETA",
+    label: "Zeta Mainnet",
+    rpcUrl: "https://zetachain-evm.blockpi.network/v1/rpc/public",
+  },
+  {
+    id: "0x109b4597",
+    token: "SFUEL",
+    label: "Razor Skale Chain",
+    rpcUrl: "https://mainnet.skalenodes.com/v1/turbulent-unique-scheat",
+  },
 ];
 
-export const otherChains = ["7001", "7000"]
+export const otherChains = [278611351, 7001, 7000, 1, 137];

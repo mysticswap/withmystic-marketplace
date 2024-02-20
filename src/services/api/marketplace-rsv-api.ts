@@ -2,16 +2,26 @@ import { NumericFiltersType } from "../../context/HomeContext/types";
 import { Post } from "../../types/rsv-types/listing-data.types";
 import { Post as AuthPost } from "../../types/rsv-types/buy-data.types";
 import { marketplaceInstance } from "../axios";
-import { getCollection, getCollectionHistory, getCollectionNfts, getCollectionTraits, getNftHistory, getSingleNft, getUserNFTs } from "./marketplace-api";
+import {
+  getAllSwaps,
+  getCollection,
+  getCollectionHistory,
+  getCollectionNfts,
+  getCollectionTraits,
+  getNeededSwaps,
+  getNftHistory,
+  getSingleNft,
+  getUserNFTs,
+} from "./marketplace-api";
 import { otherChains } from "../../wallets/chains";
+import { SwapType } from "../../types/market-schemas.types";
 
 export const getCollectionMetadata = async (
   chainId: number,
-  contractAddress: string,
-  bearerToken?:string
+  contractAddress: string
 ) => {
-  if(otherChains.includes(chainId)){
-    return await getCollection(contractAddress as string,chainId,bearerToken as string)
+  if (otherChains.includes(chainId)) {
+    return await getCollection(contractAddress as string, chainId);
   }
 
   const request = await marketplaceInstance.get("/get-collection-metadata", {
@@ -30,12 +40,11 @@ export const getCollectionNftsV2 = async (
   tokens?: string,
   numericFilters?: NumericFiltersType,
   source?: string,
-  currencies?: string,
-  bearerToken?: string
+  currencies?: string
 ) => {
-
-  if(otherChains.includes(chainId)){
-    return await getCollectionNfts(contractAddress as string,chainId,1,bearerToken as string)
+  if (otherChains.includes(chainId)) {
+    const data = await getCollectionNfts(contractAddress as string, chainId, 1);
+    return data;
   }
   const request = await marketplaceInstance.get("get-nfts-v2", {
     params: {
@@ -51,17 +60,26 @@ export const getCollectionNftsV2 = async (
       ...(currencies && { currencies }),
     },
   });
+
   return request.data;
 };
 
 export const getCollectionActivity = async (
   chainId: number,
   contractAddress: string,
-  types: string,
-  bearerToken?: string
+  types: string
 ) => {
-  if(otherChains.includes(chainId)){
-    return await getCollectionHistory(contractAddress as string,chainId, bearerToken as string)
+  if (otherChains.includes(chainId)) {
+    const swaps = await getNeededSwaps(
+      chainId,
+      SwapType.Listing,
+      contractAddress
+    );
+    const history = await getCollectionHistory(
+      contractAddress as string,
+      chainId
+    );
+    return { activities: [...swaps.activities, ...history.activities] };
   }
 
   const request = await marketplaceInstance.get("/get-collection-activity", {
@@ -72,11 +90,10 @@ export const getCollectionActivity = async (
 
 export const getCollectionTraitsV2 = async (
   chainId: number,
-  contractAddress: string,
-  bearerToken?: string
+  contractAddress: string
 ) => {
-  if(otherChains.includes(chainId)){
-    return await getCollectionTraits(contractAddress as string,chainId, bearerToken as string)
+  if (otherChains.includes(chainId)) {
+    return await getCollectionTraits(contractAddress as string, chainId);
   }
 
   const request = await marketplaceInstance("/get-traits", {
@@ -85,11 +102,11 @@ export const getCollectionTraitsV2 = async (
   return request.data;
 };
 
-export const getSingleNftV2 = async (chainId: number, tokens: string, bearerToken?: string) => {
-  if(otherChains.includes(chainId)){
-    const contractAddress = tokens.split(':')[0]
-    const tokenId = tokens.split(':')[1]
-    return await getSingleNft(contractAddress,tokenId,chainId, bearerToken as string)
+export const getSingleNftV2 = async (chainId: number, tokens: string) => {
+  if (otherChains.includes(chainId)) {
+    const contractAddress = tokens.split(":")[0];
+    const tokenId = tokens.split(":")[1];
+    return await getSingleNft(contractAddress, tokenId, chainId);
   }
 
   const request = await marketplaceInstance("/get-nft-v2", {
@@ -103,8 +120,8 @@ export const getNftOffers = async (
   token: string,
   continuation?: string
 ) => {
-  if(otherChains.includes(chainId)){
-    //return await getCollectionHistory(contractAddress as string,chainId, bearerToken as string)
+  if (otherChains.includes(chainId)) {
+    return await getAllSwaps(chainId, SwapType.Offer, token as string);
   }
 
   const request = await marketplaceInstance("/get-nft-offers", {
@@ -117,18 +134,23 @@ export const getNftActivity = async (
   chainId: number,
   token: string,
   types: string,
-  continuation?: string,
-  bearerToken?:string
+  continuation?: string
 ) => {
-  if(otherChains.includes(chainId)){
-    const contractAddress = token.split(':')[0]
-    const tokenId = token.split(':')[1]
-    return await getNftHistory(contractAddress as string,tokenId,chainId, bearerToken as string)
-  }
-
   const request = await marketplaceInstance("get-single-nft-activity", {
     params: { chainId, token, types, ...(continuation && { continuation }) },
   });
+
+  if (otherChains.includes(chainId)) {
+    const contractAddress = token.split(":")[0];
+    const tokenId = token.split(":")[1];
+    const allActivities = [
+      ...(await getNftHistory(contractAddress as string, tokenId, chainId))
+        .activities,
+      ...request.data.activities,
+    ];
+
+    return { activities: allActivities };
+  }
   return request.data;
 };
 
@@ -136,11 +158,10 @@ export const getUserNfts = async (
   chainId: number,
   user: string,
   collection: string,
-  continuation?: string,
-  bearerToken?:string
+  continuation?: string
 ) => {
-  if(otherChains.includes(chainId)){
-    return await getUserNFTs(user,chainId, collection as string, bearerToken as string)
+  if (otherChains.includes(chainId)) {
+    return await getUserNFTs(user, chainId, collection as string);
   }
 
   const request = await marketplaceInstance("get-user-nfts", {
@@ -155,8 +176,8 @@ export const getUserNfts = async (
 };
 
 export const submitListOrBid = async (chainId: number, data: Post) => {
-  if(otherChains.includes(chainId)){
-    //return await getCollectionHistory(contractAddress as string,chainId, bearerToken as string)
+  if (otherChains.includes(chainId)) {
+    //return await getCollectionHistory(contractAddress as string,chainId,)
   }
 
   const request = await marketplaceInstance.post("/submit-list-or-bid", {

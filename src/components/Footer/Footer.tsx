@@ -12,7 +12,7 @@ const Footer = () => {
   const location = useLocation();
 
   let discordUrl = collectionMetadata?.collections?.[0]?.discordUrl;
-  const twitterUrl = `https://twitter.com/${collectionMetadata?.collections[0]?.twitterUsername}`;
+  const twitterUrl = `https://twitter.com/${collectionMetadata?.collections?.[0]?.twitterUsername}`;
 
   if (
     (source == "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app" ||

@@ -36,6 +36,7 @@ const FiltersSidebar = ({ isForTraits }: Props) => {
           {!diamondHost && (
             <NumericFilters title="Rarity Rank" isRarity={true} />
           )}
+
           {collectionAttributes?.attributes?.map((attribute) => {
             return <TraitFilter key={attribute.key} attribute={attribute} />;
           })}

@@ -6,6 +6,7 @@ type Props = { attributes: NftAttributes[] | undefined; tokenCount: number };
 const TraitsHolder = ({ attributes, tokenCount }: Props) => {
   const traitList = attributes?.map((trait) => {
     const traitPercentage = (trait.tokenCount / tokenCount) * 100;
+
     const formatedTraitPercentage =
       traitPercentage % 1 > 0
         ? traitPercentage.toFixed(1)

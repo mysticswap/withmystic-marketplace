@@ -39,7 +39,7 @@ const ModalNft = ({
   if (nftData.isBuyNow) {
     tokenSymbol = nftData.symbol;
   } else {
-    tokenSymbol = supportedTokens?.[currentToken].symbol;
+    tokenSymbol = supportedTokens?.[currentToken]?.symbol;
   }
 
   return (

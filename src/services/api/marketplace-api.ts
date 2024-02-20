@@ -1,17 +1,29 @@
 /* eslint-disable no-useless-catch */
 import { BASE_API } from "../../config";
-import { ListOrOfferType } from "../../types/market-schemas.types";
+import {
+  ListOrOfferType,
+  SwapType,
+  signedOrderToMongo,
+} from "../../types/market-schemas.types";
 import { getQueryString } from "../../utils";
+import {
+  ActivityApiToReservoirApi,
+  ApiToReservoirApi,
+  MetadataApiToReservoirApi,
+  SingleActivityApiToReservoirApi,
+  SingleNFTApiToReservoirApi,
+  SwapApiToReservoirApi,
+  TraitApiToReservoirApi,
+} from "../apiReconciliation";
 
 const makeApiRequest = async (
   endpoint: string,
-  queryParams: Record<string, string | number>,
-  bearerToken: string
+  queryParams: Record<string, string | number>
 ) => {
   const queryString = getQueryString(queryParams);
   const headers = {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${bearerToken}`,
+    Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
   };
   const url = `${BASE_API}${endpoint}?${queryString}`;
 
@@ -29,12 +41,11 @@ const makeApiRequest = async (
 
 const makeApiPostRequest = async (
   endpoint: string,
-  bodyParams: Record<string, any>, // Allow varying types
-  bearerToken: string
+  bodyParams: Record<string, unknown> // Allow varying types
 ) => {
   const headers = {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${bearerToken}`,
+    Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
   };
   const url = `${BASE_API}${endpoint}`;
 
@@ -63,85 +74,68 @@ const makeApiPostRequest = async (
 
 export const getCollection = async (
   contractAddress: string,
-  chainId: number,
-  bearerToken: string
+  chainId: number
 ) => {
   const queryParams = { contractAddress, chainId };
-  return makeApiRequest(
-    "/marketplace-api/get-collection",
-    queryParams,
-    bearerToken
+  const owners = await getCollectionOwners(contractAddress, chainId);
+  return MetadataApiToReservoirApi(
+    await makeApiRequest("/marketplace-api/get-collection", queryParams),
+    owners.totalOwners
   );
 };
 
 export const getCollectionNfts = async (
   contractAddress: string,
   chainId: number,
-  page: number = 1,
-  bearerToken: string
+  page: number = 1
 ) => {
   const queryParams = { contractAddress, chainId, page };
-  return makeApiRequest(
-    "/marketplace-api/get-nfts-from-contract",
-    queryParams,
-    bearerToken
+  return ApiToReservoirApi(
+    await makeApiRequest("/marketplace-api/get-nfts-from-contract", queryParams)
   );
 };
 
 export const getSingleNft = async (
   contractAddress: string,
   tokenId: string,
-  chainId: number,
-  bearerToken: string
+  chainId: number
 ) => {
   const queryParams = { contractAddress, tokenId, chainId };
-  return makeApiRequest("/marketplace-api/get-nft", queryParams, bearerToken);
+  return SingleNFTApiToReservoirApi(
+    await makeApiRequest("/marketplace-api/get-nft", queryParams)
+  );
 };
 
 export const getCollectionTraits = async (
   contractAddress: string,
-  chainId: number,
-  bearerToken: string
+  chainId: number
 ) => {
   const queryParams = { contractAddress, chainId };
-  return makeApiRequest(
-    "/marketplace-api/get-collection-traits",
-    queryParams,
-    bearerToken
+  return TraitApiToReservoirApi(
+    await makeApiRequest("/marketplace-api/get-collection-traits", queryParams)
   );
 };
 
 export const getNftOwner = async (
   contractAddress: string,
   tokenId: string,
-  chainId: number,
-  bearerToken: string
+  chainId: number
 ) => {
   const queryParams = { contractAddress, tokenId, chainId };
-  return makeApiRequest(
-    "/marketplace-api/get-nft-owners",
-    queryParams,
-    bearerToken
-  );
+  return makeApiRequest("/marketplace-api/get-nft-owners", queryParams);
 };
 
 export const getCollectionOwners = async (
   contractAddress: string,
-  chainId: number,
-  bearerToken: string
+  chainId: number
 ) => {
   const queryParams = { contractAddress, chainId };
-  return makeApiRequest(
-    "/marketplace-api/get-collection-owners",
-    queryParams,
-    bearerToken
-  );
+  return makeApiRequest("/marketplace-api/get-collection-owners", queryParams);
 };
 
 export const getCollectionHistory = async (
   contractAddress: string,
   chainId: number,
-  bearerToken: string,
   pageKey?: string
 ) => {
   const queryParams = {
@@ -149,73 +143,87 @@ export const getCollectionHistory = async (
     chainId,
     ...(pageKey && { pageKey }),
   };
-  return makeApiRequest(
-    "/marketplace-api/get-collection-history",
-    queryParams,
-    bearerToken
+  return ActivityApiToReservoirApi(
+    await makeApiRequest("/marketplace-api/get-collection-history", queryParams)
   );
 };
 
 export const getAllSwaps = async (
-  creatorAddress: string,
   chainId: number,
-  bearerToken: string,
+  swapType: SwapType,
+  token: string,
   page: number = 1,
-  limit: number = 10,
+  limit: number = 100,
+  creatorAddress?: string
 ) => {
-  const queryParams = { creatorAddress, chainId, page, limit };
-  return makeApiRequest(
-    "/marketplace-api/all-swaps",
-    queryParams,
-    bearerToken
+  const queryParams = {
+    ...(creatorAddress && { creatorAddress }),
+    chainId,
+    page,
+    limit,
+  };
+  let swaps = await makeApiRequest("/marketplace-api/all-swaps", queryParams);
+  swaps = swaps.data
+    .filter((i: signedOrderToMongo) => i.type == swapType)
+    .filter((i: signedOrderToMongo) =>
+      i.orderComponents.offer.map((j) => j.token).includes(token)
+    );
+  return swaps;
+};
+
+export const getNeededSwaps = async (
+  chainId: number,
+  swapType: SwapType,
+  token: string,
+  page: number = 1,
+  limit: number = 100,
+  status: string = "validated",
+  creatorAddress?: string
+) => {
+  const queryParams = {
+    ...(creatorAddress && { creatorAddress }),
+    chainId,
+    page,
+    limit,
+    status,
+  };
+  let swaps = await makeApiRequest(
+    "/marketplace-api/filtered-swaps",
+    queryParams
   );
+  swaps = swaps.data.filter((i: signedOrderToMongo) => i.type == swapType);
+  // .filter((i: signedOrderToMongo) =>
+  //   i.orderComponents.offer.map((j) => j.token).includes(token)
+  // );
+  return SwapApiToReservoirApi(swaps);
 };
 
 export const getNftHistory = async (
   contractAddress: string,
   tokenId: string,
-  chainId: number,
-  bearerToken: string
+  chainId: number
 ) => {
   const queryParams = { contractAddress, chainId, tokenId };
-  return makeApiRequest(
-    "/marketplace-api/get-nft-history",
-    queryParams,
-    bearerToken
+  return SingleActivityApiToReservoirApi(
+    await makeApiRequest("/marketplace-api/get-nft-history", queryParams)
   );
 };
 
-export const getUserBalance = async (
-  address: string,
-  chainId: number,
-  bearerToken: string
-) => {
+export const getUserBalance = async (address: string, chainId: number) => {
   const queryParams = { address, chainId };
-  return makeApiRequest(
-    "/marketplace-api/get-balance",
-    queryParams,
-    bearerToken
-  );
+  return makeApiRequest("/marketplace-api/get-balance", queryParams);
 };
 
 export const getUserNFTs = async (
   address: string,
   chainId: number,
-  contractAddresses: string,
-  bearerToken: string
+  contractAddresses: string
 ) => {
   const queryParams = { address, chainId, contractAddresses };
-  return makeApiRequest(
-    "/marketplace-api/get-nfts",
-    queryParams,
-    bearerToken
-  );
+  return makeApiRequest("/marketplace-api/get-nfts", queryParams);
 };
 
-export const createSwap = async (
-  swapData: ListOrOfferType,
-  bearerToken: string
-) => {
+export const createSwap = async (swapData: ListOrOfferType) => {
   const bodyParams = {
     chainId: swapData.chainId,
     offerer: swapData.offerer,
@@ -227,86 +235,51 @@ export const createSwap = async (
     ...(swapData.fees && { fees: swapData.fees }),
     ...(swapData.endTime && { endTime: swapData.endTime }),
   };
-  return makeApiPostRequest(
+  const response = await makeApiPostRequest(
     "/marketplace-api/create-swap",
-    bodyParams,
-    bearerToken
+    bodyParams
   );
+  if (response.statusCode == 200) {
+    await validateSwap(response.swapId, "");
+  }
+  return response;
 };
 
-export const validateSwap = async (
-  swapId: string,
-  signature: string,
-  bearerToken: string
-) => {
+export const validateSwap = async (swapId: string, signature: string) => {
   const bodyParams = {
     swapId,
     signature,
   };
-  return makeApiPostRequest(
-    "/marketplace-api/validate-swap",
-    bodyParams,
-    bearerToken
-  );
+  return makeApiPostRequest("/marketplace-api/validate-swap", bodyParams);
 };
 
-export const acceptSwap = async (
-  swapId: string,
-  takerAddress: string,
-  bearerToken: string
-) => {
+export const acceptSwap = async (swapId: string, takerAddress: string) => {
   const bodyParams = {
     swapId,
     takerAddress,
   };
-  return makeApiPostRequest(
-    "/marketplace-api/accept-swap",
-    bodyParams,
-    bearerToken
-  );
+  return makeApiPostRequest("/marketplace-api/accept-swap", bodyParams);
 };
 
-export const cancelSwap = async (
-  swapId: string,
-  bearerToken: string
-) => {
+export const cancelSwap = async (swapId: string) => {
   const bodyParams = {
     swapId,
   };
-  return makeApiPostRequest(
-    "/marketplace-api/cancel-swap",
-    bodyParams,
-    bearerToken
-  );
+  return makeApiPostRequest("/marketplace-api/cancel-swap", bodyParams);
 };
 
-
-export const verifyAcceptedSwap = async (
-  swapId: string,
-  bearerToken: string
-) => {
+export const verifyAcceptedSwap = async (swapId: string) => {
   const bodyParams = {
     swapId,
   };
-  return makeApiPostRequest(
-    "/marketplace-api/verify-accepted",
-    bodyParams,
-    bearerToken
-  );
+  return makeApiPostRequest("/marketplace-api/verify-accepted", bodyParams);
 };
 
-export const verifyCancelledSwap = async (
-  swapId: string,
-  bearerToken: string
-) => {
+export const verifyCancelledSwap = async (swapId: string) => {
   const bodyParams = {
     swapId,
   };
-  return makeApiPostRequest(
-    "/marketplace-api/verify-cancelled",
-    bodyParams,
-    bearerToken
-  );
+  return makeApiPostRequest("/marketplace-api/verify-cancelled", bodyParams);
 };
 // create swap
 // validate swap
