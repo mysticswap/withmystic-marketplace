@@ -125,6 +125,7 @@ const Navbar = () => {
                           setSelectedCollection(collection);
                           setCurrentTab(tabOptions[0]);
                           setShowDropdownOptions(false);
+                          setShowMobileMenu(false);
                         }}
                       >
                         {collection.name}{" "}
@@ -137,7 +138,12 @@ const Navbar = () => {
             )}
           </div>
 
-          <Link to="/swaps">
+          <Link
+            to="/swaps"
+            onClick={() => {
+              setShowMobileMenu(false);
+            }}
+          >
             <button className="sell_button">Swap</button>
           </Link>
 
