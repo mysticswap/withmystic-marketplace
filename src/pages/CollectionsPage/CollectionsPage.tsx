@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import './CollectionsPage.css'
 import { collectionTableOptions } from "../../constants";
 import { Collection } from "./types";
+import { CollectionsSection } from "./Components/CollectionSection/CollectionsSection";
 
 const CollectionsPage = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState<null | number>(0)
@@ -27,20 +28,20 @@ const CollectionsPage = () => {
   
   function handleTrendingCollections(){
     setRows([
-      createData("1",'Trending Wizards', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("2",'Trending Wizards', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("3",'Trending Wizards', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("4",'Trending Wizards', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("5",'Trending Wizards', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
+      createData("1",'Trending Mystical Wizards', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
+      createData("2",'Pudgy penguins', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
+      createData("3",'Red Apples', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
+      createData("4",'Oranges', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
+      createData("5",'Mythical Beings', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
     ]);
   }
   function handleDefaultCollections(){
     setRows([
       createData("1",'Mystical Wizards', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("2",'Mystical Wizards', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("3",'Mystical Wizards', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("4",'Mystical Wizards', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("5",'Mystical Wizards', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
+      createData("2",'Pudgy penguins', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
+      createData("3",'Red Apples', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
+      createData("4",'Oranges', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
+      createData("5",'Mythical Beings', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
     ]);
   }
     
@@ -65,6 +66,9 @@ const CollectionsPage = () => {
          select={() =>handleTabSelection(index)}/>)}
       </div>
       <CollectionsTable rows={rows}/>
+      <CollectionsSection title="Categories" collections={rows}/>
+      <CollectionsSection title="Brands" collections={rows}/>
+
     </div>
     
   )

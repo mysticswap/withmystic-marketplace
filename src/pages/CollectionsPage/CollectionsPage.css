@@ -1,7 +1,13 @@
 .tabs_container {
   display: flex;
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+  }
 }
 .collections_page_container {
   box-sizing: border-box;
   padding: 3rem;
+  @media screen and (max-width: 1024px) {
+    padding: 2rem;
+  }
 }
