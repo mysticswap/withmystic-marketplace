@@ -1,0 +1,24 @@
+.nft_card_skeleton {
+  border: 1px solid var(--ms-mp-card-border-color);
+  border-radius: var(--ms-mp-card-border-radius);
+  overflow: hidden;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+.text_skeleton {
+  margin: 0 1rem;
+}
+.skeleton_img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3/4;
+  display: block;
+  max-height: 420px;
+  object-fit: cover;
+  background-color: var(--ms-mp-gray-light-alt);
+}
