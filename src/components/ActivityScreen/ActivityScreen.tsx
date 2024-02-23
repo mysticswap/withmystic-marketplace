@@ -40,8 +40,8 @@ const ActivityScreen = () => {
     )
       .then((result) => {
         setCollectionActivity({
-          activities: [...collectionActivity.activities, ...result.activities],
-          continuation: result.continuation,
+          activities: [...collectionActivity.activities, ...result?.activities || []],
+          continuation: result?.continuation,
         });
       })
       .finally(() => {

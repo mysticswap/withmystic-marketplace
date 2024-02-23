@@ -239,7 +239,7 @@ export function ActivityApiToReservoirApi(activityData: any, types: string) {
         },
       };
     })
-    .filter((i) => JSON.parse(types).includes(i.type));
+    .filter((i:any) => JSON.parse(types).includes(i.type));
 
   return { activities: nfts };
 }

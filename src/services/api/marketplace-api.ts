@@ -8,7 +8,6 @@ import {
 import {
   filterObjectsByAttributes,
   getQueryString,
-  parseAttributesQueryParams,
 } from "../../utils";
 import {
   ActivityApiToReservoirApi,

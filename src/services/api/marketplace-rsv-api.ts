@@ -4,7 +4,6 @@ import { Post as AuthPost } from "../../types/rsv-types/buy-data.types";
 import { marketplaceInstance } from "../axios";
 import {
   getAllOffers,
-  getAllSwaps,
   getCollection,
   getCollectionHistory,
   getCollectionNfts,
@@ -113,8 +112,13 @@ export const getCollectionActivity = async (
         ...history.activities,
         ...request.data.activities,
       ].sort((a, b) => b.timestamp - a.timestamp),
+      continuation:""
     };
   }
+
+  request.data.activities  =  request.data.activities.sort((a:any, b:any) => b.timestamp - a.timestamp)
+
+  return request.data
 };
 
 export const getCollectionTraitsV2 = async (

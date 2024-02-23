@@ -150,7 +150,7 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
                           price,
                           usd,
                           order.maker,
-                          order?._id || order?.swapId
+                          order?._id || order?.id || order?.swapId
                         )
                       }
                     >

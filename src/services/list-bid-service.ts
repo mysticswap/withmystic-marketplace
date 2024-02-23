@@ -37,12 +37,12 @@ export const handleListOrBidData = async (
           setStage(1);
         }
 
-        const orderComponents = signTypedMessage.value;
-        const payloadVerify = {
-          parameters: orderComponents,
-          signature: signature,
-          swapId,
-        };
+        // const orderComponents = signTypedMessage.value;
+        // const payloadVerify = {
+        //   parameters: orderComponents,
+        //   signature: signature,
+        //   swapId,
+        // };
 
         const response = await validateSwap(swapId, signature);
         if (response) {
