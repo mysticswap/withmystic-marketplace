@@ -44,8 +44,8 @@ const NftCard = ({ nft }: Props) => {
     collectionChainId,
     collectionContract,
     userBalance,
-    client,
     collectionActivity,
+    client,
     source,
   } = useGlobalContext();
   const { user, chainId, setProvider, setUser, setChainId } =
@@ -73,21 +73,21 @@ const NftCard = ({ nft }: Props) => {
       return type == "sale" && token?.tokenId == nft?.token?.tokenId;
     }
   );
-  const priceSale = saleActivity?.[0]?.price;
-  const priceList = listActivity?.[0]?.price;
+  const priceSale = saleActivity?.[0]?.price || nft?.token?.lastSale?.price;
+  const priceList = listActivity?.[0]?.price || nft?.market?.floorAsk?.price;
 
-  const timeSale = saleActivity?.[0]?.timestamp || 0;
-  const timeList = listActivity?.[0]?.timestamp || 0;
+  const timeSale = nft?.token?.lastSale?.timestamp || 0;
+  const timeList = nft?.market?.floorAsk?.validUntil || 0;
+  const validFrom = nft?.market?.floorAsk?.validFrom || 0;
 
   const currentEthAmount = priceList?.amount?.decimal;
-  // const currentEthAmount = nft?.market?.floorAsk?.price?.amount?.decimal;
   const saleSymbol = priceSale?.currency?.symbol;
   const listSymbol = priceList?.currency?.symbol;
-  // const symbol = nft?.market?.floorAsk?.price?.currency?.symbol;
+
   const currentValue = Math.round(priceList?.amount?.usd);
-  // const currentValue = Math.round(nft?.market?.floorAsk?.price?.amount?.usd);
+
   const lastSale = priceSale?.amount?.decimal;
-  // const lastSale = nft?.market?.floorAsk?.price?.amount?.decimal;
+
   const nftName = nft?.token?.name;
   const nftId = nft?.token?.tokenId;
   const sourceIcon = nft?.market?.floorAsk?.source?.icon;
@@ -98,15 +98,12 @@ const NftCard = ({ nft }: Props) => {
   const supply = nft?.token?.remainingSupply;
 
   const currentTokenAmount = priceSale?.amount?.decimal;
-  // const currentTokenAmount = nft.market?.floorAsk?.price?.amount?.decimal;
   const currentUsdValue = priceSale?.amount?.usd;
-  // const currentUsdValue = nft.market?.floorAsk?.price?.amount?.usd;
   const currentTokenSymbol = priceSale?.currency?.symbol;
-  // const currentTokenSymbol = nft.market?.floorAsk?.price?.currency?.symbol;
 
   const isFromCurrentMarketplace = sourceDomain == client.hostname;
   const currentDecimalToken = priceSale?.currency?.decimals;
-  // const currentDecimalToken = nft?.market?.floorAsk?.price?.currency?.decimals;
+
   const isETHModal =
     nft?.market?.floorAsk?.price?.currency.contract === ETH_CONTRACT_ADDRESS;
 
@@ -124,7 +121,7 @@ const NftCard = ({ nft }: Props) => {
   const nftMarketUrl = `https://${source}/${collectionContract}/${nftId}`;
   const postData = getDiscordEndpointData(nft, user!, client, nftMarketUrl);
   const activityData = generateSaleActivity(nft, "sale", user!);
-  // console.log(nftMarketUrl);
+
   const postDataToken = getDiscordEndpointDataToken(
     nft,
     user!,
@@ -287,7 +284,7 @@ const NftCard = ({ nft }: Props) => {
         </div>
         <Link to={`/${collectionContract}/${nftId}`}>
           <p className="nft_card_amount">
-            {priceList && timeList > timeSale ? (
+            {priceList && (timeList > timeSale || validFrom > timeSale) ? (
               <>
                 {`${currentEthAmount} ${listSymbol}`}{" "}
                 <span>(${currentValue})</span>
@@ -302,7 +299,7 @@ const NftCard = ({ nft }: Props) => {
           {priceSale && (
             <>
               Last sale: {lastSale}
-              {saleSymbol} {!lastSale && !saleSymbol && "---"}
+              {saleSymbol}
             </>
           )}
         </p>
@@ -321,7 +318,6 @@ const NftCard = ({ nft }: Props) => {
           <button
             onClick={buyNftToken}
             disabled={(user && !userCanBuyTokenBalance) as boolean}
-            // disabled={true}
           >
             {userCanBuyTokenBalance
               ? "Buy now"
