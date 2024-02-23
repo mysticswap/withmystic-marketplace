@@ -5,11 +5,16 @@ import {
   SwapType,
   signedOrderToMongo,
 } from "../../types/market-schemas.types";
-import { getQueryString } from "../../utils";
+import {
+  filterObjectsByAttributes,
+  getQueryString,
+  parseAttributesQueryParams,
+} from "../../utils";
 import {
   ActivityApiToReservoirApi,
   ApiToReservoirApi,
   MetadataApiToReservoirApi,
+  OffersApiToReservoirApi,
   SingleActivityApiToReservoirApi,
   SingleNFTApiToReservoirApi,
   SwapApiToReservoirApi,
@@ -87,12 +92,19 @@ export const getCollection = async (
 export const getCollectionNfts = async (
   contractAddress: string,
   chainId: number,
-  page: number = 1
+  page: number = 1,
+  attributes?: string
 ) => {
   const queryParams = { contractAddress, chainId, page };
-  return ApiToReservoirApi(
+  const result = ApiToReservoirApi(
     await makeApiRequest("/marketplace-api/get-nfts-from-contract", queryParams)
   );
+
+  const filteredResult = {
+    tokens: filterObjectsByAttributes(result.tokens, attributes as string),
+  };
+
+  return filteredResult;
 };
 
 export const getSingleNft = async (
@@ -136,6 +148,7 @@ export const getCollectionOwners = async (
 export const getCollectionHistory = async (
   contractAddress: string,
   chainId: number,
+  types?: string,
   pageKey?: string
 ) => {
   const queryParams = {
@@ -143,9 +156,17 @@ export const getCollectionHistory = async (
     chainId,
     ...(pageKey && { pageKey }),
   };
-  return ActivityApiToReservoirApi(
-    await makeApiRequest("/marketplace-api/get-collection-history", queryParams)
-  );
+  try {
+    return ActivityApiToReservoirApi(
+      await makeApiRequest(
+        "/marketplace-api/get-collection-history",
+        queryParams
+      ),
+      types as string
+    );
+  } catch {
+    return { activities: [] };
+  }
 };
 
 export const getAllSwaps = async (
@@ -171,9 +192,32 @@ export const getAllSwaps = async (
   return swaps;
 };
 
-export const getNeededSwaps = async (
+export const getAllOffers = async (
   chainId: number,
   swapType: SwapType,
+  token: string,
+  page: number = 1,
+  limit: number = 100,
+  creatorAddress?: string
+) => {
+  const queryParams = {
+    ...(creatorAddress && { creatorAddress }),
+    chainId,
+    page,
+    limit,
+  };
+  let swaps = await makeApiRequest("/marketplace-api/all-swaps", queryParams);
+  swaps = swaps.data
+    .filter((i: signedOrderToMongo) => i.type == swapType)
+    .filter((i: signedOrderToMongo) =>
+      i.orderComponents.offer.map((j) => j.token).includes(token)
+    );
+  return OffersApiToReservoirApi(swaps);
+};
+
+export const getNeededSwaps = async (
+  chainId: number,
+  swapType: string,
   token: string,
   page: number = 1,
   limit: number = 100,
@@ -192,7 +236,7 @@ export const getNeededSwaps = async (
     queryParams
   );
   swaps = swaps.data
-    .filter((i: signedOrderToMongo) => i.type == swapType)
+    .filter((i: signedOrderToMongo) => JSON.parse(swapType).includes(i.type))
     .filter((i: signedOrderToMongo) =>
       i.orderComponents.offer.map((j) => j.token).includes(token)
     );
@@ -205,9 +249,11 @@ export const getNftHistory = async (
   chainId: number
 ) => {
   const queryParams = { contractAddress, chainId, tokenId };
-  return SingleActivityApiToReservoirApi(
+  const res = SingleActivityApiToReservoirApi(
     await makeApiRequest("/marketplace-api/get-nft-history", queryParams)
   );
+  console.log({ res });
+  return res;
 };
 
 export const getUserBalance = async (address: string, chainId: number) => {
@@ -220,7 +266,11 @@ export const getUserNFTs = async (
   chainId: number,
   contractAddresses: string
 ) => {
-  const queryParams = { address, chainId, contractAddresses };
+  const queryParams = {
+    address,
+    chainId,
+    contractAddresses: JSON.stringify([contractAddresses]),
+  };
   return makeApiRequest("/marketplace-api/get-nfts", queryParams);
 };
 
@@ -240,9 +290,9 @@ export const createSwap = async (swapData: ListOrOfferType) => {
     "/marketplace-api/create-swap",
     bodyParams
   );
-  if (response.statusCode == 200) {
-    await validateSwap(response.swapId, "");
-  }
+  // if (response.statusCode == 200) {
+  //   await validateSwap(response.swapId, "");
+  // }
   return response;
 };
 

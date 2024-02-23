@@ -161,12 +161,13 @@ export const acceptOffer = async (
   chainId: number,
   token: string,
   taker: string,
-  source: string
+  source: string,
+  swapId?: string
 ) => {
-  // if (otherChains.includes(chainId)) {
-  //   const swapRes = await acceptSwap(orderId, taker);
-  //   return swapRes;
-  // }
+  if (otherChains.includes(chainId) && swapId) {
+    const swapRes = await acceptSwap(swapId as string, taker);
+    return swapRes;
+  }
 
   const request = await marketplaceInstance.post("/accept-offer", {
     chainId,

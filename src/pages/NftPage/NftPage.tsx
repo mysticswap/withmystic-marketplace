@@ -65,6 +65,7 @@ const NftPage = () => {
   if (!nftDataV2.tokens.length) {
     return <NotFound />;
   }
+  console.log({ nftActivity });
 
   return (
     <>

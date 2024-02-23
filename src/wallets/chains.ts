@@ -42,4 +42,4 @@ export const supportedChains = [
   },
 ];
 
-export const otherChains = [278611351, 7001, 7000, 1, 137];
+export const otherChains = [278611351, 7001, 7000, 5, 1];

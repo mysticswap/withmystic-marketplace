@@ -5,6 +5,8 @@ import { submitListOrBid } from "./api/marketplace-rsv-api";
 import { executeTransactions } from "./seaport";
 import { ActivityObject } from "../types/activity.types";
 import { postActivityToDB } from "./api/activity.api";
+import { otherChains } from "../wallets/chains";
+import { validateSwap } from "./api/marketplace-api";
 
 export const handleListOrBidData = async (
   chainId: number,
@@ -17,6 +19,42 @@ export const handleListOrBidData = async (
 
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
+
+  if (otherChains.includes(chainId)) {
+    const { signTypedMessage, approvalsNeeded, swapId } = data;
+    return executeTransactions(approvalsNeeded, signer)
+      .then(async () => {
+        const signature = await signer._signTypedData(
+          signTypedMessage?.domainData!,
+          signTypedMessage?.types as unknown as Record<
+            string,
+            Array<TypedDataField>
+          >,
+          signTypedMessage?.value!
+        );
+
+        if (signature) {
+          setStage(1);
+        }
+
+        const orderComponents = signTypedMessage.value;
+        const payloadVerify = {
+          parameters: orderComponents,
+          signature: signature,
+          swapId,
+        };
+
+        const response = await validateSwap(swapId, signature);
+        if (response) {
+          setStage(2);
+          postActivityToDB(activityData);
+        }
+      })
+      .catch(() => {
+        modalSetter(false);
+        setStage(0);
+      });
+  }
 
   const requiredApprovals: Data[] = [];
   data.steps.forEach((step) => {

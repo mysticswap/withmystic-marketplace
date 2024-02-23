@@ -3,6 +3,7 @@ import { Post } from "../../types/rsv-types/listing-data.types";
 import { Post as AuthPost } from "../../types/rsv-types/buy-data.types";
 import { marketplaceInstance } from "../axios";
 import {
+  getAllOffers,
   getAllSwaps,
   getCollection,
   getCollectionHistory,
@@ -15,6 +16,7 @@ import {
 } from "./marketplace-api";
 import { otherChains } from "../../wallets/chains";
 import { SwapType } from "../../types/market-schemas.types";
+import { UserNFTToReservoirAPI } from "../apiReconciliation";
 
 export const getCollectionMetadata = async (
   chainId: number,
@@ -42,10 +44,6 @@ export const getCollectionNftsV2 = async (
   source?: string,
   currencies?: string
 ) => {
-  if (otherChains.includes(chainId)) {
-    const data = await getCollectionNfts(contractAddress as string, chainId, 1);
-    return data;
-  }
   const request = await marketplaceInstance.get("get-nfts-v2", {
     params: {
       chainId,
@@ -61,6 +59,30 @@ export const getCollectionNftsV2 = async (
     },
   });
 
+  if (otherChains.includes(chainId)) {
+    const data = await getCollectionNfts(
+      contractAddress as string,
+      chainId,
+      1,
+      attributes
+    );
+    return data;
+  }
+  // const request = await marketplaceInstance.get("get-nfts-v2", {
+  //   params: {
+  //     chainId,
+  //     sortBy,
+  //     sortDirection,
+  //     contractAddress,
+  //     ...(continuation && { continuation }),
+  //     ...(attributes && { attributes }),
+  //     ...(tokens && { tokens }),
+  //     ...(numericFilters && { numericFilters }),
+  //     ...(source && { source }),
+  //     ...(currencies && { currencies }),
+  //   },
+  // });
+
   return request.data;
 };
 
@@ -69,23 +91,30 @@ export const getCollectionActivity = async (
   contractAddress: string,
   types: string
 ) => {
-  if (otherChains.includes(chainId)) {
-    const swaps = await getNeededSwaps(
-      chainId,
-      SwapType.Listing,
-      contractAddress
-    );
-    const history = await getCollectionHistory(
-      contractAddress as string,
-      chainId
-    );
-    return { activities: [...swaps.activities, ...history.activities] };
-  }
-
   const request = await marketplaceInstance.get("/get-collection-activity", {
     params: { chainId, contractAddress, types },
   });
-  return request.data;
+
+  if (otherChains.includes(chainId)) {
+    const swaps = await getNeededSwaps(
+      chainId,
+      types || JSON.stringify([SwapType.Listing]),
+      contractAddress
+    );
+
+    const history = await getCollectionHistory(
+      contractAddress as string,
+      chainId,
+      types
+    );
+    return {
+      activities: [
+        ...swaps.activities,
+        ...history.activities,
+        ...request.data.activities,
+      ].sort((a, b) => b.timestamp - a.timestamp),
+    };
+  }
 };
 
 export const getCollectionTraitsV2 = async (
@@ -121,7 +150,7 @@ export const getNftOffers = async (
   continuation?: string
 ) => {
   if (otherChains.includes(chainId)) {
-    return await getAllSwaps(chainId, SwapType.Offer, token as string);
+    return await getAllOffers(chainId, SwapType.Offer, token as string);
   }
 
   const request = await marketplaceInstance("/get-nft-offers", {
@@ -161,7 +190,10 @@ export const getUserNfts = async (
   continuation?: string
 ) => {
   if (otherChains.includes(chainId)) {
-    return await getUserNFTs(user, chainId, collection as string);
+    return UserNFTToReservoirAPI(
+      await getUserNFTs(user, chainId, collection as string),
+      chainId
+    );
   }
 
   const request = await marketplaceInstance("get-user-nfts", {

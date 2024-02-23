@@ -58,7 +58,12 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
 
   const isOwner = nftInfo?.owner?.toLowerCase() == user?.toLowerCase();
 
-  const acceptBid = (amount: number, price: number, offerMaker: string) => {
+  const acceptBid = (
+    amount: number,
+    price: number,
+    offerMaker: string,
+    orderId?: string
+  ) => {
     const isOffer = false;
     const isSale = true;
     const txMessage = `I’ve just sold ${nftInfo?.name}!`;
@@ -75,32 +80,34 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
     setShowConfirmationModal(true);
     const source = getHostName();
     switchChains(chainId, collectionChainId).then(() => {
-      acceptOffer(collectionChainId, user!, token, source).then((result) => {
-        const postData = getDiscordEndpointData(
-          nft,
-          offerMaker,
-          client,
-          nftMarketUrl,
-          amount.toString(),
-          price.toString()
-        );
-        const activityData = generateSaleActivity(
-          nft,
-          "sale",
-          offerMaker,
-          amount.toString()
-        );
-        setTransactionStage(1);
-        handleBuyOrSellData(
-          result,
-          setTransactionStage,
-          setTransactionHash,
-          setShowConfirmationModal,
-          collectionChainId,
-          postData,
-          activityData
-        );
-      });
+      acceptOffer(collectionChainId, user!, token, source, orderId).then(
+        (result) => {
+          const postData = getDiscordEndpointData(
+            nft,
+            offerMaker,
+            client,
+            nftMarketUrl,
+            amount.toString(),
+            price.toString()
+          );
+          const activityData = generateSaleActivity(
+            nft,
+            "sale",
+            offerMaker,
+            amount.toString()
+          );
+          setTransactionStage(1);
+          handleBuyOrSellData(
+            result,
+            setTransactionStage,
+            setTransactionHash,
+            setShowConfirmationModal,
+            collectionChainId,
+            postData,
+            activityData
+          );
+        }
+      );
     });
   };
 
@@ -138,7 +145,14 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
                   {isOwner && (
                     <button
                       className="offer_accept_button"
-                      onClick={() => acceptBid(price, usd, order.maker)}
+                      onClick={() =>
+                        acceptBid(
+                          price,
+                          usd,
+                          order.maker,
+                          order?._id || order?.swapId
+                        )
+                      }
                     >
                       Accept
                     </button>

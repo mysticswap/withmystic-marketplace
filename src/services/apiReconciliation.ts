@@ -23,6 +23,15 @@ export function ApiToReservoirApi(nftData: NftContractNftsResponse) {
         //"maker": "0xa5e809ebf9c9906f8ac12af273fb736fce5c39c9",
       },
       token: {
+        attributes:
+          data.rawMetadata?.attributes?.map((key) => {
+            return {
+              key: key.trait_type,
+              kind: "string",
+              value: key.value,
+              tokenCount: key.count || 0,
+            };
+          }) || [],
         chainId: 1,
         contract: data.contract.address,
         tokenId: data.tokenId,
@@ -127,49 +136,169 @@ export function SingleNFTTraitApiToReservoirApi(traits: any) {
   return newTraits;
 }
 
-export function ActivityApiToReservoirApi(activityData: any) {
-  const nfts = activityData.nftSales.map((data: any) => {
+export function UserNFTToReservoirAPI(nfts: any, chainId: number) {
+  const newTokens = nfts.ownedNfts.map((nft: any) => {
     return {
-      type: "ask",
-      fromAddress: data.buyerAddress,
-      toAddress: data.sellerAddress,
-      price: {
-        currency: {
-          contract: data.sellerFee.tokenAddress,
-          name: data.sellerFee.symbol,
-          symbol: data.sellerFee.symbol || "ETH",
-          decimals: data.sellerFee.decimal,
-        },
-        amount: {
-          raw: +(data.sellerFee.amount / 10 ** 18).toFixed(5),
-          decimal: +(data.sellerFee.amount / 10 ** 18).toFixed(5),
-          usd: 264.15361,
-          native: +(data.sellerFee.amount / 10 ** 18).toFixed(5),
+      ownership: {
+        tokenCount: "1",
+        onSaleCount: "0",
+        floorAsk: {
+          id: null,
+          price: null,
+          maker: null,
+          kind: null,
+          validFrom: null,
+          validUntil: null,
+          source: null,
         },
       },
-      amount: 1,
-      timestamp: data.timestamp,
-      contract: data.contractAddress,
       token: {
-        tokenId: data.tokenMetadata.tokenId,
+        chainId,
+        contract: nft.contract.address,
+        tokenId: nft.tokenId,
+        kind: nft.tokenType,
+        name: nft.title,
+        image: nft.media[0].thumbnail,
+        imageSmall: nft.media[0].thumbnail,
+        imageLarge: convertToIPFSImage(nft.media[0].raw),
+        metadata: {
+          imageOriginal: nft.media[0].raw,
+          imageMimeType: "image/jpeg",
+          tokenURI: nft.tokenUri.gateway,
+        },
+        description: nft.contract.description,
+        supply: nft.balance,
+        remainingSupply: nft.balance,
+        media: null,
+        isFlagged: false,
         isSpam: false,
-        isNsfw: false,
-        tokenName: data.tokenMetadata.title,
-        tokenImage: convertToIPFSImage(data.tokenMetadata.rawMetadata.image),
-        // rarityScore: 195.341,
-        // rarityRank: 25,
-      },
-      collection: {
-        collectionId: data.contractAddress,
-        isSpam: false,
-        isNsfw: false,
-        collectionName: data.tokenMetadata.contract.name,
-        collectionImage: data.tokenMetadata.contract.openSea.imageUrl,
+        metadataDisabled: false,
+        lastFlagUpdate: null,
+        lastFlagChange: null,
+        collection: {
+          id: nft.contract.address,
+          name: nft.contract.name,
+          slug: nft.contract.name,
+          symbol: nft.contract.symbol,
+          imageUrl: convertToIPFSImage(nft.media[0].raw),
+          isSpam: false,
+          metadataDisabled: false,
+          openseaVerificationStatus: "not_requested",
+
+          royaltiesBps: 0,
+          royalties: [],
+        },
+        lastAppraisalValue: null,
       },
     };
   });
 
+  return { tokens: newTokens };
+}
+
+export function ActivityApiToReservoirApi(activityData: any, types: string) {
+  const nfts = activityData.nftSales
+    .map((data: any) => {
+      return {
+        type: "sale",
+        swapId: data._id,
+        fromAddress: data.buyerAddress,
+        toAddress: data.sellerAddress,
+        price: {
+          currency: {
+            contract: data.sellerFee.tokenAddress,
+            name: data.sellerFee.symbol,
+            symbol: data.sellerFee.symbol || "ETH",
+            decimals: data.sellerFee.decimal,
+          },
+          amount: {
+            raw: +(data.sellerFee.amount / 10 ** 18).toFixed(5),
+            decimal: +(data.sellerFee.amount / 10 ** 18).toFixed(5),
+            usd: 264.15361,
+            native: +(data.sellerFee.amount / 10 ** 18).toFixed(5),
+          },
+        },
+        amount: 1,
+        timestamp: data.timestamp,
+        contract: data.contractAddress,
+        token: {
+          tokenId: data.tokenMetadata.tokenId,
+          isSpam: false,
+          isNsfw: false,
+          tokenName: data.tokenMetadata.title,
+          tokenImage: convertToIPFSImage(data.tokenMetadata.rawMetadata.image),
+          // rarityScore: 195.341,
+          // rarityRank: 25,
+        },
+        collection: {
+          collectionId: data.contractAddress,
+          isSpam: false,
+          isNsfw: false,
+          collectionName: data.tokenMetadata.contract.name,
+          collectionImage: data.tokenMetadata.contract.openSea.imageUrl,
+        },
+      };
+    })
+    .filter((i) => JSON.parse(types).includes(i.type));
+
   return { activities: nfts };
+}
+
+export function OffersApiToReservoirApi(offerData: any) {
+  const nfts = offerData.data.map((data: any) => {
+    return {
+      id: data._id,
+      kind: data.metadata.nftsMetadata[0].tokenType,
+      // side: string;
+      status: data.status,
+      tokenSetId: data.metadata.nftsMetadata[0].tokenId,
+      contract: data.metadata.nftsMetadata[0].contract.address,
+      contractKind: data.metadata.nftsMetadata[0].tokenType,
+      maker: data.creatorAddress,
+      taker: data.takerAddress,
+      price: {
+        currency: {
+          contract: "",
+          name: "WETH",
+          symbol: "WETH",
+          decimals: 18,
+        },
+        amount: {
+          raw: +(+data.orderComponents.offer.slice(-1)[0].endAmount).toFixed(5),
+          decimal: +(
+            +data.orderComponents.offer.slice(-1)[0].endAmount /
+            10 ** 18
+          ).toFixed(5),
+          usd: 264.15361,
+          native: +(
+            +data.orderComponents.offer.slice(-1)[0].endAmount /
+            10 ** 18
+          ).toFixed(5),
+        },
+      },
+      validFrom: data.orderComponents.startTime,
+      validUntil: data.orderComponents.endTime,
+      quantityFilled: "1",
+      // quantityRemaining: number;
+      // criteria: Criteria;
+      source: {
+        id: data.clientId,
+        domain: "",
+        name: "MysticSwap",
+        icon: "",
+        url: "",
+      },
+      // feeBps: number;
+      // feeBreakdown: FeeBreakdown[];
+      // expiration: number;
+      // isReservoir: null;
+      // createdAt: Date;
+      // updatedAt: Date;
+      // originatedAt: Date;
+    };
+  });
+
+  return { orders: nfts };
 }
 
 export function SwapApiToReservoirApi(swapData: any) {

@@ -163,3 +163,47 @@ export const convertToIPFSImage = (image: string) => {
   const imageUrl = image.replace("ipfs://", "https://ipfs.io/ipfs/");
   return imageUrl;
 };
+
+export function parseAttributesQueryParams(queryParamsString: string) {
+  const queryObj: any = {};
+  const queryParams = new URLSearchParams(queryParamsString);
+  queryParams.forEach((value, key) => {
+    if (key === "includeAttributes") {
+      queryObj[key] = value === "true";
+    } else {
+      if (!queryObj.attributes) {
+        queryObj.attributes = {};
+      }
+      const attributeKey = key.match(/\[(.*?)\]/)?.[1] || "";
+      if (!queryObj.attributes[attributeKey]) {
+        queryObj.attributes[attributeKey] = [];
+      }
+      queryObj.attributes[attributeKey].push(value);
+    }
+  });
+  return queryObj;
+}
+
+// Function to filter objects based on query parameters
+export function filterObjectsByAttributes(objects: any[], query: any) {
+  query = parseAttributesQueryParams(query);
+  if (!query.includeAttributes || !query.attributes) return objects;
+  return objects.filter((obj) => {
+    const attributes = obj.token.attributes;
+
+    for (const [key, value] of Object.entries(query.attributes)) {
+      const matchingAttribute = attributes.find(
+        (attr: any) => attr.key === key
+      );
+      if (
+        !matchingAttribute ||
+        (Array.isArray(value) && !value.includes(matchingAttribute.value)) ||
+        (!Array.isArray(value) && matchingAttribute.value !== value)
+      ) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+}

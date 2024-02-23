@@ -70,6 +70,7 @@ const CardsHolder = () => {
     const { scrollTop, scrollHeight, clientHeight } = cardsHolderRef.current!;
     const isAtBottom = scrollTop + clientHeight - scrollHeight >= -1;
     const attributeString = generateAttributeString(selectedTraits);
+    console.log({ attributeString });
 
     if (isAtBottom && collectionNfts.continuation) {
       useHideComponent("footer");
