@@ -38,7 +38,7 @@ const CollectionsPage = () => {
   
   return (
     <div className="collections_page_container">
-      <Banner details={false} activity={false} collectionInformation={false}/>
+      <Banner activity={false} />
       <div className="tabs_container">
         <Tab />
       </div>
