@@ -29,40 +29,6 @@
   color: white;
 }
 
-.collection_pill {
-  background-color: var(--ms-mp-body-background);
-  padding: 1rem;
-  border-radius: var(--ms-mp-large-border-radius);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40%;
-  gap: 2rem;
-  border: var(--ms-mp-gray-border);
-  border-color: var(--ms-mp-gray-light);
-}
-
-.pill_item p {
-  margin: 0;
-  font-size: 18px;
-}
-
-.pill_item > div {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.pill_item > div p:first-of-type {
-  font-weight: bold;
-  color: var(--ms-mp-text-color);
-}
-
-.pill_item > p {
-  font-weight: 400;
-  color: var(--ms-mp-gray-text);
-}
-
 .tabs {
   width: fit-content;
   margin: 0 auto;
@@ -94,17 +60,100 @@
   max-width: 15px;
 }
 
-.collection_information {
-  height: 60vh;
+.collection_information_wrapper {
+  height: fit-content;
   box-sizing: border-box;
   padding-top: 4rem;
+  margin-left: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }
+
 .collection_name {
   font-weight: 550;
   font-size: 1.5rem;
 }
-.creator_address
+.creator_address {
+}
+.collection_info {
+  color: rgba(0, 0, 0, 0.5);
+}
+.collection-main-image {
+  position: absolute;
+  border-radius: 1rem;
+  top: 25rem;
+  width: 9rem;
+  left: 2rem;
+}
+.collection-info-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 4rem;
+  grid-row-gap: 2rem;
+  margin-left: 1rem;
+  width: 60vw;
+  margin-bottom: 4rem;
+}
+.social-icons-container {
+  display: flex;
+  border: solid black 1px;
+  border-radius: var(--ms-mp-large-border-radius);
+  align-items: center;
+  justify-content: space-evenly;
+  width: 10rem;
+  height: 3.5rem;
+}
+.items-information-container {
+  width: 30rem;
+  height: 7rem;
+  display: flex;
+  justify-content: space-around;
+}
+.item-info-ethereum-icon {
+  width: 1rem;
+}
+.item-price-information {
+  display: flex;
+}
+.item-information-label {
+  font-size: 1.2rem;
+}
+.item-information-value,
+.item-price-information-value {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+@media screen and (max-width: 1366px) {
+  .banner {
+    position: relative;
+    height: 30vh;
+  }
 
+  .collection-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .collection-main-image {
+    top: 12rem;
+    left: 2rem;
+    width: 6rem;
+  }
+  .collection_information_wrapper {
+    height: fit-content;
+    box-sizing: border-box;
+    padding-top: 4rem;
+    margin-left: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .collection_information_wrapper {
+    margin-bottom: 0;
+  }
+}
 @media screen and (max-width: 1024px) {
   .collection_pill {
     width: 50%;
@@ -118,6 +167,16 @@
 }
 
 @media screen and (max-width: 600px) {
+  .item-information-label {
+    font-size: 1rem;
+  }
+  .items-information-container {
+    width: 20rem;
+  }
+  .collection-main-image {
+    top: 15rem;
+    left: 0.5rem;
+  }
   .banner_details h1 {
     text-align: center;
   }
