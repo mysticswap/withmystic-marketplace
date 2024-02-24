@@ -34,7 +34,7 @@ import {
 import { VideoPlayer } from "../VideoPlayer/VideoPlayer";
 import { ETH_CONTRACT_ADDRESS } from "../OfferOrListingModal/OfferOrListingModal";
 import AutoPlayer from "../AutoPlayer/AutoPlayer";
-import { useHomeContext } from "../../context/HomeContext/HomeContext";
+import { useCollectionContext } from "../../context/CollectionContext/CollectionContext";
 
 type Props = { nft: TokenElement };
 
@@ -58,7 +58,7 @@ const NftCard = ({ nft }: Props) => {
     setShowConfirmationBuyNowModal,
   } = useTransactionContext()!;
 
-  const { diamondHost } = useHomeContext()!;
+  const { diamondHost } = useCollectionContext()!;
   const nameRef = useRef(null);
   const isOverflowing = useIsOverflow(nameRef, minimalCards);
 

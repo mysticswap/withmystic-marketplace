@@ -1,6 +1,6 @@
 .banner {
   position: relative;
-  height: 60vh;
+  height: 40vh;
 }
 
 .banner img {
@@ -93,6 +93,17 @@
 .banner_pill_icon {
   max-width: 15px;
 }
+
+.collection_information {
+  height: 60vh;
+  box-sizing: border-box;
+  padding-top: 4rem;
+}
+.collection_name {
+  font-weight: 550;
+  font-size: 1.5rem;
+}
+.creator_address
 
 @media screen and (max-width: 1024px) {
   .collection_pill {

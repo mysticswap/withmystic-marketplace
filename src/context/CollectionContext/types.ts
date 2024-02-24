@@ -1,4 +1,4 @@
-export type HomeContextType = {
+export type CollectionContextType = {
   showFilters: boolean;
   setShowFilters: React.Dispatch<React.SetStateAction<boolean>>;
   // minimalCards: boolean;

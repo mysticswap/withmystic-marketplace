@@ -3,14 +3,14 @@ import "./ControlBarSearchInput.css";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { getCollectionNftsV2 } from "../../services/api/marketplace-rsv-api";
 import { generateAttributeString } from "../../utils";
-import { useHomeContext } from "../../context/HomeContext/HomeContext";
+import { useCollectionContext } from "../../context/CollectionContext/CollectionContext";
 import { useEffect, useState } from "react";
 
 const ControlBarSearchInput = () => {
   const { setCollectionNfts, collectionMetadata, collectionChainId } =
     useGlobalContext();
   const { selectedTraits, setIsFetching, selectedDropdownOption } =
-    useHomeContext()!;
+    useCollectionContext()!;
   const [inputText, setInputText] = useState<string>("");
   const contractAddress = collectionMetadata?.collections?.[0]?.primaryContract;
 

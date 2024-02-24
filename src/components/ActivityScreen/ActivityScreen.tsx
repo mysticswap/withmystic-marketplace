@@ -7,7 +7,7 @@ import { BiLoaderCircle } from "react-icons/bi";
 import { getCollectionActivity } from "../../services/api/marketplace-rsv-api";
 import FiltersSidebar from "../FiltersSidebar/FiltersSidebar";
 import { useIsMobile } from "../../hooks/useIsMobile";
-import { useHomeContext } from "../../context/HomeContext/HomeContext";
+import { useCollectionContext } from "../../context/CollectionContext/CollectionContext";
 import { v4 as uuid } from "uuid";
 
 const ActivityScreen = () => {
@@ -19,7 +19,7 @@ const ActivityScreen = () => {
     collectionChainId,
     activitiesFetching,
   } = useGlobalContext();
-  const { setShowMobileFilters } = useHomeContext()!;
+  const { setShowMobileFilters } = useCollectionContext()!;
   const [activities, setActivities] = useState(collectionActivity?.activities);
   const [canFetch, setCanFetch] = useState(true);
   const [isFetching, setIsFetching] = useState(false);

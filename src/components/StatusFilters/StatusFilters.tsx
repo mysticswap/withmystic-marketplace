@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./StatusFilters.css";
 import { RiArrowUpSLine } from "react-icons/ri";
 import StatusListItem from "../StatusListItem/StatusListItem";
-import { useHomeContext } from "../../context/HomeContext/HomeContext";
+import { useCollectionContext } from "../../context/CollectionContext/CollectionContext";
 import { getCollectionNftsV2 } from "../../services/api/marketplace-rsv-api";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { generateAttributeString, getHostName } from "../../utils";
@@ -16,7 +16,7 @@ const StatusFilters = () => {
     selectedDropdownOption,
     selectedTraits,
     setIsFetching,
-  } = useHomeContext()!;
+  } = useCollectionContext()!;
   const [showList, setShowlist] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
 

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import "./StatusFilters.css";
 import { RiArrowUpSLine } from "react-icons/ri";
-import { useHomeContext } from "../../context/HomeContext/HomeContext";
+import { useCollectionContext } from "../../context/CollectionContext/CollectionContext";
 import { getCollectionNftsV2 } from "../../services/api/marketplace-rsv-api";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import CurrencyListItem from "../StatusListItem/CurrencyListItem";
@@ -15,7 +15,7 @@ const CurrencyFilters = () => {
     supportedTokens,
   } = useGlobalContext();
 
-  const { setIsFetching, selectedDropdownOption } = useHomeContext()!;
+  const { setIsFetching, selectedDropdownOption } = useCollectionContext()!;
   const [showList, setShowlist] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [currentIndex, setCurrentIndex] = useState<number>();

@@ -2,7 +2,7 @@
 import "./CardsHolder.css";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import NftCard from "../NftCard/NftCard";
-import { useHomeContext } from "../../context/HomeContext/HomeContext";
+import { useCollectionContext } from "../../context/CollectionContext/CollectionContext";
 import SelectedFilter from "../SelectedFilter/SelectedFilter";
 import { useEffect, useRef, useState } from "react";
 import { BiLoaderCircle } from "react-icons/bi";
@@ -28,7 +28,7 @@ const CardsHolder = () => {
     selectedDropdownOption,
     setIsFetching,
     numericFilters,
-  } = useHomeContext()!;
+  } = useCollectionContext()!;
 
   const [nftsTemp, setNftsTemp] = useState(collectionNfts.tokens);
 

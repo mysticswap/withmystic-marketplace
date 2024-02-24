@@ -1,5 +1,5 @@
 import { RiArrowDownSLine } from "react-icons/ri";
-import { useHomeContext } from "../../context/HomeContext/HomeContext";
+import { useCollectionContext } from "../../context/CollectionContext/CollectionContext";
 import "./ControlBarDropdown.css";
 import { BsCheck } from "react-icons/bs";
 import { useEffect, useRef, useState } from "react";
@@ -18,7 +18,7 @@ const ControlBarDropdown = () => {
     selectedTraits,
     setIsFetching,
     numericFilters,
-  } = useHomeContext()!;
+  } = useCollectionContext()!;
 
   const dropdownRef = useRef(null);
 

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "./NumericFilters.css";
 import { RiArrowUpSLine } from "react-icons/ri";
-import { useHomeContext } from "../../context/HomeContext/HomeContext";
-import { NumericFiltersType } from "../../context/HomeContext/types";
+import { useCollectionContext } from "../../context/CollectionContext/CollectionContext";
+import { NumericFiltersType } from "../../context/CollectionContext/types";
 import { getCollectionNftsV2 } from "../../services/api/marketplace-rsv-api";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { generateAttributeString } from "../../utils";
@@ -21,7 +21,7 @@ const NumericFilters = ({ title, isRarity }: Props) => {
     selectedDropdownOption,
     setIsFetching,
     selectedTraits,
-  } = useHomeContext()!;
+  } = useCollectionContext()!;
   const { minFloorAskPrice, maxFloorAskPrice, minRarityRank, maxRarityRank } =
     numericFilters;
   const [showList, setShowlist] = useState(false);

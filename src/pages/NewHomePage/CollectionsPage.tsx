@@ -59,7 +59,7 @@ const CollectionsPage = () => {
   
   return (
     <div className="collections_page_container">
-      <Banner details={false} activity={false}/>
+      <Banner details={false} activity={false} collectionInformation={false}/>
       <div className="tabs_container">
         {collectionTableOptions.map((number, index) => <Tab  key={index}isSelected={selectedTabIndex === index}
          name={String(number)}

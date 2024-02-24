@@ -1,4 +1,4 @@
-import { NumericFiltersType } from "../../context/HomeContext/types";
+import { NumericFiltersType } from "../../context/CollectionContext/types";
 import { Post } from "../../types/rsv-types/listing-data.types";
 import { Post as AuthPost } from "../../types/rsv-types/buy-data.types";
 import { marketplaceInstance } from "../axios";

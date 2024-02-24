@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { SelectedTrait } from "../context/HomeContext/types";
+import { SelectedTrait } from "../context/CollectionContext/types";
 import { Market, TokenToken } from "../types/rsv-types/collection-nfts.types";
 
 export const getQueryString = (params: { [x: string]: any }) => {
