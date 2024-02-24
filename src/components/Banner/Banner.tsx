@@ -1,7 +1,6 @@
 import "./Banner.css";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
-
 import {
   tabOptions,
 } from "../../constants";
@@ -16,9 +15,6 @@ const Banner = ({activity }:IProps) => {
     setCurrentTab,
     client,
   } = useGlobalContext();
-
-
-
 
   return (
     <div className="wrapper">
