@@ -9,6 +9,7 @@ type Props = {
   supportedTokens?: SupportedToken[];
   currentToken: number;
   offerAmount: string | number;
+  isSale?: boolean;
 };
 
 const ModalNft = ({
@@ -16,6 +17,7 @@ const ModalNft = ({
   supportedTokens,
   currentToken,
   offerAmount,
+  isSale,
 }: Props) => {
   const [price, setPrice] = useState(0);
   const { cryptoValue } = useGlobalContext();
@@ -32,15 +34,13 @@ const ModalNft = ({
       setPrice(Number(offerAmount));
     }
   }, [cryptoValue, currentToken, nftData, offerAmount]);
-  let tokenSymbol;
+  let tokenSymbol: string | undefined = nftData.symbol;
 
   if (nftData.isBuyNow) {
     tokenSymbol = nftData.symbol;
   } else {
     tokenSymbol = supportedTokens?.[currentToken].symbol;
   }
-
-  // const cryptoSymbol = supportedTokens[currentToken].symbol;
 
   return (
     <div className="modal_nft">
@@ -53,8 +53,9 @@ const ModalNft = ({
       </div>
 
       <p className="modal_nft_value">
-        {nftData.amount || "--"} {nftData.isOffer || (nftData.isSale && "wETH")}{" "}
-        {!nftData.isOffer && !nftData.isSale && tokenSymbol}
+        {nftData.amount || "--"} {isSale && tokenSymbol}
+        {!isSale && !nftData.isOffer && tokenSymbol}
+        {!isSale && nftData.isOffer && "wETH"}
         <span>({cryptoValue > 0 ? `$${price.toFixed(2)}` : "--"})</span>
       </p>
     </div>

@@ -246,6 +246,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
               supportedTokens={supportedTokens}
               currentToken={currentToken}
               offerAmount={offerAmount}
+              isSale={false}
             />
           </div>
 

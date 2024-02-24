@@ -52,7 +52,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
     previousCollection || availableCollections?.[0]
   );
 
-  const supportedTokens = selectedCollection?.supportedTokens! || [];
+  const supportedTokens = selectedCollection?.supportedTokens || [];
 
   // const [currentToken, setCurrentToken] = useState<number>(() =>
   //   supportedTokens!.findIndex((token) => token.symbol === "WETH")
@@ -75,7 +75,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
   const [collectionAttributes, setCollectionAttributes] = useState(
     {} as CollectionTraitsV2
   );
-  const [selectedActivities, setSelectedActivities] = useState(["sale", "ask"]);
+  const [selectedActivities, setSelectedActivities] = useState(["sale"]);
   const [userBalance, setUserBalance] = useState({});
   const [userNfts, setUserNfts] = useState({} as UserNfts);
   const [minimalCards, setMinimalCards] = useState(true);
