@@ -4,7 +4,7 @@ const Tab= () => {
   
   return (
     <>
-      <div className={`tab_container`}>
+      <div className={`tab_container_collections`}>
          <span>Collections</span>
       </div>
     </>
