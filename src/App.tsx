@@ -13,12 +13,13 @@ import { getMarketplaceClient } from "./services/api/dynamic-system";
 import { ClientObject } from "./types/dynamic-system.types";
 import Loading from "./components/Loading/Loading";
 import { addLinks, changeStyles, updateMetadata } from "./utils/dynamic-styles";
-import { updateFavicon, updateSiteTitle, getHostName } from "./utils";
+import { updateFavicon, updateSiteTitle } from "./utils";
 import Collection from "./pages/Collection";
 import NftPage from "./pages/NftPage/NftPage";
 import SwapsPage from "./pages/SwapsPage/SwapsPage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
-import NewHomePage from './pages/NewHomePage/CollectionsPage';
+import Home from './pages/Home/Home';
+import CollectionsPage from "./pages/Collections/Collections";
 
 function App() {
   const [isFetchingClient, setIsFetchingClient] = useState(true);
@@ -57,7 +58,7 @@ function App() {
             <Router>
               <Navbar />
               <Routes>
-              <Route path="/" element={<NewHomePage/>} />
+              <Route path="/" element={<Home/>} />
                 <Route
                   path="/:contract/:id"
                   element={<NftPageContextProvider children={<NftPage />} />}
@@ -68,7 +69,7 @@ function App() {
                   path="/collection"
                   element={<CollectionContextProvider children={<Collection />} />}
                 />
-                <Route path="/collections" element={<NewHomePage/>} />
+                <Route path="/collections" element={<CollectionsPage/>} />
 
                 <Route path="*" element={<ErrorPage />} />
               </Routes>

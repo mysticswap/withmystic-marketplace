@@ -2,7 +2,7 @@ import Banner from "../../components/Banner/Banner";
 import { CollectionsTable } from "./Components/CollectionsTable/CollectionsTable";
 import Tab from "./Components/Tab/Tab";
 import { useEffect, useState } from "react";
-import './CollectionsPage.css'
+import './Home.css'
 import { collectionTableOptions } from "../../constants";
 import { Collection } from "./types";
 import { CollectionsSection } from "./Components/CollectionSection/CollectionsSection";
