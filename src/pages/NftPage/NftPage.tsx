@@ -65,8 +65,8 @@ const NftPage = () => {
   if (!nftDataV2.tokens.length) {
     return <NotFound />;
   }
-  console.log({ nftActivity });
 
+  console.log({ nftPriceData });
   return (
     <>
       {nftInfo?.isFlagged && <FlaggedWarning />}

@@ -16,6 +16,7 @@ import {
 import { otherChains } from "../../wallets/chains";
 import { SwapType } from "../../types/market-schemas.types";
 import { UserNFTToReservoirAPI } from "../apiReconciliation";
+import { Activity } from "../../types/rsv-types/collection-activity.types";
 
 export const getCollectionMetadata = async (
   chainId: number,
@@ -97,7 +98,7 @@ export const getCollectionActivity = async (
   if (otherChains.includes(chainId)) {
     const swaps = await getNeededSwaps(
       chainId,
-      types || JSON.stringify([SwapType.Listing]),
+      types || JSON.stringify([SwapType.Listing, SwapType.Offer]),
       contractAddress
     );
 
@@ -111,14 +112,18 @@ export const getCollectionActivity = async (
         ...swaps.activities,
         ...history.activities,
         ...request.data.activities,
-      ].sort((a, b) => b.timestamp - a.timestamp),
-      continuation:""
+      ].sort((a, b) => b.timestamp - a.timestamp) as Activity[],
+      continuation: "",
     };
+  } else {
+    return request.data;
   }
 
-  request.data.activities  =  request.data.activities.sort((a:any, b:any) => b.timestamp - a.timestamp)
+  request.data.activities = request.data.activities.sort(
+    (a: any, b: any) => b.timestamp - a.timestamp
+  );
 
-  return request.data
+  return request.data;
 };
 
 export const getCollectionTraitsV2 = async (

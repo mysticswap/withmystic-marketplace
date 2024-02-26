@@ -73,8 +73,8 @@ const NftCard = ({ nft }: Props) => {
       return type == "sale" && token?.tokenId == nft?.token?.tokenId;
     }
   );
-  const priceSale = saleActivity?.[0]?.price || nft?.token?.lastSale?.price;
-  const priceList = listActivity?.[0]?.price || nft?.market?.floorAsk?.price;
+  const priceSale = nft?.token?.lastSale?.price || saleActivity?.[0]?.price;
+  const priceList = nft?.market?.floorAsk?.price || listActivity?.[0]?.price;
 
   const timeSale = nft?.token?.lastSale?.timestamp || 0;
   const timeList = nft?.market?.floorAsk?.validUntil || 0;

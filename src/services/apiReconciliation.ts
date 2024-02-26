@@ -1,4 +1,5 @@
 import { Nft, NftContractNftsResponse } from "../types/market-schemas.types";
+import { Activity } from "../types/rsv-types/collection-activity.types";
 import { convertToIPFSImage } from "../utils";
 
 export function ApiToReservoirApi(nftData: NftContractNftsResponse) {
@@ -59,12 +60,29 @@ export function ApiToReservoirApi(nftData: NftContractNftsResponse) {
   return { tokens: nfts };
 }
 
-export function SingleNFTApiToReservoirApi(nftData: Nft) {
+export function SingleNFTApiToReservoirApi(
+  nftData: Nft,
+  owner: string,
+  lastAsk: any
+) {
   const data = nftData;
   const nfts = [
     {
+      market: {
+        floorAsk: {
+          id: lastAsk?.contract,
+          price: lastAsk?.price,
+          maker: lastAsk?.fromAddress,
+          validFrom: lastAsk?.timestamp,
+          validUntil: lastAsk?.timestamp + 86400,
+          source: {
+            id: "",
+            domain: "marketplace.mysticswap.io",
+            name: "marketplace.mysticswap.io",
+          },
+        },
+      },
       token: {
-        owner: "",
         chainId: 1,
         contract: data.contract.address,
         tokenId: data.tokenId,
@@ -83,8 +101,9 @@ export function SingleNFTApiToReservoirApi(nftData: Nft) {
         lastFlagChange: null,
         supply: "1",
         remainingSupply: "1",
-        rarity: 100,
-        rarityRank: 1,
+        rarity: null,
+        rarityRank: null,
+        owner,
         collection: {
           tokenCount: data.contract.totalSupply,
           name: data.title,
@@ -239,15 +258,16 @@ export function ActivityApiToReservoirApi(activityData: any, types: string) {
         },
       };
     })
-    .filter((i:any) => JSON.parse(types).includes(i.type));
+    .filter((i: any) => JSON.parse(types).includes(i.type)) as Activity[];
 
   return { activities: nfts };
 }
 
 export function OffersApiToReservoirApi(offerData: any) {
-  const nfts = offerData.data.map((data: any) => {
+  const nfts = offerData.map((data: any) => {
     return {
       id: data._id,
+      swapId: data._id,
       kind: data.metadata.nftsMetadata[0].tokenType,
       // side: string;
       status: data.status,
@@ -350,7 +370,7 @@ export function SwapApiToReservoirApi(swapData: any) {
           data.metadata.nftsMetadata[0].contract.openSea.imageUrl,
       },
     };
-  });
+  }) as Activity[];
 
   return { activities: nfts };
 }
@@ -395,7 +415,7 @@ export function SingleActivityApiToReservoirApi(activityData: any) {
         collectionImage: data.tokenMetadata?.contract?.openSea?.imageUrl,
       },
     };
-  });
+  }) as Activity[];
 
   return { activities: nfts };
 }

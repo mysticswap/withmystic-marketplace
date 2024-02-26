@@ -5,10 +5,7 @@ import {
   SwapType,
   signedOrderToMongo,
 } from "../../types/market-schemas.types";
-import {
-  filterObjectsByAttributes,
-  getQueryString,
-} from "../../utils";
+import { filterObjectsByAttributes, getQueryString } from "../../utils";
 import {
   ActivityApiToReservoirApi,
   ApiToReservoirApi,
@@ -112,8 +109,28 @@ export const getSingleNft = async (
   chainId: number
 ) => {
   const queryParams = { contractAddress, tokenId, chainId };
+  const owner = (
+    await makeApiRequest("/marketplace-api/get-nft-owners", queryParams)
+  ).owners[0];
+  const swaps = await getNeededSwaps(
+    chainId,
+    JSON.stringify([SwapType.Listing]),
+    contractAddress,
+    1,
+    100
+  );
+
+  console.log(swaps);
+
+  const lastAsk = swaps.activities
+    .filter((tk: any) => tk.token.tokenId == tokenId)
+    .sort((a: any, b: any) => b.timestamp - a.timestamp)[0];
+
+  console.log({ lastAsk });
   return SingleNFTApiToReservoirApi(
-    await makeApiRequest("/marketplace-api/get-nft", queryParams)
+    await makeApiRequest("/marketplace-api/get-nft", queryParams),
+    owner,
+    lastAsk
   );
 };
 
@@ -156,13 +173,15 @@ export const getCollectionHistory = async (
     ...(pageKey && { pageKey }),
   };
   try {
-    return ActivityApiToReservoirApi(
+    const activity = ActivityApiToReservoirApi(
       await makeApiRequest(
         "/marketplace-api/get-collection-history",
         queryParams
       ),
       types as string
     );
+
+    return activity;
   } catch {
     return { activities: [] };
   }
@@ -234,6 +253,7 @@ export const getNeededSwaps = async (
     "/marketplace-api/filtered-swaps",
     queryParams
   );
+
   swaps = swaps.data
     .filter((i: signedOrderToMongo) => JSON.parse(swapType).includes(i.type))
     .filter((i: signedOrderToMongo) =>
@@ -247,12 +267,15 @@ export const getNftHistory = async (
   tokenId: string,
   chainId: number
 ) => {
-  const queryParams = { contractAddress, chainId, tokenId };
-  const res = SingleActivityApiToReservoirApi(
-    await makeApiRequest("/marketplace-api/get-nft-history", queryParams)
-  );
-  console.log({ res });
-  return res;
+  try {
+    const queryParams = { contractAddress, chainId, tokenId };
+    const res = SingleActivityApiToReservoirApi(
+      await makeApiRequest("/marketplace-api/get-nft-history", queryParams)
+    );
+    return res;
+  } catch {
+    return { activities: [] };
+  }
 };
 
 export const getUserBalance = async (address: string, chainId: number) => {
