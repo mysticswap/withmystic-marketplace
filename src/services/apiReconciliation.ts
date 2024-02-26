@@ -335,16 +335,29 @@ export function SwapApiToReservoirApi(swapData: any) {
           decimals: 18,
         },
         amount: {
-          raw: +(+data.orderComponents.offer.slice(-1)[0].endAmount).toFixed(5),
-          decimal: +(
-            +data.orderComponents.offer.slice(-1)[0].endAmount /
-            10 ** 18
-          ).toFixed(5),
-          usd: 264.15361,
-          native: +(
-            +data.orderComponents.offer.slice(-1)[0].endAmount /
-            10 ** 18
-          ).toFixed(5),
+          raw:
+            +(+data.orderComponents.consideration.slice(-1)[0]
+              .endAmount).toFixed(5) ||
+            +(+data.orderComponents.offer.slice(-1)[0].endAmount).toFixed(5),
+          decimal:
+            +(
+              +data.orderComponents.consideration.slice(-1)[0].endAmount /
+              10 ** 18
+            ).toFixed(5) ||
+            +(
+              +data.orderComponents.offer.slice(-1)[0].endAmount /
+              10 ** 18
+            ).toFixed(5),
+          usd: 2500,
+          native:
+            +(
+              +data.orderComponents.consideration.slice(-1)[0].endAmount /
+              10 ** 18
+            ).toFixed(5) ||
+            +(
+              +data.orderComponents.offer.slice(-1)[0].endAmount /
+              10 ** 18
+            ).toFixed(5),
         },
       },
       amount: 1,

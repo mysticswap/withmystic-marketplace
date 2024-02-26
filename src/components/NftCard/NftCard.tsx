@@ -76,6 +76,8 @@ const NftCard = ({ nft }: Props) => {
   const priceSale = nft?.token?.lastSale?.price || saleActivity?.[0]?.price;
   const priceList = nft?.market?.floorAsk?.price || listActivity?.[0]?.price;
 
+  // console.log({ listActivity });
+
   const timeSale = nft?.token?.lastSale?.timestamp || 0;
   const timeList = nft?.market?.floorAsk?.validUntil || 0;
   const validFrom = nft?.market?.floorAsk?.validFrom || 0;
