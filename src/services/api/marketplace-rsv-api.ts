@@ -98,7 +98,7 @@ export const getCollectionActivity = async (
   if (otherChains.includes(chainId)) {
     const swaps = await getNeededSwaps(
       chainId,
-      types || JSON.stringify([SwapType.Listing, SwapType.Offer]),
+      JSON.stringify([SwapType.Listing, SwapType.Offer, SwapType.Swap]),
       contractAddress
     );
 

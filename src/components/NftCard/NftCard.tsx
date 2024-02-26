@@ -284,7 +284,7 @@ const NftCard = ({ nft }: Props) => {
         </div>
         <Link to={`/${collectionContract}/${nftId}`}>
           <p className="nft_card_amount">
-            {priceList && (timeList > timeSale || validFrom > timeSale) ? (
+            {priceList && (timeList >= timeSale || validFrom >= timeSale) ? (
               <>
                 {`${currentEthAmount} ${listSymbol}`}{" "}
                 <span>(${currentValue})</span>
