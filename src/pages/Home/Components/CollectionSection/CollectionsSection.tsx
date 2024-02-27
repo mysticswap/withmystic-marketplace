@@ -2,7 +2,7 @@ import './CollectionsSection.css'
 import { Collection } from "../../types";
 import ethereumIcon from "./../../../../assets/ethereum-1.svg";
 import checkIcon from "./../../../../assets/checkSign.png";
-
+import mockCollectionImage from './mock-collection-image.png'
 interface IProps {
   title:string,
   collections: Array<Collection>
@@ -16,7 +16,7 @@ export const CollectionsSection = ({title, collections}:IProps) => {
     <div className="collections_section_grid">
       {collections.map((collection)=>
             <div className="collection_card_container">
-            <img className="collection_card_image" src="https://i.seadn.io/gcs/files/6d4b873bd01107ff35489dbe69e031d1.png?auto=format&dpr=1&w=3840"/>
+            <img className="collection_card_image" src={mockCollectionImage}/>
             <div className="collection_card_footer">
             <div className='collection_name_container'>
               <img className="check_icon" src={checkIcon}/>
