@@ -4,7 +4,7 @@ import Tab from "./Components/Tab/Tab";
 import { useEffect, useState } from "react";
 import './Collections.css'
 import { Collection } from "./types";
-import { CollectionsSection } from "./Components/CollectionSection/CollectionsSection";
+import { CollectionsSection } from "../../components/CollectionSection/CollectionsSection";
 
 const CollectionsPage = () => {
   const [rows, setRows ] = useState<Array<Collection>>([]);

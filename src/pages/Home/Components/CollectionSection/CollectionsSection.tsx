@@ -2,7 +2,7 @@ import './CollectionsSection.css'
 import { Collection } from "../../types";
 import ethereumIcon from "./../../../../assets/ethereum-1.svg";
 import checkIcon from "./../../../../assets/checkSign.png";
-import mockCollectionImage from './mock-collection-image.png'
+import mockCollectionImage from './../../../../assets/mock-collection-image.png'
 interface IProps {
   title:string,
   collections: Array<Collection>

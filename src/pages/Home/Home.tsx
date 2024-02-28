@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import './Home.css'
 import { collectionTableOptions } from "../../constants";
 import { Collection } from "./types";
-import { CollectionsSection } from "./Components/CollectionSection/CollectionsSection";
+import { CollectionsSection } from "../../components/CollectionSection/CollectionsSection";
 
 const CollectionsPage = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState<null | number>(0)
