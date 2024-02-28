@@ -3,6 +3,7 @@ import { marketplaceInstance } from "../axios";
 import { otherChains } from "../../wallets/chains";
 import { acceptSwap, createSwap } from "./marketplace-api";
 import { SwapType } from "../../types/market-schemas.types";
+import { wethAddresses } from "../../constants";
 
 export const createListing = async (
   chainId: number,
@@ -32,6 +33,7 @@ export const createListing = async (
         ],
         consideration: [
           {
+            ...(wethAddresses[chainId] && { token: wethAddresses[chainId] }),
             amount: weiPrice,
             recipient: maker,
           },
@@ -78,9 +80,7 @@ export const createBid = async (
       offerer: maker,
       offer: [
         {
-          // itemtype: "ERC721",
-          // token: tokenAddress,
-          // identifier: tokenId,
+          ...(wethAddresses[chainId] && { token: wethAddresses[chainId] }),
           amount: weiPrice,
         },
       ],
