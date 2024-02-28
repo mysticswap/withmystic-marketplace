@@ -51,10 +51,11 @@ interface NftContract {
 }
 
 type Items = {
-  itemtype: string;
-  token: string;
-  identifier: string;
+  itemtype?: string;
+  token?: string;
+  identifier?: string;
   amount: string;
+  recipient?: string;
 };
 
 export interface Nft {

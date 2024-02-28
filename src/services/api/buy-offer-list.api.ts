@@ -32,10 +32,8 @@ export const createListing = async (
         ],
         consideration: [
           {
-            itemtype: "ERC721",
-            token: tokenAddress,
-            identifier: tokenId,
             amount: weiPrice,
+            recipient: maker,
           },
         ],
         takerAddress: maker,
@@ -80,10 +78,10 @@ export const createBid = async (
       offerer: maker,
       offer: [
         {
-          itemtype: "ERC721",
-          token: tokenAddress,
-          identifier: tokenId,
-          amount: "1",
+          // itemtype: "ERC721",
+          // token: tokenAddress,
+          // identifier: tokenId,
+          amount: weiPrice,
         },
       ],
       consideration: [
@@ -91,7 +89,8 @@ export const createBid = async (
           itemtype: "ERC721",
           token: tokenAddress,
           identifier: tokenId,
-          amount: weiPrice,
+          amount: "1",
+          recipient: maker,
         },
       ],
       takerAddress: maker,
