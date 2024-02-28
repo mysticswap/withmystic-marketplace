@@ -5,9 +5,17 @@ import { useEffect, useState } from "react";
 import './Collections.css'
 import { Collection } from "./types";
 import { CollectionsSection } from "../../components/CollectionSection/CollectionsSection";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
+import { TokenElement } from "../../types/rsv-types/collection-nfts.types";
 
 const CollectionsPage = () => {
-  const [rows, setRows ] = useState<Array<Collection>>([]);
+  const {
+    collectionNfts,
+
+  } = useGlobalContext();
+  const [tableRows, setTableRows ] = useState<Array<Collection>>([]);
+  const [tokens, setTokens ] = useState<Array<TokenElement>>(collectionNfts.tokens);
+
   function createData(
     number:string,
     collection: string,
@@ -19,13 +27,16 @@ const CollectionsPage = () => {
   ) {
     return { number, collection, floor, oneDVolume, owners, volume, supply };
   }
-  
+
   useEffect(()=>{
     handleDefaultCollections()
   },[])
+  useEffect(() => {
+    setTokens(collectionNfts?.tokens);
+  }, [collectionNfts]);
   
   function handleDefaultCollections(){
-    setRows([
+    setTableRows([
       createData("1",'Mystical Wizards', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
       createData("2",'Pudgy penguins', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
       createData("3",'Red Apples', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
@@ -42,9 +53,9 @@ const CollectionsPage = () => {
       <div className="tabs_container">
         <Tab />
       </div>
-      <CollectionsTable rows={rows}/>
-      <CollectionsSection title="Categories" collections={rows}/>
-      <CollectionsSection title="Brands" collections={rows}/>
+      <CollectionsTable rows={tableRows}/>
+      <CollectionsSection title="Categories" collections={tokens}/>
+      <CollectionsSection title="Brands" collections={tokens}/>
 
     </div>
     

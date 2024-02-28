@@ -58,7 +58,7 @@ function App() {
             <Router>
               <Navbar />
               <Routes>
-              <Route path="/" element={<Home/>} />
+              <Route path="/" element={<CollectionContextProvider children={<Home />} />}  />
                 <Route
                   path="/:contract/:id"
                   element={<NftPageContextProvider children={<NftPage />} />}
@@ -69,7 +69,7 @@ function App() {
                   path="/collection"
                   element={<CollectionContextProvider children={<Collection />} />}
                 />
-                <Route path="/collections" element={<CollectionsPage/>} />
+                <Route path="/collections" element={<CollectionContextProvider children={<CollectionsPage />} />} />
 
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
