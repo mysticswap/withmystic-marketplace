@@ -1,5 +1,5 @@
 import Banner from "../../components/Banner/Banner";
-import { CollectionsTable } from "./Components/CollectionsTable/CollectionsTable";
+import { CollectionsTable } from "../../components/CollectionsTable/CollectionsTable";
 import Tab from "./Components/Tab/Tab";
 import { useEffect, useState } from "react";
 import './Home.css'
