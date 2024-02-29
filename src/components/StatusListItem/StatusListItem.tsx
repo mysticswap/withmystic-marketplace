@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Checkbox from "../Checkbox/Checkbox";
 import "./StatusListItem.css";
-import { useHomeContext } from "../../context/HomeContext/HomeContext";
+import { useCollectionContext } from "../../context/CollectionContext/CollectionContext";
 
 type Props = {
   text: string;
@@ -19,7 +19,7 @@ const StatusListItem = ({
   isForTraits,
   type,
 }: Props) => {
-  const { selectedTraits } = useHomeContext()!;
+  const { selectedTraits } = useCollectionContext()!;
   const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {

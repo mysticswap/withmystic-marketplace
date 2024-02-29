@@ -1,0 +1,102 @@
+.collection_information_wrapper {
+  height: fit-content;
+  box-sizing: border-box;
+  padding-top: 4rem;
+  margin-left: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.collection_name {
+  font-weight: 550;
+  font-size: 1.5rem;
+}
+.creator_address {
+}
+.collection_info {
+  color: rgba(0, 0, 0, 0.5);
+}
+.collection-main-image {
+  position: absolute;
+  border-radius: 1rem;
+  top: 25rem;
+  width: 9rem;
+  left: 2rem;
+}
+.collection-info-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 4rem;
+  grid-row-gap: 2rem;
+  margin-left: 1rem;
+  width: 60vw;
+  margin-bottom: 4rem;
+}
+.social-icons-container {
+  display: flex;
+  border: solid black 1px;
+  border-radius: var(--ms-mp-large-border-radius);
+  align-items: center;
+  justify-content: space-evenly;
+  width: 10rem;
+  height: 3.5rem;
+}
+.items-information-container {
+  width: 30rem;
+  height: 7rem;
+  display: flex;
+  justify-content: space-around;
+}
+.item-info-ethereum-icon {
+  width: 1rem;
+}
+.item-price-information {
+  display: flex;
+}
+.item-information-label {
+  font-size: 1.2rem;
+}
+.item-information-value,
+.item-price-information-value {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+@media screen and (max-width: 1366px) {
+  .collection-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .collection-main-image {
+    top: 12rem;
+    left: 2rem;
+    width: 6rem;
+  }
+  .collection_information_wrapper {
+    height: fit-content;
+    box-sizing: border-box;
+    padding-top: 4rem;
+    margin-left: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .collection_information_wrapper {
+    margin-bottom: 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .item-information-label {
+    font-size: 1rem;
+  }
+  .items-information-container {
+    width: 20rem;
+  }
+  .collection-main-image {
+    top: 15rem;
+    left: 0.5rem;
+  }
+}

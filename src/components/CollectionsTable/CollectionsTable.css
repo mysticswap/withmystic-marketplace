@@ -1,0 +1,37 @@
+.collection_container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  width: fit-content;
+}
+.collection_image {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+}
+.collections-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.collections-table-header-item,
+.collections-table-row-item {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.collections-table-header-item {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.collections-table-header-row:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.collection-table-row:hover {
+  background-color: #ddd;
+}

@@ -1,5 +1,5 @@
 import { RiArrowLeftSLine } from "react-icons/ri";
-import { useHomeContext } from "../../context/HomeContext/HomeContext";
+import { useCollectionContext } from "../../context/CollectionContext/CollectionContext";
 import "./FilterButton.css";
 import { IoOptionsOutline } from "react-icons/io5";
 import { useIsMobile } from "../../hooks/useIsMobile";
@@ -11,7 +11,7 @@ const FilterButton = () => {
     selectedTraits,
     setShowMobileFilters,
     showMobileFilters,
-  } = useHomeContext()!;
+  } = useCollectionContext()!;
   const isMobile = useIsMobile();
 
   return (

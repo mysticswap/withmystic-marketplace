@@ -3,7 +3,7 @@ import "./TraitFilter.css";
 import { useEffect, useState } from "react";
 import { IoClose, IoSearchSharp } from "react-icons/io5";
 import StatusListItem from "../StatusListItem/StatusListItem";
-import { useHomeContext } from "../../context/HomeContext/HomeContext";
+import { useCollectionContext } from "../../context/CollectionContext/CollectionContext";
 import { AttributeV2 } from "../../types/rsv-types/collection-traits.types";
 import RangeFilter from "../RangeFilter/RangeFilter";
 
@@ -12,7 +12,7 @@ type Props = {
 };
 
 const TraitFilter = ({ attribute }: Props) => {
-  const { selectedTraits, setSelectedTraits } = useHomeContext()!;
+  const { selectedTraits, setSelectedTraits } = useCollectionContext()!;
 
   const [showList, setShowlist] = useState(false);
   const traitValues = attribute.values!;

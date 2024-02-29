@@ -6,16 +6,16 @@ import {
   useEffect,
   useState,
 } from "react";
-import { HomeContextType, SelectedTrait } from "./types";
+import { CollectionContextType, SelectedTrait } from "./types";
 import { defaultNumericFilters, dropdownOptions } from "../../constants";
 import { useGlobalContext } from "../GlobalContext/GlobalContext";
 import { getHostName } from "../../utils";
 
-const HomeContext = createContext<HomeContextType | null>(null);
+const CollectionContext = createContext<CollectionContextType | null>(null);
 
 type Props = { children: ReactNode };
 
-export const HomeContextProvider = ({ children }: Props) => {
+export const CollectionContextProvider = ({ children }: Props) => {
   const { selectedCollection } = useGlobalContext();
   const [showFilters, setShowFilters] = useState(true);
   const [selectedTraits, setSelectedTraits] = useState<SelectedTrait[]>([]);
@@ -56,7 +56,7 @@ export const HomeContextProvider = ({ children }: Props) => {
   }, [selectedCollection]);
 
   return (
-    <HomeContext.Provider
+    <CollectionContext.Provider
       value={{
         showFilters,
         setShowFilters,
@@ -74,14 +74,14 @@ export const HomeContextProvider = ({ children }: Props) => {
       }}
     >
       {children}
-    </HomeContext.Provider>
+    </CollectionContext.Provider>
   );
 };
 
-export const useHomeContext = () => {
-  const context = useContext(HomeContext);
+export const useCollectionContext = () => {
+  const context = useContext(CollectionContext);
 
   if (context === undefined)
-    throw new Error("HomeContext was used outside the HomeContextProvider");
+    throw new Error("CollectionContext was used outside the CollectionContextProvider");
   return context;
 };

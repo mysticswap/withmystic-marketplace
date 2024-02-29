@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { GlobalContextProvider } from "./context/GlobalContext/GlobalContext";
-import { HomeContextProvider } from "./context/HomeContext/HomeContext";
+import { CollectionContextProvider } from "./context/CollectionContext/CollectionContext";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import { NftPageContextProvider } from "./context/NftPageContext/NftPageContext";
@@ -14,10 +14,12 @@ import { ClientObject } from "./types/dynamic-system.types";
 import Loading from "./components/Loading/Loading";
 import { addLinks, changeStyles, updateMetadata } from "./utils/dynamic-styles";
 import { updateFavicon, updateSiteTitle } from "./utils";
-import Home from "./pages/Home";
+import Collection from "./pages/Collection";
 import NftPage from "./pages/NftPage/NftPage";
 import SwapsPage from "./pages/SwapsPage/SwapsPage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
+import Home from './pages/Home/Home';
+import CollectionsPage from "./pages/Collections/Collections";
 
 function App() {
   const [isFetchingClient, setIsFetchingClient] = useState(true);
@@ -56,15 +58,19 @@ function App() {
             <Router>
               <Navbar />
               <Routes>
-                <Route
-                  path="/"
-                  element={<HomeContextProvider children={<Home />} />}
-                />
+              <Route path="/" element={<CollectionContextProvider children={<Home />} />}  />
                 <Route
                   path="/:contract/:id"
                   element={<NftPageContextProvider children={<NftPage />} />}
                 />
                 <Route path="/swaps" element={<SwapsPage />} />
+                
+                <Route
+                  path="/collection"
+                  element={<CollectionContextProvider children={<Collection />} />}
+                />
+                <Route path="/collections" element={<CollectionContextProvider children={<CollectionsPage />} />} />
+
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
               <Footer />

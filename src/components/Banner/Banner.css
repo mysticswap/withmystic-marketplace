@@ -1,6 +1,6 @@
 .banner {
   position: relative;
-  height: 60vh;
+  height: 40vh;
 }
 
 .banner img {
@@ -27,40 +27,6 @@
 .banner_details h1 {
   font-weight: 500;
   color: white;
-}
-
-.collection_pill {
-  background-color: var(--ms-mp-body-background);
-  padding: 1rem;
-  border-radius: var(--ms-mp-large-border-radius);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40%;
-  gap: 2rem;
-  border: var(--ms-mp-gray-border);
-  border-color: var(--ms-mp-gray-light);
-}
-
-.pill_item p {
-  margin: 0;
-  font-size: 18px;
-}
-
-.pill_item > div {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.pill_item > div p:first-of-type {
-  font-weight: bold;
-  color: var(--ms-mp-text-color);
-}
-
-.pill_item > p {
-  font-weight: 400;
-  color: var(--ms-mp-gray-text);
 }
 
 .tabs {
@@ -94,28 +60,9 @@
   max-width: 15px;
 }
 
-@media screen and (max-width: 1024px) {
-  .collection_pill {
-    width: 50%;
-  }
-}
-
-@media screen and (max-width: 820px) {
-  .collection_pill {
-    width: 60%;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .banner_details h1 {
-    text-align: center;
-  }
-
-  .collection_pill {
-    width: 80%;
-  }
-
-  .pill_item p {
-    font-size: 13px;
+@media screen and (max-width: 1366px) {
+  .banner {
+    position: relative;
+    height: 30vh;
   }
 }

@@ -9,8 +9,8 @@ import OfferOrListingModal from "../../components/OfferOrListingModal/OfferOrLis
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import ConfirmPurchaseModal from "../../components/ConfirmPurchaseModal/ConfirmPurchaseModal";
 import ConfirmPurchaseBuyNowModal from "../../components/ConfirmPurchaseModal/ConfirmPurchaseBuyNowModal";
-
-const Home = () => {
+import CollectionInformation from "../../components/CollectionInformation/CollectionInformation";
+const Collection = () => {
   const { currentTab } = useGlobalContext();
   const {
     showOfferOrListingModal,
@@ -24,7 +24,8 @@ const Home = () => {
 
   return (
     <div>
-      <Banner />
+      <Banner activity={true} />
+      <CollectionInformation/>
       <ControlBar isInItemsSection={isInItemsSection} />
 
       {isInItemsSection ? <ItemsScreen /> : <ActivityScreen />}
@@ -49,4 +50,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Collection;

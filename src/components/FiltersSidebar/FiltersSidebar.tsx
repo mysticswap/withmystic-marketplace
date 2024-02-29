@@ -4,7 +4,7 @@ import NumericFilters from "../NumericFilters/NumericFilters";
 import TraitFilter from "../TraitFilter/TraitFilter";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import ActivityFilters from "../ActivityFilters/ActivityFilters";
-import { useHomeContext } from "../../context/HomeContext/HomeContext";
+import { useCollectionContext } from "../../context/CollectionContext/CollectionContext";
 import { IoClose } from "react-icons/io5";
 import CurrencyFilters from "../StatusFilters/CurrencyFilters";
 
@@ -13,7 +13,7 @@ type Props = { isForTraits: boolean };
 const FiltersSidebar = ({ isForTraits }: Props) => {
   const { collectionAttributes, supportedTokens } = useGlobalContext()!;
   const { showMobileFilters, setShowMobileFilters, diamondHost } =
-    useHomeContext()!;
+    useCollectionContext()!;
 
   return (
     <div
