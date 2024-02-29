@@ -21,13 +21,12 @@
   background-color: var(--ms-mp-controlbar-hover);
 }
 
-.logout_btn:hover {
+.navbar-button:hover {
   background-color: var(--ms-mp-controlbar-hover);
 }
 
-.logout_btn {
-  position: absolute;
-  right: 1rem;
+.navbar-button {
+  position: relative;
   margin-top: 0.5rem;
   padding: 0.5rem;
   background-color: var(--ms-mp-body-background);
@@ -41,4 +40,10 @@
   font-size: 14px;
   border: var(--ms-mp-gray-border);
   border-color: var(--ms-mp-gray-light);
+}
+.dropdown-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  right: 1rem;
 }
