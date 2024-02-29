@@ -1,0 +1,136 @@
+.nft_card {
+  border: 1px solid var(--ms-mp-card-border-color);
+  border-radius: var(--ms-mp-card-border-radius);
+  overflow: hidden;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.nft_card:hover {
+  transform: scale(103%);
+}
+
+.nft_card_image_area {
+  position: relative;
+}
+
+.nft_card_supply_count {
+  position: absolute;
+  inset: 0.75rem auto auto 0.75rem;
+  padding: 0.25rem;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  backdrop-filter: blur(10px);
+}
+.nft_alter_video {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  height: 100%;
+}
+
+.nft_card img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3/4;
+  display: block;
+  max-height: 420px;
+  object-fit: cover;
+}
+
+.nft_card_details {
+  padding: 1rem;
+  position: relative;
+  height: 3rem;
+}
+
+.nft_card_details p {
+  margin: 0;
+}
+
+.card_name {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.card_name a {
+  text-decoration: none;
+  color: unset;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card_name p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nft_card_last_sale {
+  font-size: 13px;
+  color: var(--ms-mp-gray-text);
+}
+
+.nft_card_amount {
+  font-weight: 600;
+}
+
+.nft_card_amount > span {
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--ms-mp-gray-text);
+}
+
+.nft_card_details button {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: var(--ms-mp-primary-color);
+  color: white;
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+  bottom: -100%;
+  height: 35%;
+}
+
+.nft_card:hover > .nft_card_details button {
+  bottom: 0;
+  z-index: 1;
+}
+
+.source_icon {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  border-radius: 50%;
+}
+
+.source_icon img {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .nft_card_details p.nft_card_last_sale {
+    margin-bottom: 1rem;
+  }
+
+  .nft_card_details button {
+    height: 30%;
+  }
+}
