@@ -16,7 +16,7 @@ const ConnectedWalletButton = () => {
     disconnectWallets(setUser, setProvider, setChainId);
   };
   const isMobile = useIsMobile();
-  useOutsideClick(dropdownRef, setShowDropdown, "connected_wallet_button");
+  useOutsideClick(dropdownRef, setProvider, "connected_wallet_button");
 
   return (
     <div className="connected_button_container">
