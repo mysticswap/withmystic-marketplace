@@ -15,7 +15,7 @@ const CardSkeleton = ({ cards }: props) => {
         className={`${!listView ? "nft_card_skeleton" : "nft_list_skeleton"}`}
         key={index}
       >
-        <SkeletonTheme>
+        <SkeletonTheme baseColor="#d9e0ec3d" highlightColor="#d9e0ec76">
           <Skeleton className={`${!listView ? "skeleton_img" : "hide"}`} />
           <Skeleton
             className="text_skeleton"
