@@ -1,5 +1,5 @@
 .grid_buttons {
-  width: 10%;
+  width: 15%;
   background-color: var(--ms-mp-gray-light);
   border-radius: var(--ms-mp-large-border-radius);
   display: flex;
@@ -22,6 +22,9 @@
 
 .grid_buttons button:first-of-type {
   border-right: 1px solid var(--ms-mp-gray);
+}
+.grid_buttons button:last-of-type {
+  border-left: 1px solid var(--ms-mp-gray);
 }
 
 .filter_button:hover,

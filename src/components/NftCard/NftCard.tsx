@@ -36,9 +36,9 @@ import { ETH_CONTRACT_ADDRESS } from "../OfferOrListingModal/OfferOrListingModal
 import AutoPlayer from "../AutoPlayer/AutoPlayer";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
 
-type Props = { nft: TokenElement };
+type Props = { nft: TokenElement; listView: boolean };
 
-const NftCard = ({ nft }: Props) => {
+const NftCard = ({ nft, listView }: Props) => {
   const {
     minimalCards,
     collectionChainId,
@@ -222,12 +222,12 @@ const NftCard = ({ nft }: Props) => {
     Number(userBalance[currentTokenSymbol]) >= currentTokenAmount;
 
   return (
-    <div className="nft_card">
+    <div className={!listView ? "nft_card" : "nft_card_list"}>
       <div className="nft_card_image_area">
         {isErc1155 && (
           <div className="nft_card_supply_count">{`x${supply}`}</div>
         )}
-        {nft.token.media !== null ? (
+        {nft.token.media !== null && !listView ? (
           !diamondHost ? (
             <VideoPlayer
               nftUrl={`/${collectionContract}/${nftId}`}
@@ -262,7 +262,7 @@ const NftCard = ({ nft }: Props) => {
         )}
       </div>
 
-      <div className="nft_card_details">
+      <div className={!listView ? "nft_card_details" : "nft_list_details"}>
         <div className="card_name">
           {isOverflowing ? (
             <CustomTooltip text={nftName}>{nameLink}</CustomTooltip>

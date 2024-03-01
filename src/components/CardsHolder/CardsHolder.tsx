@@ -18,6 +18,7 @@ const CardsHolder = () => {
     collectionNfts,
     setCollectionNfts,
     minimalCards,
+    setMinimalCards,
     collectionChainId,
     collectionContract,
   } = useGlobalContext();
@@ -50,8 +51,19 @@ const CardsHolder = () => {
     setNftsTemp(collectionNfts?.tokens);
   }, [collectionNfts]);
 
+  const listView = true;
+
   const nftsList = nftsTemp?.map((nft) => {
-    return <NftCard key={nft?.token?.tokenId} nft={nft} />;
+    if (!listView) {
+      return (
+        <NftCard key={nft?.token?.tokenId} nft={nft} listView={listView} />
+      );
+    } else {
+      setMinimalCards(false);
+      return (
+        <NftCard key={nft?.token?.tokenId} nft={nft} listView={listView} />
+      );
+    }
   });
 
   const selectedTraitList = selectedTraits.map((trait, index) => {
@@ -150,9 +162,8 @@ const CardsHolder = () => {
       className={`cards_holder ${
         showFilters ? "small_cards_holder" : "large_cards_holder"
       } ${
-        minimalCards
-          ? "small_cards_holder_minmax_v1"
-          : "small_cards_holder_minmax_v2"
+        minimalCards && "small_cards_holder_minmax_v1"
+        // : "small_cards_holder_minmax_v2"
       }`}
     >
       {selectedTraits.length > 0 && (
@@ -165,12 +176,7 @@ const CardsHolder = () => {
       )}
 
       {nftsList}
-      {isFetching && (
-        <CardSkeleton cards={9} />
-        // <div className="loader_holder">
-        //   <BiLoaderCircle className="loader" size={50} />
-        // </div>
-      )}
+      {isFetching && <CardSkeleton cards={9} />}
       {nftsList?.length < 1 && !isFetching && (
         <p className="no_result">No results</p>
       )}
