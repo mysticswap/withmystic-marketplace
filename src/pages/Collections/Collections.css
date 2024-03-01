@@ -1,5 +1,7 @@
-.tabs_container {
+.collections_tabs_container {
   display: flex;
+  margin-top: 3rem;
+  justify-content: space-between;
   @media screen and (max-width: 1024px) {
     width: 100%;
   }

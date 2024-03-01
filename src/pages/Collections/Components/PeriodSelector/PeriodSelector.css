@@ -1,0 +1,41 @@
+.period-selector-container {
+  height: fit-content;
+  width: fit-content;
+  border: solid black 1px;
+  border-radius: var(--ms-mp-large-border-radius);
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+.period-selector-item {
+  font-weight: bold;
+}
+.period-selector-item:hover {
+  cursor: pointer;
+}
+.period-selected {
+  color: black;
+}
+
+.period-not-selected {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+@media only screen and (max-width: 600px) {
+  .period-selector-container {
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+  }
+  .period-selector-item {
+    font-weight: bold;
+    font-size: 0.7rem;
+  }
+  .period-selector-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+  }
+}

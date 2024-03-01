@@ -4,8 +4,8 @@ import Tab from "./Components/Tab/Tab";
 import { useEffect, useState } from "react";
 import './Collections.css'
 import { ICollection } from "./types";
-import { CollectionsSection } from "../../components/CollectionSection/CollectionsSection";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
+import { PeriodSelector } from "./Components/PeriodSelector/PeriodSelector";
 
 const CollectionsPage = () => {
   const {
@@ -34,18 +34,14 @@ const CollectionsPage = () => {
     setTableRows(parsedData);
   }
     
-
-  
   return (
     <div className="collections_page_container">
       <Banner activity={false} />
-      <div className="tabs_container">
+      <div className="collections_tabs_container">
         <Tab />
+        <PeriodSelector/>
       </div>
       <CollectionsTable rows={tableRows}/>
-      <CollectionsSection title="Categories" collections={tableRows}/>
-      <CollectionsSection title="Brands" collections={tableRows}/>
-
     </div>
     
   )

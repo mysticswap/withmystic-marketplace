@@ -31,6 +31,7 @@ export const dropdownOptions = [
 
 export const tabOptions = ["Items", "Activity"];
 export const collectionTableOptions = ["Collections", "Trending"]
+export const periodSelectors = ["1H","1D","30D","All-time"]
 export const activityButtons = [
   { activity: "Sale", icon: BsFillCartFill, type: "sale" },
   { activity: "Offers", icon: BsTagFill, type: "bid" },
