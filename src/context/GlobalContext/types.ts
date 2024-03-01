@@ -48,4 +48,6 @@ export type GlobalContextType = {
   supportedTokens: SupportedToken[];
   currentToken: number;
   setCurrentToken: React.Dispatch<React.SetStateAction<number>>;
+  listView: boolean;
+  setListView: React.Dispatch<React.SetStateAction<boolean>>;
 };

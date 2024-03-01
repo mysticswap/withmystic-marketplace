@@ -23,9 +23,9 @@
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
 
-/* .small_cards_holder_minmax_v2 {
+.small_cards_holder_minmax_v2 {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-} */
+}
 
 .selected_traits_holder {
   grid-column: 1 / -1;

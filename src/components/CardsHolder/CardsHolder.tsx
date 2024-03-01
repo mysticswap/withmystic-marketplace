@@ -18,9 +18,9 @@ const CardsHolder = () => {
     collectionNfts,
     setCollectionNfts,
     minimalCards,
-    setMinimalCards,
     collectionChainId,
     collectionContract,
+    listView,
   } = useGlobalContext();
   const {
     showFilters,
@@ -34,7 +34,7 @@ const CardsHolder = () => {
 
   const [nftsTemp, setNftsTemp] = useState(collectionNfts.tokens);
 
-  const cardsHolderRef = useRef(null);
+  const cardsHolderRef = useRef<HTMLDivElement>(null);
 
   const removeSelectedFilter = (trait: string, traitType: string) => {
     const selectedTraitsUpdate = selectedTraits.filter((item) => {
@@ -51,19 +51,8 @@ const CardsHolder = () => {
     setNftsTemp(collectionNfts?.tokens);
   }, [collectionNfts]);
 
-  const listView = true;
-
   const nftsList = nftsTemp?.map((nft) => {
-    if (!listView) {
-      return (
-        <NftCard key={nft?.token?.tokenId} nft={nft} listView={listView} />
-      );
-    } else {
-      setMinimalCards(false);
-      return (
-        <NftCard key={nft?.token?.tokenId} nft={nft} listView={listView} />
-      );
-    }
+    return <NftCard key={nft?.token?.tokenId} nft={nft} />;
   });
 
   const selectedTraitList = selectedTraits.map((trait, index) => {
@@ -162,8 +151,11 @@ const CardsHolder = () => {
       className={`cards_holder ${
         showFilters ? "small_cards_holder" : "large_cards_holder"
       } ${
-        minimalCards && "small_cards_holder_minmax_v1"
-        // : "small_cards_holder_minmax_v2"
+        minimalCards
+          ? "small_cards_holder_minmax_v1"
+          : !listView
+          ? "small_cards_holder_minmax_v2"
+          : ""
       }`}
     >
       {selectedTraits.length > 0 && (

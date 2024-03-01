@@ -4,29 +4,36 @@ import "./GridButtons.css";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
 const GridButtons = () => {
-  const { setMinimalCards, minimalCards } = useGlobalContext();
+  const { setMinimalCards, minimalCards, listView, setListView } =
+    useGlobalContext();
   return (
     <div className="grid_buttons">
       <button
         onClick={() => {
+          setListView(false);
           setMinimalCards(true);
         }}
       >
-        <BsFillGridFill opacity={minimalCards ? 0.25 : 1} size={20} />
+        <BsFillGridFill opacity={!minimalCards ? 0.25 : 1} size={20} />
       </button>
       <button
-      // onClick={() => {
-      //   setMinimalCards(false);
-      // }}
+        onClick={() => {
+          setListView(true);
+          setMinimalCards(false);
+        }}
       >
-        <FaThList opacity={!minimalCards ? 0.25 : 1} size={20} />
+        <FaThList opacity={!listView ? 0.25 : 1} size={20} />
       </button>
       <button
         onClick={() => {
           setMinimalCards(false);
+          setListView(false);
         }}
       >
-        <BsFillGrid3X3GapFill opacity={!minimalCards ? 0.25 : 1} size={20} />
+        <BsFillGrid3X3GapFill
+          opacity={minimalCards || listView ? 0.25 : 1}
+          size={20}
+        />
       </button>
     </div>
   );

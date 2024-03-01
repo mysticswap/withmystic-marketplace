@@ -36,9 +36,9 @@ import { ETH_CONTRACT_ADDRESS } from "../OfferOrListingModal/OfferOrListingModal
 import AutoPlayer from "../AutoPlayer/AutoPlayer";
 import { useHomeContext } from "../../context/HomeContext/HomeContext";
 
-type Props = { nft: TokenElement; listView: boolean };
+type Props = { nft: TokenElement };
 
-const NftCard = ({ nft, listView }: Props) => {
+const NftCard = ({ nft }: Props) => {
   const {
     minimalCards,
     collectionChainId,
@@ -46,6 +46,7 @@ const NftCard = ({ nft, listView }: Props) => {
     userBalance,
     client,
     source,
+    listView,
   } = useGlobalContext();
   const { user, chainId, setProvider, setUser, setChainId } =
     useConnectionContext()!;
