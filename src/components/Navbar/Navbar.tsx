@@ -1,12 +1,11 @@
 import "./Navbar.css";
 import {
-  RiArrowDownSLine,
   RiDiscordFill,
   RiMenu3Fill,
   RiTwitterXLine,
 } from "react-icons/ri";
 import SolidButton from "../SolidButton/SolidButton";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { scrollToTop } from "../../utils";
 import { connectWallets } from "../../services/web3Onboard";
@@ -43,7 +42,9 @@ const Navbar = () => {
 
   const [showDropdownOptions, setShowDropdownOptions] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
-
+  
+  const navigate = useNavigate();
+  
   useOutsideClick(
     dropdownRef,
     setShowDropdownOptions,
@@ -113,13 +114,10 @@ const Navbar = () => {
           <div className="collections_dropdown">
             <button
               className="collection_dropdown_trigger"
-              onClick={() => setShowDropdownOptions(!showDropdownOptions)}
+              onClick={() => navigate('/collections')}
             >
               Collections{" "}
-              <RiArrowDownSLine
-                size={20}
-                className="collection_dropdown_trigger"
-              />
+
             </button>
 
             {showDropdownOptions && (

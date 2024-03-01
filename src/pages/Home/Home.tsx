@@ -4,54 +4,51 @@ import Tab from "./Components/Tab/Tab";
 import { useEffect, useState } from "react";
 import './Home.css'
 import { collectionTableOptions } from "../../constants";
-import { Collection } from "./types";
 import { CollectionsSection } from "../../components/CollectionSection/CollectionsSection";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
-import { TokenElement } from "../../types/rsv-types/collection-nfts.types";
+import { ICollection } from "../Collections/types";
 
 const CollectionsPage = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState<null | number>(0)
   const {
-    collectionNfts,
-
+    availableCollections
   } = useGlobalContext();
-  const [tableRows, setTableRows ] = useState<Array<Collection>>([]);
-  const [tokens, setTokens ] = useState<Array<TokenElement>>(collectionNfts.tokens);
-  function createData(
-    number:string,
-    collection: string,
-    floor: string,
-    volume: string,
-    oneDVolume: string,
-    owners: string,
-    supply: string,
-  ) {
-    return { number, collection, floor, oneDVolume, owners, volume, supply };
-  }
+  const [tableRows, setTableRows ] = useState<Array<ICollection>>([]);
   
   useEffect(()=>{
     handleDefaultCollections()
   },[])
-  useEffect(() => {
-    setTokens(collectionNfts?.tokens);
-  }, [collectionNfts]);
+
   function handleTrendingCollections(){
-    setTableRows([
-      createData("1",'Trending Mystical Wizards', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("2",'Pudgy penguins', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("3",'Red Apples', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("4",'Oranges', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("5",'Mythical Beings', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-    ]);
+    const parsedData = availableCollections.map((collection, index)=>({
+      id:collection.id,
+      number:index, 
+      address:collection.address,
+      collection:collection.name, 
+      floor: "1 ETH",
+      oneDVolume: "100 ETH", 
+      owners:"9ETH", 
+      volume:"2,678", 
+      supply: "4,4444",
+    }))
+    
+   setTableRows(parsedData);
   }
   function handleDefaultCollections(){
-    setTableRows([
-      createData("1",'Mystical Wizards', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("2",'Pudgy penguins', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("3",'Red Apples', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("4",'Oranges', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("5",'Mythical Beings', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-    ]);
+    const parsedData = availableCollections.map((collection, index)=>({
+      id:collection.id,
+      number:index, 
+      address:collection.address,
+      collection:collection.name, 
+      floor: "1 ETH",
+      oneDVolume: "100 ETH", 
+      owners:"9ETH", 
+      volume:"2,1078", 
+      supply: "5,84887",
+    }))
+    
+   setTableRows(parsedData);
+   
   }
     
   function handleTabSelection(index:number) {
@@ -75,8 +72,8 @@ const CollectionsPage = () => {
          select={() =>handleTabSelection(index)}/>)}
       </div>
       <CollectionsTable rows={tableRows}/>
-      <CollectionsSection title="Categories" collections={tokens}/>
-      <CollectionsSection title="Brands" collections={tokens}/>
+      <CollectionsSection title="Categories" collections={tableRows}/>
+      <CollectionsSection title="Brands" collections={tableRows}/>
 
     </div>
     

@@ -3,46 +3,35 @@ import { CollectionsTable } from "../../components/CollectionsTable/CollectionsT
 import Tab from "./Components/Tab/Tab";
 import { useEffect, useState } from "react";
 import './Collections.css'
-import { Collection } from "./types";
+import { ICollection } from "./types";
 import { CollectionsSection } from "../../components/CollectionSection/CollectionsSection";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
-import { TokenElement } from "../../types/rsv-types/collection-nfts.types";
 
 const CollectionsPage = () => {
   const {
-    collectionNfts,
-
+    availableCollections,
   } = useGlobalContext();
-  const [tableRows, setTableRows ] = useState<Array<Collection>>([]);
-  const [tokens, setTokens ] = useState<Array<TokenElement>>(collectionNfts.tokens);
 
-  function createData(
-    number:string,
-    collection: string,
-    floor: string,
-    volume: string,
-    oneDVolume: string,
-    owners: string,
-    supply: string,
-  ) {
-    return { number, collection, floor, oneDVolume, owners, volume, supply };
-  }
+  const [tableRows, setTableRows ] = useState<Array<ICollection>>([]);
 
   useEffect(()=>{
     handleDefaultCollections()
   },[])
-  useEffect(() => {
-    setTokens(collectionNfts?.tokens);
-  }, [collectionNfts]);
   
   function handleDefaultCollections(){
-    setTableRows([
-      createData("1",'Mystical Wizards', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("2",'Pudgy penguins', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("3",'Red Apples', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("4",'Oranges', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-      createData("5",'Mythical Beings', "1 ETH", "100 ETH","9ETH", "2,678", "4,4444"),
-    ]);
+    const parsedData = availableCollections.map((collection, index)=>({
+       id:collection.id,
+       number:index, 
+       address:collection.address,
+       collection:collection.name, 
+       floor: "1 ETH",
+       oneDVolume: "100 ETH", 
+       owners:"9ETH", 
+       volume:"2,678", 
+       supply: "4,4444",
+     }))
+     
+    setTableRows(parsedData);
   }
     
 
@@ -54,8 +43,8 @@ const CollectionsPage = () => {
         <Tab />
       </div>
       <CollectionsTable rows={tableRows}/>
-      <CollectionsSection title="Categories" collections={tokens}/>
-      <CollectionsSection title="Brands" collections={tokens}/>
+      <CollectionsSection title="Categories" collections={tableRows}/>
+      <CollectionsSection title="Brands" collections={tableRows}/>
 
     </div>
     

@@ -10,8 +10,11 @@ import { useTransactionContext } from "../../context/TransactionContext/Transact
 import ConfirmPurchaseModal from "../../components/ConfirmPurchaseModal/ConfirmPurchaseModal";
 import ConfirmPurchaseBuyNowModal from "../../components/ConfirmPurchaseModal/ConfirmPurchaseBuyNowModal";
 import CollectionInformation from "../../components/CollectionInformation/CollectionInformation";
+import {useParams, useNavigate} from 'react-router-dom'
+import { useEffect } from "react";
+
 const Collection = () => {
-  const { currentTab } = useGlobalContext();
+  const { currentTab, setSelectedCollection, availableCollections } = useGlobalContext();
   const {
     showOfferOrListingModal,
     setShowOfferOrListingModal,
@@ -20,6 +23,14 @@ const Collection = () => {
     showConfirmationBuyNowModal,
     setShowConfirmationBuyNowModal,
   } = useTransactionContext()!;
+  
+  const {id:collectionId} = useParams()
+  const navigate = useNavigate()
+  useEffect(()=>{
+      const selectedCollection = availableCollections.find((collection) => String(collection.id) === collectionId)
+      if(!selectedCollection) return navigate('/')
+      setSelectedCollection(selectedCollection)
+  },[])
   const isInItemsSection = currentTab == tabOptions[0];
 
   return (

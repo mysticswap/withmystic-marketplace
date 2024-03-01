@@ -1,10 +1,10 @@
 import "./CollectionsSection.css";
-import NftCard from "../NftCard/NftCard";
-import { TokenElement } from "../../types/rsv-types/collection-nfts.types";
+import CollectionCard from "../CollectionCard/CollectionCard";
+import { ICollection } from "../../pages/Collections/types";
 
 interface IProps {
   title: string;
-  collections: Array<TokenElement>;
+  collections: Array<ICollection>;
 }
 
 export const CollectionsSection = ({ title, collections }: IProps) => {
@@ -14,8 +14,8 @@ export const CollectionsSection = ({ title, collections }: IProps) => {
     <div className="colletions_section_container">
       <h1 className="collections_section_title">{title}</h1>
       <div className="collections_section_grid">
-        {collections?.map((nft) => {
-          return <NftCard key={nft?.token?.tokenId} nft={nft} />;
+        {collections?.map((collection, index) => {
+          return <CollectionCard key={index} collection={collection} />;
         })}
       </div>
     </div>

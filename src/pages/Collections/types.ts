@@ -1,9 +1,11 @@
-export type Collection = {
-  number:string
-  collection: string
-  floor: string
-  volume: string
-  oneDVolume: string
-  owners: string
+export type ICollection = {
+  id:string,
+  address: string,
+  number:number, 
+  collection:string, 
+  floor: string,
+  oneDVolume: string, 
+  owners: string, 
+  volume:string, 
   supply: string
 }

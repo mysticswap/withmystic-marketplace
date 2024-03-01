@@ -15,7 +15,6 @@
   border-collapse: collapse;
   margin-bottom: 20px;
 }
-
 .collections-table-header-item,
 .collections-table-row-item {
   border: 1px solid #ddd;
@@ -34,4 +33,12 @@
 
 .collection-table-row:hover {
   background-color: #ddd;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+  .collection-table-container {
+    width: 80vw;
+    overflow: auto;
+  }
 }

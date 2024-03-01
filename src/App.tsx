@@ -66,7 +66,7 @@ function App() {
                 <Route path="/swaps" element={<SwapsPage />} />
                 
                 <Route
-                  path="/collection"
+                  path="/collection/:id"
                   element={<CollectionContextProvider children={<Collection />} />}
                 />
                 <Route path="/collections" element={<CollectionContextProvider children={<CollectionsPage />} />} />
