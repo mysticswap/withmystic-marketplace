@@ -18,8 +18,10 @@
 .collections-table-header-item,
 .collections-table-row-item {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 1rem;
   text-align: left;
+  border-right: none;
+  border-left: none;
 }
 
 .collections-table-header-item {
@@ -32,7 +34,7 @@
 }
 
 .collection-table-row:hover {
-  background-color: #ddd;
+  background-color: #d9e0ec;
   cursor: pointer;
 }
 
