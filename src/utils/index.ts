@@ -84,11 +84,11 @@ export const getHostName = () => {
   const hostName = window.location.hostname;
   switch (hostName) {
     case "localhost":
+      //DiamondNXT-NFT host
+      return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
       return "talentprotocol.withmystic.xyz";
       return "marketplace.mysticswaplocalhost.io";
       return "deploy-preview-14--heroic-duckanoo-b32f52.netlify.app";
-      //DiamondNXT-NFT host
-      return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
       // SteadyStack host
       return "deploy-preview-15--heroic-duckanoo-b32f52.netlify.app";
       return "deploy-preview-25--heroic-duckanoo-b32f52.netlify.app";

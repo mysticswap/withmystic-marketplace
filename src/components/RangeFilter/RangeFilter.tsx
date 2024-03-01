@@ -54,6 +54,14 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
 
   return (
     <>
+      <div className="nft_filter_slider">
+        <input
+          type="range"
+          value={maxValue}
+          max="11"
+          onChange={(e) => handleChange(false, e.target.value)}
+        ></input>
+      </div>
       <div className="nft_filter_range">
         <input
           type="number"
