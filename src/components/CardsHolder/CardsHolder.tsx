@@ -166,7 +166,6 @@ const CardsHolder = () => {
           </button>
         </div>
       )}
-
       {nftsList}
       {isFetching && <CardSkeleton cards={9} />}
       {nftsList?.length < 1 && !isFetching && (
