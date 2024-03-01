@@ -3,20 +3,15 @@ import { Link } from "react-router-dom";
 import { useRef } from "react";
 import CustomTooltip from "../CustomTooltip/CustomTooltip";
 import { SiOpensea } from "react-icons/si";
-import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
-import { useIsOverflow } from "../../hooks/useIsOverflow";
 import { ICollection } from "../../pages/Collections/types";
 import ethereumIcon from "./../../assets/ethereum-1.svg";
 import checkIcon from "./../../assets/checkSign.png";
 type Props = { collection: ICollection };
 
 const CollectionCard = ({ collection }: Props) => {
-  const {
-    minimalCards,
-  } = useGlobalContext();
+
 
   const nameRef = useRef(null);
-  const isOverflowing = useIsOverflow(nameRef, minimalCards);
 
   const nameLink = (
     <Link to={`/${collection.id}`}>
