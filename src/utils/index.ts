@@ -84,6 +84,7 @@ export const getHostName = () => {
   const hostName = window.location.hostname;
   switch (hostName) {
     case "localhost":
+      return "talentprotocol.withmystic.xyz";
       return "marketplace.mysticswaplocalhost.io";
       return "deploy-preview-14--heroic-duckanoo-b32f52.netlify.app";
       //DiamondNXT-NFT host
