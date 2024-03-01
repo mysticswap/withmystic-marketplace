@@ -1,4 +1,4 @@
-.nft_card {
+.collection_card {
   border: 1px solid var(--ms-mp-card-border-color);
   border-radius: var(--ms-mp-card-border-radius);
   overflow: hidden;
@@ -11,15 +11,15 @@
   justify-content: start;
 }
 
-.nft_card:hover {
+.collection_card:hover {
   transform: scale(103%);
 }
 
-.nft_card_image_area {
+.collection_card_image_area {
   position: relative;
 }
 
-.nft_card_supply_count {
+.collection_card_supply_count {
   position: absolute;
   inset: 0.75rem auto auto 0.75rem;
   padding: 0.25rem;
@@ -34,7 +34,7 @@
   height: 100%;
 }
 
-.nft_card img {
+.collection_card .collection-cover-image {
   width: 100%;
   height: auto;
   aspect-ratio: 3/4;
@@ -43,13 +43,13 @@
   object-fit: cover;
 }
 
-.nft_card_details {
+.collection_card_details {
   padding: 1rem;
   position: relative;
-  height: 3rem;
+  height: 6rem;
 }
 
-.nft_card_details p {
+.collection_card_details p {
   margin: 0;
 }
 
@@ -73,22 +73,22 @@
   text-overflow: ellipsis;
 }
 
-.nft_card_last_sale {
+.collection_card_last_sale {
   font-size: 13px;
   color: var(--ms-mp-gray-text);
 }
 
-.nft_card_amount {
+.collection_card_amount {
   font-weight: 600;
 }
 
-.nft_card_amount > span {
+.collection_card_amount > span {
   font-weight: 400;
   font-size: 13px;
   color: var(--ms-mp-gray-text);
 }
 
-.nft_card_details button {
+.collection_card_details button {
   position: absolute;
   left: 0;
   right: 0;
@@ -107,7 +107,7 @@
   height: 35%;
 }
 
-.nft_card:hover > .nft_card_details button {
+.collection_card:hover > .collection_card_details button {
   bottom: 0;
   z-index: 1;
 }
@@ -124,13 +124,31 @@
 .source_icon img {
   width: 100%;
 }
-
+.collection-floor-label {
+  color: rgba(0, 0, 0, 0.5);
+}
+.floor-info-container {
+}
+.flor-info-value {
+  display: flex;
+}
+.collection-card-ethereum-icon {
+  width: 0.8rem;
+  margin-right: 0.3rem;
+}
+.collection-card-check-icon {
+  width: 1rem;
+  height: 1.2rem;
+}
+.card_name {
+  display: flex;
+}
 @media (max-width: 600px) {
-  .nft_card_details p.nft_card_last_sale {
+  .collection_card_details p.collection_card_last_sale {
     margin-bottom: 1rem;
   }
 
-  .nft_card_details button {
+  .collection_card_details button {
     height: 30%;
   }
 }
