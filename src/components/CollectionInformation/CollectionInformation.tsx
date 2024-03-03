@@ -13,7 +13,7 @@ const CollectionInformation= () => {
     collectionMetadata,
     collectionChainId,
   } = useGlobalContext();
-
+  
   const collectionContract =
     collectionMetadata?.collections?.[0]?.primaryContract;
   const nameShouldBeHidden = collectionsWithHiddenNames[collectionContract!];
