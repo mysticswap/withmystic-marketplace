@@ -28,9 +28,9 @@ const CollectionInformation= () => {
               <span className="collection_info_label">Royalties:{" "}<span className="collection_info">{collectionMetadata?.collections?.[0]?.allRoyalties?.opensea?.[0]?.bps}</span></span>
               <span className="collection_info_label">Created By:{" "}<span className="collection_info">{collectionMetadata?.collections?.[0]?.floorAsk.maker}</span></span>
               <div className="social-icons-container">
-                <img className="social-icon" src={xIcon}></img>
-                <img className="social-icon" src={discordIcon}></img>
-                <img className="social-icon" src={webSiteIcon}></img>
+               <a href={`https://twitter.com/${collectionMetadata?.collections?.[0]?.twitterUsername}`}> <img className="social-icon" src={xIcon}></img></a>
+               <a href={collectionMetadata?.collections?.[0]?.discordUrl}><img className="social-icon" src={discordIcon}></img></a>
+               <a href={collectionMetadata?.collections?.[0]?.externalUrl} target='_blank'><img className="social-icon" src={webSiteIcon}></img></a> 
               </div>
             </div>
             <p className="collection-description">{collectionMetadata?.collections?.[0]?.description}</p>
