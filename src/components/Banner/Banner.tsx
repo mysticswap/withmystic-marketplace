@@ -7,7 +7,6 @@ import {
 
 type IProps = {
   activity: boolean
-  bannerUrl: string
 }
 
 const Banner = ({activity }:IProps) => {
