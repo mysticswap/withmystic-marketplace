@@ -142,6 +142,7 @@
 }
 .card_name {
   display: flex;
+  gap: 0.25rem;
 }
 @media (max-width: 600px) {
   .collection_card_details p.collection_card_last_sale {

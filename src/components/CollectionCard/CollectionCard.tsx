@@ -44,10 +44,8 @@ const CollectionCard = ({ collection }: Props) => {
 
       <div className="collection_card_details">
         <div className="card_name">
-        <div>
           <CustomTooltip text={collection.collection}>{nameLink}</CustomTooltip>
           <img className="collection-card-check-icon" src={checkIcon}/>
-        </div>
         </div>
           <div className="floor-info-container">
             <span className="collection-floor-label">Floor</span>
