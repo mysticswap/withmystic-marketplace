@@ -36,7 +36,7 @@ const CollectionsPage = () => {
     
   return (
     <div className="collections_page_container">
-      <Banner activity={false} />
+      <Banner activity={false} displayCollectionAvatar={false} />
       <div className="collections_tabs_container">
         <Tab />
         <PeriodSelector/>

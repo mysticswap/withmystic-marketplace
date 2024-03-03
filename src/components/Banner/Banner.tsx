@@ -7,9 +7,10 @@ import {
 
 type IProps = {
   activity: boolean
+  displayCollectionAvatar: boolean
 }
 
-const Banner = ({activity }:IProps) => {
+const Banner = ({activity, displayCollectionAvatar }:IProps) => {
   const {
     currentTab,
     setCurrentTab,
@@ -18,7 +19,8 @@ const Banner = ({activity }:IProps) => {
   } = useGlobalContext();
 
   return (
-    <div className="wrapper">
+    <div className="banner-wrapper">
+      {displayCollectionAvatar && <img src={collectionMetadata?.collections?.[0]?.image} className="collection-avatar"/>}
       <div className="banner">
         <img src={collectionMetadata?.collections?.[0]?.banner  || client.bannerUrl} alt="" />
         {activity && <div className="tabs">

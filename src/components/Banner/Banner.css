@@ -1,3 +1,6 @@
+.banner-wrapper {
+  position: relative;
+}
 .banner {
   position: relative;
   height: 40vh;
@@ -59,10 +62,28 @@
 .banner_pill_icon {
   max-width: 15px;
 }
+.collection-avatar {
+  position: absolute;
+  border-radius: 1rem;
+  bottom: -3rem;
+  left: 2rem;
+  z-index: 999;
+  width: 10rem;
+}
 
 @media screen and (max-width: 1366px) {
   .banner {
     position: relative;
     height: 30vh;
+  }
+  .collection-avatar {
+    width: 8rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .collection-avatar {
+    width: 6rem;
+    left: 0.75rem;
   }
 }

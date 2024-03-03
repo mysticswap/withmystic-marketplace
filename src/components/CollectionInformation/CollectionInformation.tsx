@@ -21,7 +21,6 @@ const CollectionInformation= () => {
   return(
     <div className="collection_information_wrapper">
           <div className="collection-information-container">
-            <img src={collectionMetadata?.collections?.[0]?.image} className="collection-main-image"/>
             {!nameShouldBeHidden && <span className="collection_name">{collectionMetadata?.collections?.[0]?.name}</span>}
             <div className="collection-info-container">
               <span className="collection_info_label">Contract:{" "}<span className="collection_info">{collectionMetadata?.collections?.[0]?.floorAsk?.token?.contract}</span></span>
