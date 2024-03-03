@@ -94,7 +94,7 @@ const Navbar = () => {
               setShowMobileMenu(false);
             }}
           >
-            <img src={client.logoUrl} alt="collection_logo" />
+            <img src={collectionMetadata?.collections?.[0]?.image} alt="collection_logo" />
           </Link>
         </div>
 
