@@ -4,6 +4,7 @@ import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 type IProps = {
   activity: boolean
   displayCollectionAvatar: boolean
+  height?:string
 }
 
 const Banner = ({ displayCollectionAvatar }:IProps) => {
