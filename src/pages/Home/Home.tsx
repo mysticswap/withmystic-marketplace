@@ -3,7 +3,7 @@ import { CollectionsTable } from "../../components/CollectionsTable/CollectionsT
 import Tab from "./Components/Tab/Tab";
 import { useEffect, useState } from "react";
 import './Home.css'
-import { collectionTableOptions } from "../../constants";
+import { bannerHeight, collectionTableOptions } from "../../constants";
 import { CollectionsSection } from "../../components/CollectionSection/CollectionsSection";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { ICollection } from "../Collections/types";
@@ -65,7 +65,7 @@ const CollectionsPage = () => {
   
   return (
     <div className="collections_page_container">
-      <Banner  activity={false} />
+      <Banner   displayCollectionAvatar={false} height={bannerHeight.home} />
       <div className="tabs_container">
         {collectionTableOptions.map((number, index) => <Tab  key={index}isSelected={selectedTabIndex === index}
          name={String(number)}

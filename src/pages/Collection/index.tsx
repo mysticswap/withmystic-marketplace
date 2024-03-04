@@ -35,7 +35,7 @@ const Collection = () => {
 
   return (
     <div>
-      <Banner activity={true} displayCollectionAvatar={true} height={40} />
+      <Banner displayCollectionAvatar={true} />
       <CollectionInformation/>
       <ControlBar isInItemsSection={isInItemsSection} />
 

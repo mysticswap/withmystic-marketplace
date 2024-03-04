@@ -1,13 +1,13 @@
 import "./Banner.css";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
+import { bannerHeight } from "../../constants";
 
 type IProps = {
-  activity: boolean
   displayCollectionAvatar: boolean
-  height?:number
+  height?: string
 }
 
-const Banner = ({ displayCollectionAvatar, height = 70 }:IProps) => {
+const Banner = ({ displayCollectionAvatar, height = bannerHeight.default }:IProps) => {
   const {
     client,
     collectionMetadata
@@ -17,7 +17,7 @@ const Banner = ({ displayCollectionAvatar, height = 70 }:IProps) => {
     <div className="banner-wrapper">
       {displayCollectionAvatar && <img src={collectionMetadata?.collections?.[0]?.image}  className="collection-avatar"/>}
       <div className="banner">
-        <img src={collectionMetadata?.collections?.[0]?.banner  || client.bannerUrl} alt="" style={{height: `${height}vh`}} />
+        <img src={collectionMetadata?.collections?.[0]?.banner  || client.bannerUrl} alt="" style={{height: height}} />
       </div>
     </div>
   );
