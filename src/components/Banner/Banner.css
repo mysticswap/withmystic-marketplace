@@ -32,33 +32,6 @@
   color: white;
 }
 
-.tabs {
-  width: fit-content;
-  margin: 0 auto;
-  position: absolute;
-  inset: auto 0 0 0;
-}
-
-.tabs button {
-  background-color: transparent;
-  border: none;
-  padding: 1rem;
-  color: rgba(255, 255, 255, 0.5);
-  border-bottom: 2px solid transparent;
-  cursor: pointer;
-  transition: all 0.25s ease-in-out;
-  font-size: 18px;
-}
-
-.tabs button:hover {
-  color: white;
-}
-
-.tabs > .active_tab {
-  border-color: yellow;
-  color: white;
-}
-
 .banner_pill_icon {
   max-width: 15px;
 }

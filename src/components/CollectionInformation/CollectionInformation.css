@@ -1,10 +1,13 @@
 .collection_information_wrapper {
+  padding-bottom: 3rem;
+  position: relative;
   height: fit-content;
   box-sizing: border-box;
   padding-top: 4rem;
   margin-left: 0.5rem;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  border-bottom: solid 1px #d9e0ec;
 }
 
 .collection_name {
@@ -55,7 +58,33 @@
   font-weight: bold;
   font-size: 1.5rem;
 }
-@media screen and (max-width: 1366px) {
+.tabs {
+  width: fit-width;
+  margin: 0 auto;
+  position: absolute;
+  inset: auto 0 0 0;
+}
+
+.tabs button {
+  background-color: transparent;
+  border: none;
+  padding: 1rem;
+  color: black;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+  font-size: 18px;
+}
+
+.tabs button:hover {
+  cursor: pointer;
+}
+
+.tabs > .active_tab {
+  border-color: #085abc;
+  color: black;
+}
+@media screen and (max-width: 600px) {
   .collection-info-container {
     display: flex;
     flex-direction: column;

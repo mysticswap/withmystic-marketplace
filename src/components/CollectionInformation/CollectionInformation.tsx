@@ -7,9 +7,12 @@ import webSiteIcon from './../../assets/website-link-icon.png'
 import {
   collectionNetworkIcon,
   collectionsWithHiddenNames,
+  tabOptions,
 } from "../../constants";
 const CollectionInformation= () => {
   const {
+    currentTab,
+    setCurrentTab,
     collectionMetadata,
     collectionChainId,
   } = useGlobalContext();
@@ -64,6 +67,21 @@ const CollectionInformation= () => {
                 <span className="item-information-label">Floor price</span>
               </div>
             </div>
+              <div className="tabs">
+                {tabOptions.map((item) => {
+                  return (
+                    <button
+                      key={item}
+                      className={item == currentTab ? "active_tab" : ""}
+                      onClick={() => {
+                        setCurrentTab(item);
+                      }}
+                    >
+                      {item}
+                    </button>
+                  );
+                })}
+              </div>
         </div>
   )
 }
