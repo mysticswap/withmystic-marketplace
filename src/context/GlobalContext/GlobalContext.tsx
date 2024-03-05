@@ -78,7 +78,10 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
   const [selectedActivities, setSelectedActivities] = useState(["sale"]);
   const [userBalance, setUserBalance] = useState({});
   const [userNfts, setUserNfts] = useState({} as UserNfts);
+  // Nft Views
   const [minimalCards, setMinimalCards] = useState(true);
+  const [listView, setListView] = useState(false);
+
   const [cryptoValue, setCryptoValue] = useState(0);
   const [activitiesFetching, setActivitiesFetching] = useState(false);
 
@@ -214,6 +217,8 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
         supportedTokens,
         currentToken,
         setCurrentToken,
+        listView,
+        setListView,
       }}
     >
       {children}

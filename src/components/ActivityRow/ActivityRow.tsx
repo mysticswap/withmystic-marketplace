@@ -26,7 +26,7 @@ const ActivityRow = ({ activity }: Props) => {
   const fullTime = dayjs(activity?.timestamp * 1000).toString();
   const price = activity?.price?.amount?.decimal;
   const activityType = activity.type;
-  const hasTxHash = activity.hasOwnProperty("txHash");
+  const hasTxHash = Object.prototype.hasOwnProperty.call(activity, "txHash");
   const source = activity?.order?.source?.icon;
   const sourceDomain = activity?.order?.source?.domain;
   const tokenId = activity?.token?.tokenId;

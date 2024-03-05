@@ -127,6 +127,56 @@
   aspect-ratio: 4/4;
 }
 
+/* ListView Styles */
+.nft_card_list {
+  border: 1px solid var(--ms-mp-card-border-color);
+  border-radius: var(--ms-mp-card-border-radius);
+  overflow: hidden;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+.nft_card_list:hover {
+  transform: scale(101%);
+}
+.nft_card_list img {
+  width: 100%;
+  aspect-ratio: 4/4;
+  height: auto;
+  display: block;
+  max-height: 150px;
+  object-fit: cover;
+}
+
+.nft_list_details {
+  padding: 1rem;
+  position: relative;
+}
+
+.nft_list_details p {
+  margin: 0.2rem;
+}
+.nft_list_details button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0;
+  padding: 0.3rem 0;
+  border: none;
+  border-radius: var(--ms-mp-card-border-radius);
+  background-color: var(--ms-mp-primary-color);
+  color: white;
+  cursor: pointer;
+  transition: var(--ms-mp-transition);
+  height: 35%;
+}
+
+/* Responsive queries */
 @media (max-width: 600px) {
   .nft_card_details p.nft_card_last_sale {
     margin-bottom: 1rem;
@@ -134,5 +184,8 @@
 
   .nft_card_details button {
     height: 30%;
+  }
+  .nft_list_details button {
+    width: 90%;
   }
 }

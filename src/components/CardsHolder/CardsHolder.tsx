@@ -20,6 +20,7 @@ const CardsHolder = () => {
     minimalCards,
     collectionChainId,
     collectionContract,
+    listView,
   } = useGlobalContext();
   const {
     showFilters,
@@ -33,7 +34,7 @@ const CardsHolder = () => {
 
   const [nftsTemp, setNftsTemp] = useState(collectionNfts.tokens);
 
-  const cardsHolderRef = useRef(null);
+  const cardsHolderRef = useRef<HTMLDivElement>(null);
 
   const removeSelectedFilter = (trait: string, traitType: string) => {
     const selectedTraitsUpdate = selectedTraits.filter((item) => {
@@ -152,7 +153,9 @@ const CardsHolder = () => {
       } ${
         minimalCards
           ? "small_cards_holder_minmax_v1"
-          : "small_cards_holder_minmax_v2"
+          : !listView
+          ? "small_cards_holder_minmax_v2"
+          : ""
       }`}
     >
       {selectedTraits.length > 0 && (
@@ -163,14 +166,8 @@ const CardsHolder = () => {
           </button>
         </div>
       )}
-
       {nftsList}
-      {isFetching && (
-        <CardSkeleton cards={9} />
-        // <div className="loader_holder">
-        //   <BiLoaderCircle className="loader" size={50} />
-        // </div>
-      )}
+      {isFetching && <CardSkeleton cards={9} />}
       {nftsList?.length < 1 && !isFetching && (
         <p className="no_result">No results</p>
       )}
