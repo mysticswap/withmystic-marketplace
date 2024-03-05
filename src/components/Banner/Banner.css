@@ -50,6 +50,7 @@
   }
   .collection-avatar {
     width: 8rem;
+    bottom: -7em;
   }
 }
 

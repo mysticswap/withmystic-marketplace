@@ -84,6 +84,11 @@
   border-color: #085abc;
   color: black;
 }
+@media screen and (max-width: 1360px) {
+  .collection_information_wrapper {
+    padding-top: 8rem;
+  }
+}
 @media screen and (max-width: 600px) {
   .collection-info-container {
     display: flex;
@@ -112,5 +117,8 @@
   }
   .items-information-container {
     width: 20rem;
+  }
+  .collection_information_wrapper {
+    padding-top: 8rem;
   }
 }

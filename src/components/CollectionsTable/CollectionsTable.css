@@ -25,7 +25,6 @@
 }
 
 .collections-table-header-item {
-  background-color: #f2f2f2;
   color: #333;
 }
 
@@ -34,7 +33,7 @@
 }
 
 .collection-table-row:hover {
-  background-color: #d9e0ec;
+  background-color: var(--ms-mp-gray-light);
   cursor: pointer;
 }
 
