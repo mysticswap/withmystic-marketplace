@@ -14,7 +14,7 @@ const Banner = ({ displayCollectionAvatar, height = bannerHeight.default }:IProp
   } = useGlobalContext();
 
   return (
-    <div className="banner-wrapper">
+    <div className="banner-wrapper" style={{height: height }}>
       {displayCollectionAvatar && <img src={collectionMetadata?.collections?.[0]?.image}  className="collection-avatar"/>}
       <div className="banner">
         <img src={collectionMetadata?.collections?.[0]?.banner  || client.bannerUrl} alt="" style={{height: height}} />
