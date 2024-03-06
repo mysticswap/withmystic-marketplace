@@ -229,12 +229,21 @@ export const getAllOffers = async (
     "/marketplace-api/filtered-swaps",
     queryParams
   );
-  swaps = swaps.data.filter((i: signedOrderToMongo) =>
-    [
-      ...i.orderComponents.offer.map((j) => j.token),
-      ...i.orderComponents.consideration.map((j) => j.token),
-    ].includes(token)
-  );
+  const mainToken = token.split(":")[0];
+  const mainId = token.split(":")[1];
+  swaps = swaps.data
+    .filter((i: signedOrderToMongo) =>
+      [
+        ...i.orderComponents.offer.map((j) => j.token),
+        ...i.orderComponents.consideration.map((j) => j.token),
+      ].includes(mainToken)
+    )
+    .filter((i: signedOrderToMongo) =>
+      [
+        ...i.orderComponents.offer.map((j) => j.identifier),
+        ...i.orderComponents.consideration.map((j) => j.identifier),
+      ].includes(mainId)
+    );
 
   return OffersApiToReservoirApi(swaps, chainId);
 };

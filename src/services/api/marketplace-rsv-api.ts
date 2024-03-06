@@ -155,7 +155,7 @@ export const getNftOffers = async (
   continuation?: string
 ) => {
   if (otherChains.includes(chainId)) {
-    return await getAllOffers(chainId, SwapType.Offer, token.split(":")[0]);
+    return await getAllOffers(chainId, SwapType.Offer, token);
   }
 
   const request = await marketplaceInstance("/get-nft-offers", {

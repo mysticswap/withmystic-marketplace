@@ -110,10 +110,16 @@ const AuctionModal = ({ setShowOfferOrListingModal }: Props) => {
   );
 
   const getActiveAuction = async () => {
-    const auctions = await getAllTokenAuctions(
+    let auctions = await getAllTokenAuctions(
       collectionContract,
       collectionChainId
     );
+
+    auctions = auctions.filter((auction: any) => {
+      return auction.auctionComponent
+        .map((i: any) => i.identifier)
+        .includes(tokenId);
+    });
     setActiveAuctions(auctions);
     return auctions;
   };
