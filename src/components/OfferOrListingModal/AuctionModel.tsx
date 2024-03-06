@@ -100,10 +100,12 @@ const AuctionModal = ({ setShowOfferOrListingModal }: Props) => {
           {getUserBalance()} {supportedTokens[currentToken].symbol || "WETH"}
         </span>
       </p>
-      {isOffer && (
+      {true && (
         <p>
           <span>Last Bid</span>
-          <span>{"10"} ETH</span>
+          <span>
+            {(activeAuctions?.[0]?.lastBidAmount || 0) / 10 ** 18} ETH
+          </span>
         </p>
       )}
     </>
