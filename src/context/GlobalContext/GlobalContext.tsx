@@ -194,7 +194,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
   }, [cryptoName]);
 
   function getDistinctArray(arr: SupportedToken[]) {
-    const symbols = {};
+    const symbols: any = {};
 
     for (let i = 0; i < arr.length; i++) {
       if (!symbols[arr[i].contract]) {

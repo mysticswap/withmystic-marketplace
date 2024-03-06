@@ -1,22 +1,15 @@
 import { IoClose } from "react-icons/io5";
 import "./OfferOrListingModal.css";
 import ModalNft from "../ModalNft/ModalNft";
-import { BsCalendar, BsCheck2, BsChevronDown } from "react-icons/bs";
+import { BsCalendar } from "react-icons/bs";
 import { useEffect, useRef, useState } from "react";
 import SolidButton from "../SolidButton/SolidButton";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { durationOptions, wethAddresses } from "../../constants";
-import {
-  createBid,
-  createListing,
-} from "../../services/api/buy-offer-list.api";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
-import { convertTokenAmountToDecimals, getHostName } from "../../utils";
-import {
-  handleAuctionOrBidData,
-  handleListOrBidData,
-} from "../../services/list-bid-service";
+import { convertTokenAmountToDecimals } from "../../utils";
+import { handleAuctionOrBidData } from "../../services/list-bid-service";
 import ProcessComponent from "../TransactionStages/TransactionStages";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import { switchChains } from "../../utils/wallet-connection";
@@ -27,7 +20,7 @@ import {
   createAuction,
   getAllTokenAuctions,
 } from "../../services/api/marketplace-api";
-import { AuctionEnumType, AuctionType } from "../../types/market-schemas.types";
+import { AuctionEnumType } from "../../types/market-schemas.types";
 
 type Props = {
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -46,7 +39,6 @@ const AuctionModal = ({ setShowOfferOrListingModal }: Props) => {
     cryptoValue,
     supportedTokens,
     currentToken,
-    setCurrentToken,
   } = useGlobalContext();
   const {
     transactionNft,
@@ -60,14 +52,11 @@ const AuctionModal = ({ setShowOfferOrListingModal }: Props) => {
 
   // const currencyIsListing = supportedTokens[currentToken].contract;
 
-  const currency = wethAddresses[collectionChainId];
+  // const currency = wethAddresses[collectionChainId];
 
   const headerContent = isOffer ? "Bid This Auction" : "Create An Auction";
   const finalHeader = isOffer ? "Bid completed!" : "Auction created!";
   const inputPlaceholder = isOffer ? "Enter bid" : "Auction price";
-
-  const collectionFloorPrice =
-    collectionMetadata?.collections?.[0]?.floorAsk?.price?.amount?.decimal;
 
   const [selectedDuration, setSelectedDuration] = useState(durationOptions[6]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -130,8 +119,8 @@ const AuctionModal = ({ setShowOfferOrListingModal }: Props) => {
   };
 
   const createBidOrList = async () => {
-    const source = getHostName();
-    const token = `${collectionContract}:${tokenId}`;
+    // const source = getHostName();
+    // const token = `${collectionContract}:${tokenId}`;
 
     const weiPrice = convertTokenAmountToDecimals(
       Number(auctionAmount),

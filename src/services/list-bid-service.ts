@@ -125,7 +125,7 @@ export const handleAuctionOrBidData = async (
   const signer = provider.getSigner();
 
   if (otherChains.includes(chainId)) {
-    const { signTypedMessage, approvalsNeeded, auctionId, bidId } = data;
+    const { approvalsNeeded, auctionId, bidId } = data;
     return executeTransactions(approvalsNeeded, signer)
       .then(async () => {
         const signature = "";

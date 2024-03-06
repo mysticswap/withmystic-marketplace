@@ -394,6 +394,7 @@ export const validateBid = async (
   auctionId: string,
   bidId: string
 ) => {
+  console.log(chainId);
   const bodyParams = {
     auctionId,
     bidId,

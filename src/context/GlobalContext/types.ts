@@ -48,6 +48,6 @@ export type GlobalContextType = {
   supportedTokens: SupportedToken[];
   currentToken: number;
   setCurrentToken: React.Dispatch<React.SetStateAction<number>>;
-  selectedToken: string;
-  setSelectedToken: React.Dispatch<React.SetStateAction<string>>;
+  selectedToken: any;
+  setSelectedToken: React.Dispatch<React.SetStateAction<any>>;
 };

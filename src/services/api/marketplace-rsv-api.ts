@@ -9,7 +9,6 @@ import {
   getCollectionHistory,
   getCollectionNfts,
   getCollectionTraits,
-  getNeededSwaps,
   getNftHistory,
   getSingleNft,
   getUserNFTs,
@@ -97,10 +96,7 @@ export const getCollectionActivity = async (
   });
 
   if (otherChains.includes(chainId)) {
-    const swaps = await getAllSwaps(
-      chainId,
-      contractAddress
-    );
+    const swaps = await getAllSwaps(chainId, contractAddress);
 
     const history = await getCollectionHistory(
       contractAddress as string,
