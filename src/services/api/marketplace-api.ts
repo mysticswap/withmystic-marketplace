@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-catch */
 import { BASE_API } from "../../config";
 import {
+  AuctionType,
   ListOrOfferType,
   SwapType,
   signedOrderToMongo,
@@ -114,19 +115,16 @@ export const getSingleNft = async (
   ).owners[0];
   const swaps = await getNeededSwaps(
     chainId,
-    JSON.stringify([SwapType.Listing]),
+    SwapType.Listing,
     contractAddress,
     1,
     100
   );
 
-  console.log(swaps);
-
   const lastAsk = swaps.activities
     .filter((tk: any) => tk.token.tokenId == tokenId)
     .sort((a: any, b: any) => b.timestamp - a.timestamp)[0];
 
-  console.log({ lastAsk });
   return SingleNFTApiToReservoirApi(
     await makeApiRequest("/marketplace-api/get-nft", queryParams),
     owner,
@@ -189,7 +187,6 @@ export const getCollectionHistory = async (
 
 export const getAllSwaps = async (
   chainId: number,
-  swapType: SwapType,
   token: string,
   page: number = 1,
   limit: number = 100,
@@ -202,20 +199,22 @@ export const getAllSwaps = async (
     limit,
   };
   let swaps = await makeApiRequest("/marketplace-api/all-swaps", queryParams);
-  swaps = swaps.data
-    .filter((i: signedOrderToMongo) => i.type == swapType)
-    .filter((i: signedOrderToMongo) =>
-      i.orderComponents.offer.map((j) => j.token).includes(token)
-    );
+  swaps = swaps.data.filter((i: signedOrderToMongo) =>
+    [
+      ...i.orderComponents.offer.map((j) => j.token),
+      ...i.orderComponents.consideration.map((j) => j.token),
+    ].includes(token)
+  );
   return swaps;
 };
 
 export const getAllOffers = async (
   chainId: number,
-  swapType: SwapType,
+  swapType: string,
   token: string,
   page: number = 1,
   limit: number = 100,
+  status: string = "validated",
   creatorAddress?: string
 ) => {
   const queryParams = {
@@ -223,14 +222,21 @@ export const getAllOffers = async (
     chainId,
     page,
     limit,
+    status,
+    type: swapType,
   };
-  let swaps = await makeApiRequest("/marketplace-api/all-swaps", queryParams);
-  swaps = swaps.data
-    .filter((i: signedOrderToMongo) => i.type == swapType)
-    .filter((i: signedOrderToMongo) =>
-      i.orderComponents.offer.map((j) => j.token).includes(token)
-    );
-  return OffersApiToReservoirApi(swaps);
+  let swaps = await makeApiRequest(
+    "/marketplace-api/filtered-swaps",
+    queryParams
+  );
+  swaps = swaps.data.filter((i: signedOrderToMongo) =>
+    [
+      ...i.orderComponents.offer.map((j) => j.token),
+      ...i.orderComponents.consideration.map((j) => j.token),
+    ].includes(token)
+  );
+
+  return OffersApiToReservoirApi(swaps, chainId);
 };
 
 export const getNeededSwaps = async (
@@ -248,17 +254,20 @@ export const getNeededSwaps = async (
     page,
     limit,
     status,
+    type: swapType,
   };
   let swaps = await makeApiRequest(
     "/marketplace-api/filtered-swaps",
     queryParams
   );
 
-  swaps = swaps.data
-    .filter((i: signedOrderToMongo) => JSON.parse(swapType).includes(i.type))
-    .filter((i: signedOrderToMongo) =>
-      i.orderComponents.offer.map((j) => j.token).includes(token)
-    );
+  swaps = swaps.data.filter((i: signedOrderToMongo) =>
+    [
+      ...i.orderComponents.offer.map((j) => j.token),
+      ...i.orderComponents.consideration.map((j) => j.token),
+    ].includes(token)
+  );
+
   return SwapApiToReservoirApi(swaps);
 };
 
@@ -354,14 +363,83 @@ export const verifyCancelledSwap = async (swapId: string) => {
   };
   return makeApiPostRequest("/marketplace-api/verify-cancelled", bodyParams);
 };
-// create swap
-// validate swap
-// accept swap
-// verify swap acceptance
-// cancel swap,
-// verify swap cancellation
-// get all swaps
-// get swaps
-// get nft other blockchains
-// get metadata
-// get nfts
+
+export const validateAuction = async (auctionId: string, signature: string) => {
+  const bodyParams = {
+    auctionId,
+    signature,
+  };
+  return makeApiPostRequest("/marketplace-api/validate-auction", bodyParams);
+};
+
+export const bidAuction = async (
+  chainId: number,
+  auctionId: string,
+  token: string,
+  amount: string,
+  bidder: string
+) => {
+  const bodyParams = {
+    chainId,
+    auctionId,
+    token,
+    amount,
+    bidder,
+  };
+  return makeApiPostRequest("/marketplace-api/bid-auction", bodyParams);
+};
+
+export const validateBid = async (
+  chainId: number,
+  auctionId: string,
+  bidId: string
+) => {
+  const bodyParams = {
+    auctionId,
+    bidId,
+  };
+  return makeApiPostRequest("/marketplace-api/validate-bid", bodyParams);
+};
+
+export const getAllAuctions = async (chainId: number) => {
+  const queryParams = { chainId };
+  return makeApiRequest("/marketplace-api/get-auctions", queryParams);
+};
+
+export const getAllTokenAuctions = async (address: string, chainId: number) => {
+  const queryParams = { contractAddress: address, chainId };
+  return makeApiRequest("/marketplace-api/get-token-auctions", queryParams);
+};
+
+export const getOneAuction = async (auctionId: string) => {
+  return makeApiRequest(`/marketplace-api/get-auction/${auctionId}`, {});
+};
+
+export const createAuction = async (swapData: AuctionType) => {
+  const bodyParams = {
+    chainId: swapData.chainId,
+    offerer: swapData.offerer,
+    offer: swapData.offer,
+    endTime: swapData.endTime,
+    startAmount: swapData.startAmount,
+    ...(swapData.creatorAddress && { creatorAddress: swapData.creatorAddress }),
+    ...(swapData.type && { type: swapData.type }),
+    ...(swapData.fees && { fees: swapData.fees }),
+    ...(swapData.startTime && { startTime: swapData.startTime }),
+    ...(swapData.endAmount && { endAmount: swapData.endAmount }),
+  };
+  const response = await makeApiPostRequest(
+    "/marketplace-api/create-auction",
+    bodyParams
+  );
+  // if (response.statusCode == 200) {
+  //   await validateSwap(response.swapId, "");
+  // }
+  return response;
+};
+
+// create auction
+// get auctions
+// validate auction
+// bid for auction
+// get an auction

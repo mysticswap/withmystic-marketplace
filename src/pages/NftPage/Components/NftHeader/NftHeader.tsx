@@ -55,6 +55,7 @@ type Props = {
   setShowConfirmationModal: React.Dispatch<React.SetStateAction<boolean>>;
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
   setShowConfirmationBuyNowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowAuctionModal?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const NftHeader = ({
@@ -63,6 +64,7 @@ const NftHeader = ({
   nftInfo,
   nftPriceData,
   setShowConfirmationBuyNowModal,
+  setShowAuctionModal
 }: Props) => {
   const { user, setProvider, chainId, setUser, setChainId } =
     useConnectionContext()!;
@@ -221,6 +223,11 @@ const NftHeader = ({
     setTransactionNft(txNft);
   };
 
+  const createAuction = () => {
+    triggerModal(setShowAuctionModal || setShowOfferOrListingModal);
+    setTransactionNft(txNft);
+  };
+
   const refreshMetadata = async () => {
     setIsRefreshing(true);
     await Promise.all([
@@ -307,6 +314,15 @@ const NftHeader = ({
         {!userIsOwner && (
           <OutlineButton text="Make Offer" onClick={makeOffer} />
         )}
+
+        {userIsOwner && (
+          <OutlineButton text="Create Auction" onClick={createAuction} />
+        )}
+
+        {!userIsOwner && (
+          <OutlineButton text="Bid on Available Auction" onClick={createAuction} />
+        )}
+
         {userIsOwner && (
           <OutlineButton text="Edit Listing" onClick={buyOrList} />
         )}

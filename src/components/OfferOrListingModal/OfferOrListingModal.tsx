@@ -91,8 +91,11 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     user!
   );
 
+  const getUserBalance = () =>
+    userBalance[supportedTokens[currentToken].symbol] || userBalance.WETH;
+
   useEffect(() => {
-    const isOverUserBalance = Number(offerAmount) > Number(userBalance.WETH);
+    const isOverUserBalance = Number(offerAmount) > Number(getUserBalance());
     isOffer && setIsOverBalance(isOverUserBalance);
   }, [offerAmount, isOffer, userBalance.WETH]);
 
@@ -100,7 +103,9 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     <>
       <p>
         <span>Your Balance</span>
-        <span>{userBalance?.WETH} wETH</span>
+        <span>
+          {getUserBalance()} {supportedTokens[currentToken].symbol || "WETH"}
+        </span>
       </p>
       <p>
         <span>Floor price</span>
@@ -204,7 +209,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
           weiPrice,
           expiration,
           !isOffer,
-          currency
+          supportedTokens[currentToken].contract || currency
         );
         await handleListOrBidData(
           collectionChainId,
@@ -303,19 +308,15 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                   }
                   ref={ref}
                   onClick={() => {
-                    if (isOffer || supportedTokens.length === 1) return;
+                    // if (isOffer || supportedTokens.length === 1) return;
                     setShowTokensDropdown(!showTokensDropdown);
                   }}
                 >
                   {supportedTokens.length === 1 ||
                     (!isOffer && <BsChevronDown />)}
                   <p>
-                    {!isOffer
-                      ? `${
-                          supportedTokens!.length > 0
-                            ? supportedTokens![currentToken].symbol
-                            : "wETH"
-                        }`
+                    {supportedTokens!.length > 0
+                      ? supportedTokens![currentToken].symbol
                       : "wETH"}
                   </p>
                 </div>
@@ -325,7 +326,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                       return (
                         <div
                           className="single-token"
-                          key={token?.contract}
+                          key={token?.contract + "-" + index}
                           onClick={() => {
                             setCurrentToken(index);
                             setShowTokensDropdown(false);

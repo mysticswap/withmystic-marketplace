@@ -4,6 +4,7 @@ import { IoSparklesSharp } from "react-icons/io5";
 import { addDays, addHours, addMonths } from "../utils/date-utils";
 import maticIcon from "../assets/matic-logo.svg";
 import ethereumIcon from "../assets/ethereum-1.svg";
+import { SupportedToken } from "../types/dynamic-system.types";
 
 export const rsvActivityTypes = JSON.stringify([
   "sale",
@@ -61,6 +62,87 @@ export const wethAddresses: { [x: number]: string } = {
   1: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
   5: "0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6",
   137: "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
+};
+
+export const offerTokens: Record<number, Array<SupportedToken>> = {
+  1: [
+    {
+      contract: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+      name: "Tether USD",
+      decimals: 6,
+      symbol: "USDT",
+      image:
+        "https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661",
+    },
+    {
+      contract: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      name: "USD Coin",
+      decimals: 6,
+      symbol: "USDC",
+      image:
+        "https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694",
+    },
+    {
+      contract: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+      name: "Wrapped BTC",
+      decimals: 18,
+      symbol: "WBTC",
+      image:
+        "https://assets.coingecko.com/coins/images/1/standard/bitcoin.png?1696501400",
+    },
+  ],
+  5: [
+    {
+      contract: "0x509Ee0d083DdF8AC028f2a56731412edD63223B9",
+      name: "Tether USD",
+      decimals: 6,
+      symbol: "USDT",
+      image:
+        "https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661",
+    },
+    {
+      contract: "0xD87Ba7A50B2E7E660f678A895E4B72E7CB4CCd9C",
+      name: "USD Coin",
+      decimals: 6,
+      symbol: "USDC",
+      image:
+        "https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694",
+    },
+    {
+      contract: "0xC04B0d3107736C32e19F1c62b2aF67BE61d63a05",
+      name: "Wrapped BTC",
+      decimals: 18,
+      symbol: "WBTC",
+      image:
+        "https://assets.coingecko.com/coins/images/1/standard/bitcoin.png?1696501400",
+    },
+  ],
+  137: [
+    {
+      contract: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+      name: "Tether USD",
+      decimals: 6,
+      symbol: "USDT",
+      image:
+        "https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661",
+    },
+    {
+      contract: "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+      name: "USD Coin",
+      decimals: 6,
+      symbol: "USDC",
+      image:
+        "https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694",
+    },
+    {
+      contract: "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
+      name: "Wrapped BTC",
+      decimals: 18,
+      symbol: "WBTC",
+      image:
+        "https://assets.coingecko.com/coins/images/1/standard/bitcoin.png?1696501400",
+    },
+  ],
 };
 
 export const defaultSort = "floorAskPrice";

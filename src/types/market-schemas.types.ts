@@ -77,6 +77,12 @@ export enum SwapType {
   Offer = "offer",
 }
 
+export enum AuctionEnumType {
+  Dutch = "dutch",
+  Basic = "basic",
+  Advanced = "advanced",
+}
+
 export type ListOrOfferType = {
   endTime?: string;
   chainId?: number;
@@ -87,6 +93,19 @@ export type ListOrOfferType = {
   creatorAddress?: string;
   type?: SwapType;
   domain?: string;
+  fees?: string;
+};
+
+export type AuctionType = {
+  endTime: string;
+  startAmount: string;
+  startTime?: string;
+  endAmount?: string;
+  chainId?: number;
+  offerer: string;
+  offer: Items[];
+  creatorAddress?: string;
+  type?: AuctionEnumType;
   fees?: string;
 };
 

@@ -4,6 +4,7 @@ import { Post as AuthPost } from "../../types/rsv-types/buy-data.types";
 import { marketplaceInstance } from "../axios";
 import {
   getAllOffers,
+  getAllSwaps,
   getCollection,
   getCollectionHistory,
   getCollectionNfts,
@@ -96,9 +97,8 @@ export const getCollectionActivity = async (
   });
 
   if (otherChains.includes(chainId)) {
-    const swaps = await getNeededSwaps(
+    const swaps = await getAllSwaps(
       chainId,
-      JSON.stringify([SwapType.Listing, SwapType.Offer, SwapType.Swap]),
       contractAddress
     );
 
@@ -159,7 +159,7 @@ export const getNftOffers = async (
   continuation?: string
 ) => {
   if (otherChains.includes(chainId)) {
-    return await getAllOffers(chainId, SwapType.Offer, token as string);
+    return await getAllOffers(chainId, SwapType.Offer, token.split(":")[0]);
   }
 
   const request = await marketplaceInstance("/get-nft-offers", {

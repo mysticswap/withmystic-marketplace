@@ -21,6 +21,7 @@ import { GetNftsRsv } from "../../types/rsv-types/collection-nfts.types";
 import {
   defaultSort,
   defaultSortby,
+  offerTokens,
   rsvActivityTypes,
   tabOptions,
 } from "../../constants";
@@ -30,7 +31,7 @@ import { UserNfts } from "../../types/rsv-types/user-nfts.types";
 import { useConnectionContext } from "../ConnectionContext/ConnectionContext";
 import { getHostName, getPreviousCollectionAddress } from "../../utils";
 import { getCryptoPrice } from "../../services/api/coin-gecko.api";
-import { ClientObject } from "../../types/dynamic-system.types";
+import { ClientObject, SupportedToken } from "../../types/dynamic-system.types";
 import { useDisableNumberInputScroll } from "../../hooks/useDisableNumberInputScroll";
 
 const GlobalContext = createContext({} as GlobalContextType);
@@ -52,7 +53,18 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
     previousCollection || availableCollections?.[0]
   );
 
-  const supportedTokens = selectedCollection?.supportedTokens || [];
+  const collectionChainId = selectedCollection.chainId;
+  const collectionContract = selectedCollection.address;
+
+  const supportedTokens =
+    getDistinctArray([
+      ...(selectedCollection?.supportedTokens || []),
+      ...offerTokens[collectionChainId || 1],
+    ]) ||
+    selectedCollection?.supportedTokens ||
+    [];
+
+  console.log({ supportedTokens });
 
   // const [currentToken, setCurrentToken] = useState<number>(() =>
   //   supportedTokens!.findIndex((token) => token.symbol === "WETH")
@@ -84,8 +96,10 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
 
   const selectedActivityTypes = JSON.stringify(selectedActivities);
   const source = getHostName();
-  const collectionChainId = selectedCollection.chainId;
-  const collectionContract = selectedCollection.address;
+
+  const [selectedToken, setSelectedToken] = useState(
+    offerTokens[collectionChainId || 1][0]
+  );
 
   useEffect(() => {
     getCollectionMetadata(collectionChainId, collectionContract).then(
@@ -179,6 +193,17 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
     });
   }, [cryptoName]);
 
+  function getDistinctArray(arr: SupportedToken[]) {
+    const symbols = {};
+
+    for (let i = 0; i < arr.length; i++) {
+      if (!symbols[arr[i].contract]) {
+        symbols[arr[i].contract] = arr[i];
+      }
+    }
+    return Object.values(symbols) as SupportedToken[];
+  }
+
   useDisableNumberInputScroll();
 
   return (
@@ -214,6 +239,8 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
         supportedTokens,
         currentToken,
         setCurrentToken,
+        selectedToken,
+        setSelectedToken,
       }}
     >
       {children}

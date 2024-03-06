@@ -20,6 +20,7 @@ import NotFound from "./Components/NotFound/NotFound";
 import ConfirmPurchaseBuyNowModal from "../../components/ConfirmPurchaseModal/ConfirmPurchaseBuyNowModal";
 import { useEffect, useState } from "react";
 import { getVideoCache } from "../../utils/videoCache-utils";
+import AuctionModal from "../../components/OfferOrListingModal/AuctionModel";
 
 const NftPage = () => {
   const { id } = useParams();
@@ -41,6 +42,8 @@ const NftPage = () => {
     setShowConfirmationModal,
     showConfirmationBuyNowModal,
     setShowConfirmationBuyNowModal,
+    showAuctionModal,
+    setShowAuctionModal
   } = useTransactionContext()!;
   const { collectionContract } = useGlobalContext();
 
@@ -113,6 +116,7 @@ const NftPage = () => {
               setShowConfirmationModal={setShowConfirmationModal}
               setShowOfferOrListingModal={setShowOfferOrListingModal}
               setShowConfirmationBuyNowModal={setShowConfirmationBuyNowModal}
+              setShowAuctionModal={setShowAuctionModal}
             />
           )}
           {!isMobile && <CurrentPrice nftPriceData={nftPriceData} />}
@@ -146,6 +150,12 @@ const NftPage = () => {
       {showOfferOrListingModal && (
         <OfferOrListingModal
           setShowOfferOrListingModal={setShowOfferOrListingModal}
+        />
+      )}
+
+      {showAuctionModal && (
+        <AuctionModal
+          setShowOfferOrListingModal={setShowAuctionModal}
         />
       )}
 

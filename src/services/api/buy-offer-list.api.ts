@@ -33,7 +33,10 @@ export const createListing = async (
         ],
         consideration: [
           {
-            ...(wethAddresses[chainId] && { token: wethAddresses[chainId] }),
+            itemtype: "ERC20",
+            identifier: "0",
+            /// ...(wethAddresses[chainId] && { token: wethAddresses[chainId] }),
+            token: currency,
             amount: weiPrice,
             recipient: maker,
           },
@@ -80,8 +83,13 @@ export const createBid = async (
       offerer: maker,
       offer: [
         {
-          ...(wethAddresses[chainId] && { token: wethAddresses[chainId] }),
+          itemtype: "ERC20",
+          token:
+            currency == "0x0000000000000000000000000000000000000000"
+              ? wethAddresses[chainId]
+              : currency,
           amount: weiPrice,
+          identifier: "0",
         },
       ],
       consideration: [

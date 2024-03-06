@@ -6,7 +6,11 @@ import { executeTransactions } from "./seaport";
 import { ActivityObject } from "../types/activity.types";
 import { postActivityToDB } from "./api/activity.api";
 import { otherChains } from "../wallets/chains";
-import { validateSwap } from "./api/marketplace-api";
+import {
+  validateAuction,
+  validateBid,
+  validateSwap,
+} from "./api/marketplace-api";
 
 export const handleListOrBidData = async (
   chainId: number,
@@ -105,4 +109,52 @@ export const handleListOrBidData = async (
       modalSetter(false);
       setStage(0);
     });
+};
+
+export const handleAuctionOrBidData = async (
+  chainId: number,
+  data: any,
+  setStage: React.Dispatch<React.SetStateAction<number>>,
+  modalSetter: React.Dispatch<React.SetStateAction<boolean>>,
+  activityData: ActivityObject,
+  isOffer: boolean
+) => {
+  await window.ethereum.enable();
+
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+
+  if (otherChains.includes(chainId)) {
+    const { signTypedMessage, approvalsNeeded, auctionId, bidId } = data;
+    return executeTransactions(approvalsNeeded, signer)
+      .then(async () => {
+        const signature = "";
+        setStage(1);
+        // if (signature) {
+        //   setStage(1);
+        // }
+
+        // const orderComponents = signTypedMessage.value;
+        // const payloadVerify = {
+        //   parameters: orderComponents,
+        //   signature: signature,
+        //   swapId,
+        // };
+        let response;
+        if (!isOffer) {
+          response = await validateAuction(auctionId, signature);
+        } else {
+          response = await validateBid(chainId, auctionId, bidId);
+        }
+
+        if (response) {
+          setStage(2);
+          postActivityToDB(activityData);
+        }
+      })
+      .catch(() => {
+        modalSetter(false);
+        setStage(0);
+      });
+  }
 };
