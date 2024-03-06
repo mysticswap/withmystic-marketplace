@@ -184,7 +184,20 @@ const AuctionModal = ({ setShowOfferOrListingModal }: Props) => {
 
   return (
     <div className="modal_parent">
-      {activeAuctions.length > 0 ? (
+      {activeAuctions.length <= 0 && isOffer ? (
+        <div className="modal_content">
+          <p className="modal_header ellipsis">No Auctions Available Yet</p>
+          <IoClose
+            className="modal_closer"
+            display="block"
+            size={25}
+            onClick={() => {
+              setShowOfferOrListingModal?.(false);
+              setTransactionStage(0);
+            }}
+          />
+        </div>
+      ) : (
         <div className="modal_content">
           <p className="modal_header">
             {transactionStage !== 2 ? headerContent : finalHeader}
@@ -352,19 +365,6 @@ const AuctionModal = ({ setShowOfferOrListingModal }: Props) => {
               <ProcessComponent stage={transactionStage} />
             )}
           </div>
-        </div>
-      ) : (
-        <div className="modal_content">
-          <p className="modal_header ellipsis">No Auctions Available Yet</p>
-          <IoClose
-            className="modal_closer"
-            display="block"
-            size={25}
-            onClick={() => {
-              setShowOfferOrListingModal?.(false);
-              setTransactionStage(0);
-            }}
-          />
         </div>
       )}
     </div>
