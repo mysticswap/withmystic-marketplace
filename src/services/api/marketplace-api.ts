@@ -240,8 +240,8 @@ export const getAllOffers = async (
     )
     .filter((i: signedOrderToMongo) =>
       [
-        ...i.orderComponents.offer.map((j) => j.identifier),
-        ...i.orderComponents.consideration.map((j) => j.identifier),
+        ...i.orderComponents.offer.map((j) => j.identifierOrCriteria),
+        ...i.orderComponents.consideration.map((j) => j.identifierOrCriteria),
       ].includes(mainId)
     );
 

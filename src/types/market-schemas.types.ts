@@ -54,6 +54,7 @@ type Items = {
   itemtype?: string;
   token?: string;
   identifier?: string;
+  identifierOrCriteria?: string;
   amount: string;
   recipient?: string;
 };
