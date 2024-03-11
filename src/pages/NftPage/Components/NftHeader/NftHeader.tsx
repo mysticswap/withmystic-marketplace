@@ -64,8 +64,8 @@ const NftHeader = ({
   nftInfo,
   nftPriceData,
   setShowConfirmationBuyNowModal,
-  setShowAuctionModal,
-}: Props) => {
+}: // setShowAuctionModal,
+Props) => {
   const { user, setProvider, chainId, setUser, setChainId } =
     useConnectionContext()!;
   const { setTransactionNft, setTransactionStage, setTransactionHash } =
@@ -223,10 +223,10 @@ const NftHeader = ({
     setTransactionNft(txNft);
   };
 
-  const createAuction = () => {
-    triggerModal(setShowAuctionModal || setShowOfferOrListingModal);
-    setTransactionNft(txNft);
-  };
+  // const createAuction = () => {
+  //   triggerModal(setShowAuctionModal || setShowOfferOrListingModal);
+  //   setTransactionNft(txNft);
+  // };
 
   const refreshMetadata = async () => {
     setIsRefreshing(true);

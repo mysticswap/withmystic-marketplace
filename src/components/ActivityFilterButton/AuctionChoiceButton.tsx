@@ -1,16 +1,8 @@
-import { IconType } from "react-icons";
+// import { IconType } from "react-icons";
 import "./ActivityFilterButton.css";
 import Checkbox from "../Checkbox/Checkbox";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
-
-type Props = {
-  activity: {
-    activity: string;
-    icon: IconType;
-    type: string;
-  };
-};
 
 const AuctionButton = () => {
   const { setIsAuction } = useGlobalContext();

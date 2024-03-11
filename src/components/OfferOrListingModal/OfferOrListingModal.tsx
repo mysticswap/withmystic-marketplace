@@ -22,7 +22,7 @@ import { useTransactionContext } from "../../context/TransactionContext/Transact
 import { switchChains } from "../../utils/wallet-connection";
 import { generateListOrBidActivity } from "../../utils/activity-utils";
 import { useOutsideClicks } from "../../hooks/useOutsideClicks";
-import Checkbox from "../Checkbox/Checkbox";
+// import Checkbox from "../Checkbox/Checkbox";
 import AuctionButton from "../ActivityFilterButton/AuctionChoiceButton";
 import {
   bidAuction,
