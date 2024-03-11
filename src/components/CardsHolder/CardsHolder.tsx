@@ -12,6 +12,7 @@ import { useHideComponent } from "../../hooks/useHideComponent";
 import { useShowComponent } from "../../hooks/useShowComponent";
 import { GetNftsRsv } from "../../types/rsv-types/collection-nfts.types";
 import CardSkeleton from "../CardSkeleton/CardSkeleton";
+import ListAtributes from "../ListAttributes/ListAttributes";
 
 const CardsHolder = () => {
   const {
@@ -166,6 +167,7 @@ const CardsHolder = () => {
           </button>
         </div>
       )}
+      {listView && <ListAtributes />}
       {nftsList}
       {isFetching && <CardSkeleton cards={9} />}
       {nftsList?.length < 1 && !isFetching && (

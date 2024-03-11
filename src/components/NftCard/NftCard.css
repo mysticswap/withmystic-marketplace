@@ -148,17 +148,26 @@
   aspect-ratio: 4/4;
   height: auto;
   display: block;
-  max-height: 150px;
+  max-height: 70px;
   object-fit: cover;
 }
 
 .nft_list_details {
-  padding: 1rem;
+  padding: 0 1rem;
   position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
-.nft_list_details p {
-  margin: 0.2rem;
+.list_atributes {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+.list_atributes p {
+  text-align: end;
+  min-width: 50px;
 }
 .nft_list_details button {
   display: flex;

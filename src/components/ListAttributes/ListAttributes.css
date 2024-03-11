@@ -1,0 +1,10 @@
+.list_attributes_container {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ms-mp-card-border-color);
+  padding: 0 4.5rem;
+  position: sticky;
+  top: -1rem;
+  background-color: var(--ms-mp-body-background);
+  z-index: 10;
+}

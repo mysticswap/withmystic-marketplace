@@ -76,9 +76,12 @@ const NftCard = ({ nft }: Props) => {
   const currentValue = Math.round(priceList?.amount?.usd);
 
   const lastSale = priceSale?.amount?.decimal;
-
   const nftName = nft?.token?.name;
+  const nftListName = nft?.token?.name?.split("", 14)?.join("");
   const nftId = nft?.token?.tokenId;
+  const nftRarity = nft?.token?.rarityRank;
+  const topBid = nft?.market?.topBid?.price?.amount?.native || "-";
+  const owner = nft?.token?.owner?.split("", 6)?.join("") || "-";
   const sourceIcon = nft?.market?.floorAsk?.source?.icon;
   const sourceLink = nft?.market?.floorAsk?.source?.url;
   const sourceDomain = nft?.market?.floorAsk?.source?.domain;
@@ -103,7 +106,7 @@ const NftCard = ({ nft }: Props) => {
 
   const nameLink = (
     <Link to={`/${collectionContract}/${nftId}`}>
-      <p ref={nameRef}>{nftName}</p>
+      <p ref={nameRef}>{!listView ? nftName : `${nftListName}...`}</p>
     </Link>
   );
 
@@ -273,7 +276,9 @@ const NftCard = ({ nft }: Props) => {
         </div>
         <Link to={`/${collectionContract}/${nftId}`}>
           <p className="nft_card_amount">
-            {priceList && (timeList > timeSale || validFrom > timeSale) ? (
+            {priceList &&
+            !listView &&
+            (timeList > timeSale || validFrom > timeSale) ? (
               <>
                 {`${currentEthAmount} ${listSymbol}`}{" "}
                 <span>(${currentValue})</span>
@@ -285,15 +290,33 @@ const NftCard = ({ nft }: Props) => {
         </Link>
 
         <p className="nft_card_last_sale ellipsis">
-          {priceSale && (
+          {priceSale && !listView && (
             <>
               Last sale: {lastSale}
               {saleSymbol}
             </>
           )}
         </p>
-
-        {currentEthAmount && currentValue && !userIsOwner && isETHModal ? (
+        {listView && (
+          <div className="list_atributes">
+            <p>{nftRarity}</p>
+            <p>
+              {currentEthAmount || "-"}
+              {listSymbol}
+            </p>
+            <p>
+              {lastSale || "-"}
+              {saleSymbol}
+            </p>
+            <p>{topBid}</p>
+            <p>{owner}</p>
+          </div>
+        )}
+        {currentEthAmount &&
+        currentValue &&
+        !userIsOwner &&
+        isETHModal &&
+        !listView ? (
           <button onClick={buyNft} disabled={(user && !userCanBuy) as boolean}>
             {userCanBuy
               ? "Buy now"

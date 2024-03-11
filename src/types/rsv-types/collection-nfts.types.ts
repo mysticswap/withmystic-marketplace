@@ -1,3 +1,5 @@
+import { Price } from "./user-nfts.types";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface GetNftsRsv {
   tokens: TokenElement[];
@@ -12,8 +14,17 @@ export interface TokenElement {
 
 export interface Market {
   floorAsk: FloorAsk;
+  topBid: TopBid;
 }
 
+export interface TopBid {
+  id: string;
+  price: Price;
+  maker: string;
+  validFrom: number;
+  validUntil: number;
+  source: Source;
+}
 export interface FloorAsk {
   id: string;
   price: FloorAskPrice;
