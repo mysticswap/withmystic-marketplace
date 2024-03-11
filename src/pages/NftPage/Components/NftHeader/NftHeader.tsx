@@ -64,7 +64,7 @@ const NftHeader = ({
   nftInfo,
   nftPriceData,
   setShowConfirmationBuyNowModal,
-  setShowAuctionModal
+  setShowAuctionModal,
 }: Props) => {
   const { user, setProvider, chainId, setUser, setChainId } =
     useConnectionContext()!;
@@ -311,17 +311,15 @@ const NftHeader = ({
           />
         )}
 
-        {!userIsOwner && (
-          <OutlineButton text="Make Offer" onClick={makeOffer} />
-        )}
+        {!userIsOwner && <OutlineButton text="Place Bid" onClick={makeOffer} />}
 
-        {userIsOwner && (
+        {/* {userIsOwner && (
           <OutlineButton text="Create Auction" onClick={createAuction} />
         )}
 
         {!userIsOwner && (
           <OutlineButton text="Bid on Available Auction" onClick={createAuction} />
-        )}
+        )} */}
 
         {userIsOwner && (
           <OutlineButton text="Edit Listing" onClick={buyOrList} />

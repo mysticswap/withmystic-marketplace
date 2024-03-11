@@ -43,7 +43,7 @@ const NftPage = () => {
     showConfirmationBuyNowModal,
     setShowConfirmationBuyNowModal,
     showAuctionModal,
-    setShowAuctionModal
+    setShowAuctionModal,
   } = useTransactionContext()!;
   const { collectionContract } = useGlobalContext();
 
@@ -154,9 +154,7 @@ const NftPage = () => {
       )}
 
       {showAuctionModal && (
-        <AuctionModal
-          setShowOfferOrListingModal={setShowAuctionModal}
-        />
+        <AuctionModal setShowOfferOrListingModal={setShowAuctionModal} />
       )}
 
       {showShareModal && <SocialShare />}

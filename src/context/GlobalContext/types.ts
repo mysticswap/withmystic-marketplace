@@ -50,4 +50,6 @@ export type GlobalContextType = {
   setCurrentToken: React.Dispatch<React.SetStateAction<number>>;
   selectedToken: any;
   setSelectedToken: React.Dispatch<React.SetStateAction<any>>;
+  isAuction: boolean;
+  setIsAuction: React.Dispatch<React.SetStateAction<boolean>>;
 };

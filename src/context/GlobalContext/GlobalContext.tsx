@@ -64,13 +64,14 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
     selectedCollection?.supportedTokens ||
     [];
 
-  console.log({ supportedTokens });
+  // console.log({ supportedTokens });
 
   // const [currentToken, setCurrentToken] = useState<number>(() =>
   //   supportedTokens!.findIndex((token) => token.symbol === "WETH")
   // );
 
   const [currentToken, setCurrentToken] = useState<number>(0);
+  const [isAuction, setIsAuction] = useState<boolean>(false);
 
   const cryptoName = supportedTokens?.[currentToken]?.name
     ?.split(" ")
@@ -241,6 +242,8 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
         setCurrentToken,
         selectedToken,
         setSelectedToken,
+        isAuction,
+        setIsAuction,
       }}
     >
       {children}

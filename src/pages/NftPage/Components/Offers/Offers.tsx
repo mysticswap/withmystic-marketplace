@@ -7,7 +7,7 @@ import {
 } from "../../../../utils";
 import "./Offers.css";
 import { getNftOffers } from "../../../../services/api/marketplace-rsv-api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useConnectionContext } from "../../../../context/ConnectionContext/ConnectionContext";
 import { useNftPageContext } from "../../../../context/NftPageContext/NftPageContext";
 import { acceptOffer } from "../../../../services/api/buy-offer-list.api";
@@ -19,6 +19,7 @@ import { getDiscordEndpointData } from "../../../../utils/discord-utils";
 import { TokenElement } from "../../../../types/rsv-types/collection-nfts.types";
 import { generateSaleActivity } from "../../../../utils/activity-utils";
 import { getTransactionNft } from "../../../../utils/transaction-nft.utils";
+import { getAllTokenAuctions } from "../../../../services/api/marketplace-api";
 
 type Props = {
   nftOffers: NftOffers;
@@ -37,10 +38,16 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
     setTransactionNft,
   } = useTransactionContext()!;
   const [isFetching, setIsFetching] = useState(false);
+  const [activeAuctions, setActiveAuctions] = useState<any[]>([]);
+
   const token = `${collectionContract}:${tokenId}`;
   const nftMarketUrl = window.location.href;
 
   const nft = { token: nftInfo, market: nftPriceData } as TokenElement;
+
+  useEffect(() => {
+    getActiveAuction();
+  }, []);
 
   const fetchMoreOffers = () => {
     setIsFetching(true);
@@ -54,6 +61,21 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
       .finally(() => {
         setIsFetching(false);
       });
+  };
+
+  const getActiveAuction = async () => {
+    let auctions = await getAllTokenAuctions(
+      collectionContract,
+      collectionChainId
+    );
+
+    auctions = auctions.filter((auction: any) => {
+      return auction.auctionComponent
+        .map((i: any) => i.identifier)
+        .includes(tokenId);
+    });
+    setActiveAuctions(auctions);
+    return auctions;
   };
 
   const isOwner = nftInfo?.owner?.toLowerCase() == user?.toLowerCase();
@@ -112,63 +134,80 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
   };
 
   return (
-    <div className="offers">
-      <p className="offers_title">Offers</p>
-      <div className="offers_table">
-        <div className="offers_table_head">
-          <p>Price</p>
-          <p>Expires in</p>
-          <p>By</p>
+    <>
+      {activeAuctions.length > 0 ? (
+        <div className="offers">
+          <p>Minimum Bid</p>
+          <p className="offers_title">
+            {activeAuctions?.[0]?.lastBidAmount || 0}
+          </p>
+          <p>Auction ends {activeAuctions?.[0]?.endTime}</p>
         </div>
-        <div>
-          {nftOffers?.orders?.map((order) => {
-            const timeStamp = dayjs(order?.expiration * 1000).fromNow();
-            const altTimeStamp =
-              timeStamp.startsWith("in") && timeStamp.substring(2);
-            const price = order.price.amount.decimal;
-            const usd = order.price.amount.usd;
-            const symbol = order.price.currency.symbol;
-            const currentTime = new Date().getTime();
-            const endTime = order?.expiration * 1000;
-            const isExpired = currentTime > endTime;
+      ) : (
+        <div className="offers">
+          <p className="offers_title">Offers</p>
+          <div className="offers_table">
+            <div className="offers_table_head">
+              <p>Price</p>
+              <p>Expires in</p>
+              <p>By</p>
+            </div>
+            <div>
+              {/* {activeAuctions.length > 0 && } */}
+              {nftOffers?.orders?.map((order) => {
+                const timeStamp = dayjs(order?.expiration * 1000).fromNow();
+                const altTimeStamp =
+                  timeStamp.startsWith("in") && timeStamp.substring(2);
+                const price = order.price.amount.decimal;
+                const usd = order.price.amount.usd;
+                const symbol = order.price.currency.symbol;
+                const currentTime = new Date().getTime();
+                const endTime = order?.expiration * 1000;
+                const isExpired = currentTime > endTime;
 
-            return (
-              <div key={order.id} className="offers_table_item">
-                <p>
-                  {price} {symbol}
-                </p>
-                {isExpired ? <p>---</p> : <p>{altTimeStamp || timeStamp}</p>}
-                <div>
-                  <p onClick={() => redirectToMSWalletPage(order.maker)}>
-                    {truncateAddress(order.maker, 5, "...")}
-                  </p>
-                  {isOwner && (
-                    <button
-                      className="offer_accept_button"
-                      onClick={() =>
-                        acceptBid(
-                          price,
-                          usd,
-                          order.maker,
-                          order?._id || order?.id || order?.swapId
-                        )
-                      }
-                    >
-                      Accept
-                    </button>
-                  )}
-                </div>
-              </div>
-            );
-          })}
+                return (
+                  <div key={order.id} className="offers_table_item">
+                    <p>
+                      {price} {symbol}
+                    </p>
+                    {isExpired ? (
+                      <p>---</p>
+                    ) : (
+                      <p>{altTimeStamp || timeStamp}</p>
+                    )}
+                    <div>
+                      <p onClick={() => redirectToMSWalletPage(order.maker)}>
+                        {truncateAddress(order.maker, 5, "...")}
+                      </p>
+                      {isOwner && (
+                        <button
+                          className="offer_accept_button"
+                          onClick={() =>
+                            acceptBid(
+                              price,
+                              usd,
+                              order.maker,
+                              order?._id || order?.id || order?.swapId
+                            )
+                          }
+                        >
+                          Accept
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          {nftOffers.continuation && !isFetching && (
+            <button className="more_offers_btn" onClick={fetchMoreOffers}>
+              Load More
+            </button>
+          )}
         </div>
-      </div>
-      {nftOffers.continuation && !isFetching && (
-        <button className="more_offers_btn" onClick={fetchMoreOffers}>
-          Load More
-        </button>
       )}
-    </div>
+    </>
   );
 };
 
