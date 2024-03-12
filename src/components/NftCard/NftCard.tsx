@@ -302,13 +302,15 @@ const NftCard = ({ nft }: Props) => {
             <Link to={`/${collectionContract}/${nftId}`}>
               <p>{nftRarity}</p>
             </Link>
-            <button
-              className="list_buy_now"
-              onClick={isETHModal ? buyNft : buyNftToken}
-            >
-              {currentEthAmount || "-"}
-              {listSymbol}
-            </button>
+            <div className="list_button_container">
+              <button
+                className="list_buy_now"
+                onClick={isETHModal ? buyNft : buyNftToken}
+              >
+                {currentEthAmount || "-"}
+                {listSymbol}
+              </button>
+            </div>
             <Link to={`/${collectionContract}/${nftId}`}>
               <p>
                 {lastSale || "-"}

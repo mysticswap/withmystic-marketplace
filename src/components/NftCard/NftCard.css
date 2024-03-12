@@ -175,15 +175,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.3rem;
+  padding: 0.2rem 2rem;
   border: none;
   border-radius: var(--ms-mp-card-border-radius);
-  background-color: var(--ms-mp-primary-color);
+  background: var(--ms-mp-gradient-blue);
   color: white;
   cursor: pointer;
   transition: var(--ms-mp-transition);
-  width: 15%;
+  width: 10%;
   height: 35%;
+}
+.list_button_container {
+  display: flex;
+  width: calc(100% / 7);
+  justify-content: end;
 }
 
 .list_icon {
