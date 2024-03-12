@@ -13,6 +13,7 @@ import {
   getHostName,
   getOnePercentFee,
   getOnePercentFeeToken,
+  redirectToMSWalletPage,
 } from "../../utils";
 import {
   handleBuyOrSellData,
@@ -320,7 +321,12 @@ const NftCard = ({ nft }: Props) => {
             <Link to={`/${collectionContract}/${nftId}`}>
               <p>{topBid}</p>
             </Link>
-            <Link to={`/${collectionContract}/${nftId}`}>
+            <Link
+              to="#"
+              onClick={() => {
+                redirectToMSWalletPage(nft?.token?.owner);
+              }}
+            >
               <p>{owner}</p>
             </Link>
           </div>

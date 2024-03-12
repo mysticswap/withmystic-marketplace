@@ -171,6 +171,9 @@
   text-align: end;
   width: calc(100% / 7);
 }
+.list_atributes a:hover {
+  opacity: 0.5;
+}
 .nft_list_details button {
   display: flex;
   align-items: center;
