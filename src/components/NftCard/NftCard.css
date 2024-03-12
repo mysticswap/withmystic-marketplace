@@ -172,6 +172,9 @@
   text-align: start;
   width: calc(100% / 6);
 }
+.list_atributes p {
+  font-size: 15px;
+}
 .list_atributes a:last-of-type {
   color: var(--ms-mp-primary-color-dark);
 }
