@@ -299,17 +299,28 @@ const NftCard = ({ nft }: Props) => {
         </p>
         {listView && (
           <div className="list_atributes">
-            <p>{nftRarity}</p>
-            <p>
+            <Link to={`/${collectionContract}/${nftId}`}>
+              <p>{nftRarity}</p>
+            </Link>
+            <button
+              className="list_buy_now"
+              onClick={isETHModal ? buyNft : buyNftToken}
+            >
               {currentEthAmount || "-"}
               {listSymbol}
-            </p>
-            <p>
-              {lastSale || "-"}
-              {saleSymbol}
-            </p>
-            <p>{topBid}</p>
-            <p>{owner}</p>
+            </button>
+            <Link to={`/${collectionContract}/${nftId}`}>
+              <p>
+                {lastSale || "-"}
+                {saleSymbol}
+              </p>
+            </Link>
+            <Link to={`/${collectionContract}/${nftId}`}>
+              <p>{topBid}</p>
+            </Link>
+            <Link to={`/${collectionContract}/${nftId}`}>
+              <p>{owner}</p>
+            </Link>
           </div>
         )}
         {currentEthAmount &&
@@ -326,7 +337,11 @@ const NftCard = ({ nft }: Props) => {
           </button>
         ) : null}
 
-        {currentTokenAmount && currentValue && !userIsOwner && !isETHModal ? (
+        {currentTokenAmount &&
+        currentValue &&
+        !userIsOwner &&
+        !isETHModal &&
+        !listView ? (
           <button
             onClick={buyNftToken}
             disabled={(user && !userCanBuyTokenBalance) as boolean}
@@ -340,7 +355,7 @@ const NftCard = ({ nft }: Props) => {
         ) : null}
       </div>
 
-      <div className="source_icon">
+      <div className={!listView ? "source_icon" : "list_icon"}>
         <a href={sourceLink}>
           {!sourceLink ? (
             <img src={client?.favicon} alt="icon" />

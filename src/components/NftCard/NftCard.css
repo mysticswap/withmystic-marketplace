@@ -164,37 +164,47 @@
   display: flex;
   width: 100%;
   justify-content: space-around;
+  align-items: center;
 }
-.list_atributes p {
+
+.list_atributes a {
   text-align: end;
-  min-width: 50px;
+  width: calc(100% / 7);
 }
 .nft_list_details button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  margin: 0;
-  padding: 0.3rem 0;
+  padding: 0.3rem;
   border: none;
   border-radius: var(--ms-mp-card-border-radius);
   background-color: var(--ms-mp-primary-color);
   color: white;
   cursor: pointer;
   transition: var(--ms-mp-transition);
+  width: 15%;
   height: 35%;
 }
 
+.list_icon {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  bottom: 35%;
+  right: 0.5rem;
+  border-radius: 50%;
+}
+
+.list_icon img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4/4;
+}
+
 /* Responsive queries */
+
 @media (max-width: 600px) {
   .nft_card_details p.nft_card_last_sale {
     margin-bottom: 1rem;
-  }
-
-  .nft_card_details button {
-    height: 30%;
-  }
-  .nft_list_details button {
-    width: 90%;
   }
 }
