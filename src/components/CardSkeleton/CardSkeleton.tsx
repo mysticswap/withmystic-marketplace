@@ -16,13 +16,13 @@ const CardSkeleton = ({ cards }: props) => {
         key={index}
       >
         <SkeletonTheme baseColor="#d9e0ec3d" highlightColor="#d9e0ec76">
-          <Skeleton className={`${!listView ? "skeleton_img" : "hide"}`} />
+          {!listView && <Skeleton className="skeleton_img" />}
           <Skeleton
             className="text_skeleton"
             width={`${!listView ? "90%" : "95%"}`}
           />
           <Skeleton
-            count={!listView ? 2 : 4}
+            count={2}
             className="text_skeleton"
             width={`${!listView ? "40%" : "95%"}`}
           />

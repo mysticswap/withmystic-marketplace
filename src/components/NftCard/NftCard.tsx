@@ -309,13 +309,12 @@ const NftCard = ({ nft }: Props) => {
                 onClick={isETHModal ? buyNft : buyNftToken}
               >
                 {currentEthAmount || "-"}
-                {listSymbol}
+                {/* {listSymbol} */}
               </button>
             </div>
             <Link to={`/${collectionContract}/${nftId}`}>
               <p>
-                {lastSale || "-"}
-                {saleSymbol}
+                {lastSale || "-"} {saleSymbol}
               </p>
             </Link>
             <Link to={`/${collectionContract}/${nftId}`}>

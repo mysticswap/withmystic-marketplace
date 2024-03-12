@@ -10,13 +10,16 @@
 
 .name_atribute {
   width: 180px;
-  text-align: center;
+  text-align: start;
+}
+.list_attributes_container span {
+  width: 7.5%;
 }
 
 .extra_atributes {
   display: flex;
   width: 80%;
-  text-align: end;
+  text-align: start;
 }
 .extra_atributes p {
   width: calc(100% / 5);

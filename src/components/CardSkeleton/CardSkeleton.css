@@ -27,5 +27,7 @@
   box-sizing: border-box;
   cursor: pointer;
   transition: var(--ms-mp-transition);
-  height: 150px;
+}
+.text_skeleton {
+  margin: 0 1rem;
 }
