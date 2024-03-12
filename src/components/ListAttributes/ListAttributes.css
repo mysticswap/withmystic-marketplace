@@ -6,7 +6,6 @@
   top: -1rem;
   background-color: var(--ms-mp-body-background);
   z-index: 10;
-  width: 72vw;
 }
 
 .name_atribute {
@@ -27,4 +26,10 @@
 }
 .extra_atributes p:last-of-type {
   margin-right: 2rem;
+}
+
+@media screen and (max-width: 1024px) {
+  .list_attributes_container {
+    width: 100vw;
+  }
 }
