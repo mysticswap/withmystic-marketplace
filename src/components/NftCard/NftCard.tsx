@@ -13,6 +13,7 @@ import {
   getHostName,
   getOnePercentFee,
   getOnePercentFeeToken,
+  redirectToMSWalletPage,
 } from "../../utils";
 import {
   handleBuyOrSellData,
@@ -76,9 +77,12 @@ const NftCard = ({ nft }: Props) => {
   const currentValue = Math.round(priceList?.amount?.usd);
 
   const lastSale = priceSale?.amount?.decimal;
-
   const nftName = nft?.token?.name;
+  const nftListName = nft?.token?.name?.split("", 14)?.join("");
   const nftId = nft?.token?.tokenId;
+  const nftRarity = nft?.token?.rarityRank;
+  const topBid = nft?.market?.topBid?.price?.amount?.native || "-";
+  const owner = nft?.token?.owner?.split("", 6)?.join("") || "-";
   const sourceIcon = nft?.market?.floorAsk?.source?.icon;
   const sourceLink = nft?.market?.floorAsk?.source?.url;
   const sourceDomain = nft?.market?.floorAsk?.source?.domain;
@@ -103,7 +107,7 @@ const NftCard = ({ nft }: Props) => {
 
   const nameLink = (
     <Link to={`/${collectionContract}/${nftId}`}>
-      <p ref={nameRef}>{nftName}</p>
+      <p ref={nameRef}>{!listView ? nftName : `${nftListName}...`}</p>
     </Link>
   );
 
@@ -273,7 +277,9 @@ const NftCard = ({ nft }: Props) => {
         </div>
         <Link to={`/${collectionContract}/${nftId}`}>
           <p className="nft_card_amount">
-            {priceList && (timeList > timeSale || validFrom > timeSale) ? (
+            {priceList &&
+            !listView &&
+            (timeList > timeSale || validFrom > timeSale) ? (
               <>
                 {`${currentEthAmount} ${listSymbol}`}{" "}
                 <span>(${currentValue})</span>
@@ -285,15 +291,49 @@ const NftCard = ({ nft }: Props) => {
         </Link>
 
         <p className="nft_card_last_sale ellipsis">
-          {priceSale && (
+          {priceSale && !listView && (
             <>
               Last sale: {lastSale}
               {saleSymbol}
             </>
           )}
         </p>
-
-        {currentEthAmount && currentValue && !userIsOwner && isETHModal ? (
+        {listView && (
+          <div className="list_atributes">
+            <Link to={`/${collectionContract}/${nftId}`}>
+              <p>{nftRarity}</p>
+            </Link>
+            <div className="list_button_container">
+              <button
+                className="list_buy_now"
+                onClick={isETHModal ? buyNft : buyNftToken}
+              >
+                {currentEthAmount || "-"} {listSymbol}
+              </button>
+            </div>
+            <Link to={`/${collectionContract}/${nftId}`}>
+              <p>
+                {lastSale || "-"} {saleSymbol}
+              </p>
+            </Link>
+            <Link to={`/${collectionContract}/${nftId}`}>
+              <p>{topBid}</p>
+            </Link>
+            <Link
+              to="#"
+              onClick={() => {
+                redirectToMSWalletPage(nft?.token?.owner);
+              }}
+            >
+              <p>{owner}</p>
+            </Link>
+          </div>
+        )}
+        {currentEthAmount &&
+        currentValue &&
+        !userIsOwner &&
+        isETHModal &&
+        !listView ? (
           <button onClick={buyNft} disabled={(user && !userCanBuy) as boolean}>
             {userCanBuy
               ? "Buy now"
@@ -303,7 +343,11 @@ const NftCard = ({ nft }: Props) => {
           </button>
         ) : null}
 
-        {currentTokenAmount && currentValue && !userIsOwner && !isETHModal ? (
+        {currentTokenAmount &&
+        currentValue &&
+        !userIsOwner &&
+        !isETHModal &&
+        !listView ? (
           <button
             onClick={buyNftToken}
             disabled={(user && !userCanBuyTokenBalance) as boolean}
@@ -317,7 +361,7 @@ const NftCard = ({ nft }: Props) => {
         ) : null}
       </div>
 
-      <div className="source_icon">
+      <div className={!listView ? "source_icon" : "list_icon"}>
         <a href={sourceLink}>
           {!sourceLink ? (
             <img src={client?.favicon} alt="icon" />
