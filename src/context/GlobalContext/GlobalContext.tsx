@@ -24,15 +24,17 @@ import {
   offerTokens,
   rsvActivityTypes,
   tabOptions,
+  wethAddresses,
 } from "../../constants";
 import { CollectionActivity } from "../../types/rsv-types/collection-activity.types";
 import { CollectionTraitsV2 } from "../../types/rsv-types/collection-traits.types";
 import { UserNfts } from "../../types/rsv-types/user-nfts.types";
 import { useConnectionContext } from "../ConnectionContext/ConnectionContext";
 import { getHostName, getPreviousCollectionAddress } from "../../utils";
-import { getCryptoPrice } from "../../services/api/coin-gecko.api";
+import { coinList, getCryptoPrice } from "../../services/api/coin-gecko.api";
 import { ClientObject, SupportedToken } from "../../types/dynamic-system.types";
 import { useDisableNumberInputScroll } from "../../hooks/useDisableNumberInputScroll";
+import { ETH_CONTRACT_ADDRESS } from "../../components/OfferOrListingModal/OfferOrListingModal";
 
 const GlobalContext = createContext({} as GlobalContextType);
 
@@ -73,7 +75,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
   const [currentToken, setCurrentToken] = useState<number>(0);
   const [isAuction, setIsAuction] = useState<boolean>(false);
 
-  const cryptoName = supportedTokens?.[currentToken]?.name
+  const cryptoName = supportedTokens?.[currentToken]?.symbol
     ?.split(" ")
     ?.join("-")
     ?.toLowerCase();
@@ -187,7 +189,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
   useEffect(() => {
     getCryptoPrice(cryptoName).then((result) => {
       if (Object.keys(result).length !== 0) {
-        setCryptoValue(result[cryptoName].usd);
+        setCryptoValue(result[coinList[cryptoName]].usd);
       } else {
         setCryptoValue(0);
       }
@@ -198,6 +200,12 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
     const symbols: any = {};
 
     for (let i = 0; i < arr.length; i++) {
+      if (arr[i].contract == ETH_CONTRACT_ADDRESS) {
+        arr[i].contract = wethAddresses[collectionChainId];
+        arr[i].symbol = "WETH";
+        arr[i].name = "Wrapped ETHEREUM";
+      }
+
       if (!symbols[arr[i].contract]) {
         symbols[arr[i].contract] = arr[i];
       }

@@ -139,7 +139,7 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
         <div className="offers">
           <p>Minimum Bid</p>
           <p className="offers_title">
-            {activeAuctions?.[0]?.lastBidAmount || 0}
+            {activeAuctions?.[0]?.lastBidAmount / 10 ** 18 || 0} WETH
           </p>
           <p>Auction ends {activeAuctions?.[0]?.endTime}</p>
         </div>

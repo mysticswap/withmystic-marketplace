@@ -35,7 +35,7 @@ type Props = {
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const WETH_CONTRACT_ADDRESS = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+// const WETH_CONTRACT_ADDRESS = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
 export const ETH_CONTRACT_ADDRESS =
   "0x0000000000000000000000000000000000000000";
 
@@ -51,6 +51,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     currentToken,
     setCurrentToken,
     isAuction,
+    setIsAuction,
   } = useGlobalContext();
   const {
     transactionNft,
@@ -62,7 +63,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
   const { isOffer, tokenId } = transactionNft;
   const currencyIsListing =
-    supportedTokens[currentToken]?.contract === WETH_CONTRACT_ADDRESS
+    supportedTokens[currentToken]?.contract === wethAddresses[collectionChainId]
       ? ETH_CONTRACT_ADDRESS
       : supportedTokens[currentToken]?.contract;
 
@@ -89,6 +90,10 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
   const [showTokensDropdown, setShowTokensDropdown] = useState(false);
 
+  useEffect(() => {
+    setIsAuction(false);
+  }, []);
+
   const closeDropdown = () => {
     setShowTokensDropdown(false);
   };
@@ -105,7 +110,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   );
 
   const getUserBalance = () =>
-    userBalance[supportedTokens[currentToken].symbol] || userBalance.WETH;
+    userBalance[supportedTokens[currentToken].symbol] || 0;
 
   useEffect(() => {
     const isOverUserBalance = Number(offerAmount) > Number(getUserBalance());
@@ -316,7 +321,11 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
   const transactionButtonIsDisable =
     Number(offerAmount) <= 0 || (isOffer && isOverBalance);
-  const transactionButtonText = isOffer ? "Make Offer" : "Create Listing";
+  const transactionButtonText = isOffer
+    ? "Make Offer"
+    : isAuction
+    ? "Create Auction"
+    : "Create Listing";
 
   return (
     <div className="modal_parent">
@@ -389,23 +398,16 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                 />
                 <div
                   // className={isOffer ? "chevron-down-2" : "chevron-down"}
-                  className={
-                    isOffer
-                      ? "chevron-down-2"
-                      : `${
-                          supportedTokens.length === 1
-                            ? "chevron-down"
-                            : "chevron-down no-cursor"
-                        }`
-                  }
+                  className={isAuction ? "chevron-down-2" : "chevron-down"}
                   ref={ref}
                   onClick={() => {
                     // if (isOffer || supportedTokens.length === 1) return;
                     setShowTokensDropdown(!showTokensDropdown);
                   }}
                 >
-                  {supportedTokens.length === 1 ||
-                    (!isOffer && <BsChevronDown />)}
+                  {!(isAuction || (isOffer && activeAuctions.length > 0)) && (
+                    <BsChevronDown />
+                  )}
                   <p>
                     {supportedTokens!.length > 0
                       ? supportedTokens![currentToken].symbol

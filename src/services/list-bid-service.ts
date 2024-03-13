@@ -124,37 +124,36 @@ export const handleAuctionOrBidData = async (
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
 
-  if (otherChains.includes(chainId)) {
-    const { approvalsNeeded, auctionId, bidId } = data;
-    return executeTransactions(approvalsNeeded, signer)
-      .then(async () => {
-        const signature = "";
-        setStage(1);
-        // if (signature) {
-        //   setStage(1);
-        // }
+  const { approvalsNeeded, auctionId, bidId } = data;
+  return executeTransactions(approvalsNeeded, signer)
+    .then(async () => {
+      const signature = "";
+      setStage(1);
+      console.log('next')
+      // if (signature) {
+      //   setStage(1);
+      // }
 
-        // const orderComponents = signTypedMessage.value;
-        // const payloadVerify = {
-        //   parameters: orderComponents,
-        //   signature: signature,
-        //   swapId,
-        // };
-        let response;
-        if (!isOffer) {
-          response = await validateAuction(auctionId, signature);
-        } else {
-          response = await validateBid(chainId, auctionId, bidId);
-        }
+      // const orderComponents = signTypedMessage.value;
+      // const payloadVerify = {
+      //   parameters: orderComponents,
+      //   signature: signature,
+      //   swapId,
+      // };
+      let response;
+      if (!isOffer) {
+        response = await validateAuction(auctionId, signature);
+      } else {
+        response = await validateBid(chainId, auctionId, bidId);
+      }
 
-        if (response) {
-          setStage(2);
-          postActivityToDB(activityData);
-        }
-      })
-      .catch(() => {
-        modalSetter(false);
-        setStage(0);
-      });
-  }
+      if (response) {
+        setStage(2);
+        postActivityToDB(activityData);
+      }
+    })
+    .catch(() => {
+      modalSetter(false);
+      setStage(0);
+    });
 };
