@@ -163,9 +163,9 @@
 .list_atributes {
   display: flex;
   width: 100%;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  margin: 0 2.5rem;
+  margin: 0 3rem 0 2rem;
 }
 
 .list_atributes a {
@@ -178,27 +178,28 @@
 .list_atributes a:last-of-type {
   color: var(--ms-mp-primary-color-dark);
 }
-.list_atributes a:hover {
+.list_atributes a:last-of-type:hover {
   opacity: 0.5;
 }
 .nft_list_details button {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.2rem 2.3rem;
+  padding: 0.2rem 0.2rem;
   border: none;
   border-radius: var(--ms-mp-card-border-radius);
   background: var(--ms-mp-gradient-blue);
   color: white;
   cursor: pointer;
   transition: var(--ms-mp-transition);
-  width: 10%;
+  width: 95%;
   height: 35%;
 }
 .list_button_container {
   display: flex;
   width: calc(100% / 6);
   justify-content: start;
+  margin-left: -0.5rem;
 }
 
 .list_icon {
