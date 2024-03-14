@@ -4,7 +4,7 @@ import { Post as AuthPost } from "../../types/rsv-types/buy-data.types";
 import { marketplaceInstance } from "../axios";
 import {
   getAllOffers,
-  getAllSwaps,
+  // getAllSwaps,
   getCollection,
   getCollectionHistory,
   getCollectionNfts,
@@ -96,7 +96,7 @@ export const getCollectionActivity = async (
   });
 
   if (otherChains.includes(chainId)) {
-    const swaps = await getAllSwaps(chainId, contractAddress);
+    // const swaps = await getAllSwaps(chainId, contractAddress);
 
     const history = await getCollectionHistory(
       contractAddress as string,
@@ -105,7 +105,7 @@ export const getCollectionActivity = async (
     );
     return {
       activities: [
-        ...swaps.activities,
+        // ...swaps.activities,
         ...history.activities,
         ...request.data.activities,
       ].sort((a, b) => b.timestamp - a.timestamp) as Activity[],
@@ -114,12 +114,6 @@ export const getCollectionActivity = async (
   } else {
     return request.data;
   }
-
-  request.data.activities = request.data.activities.sort(
-    (a: any, b: any) => b.timestamp - a.timestamp
-  );
-
-  return request.data;
 };
 
 export const getCollectionTraitsV2 = async (
@@ -191,17 +185,38 @@ export const getNftActivity = async (
   return request.data;
 };
 
+function mergeUnique(
+  arr1: any[],
+  arr2: any[],
+  identifier: string,
+  identifier2: string
+) {
+  const mergedArray = arr1.concat(arr2);
+  const uniqueArray = mergedArray.filter(
+    (item, index, self) =>
+      index ===
+      self.findIndex(
+        (t) =>
+          t[identifier] === item[identifier] &&
+          t[identifier2] === item[identifier2]
+      )
+  );
+  return uniqueArray;
+}
+
 export const getUserNfts = async (
   chainId: number,
   user: string,
   collection: string,
   continuation?: string
 ) => {
-  if (otherChains.includes(chainId)) {
-    return UserNFTToReservoirAPI(
+  const nfts = [];
+  if (otherChains.includes(chainId) && chainId != 1) {
+    const nft = UserNFTToReservoirAPI(
       await getUserNFTs(user, chainId, collection as string),
       chainId
     );
+    nfts.push(...nft.tokens);
   }
 
   const request = await marketplaceInstance("get-user-nfts", {
@@ -212,7 +227,13 @@ export const getUserNfts = async (
       ...(continuation && { continuation }),
     },
   });
-  return request.data;
+
+  const tokens = mergeUnique(request.data.tokens, nfts, "contract", "tokenId");
+  nfts.push(...tokens);
+
+  console.log(tokens.length, nfts.length, "length");
+
+  return { tokens: nfts, continuation: null };
 };
 
 export const submitListOrBid = async (chainId: number, data: Post) => {

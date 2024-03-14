@@ -157,61 +157,62 @@ export function SingleNFTTraitApiToReservoirApi(traits: any) {
 }
 
 export function UserNFTToReservoirAPI(nfts: any, chainId: number) {
-  const newTokens = nfts.ownedNfts.map((nft: any) => {
-    return {
-      ownership: {
-        tokenCount: "1",
-        onSaleCount: "0",
-        floorAsk: {
-          id: null,
-          price: null,
-          maker: null,
-          kind: null,
-          validFrom: null,
-          validUntil: null,
-          source: null,
+  const newTokens =
+    nfts?.ownedNfts?.map((nft: any) => {
+      return {
+        ownership: {
+          tokenCount: "1",
+          onSaleCount: "0",
+          floorAsk: {
+            id: null,
+            price: null,
+            maker: null,
+            kind: null,
+            validFrom: null,
+            validUntil: null,
+            source: null,
+          },
         },
-      },
-      token: {
-        chainId,
-        contract: nft.contract.address,
-        tokenId: nft.tokenId,
-        kind: nft.tokenType,
-        name: nft.title,
-        image: nft.media[0].thumbnail,
-        imageSmall: nft.media[0].thumbnail,
-        imageLarge: convertToIPFSImage(nft.media[0].raw),
-        metadata: {
-          imageOriginal: nft.media[0].raw,
-          imageMimeType: "image/jpeg",
-          tokenURI: nft.tokenUri.gateway,
-        },
-        description: nft.contract.description,
-        supply: nft.balance,
-        remainingSupply: nft.balance,
-        media: null,
-        isFlagged: false,
-        isSpam: false,
-        metadataDisabled: false,
-        lastFlagUpdate: null,
-        lastFlagChange: null,
-        collection: {
-          id: nft.contract.address,
-          name: nft.contract.name,
-          slug: nft.contract.name,
-          symbol: nft.contract.symbol,
-          imageUrl: convertToIPFSImage(nft.media[0].raw),
+        token: {
+          chainId,
+          contract: nft.contract.address,
+          tokenId: nft.tokenId,
+          kind: nft.tokenType,
+          name: nft.title,
+          image: nft.media[0].thumbnail,
+          imageSmall: nft.media[0].thumbnail,
+          imageLarge: convertToIPFSImage(nft.media[0].raw),
+          metadata: {
+            imageOriginal: nft.media[0].raw,
+            imageMimeType: "image/jpeg",
+            tokenURI: nft.tokenUri.gateway,
+          },
+          description: nft.contract.description,
+          supply: nft.balance,
+          remainingSupply: nft.balance,
+          media: null,
+          isFlagged: false,
           isSpam: false,
           metadataDisabled: false,
-          openseaVerificationStatus: "not_requested",
+          lastFlagUpdate: null,
+          lastFlagChange: null,
+          collection: {
+            id: nft.contract.address,
+            name: nft.contract.name,
+            slug: nft.contract.name,
+            symbol: nft.contract.symbol,
+            imageUrl: convertToIPFSImage(nft.media[0].raw),
+            isSpam: false,
+            metadataDisabled: false,
+            openseaVerificationStatus: "not_requested",
 
-          royaltiesBps: 0,
-          royalties: [],
+            royaltiesBps: 0,
+            royalties: [],
+          },
+          lastAppraisalValue: null,
         },
-        lastAppraisalValue: null,
-      },
-    };
-  });
+      };
+    }) || [];
 
   return { tokens: newTokens };
 }
