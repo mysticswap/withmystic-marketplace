@@ -149,10 +149,8 @@ export const getNftOffers = async (
   continuation?: string
 ) => {
   const offers = [];
-  if (otherChains.includes(chainId)) {
-    const offer = await getAllOffers(chainId, SwapType.Offer, token);
-    offers.push(...offer.orders);
-  }
+  const offer = await getAllOffers(chainId, SwapType.Offer, token);
+  offers.push(...offer.orders);
 
   const request = await marketplaceInstance("/get-nft-offers", {
     params: { chainId, token, ...(continuation && { continuation }) },
@@ -211,13 +209,11 @@ export const getUserNfts = async (
   continuation?: string
 ) => {
   const nfts = [];
-  if (otherChains.includes(chainId) && chainId != 1) {
-    const nft = UserNFTToReservoirAPI(
-      await getUserNFTs(user, chainId, collection as string),
-      chainId
-    );
-    nfts.push(...nft.tokens);
-  }
+  const nft = UserNFTToReservoirAPI(
+    await getUserNFTs(user, chainId, collection as string),
+    chainId
+  );
+  nfts.push(...nft.tokens);
 
   const request = await marketplaceInstance("get-user-nfts", {
     params: {
@@ -230,8 +226,6 @@ export const getUserNfts = async (
 
   const tokens = mergeUnique(request.data.tokens, nfts, "contract", "tokenId");
   nfts.push(...tokens);
-
-  console.log(tokens.length, nfts.length, "length");
 
   return { tokens: nfts, continuation: null };
 };
