@@ -4,7 +4,7 @@ import Checkbox from "../Checkbox/Checkbox";
 import { useState } from "react";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
-const AuctionButton = () => {
+const AuctionButton = ({ disabled }: { disabled: boolean }) => {
   const { setIsAuction, setCurrentToken } = useGlobalContext();
   const [isClicked, setIsClicked] = useState(false);
 
@@ -15,7 +15,10 @@ const AuctionButton = () => {
   };
 
   return (
-    <div className="auction_filter_button" onClick={toggleSelection}>
+    <div
+      className="auction_filter_button"
+      onClick={() => !disabled && toggleSelection()}
+    >
       <div>
         <Checkbox isClicked={isClicked} />
         <p>Auction to the highest bidder</p>

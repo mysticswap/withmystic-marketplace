@@ -47,7 +47,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     collectionChainId,
     collectionContract,
     cryptoValue,
-    supportedTokens,
+    supportedTokens: oldSupportedTokens,
     currentToken,
     setCurrentToken,
     isAuction,
@@ -62,12 +62,25 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const dropdownRef = useRef(null);
 
   const { isOffer, tokenId } = transactionNft;
+
+  const supportedTokens = oldSupportedTokens?.map((tk) => {
+    if (
+      tk.contract == wethAddresses[collectionChainId] &&
+      !isAuction &&
+      !isOffer
+    ) {
+      tk.contract = ETH_CONTRACT_ADDRESS;
+      tk.symbol = "ETH";
+      tk.name = "ETHEREUM";
+    }
+
+    return tk;
+  });
+
   const currencyIsListing =
     supportedTokens[currentToken]?.contract === wethAddresses[collectionChainId]
       ? ETH_CONTRACT_ADDRESS
       : supportedTokens[currentToken]?.contract;
-
-  // const currencyIsListing = supportedTokens[currentToken].contract;
 
   const currency = isOffer ? wethAddresses[collectionChainId] : "";
 
@@ -353,7 +366,9 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
               isSale={false}
             />
 
-            {!isOffer && <AuctionButton />}
+            {!isOffer && !(transactionStage && !isAuction) && (
+              <AuctionButton disabled={!!transactionStage} />
+            )}
           </div>
 
           {!transactionStage ? (
@@ -410,8 +425,8 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                   )}
                   <p>
                     {supportedTokens!.length > 0
-                      ? supportedTokens![currentToken].symbol
-                      : "wETH"}
+                      ? supportedTokens[currentToken]?.symbol
+                      : "ETH"}
                   </p>
                 </div>
                 {showTokensDropdown &&
