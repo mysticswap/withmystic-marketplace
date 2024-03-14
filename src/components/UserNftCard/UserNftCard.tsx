@@ -54,7 +54,7 @@ const UserNftCard = ({ nft, setShowUserNftsModal }: Props) => {
             <p ref={nameRef}>{nftName}</p>
           )}
         </div>
-        <p className="user_nft_card_rarity">#{rarityRank}</p>
+        <p className="user_nft_card_rarity">#{nft.token.tokenId}</p>
       </div>
     </div>
   );

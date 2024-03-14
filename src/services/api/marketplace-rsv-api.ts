@@ -195,8 +195,8 @@ function mergeUnique(
       index ===
       self.findIndex(
         (t) =>
-          t[identifier] === item[identifier] &&
-          t[identifier2] === item[identifier2]
+          t.token[identifier] === item.token[identifier] &&
+          t.token[identifier2] === item.token[identifier2]
       )
   );
   return uniqueArray;
@@ -225,9 +225,8 @@ export const getUserNfts = async (
   });
 
   const tokens = mergeUnique(request.data.tokens, nfts, "contract", "tokenId");
-  nfts.push(...tokens);
 
-  return { tokens: nfts, continuation: null };
+  return { tokens, continuation: null };
 };
 
 export const submitListOrBid = async (chainId: number, data: Post) => {
