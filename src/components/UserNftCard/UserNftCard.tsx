@@ -20,7 +20,7 @@ const UserNftCard = ({ nft, setShowUserNftsModal }: Props) => {
   const isOverflowing = useIsOverflow(nameRef);
 
   const nftName = nft?.token?.name;
-  const rarityRank = nft?.token?.rarityRank;
+  // const rarityRank = nft?.token?.rarityRank;
 
   const handleClick = () => {
     setShowUserNftsModal(false);
