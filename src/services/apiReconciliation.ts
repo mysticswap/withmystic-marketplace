@@ -264,10 +264,14 @@ export function ActivityApiToReservoirApi(activityData: any, types: string) {
   return { activities: nfts };
 }
 
-export function OffersApiToReservoirApi(offerData: any, chainId= 1) {
+export function OffersApiToReservoirApi(offerData: any, chainId = 1) {
   const nfts = offerData.map((data: any) => {
-    const tk = offerTokens[chainId].find(k=>k.contract.toLowerCase() == data.orderComponents.offer.slice(-1)[0].token.toLowerCase() )
-   
+    const tk = offerTokens[chainId].find(
+      (k) =>
+        k.contract.toLowerCase() ==
+        data.orderComponents.offer.slice(-1)[0].token.toLowerCase()
+    );
+
     return {
       id: data._id,
       swapId: data._id,
@@ -282,7 +286,7 @@ export function OffersApiToReservoirApi(offerData: any, chainId= 1) {
       price: {
         currency: {
           contract: tk?.contract || "",
-          name:tk?.name|| "WETH",
+          name: tk?.name || "WETH",
           symbol: tk?.symbol || "WETH",
           decimals: tk?.decimals || 18,
         },
@@ -290,7 +294,7 @@ export function OffersApiToReservoirApi(offerData: any, chainId= 1) {
           raw: +(+data.orderComponents.offer.slice(-1)[0].endAmount).toFixed(5),
           decimal: +(
             +data.orderComponents.offer.slice(-1)[0].endAmount /
-            10**(tk?.decimals || 18)
+            10 ** (tk?.decimals || 18)
           ).toFixed(5),
           usd: 264.15361,
           native: +(

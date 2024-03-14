@@ -125,11 +125,11 @@ export const handleAuctionOrBidData = async (
   const signer = provider.getSigner();
 
   const { approvalsNeeded, auctionId, bidId } = data;
+
   return executeTransactions(approvalsNeeded, signer)
     .then(async () => {
       const signature = "";
       setStage(1);
-      console.log('next')
       // if (signature) {
       //   setStage(1);
       // }

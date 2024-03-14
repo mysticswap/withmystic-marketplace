@@ -154,14 +154,17 @@ export const getNftOffers = async (
   token: string,
   continuation?: string
 ) => {
+  const offers = [];
   if (otherChains.includes(chainId)) {
-    return await getAllOffers(chainId, SwapType.Offer, token);
+    const offer = await getAllOffers(chainId, SwapType.Offer, token);
+    offers.push(...offer.orders);
   }
 
   const request = await marketplaceInstance("/get-nft-offers", {
     params: { chainId, token, ...(continuation && { continuation }) },
   });
-  return request.data;
+  offers.push(...request.data.orders);
+  return { orders: offers, continuation: request.data.continuation };
 };
 
 export const getNftActivity = async (
