@@ -4,7 +4,9 @@ export interface NftOffers {
 }
 
 export interface Offer {
-  id: string;
+  _id?: string;
+  id?: string;
+  swapId?: string;
   kind: string;
   side: string;
   status: string;

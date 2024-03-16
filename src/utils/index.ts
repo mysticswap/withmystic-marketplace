@@ -85,19 +85,18 @@ export const getHostName = () => {
   switch (hostName) {
     case "localhost":
       return "marketplace.mysticswaplocalhost.io";
-      return "goldfinch.withmystic.xyz";
       //DiamondNXT-NFT host
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
+      return "talentprotocol.withmystic.xyz";
+      return "deploy-preview-14--heroic-duckanoo-b32f52.netlify.app";
       // SteadyStack host
       return "deploy-preview-15--heroic-duckanoo-b32f52.netlify.app";
       return "deploy-preview-25--heroic-duckanoo-b32f52.netlify.app";
-      return "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app";
-      return "market.localhost.io";
     case "deploy-preview-97--heroic-duckanoo-b32f52.netlify.app":
       return "marketplace.mysticswaplocalhost.io";
+      //DiamondNXT-NFT host
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
-      return "deploy-preview-15--heroic-duckanoo-b32f52.netlify.app";
-      return "deploy-preview-25--heroic-duckanoo-b32f52.netlify.app";
+      return "talentprotocol.withmystic.xyz";
     case "deploy-preview-81--heroic-duckanoo-b32f52.netlify.app":
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
       return "deploy-preview-19--heroic-duckanoo-b32f52.netlify.app";
@@ -163,3 +162,47 @@ export const convertToIPFSImage = (image: string) => {
   const imageUrl = image.replace("ipfs://", "https://ipfs.io/ipfs/");
   return imageUrl;
 };
+
+export function parseAttributesQueryParams(queryParamsString: string) {
+  const queryObj: any = {};
+  const queryParams = new URLSearchParams(queryParamsString);
+  queryParams.forEach((value, key) => {
+    if (key === "includeAttributes") {
+      queryObj[key] = value === "true";
+    } else {
+      if (!queryObj.attributes) {
+        queryObj.attributes = {};
+      }
+      const attributeKey = key.match(/\[(.*?)\]/)?.[1] || "";
+      if (!queryObj.attributes[attributeKey]) {
+        queryObj.attributes[attributeKey] = [];
+      }
+      queryObj.attributes[attributeKey].push(value);
+    }
+  });
+  return queryObj;
+}
+
+// Function to filter objects based on query parameters
+export function filterObjectsByAttributes(objects: any[], query: any) {
+  query = parseAttributesQueryParams(query);
+  if (!query.includeAttributes || !query.attributes) return objects;
+  return objects.filter((obj) => {
+    const attributes = obj.token.attributes;
+
+    for (const [key, value] of Object.entries(query.attributes)) {
+      const matchingAttribute = attributes.find(
+        (attr: any) => attr.key === key
+      );
+      if (
+        !matchingAttribute ||
+        (Array.isArray(value) && !value.includes(matchingAttribute.value)) ||
+        (!Array.isArray(value) && matchingAttribute.value !== value)
+      ) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+}

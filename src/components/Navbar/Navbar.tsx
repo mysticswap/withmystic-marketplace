@@ -33,6 +33,7 @@ const Navbar = () => {
     client,
     source,
   } = useGlobalContext();
+
   const { setShowOfferOrListingModal } = useTransactionContext()!;
   const location = useLocation();
   const isMobile = useIsMobile();
@@ -71,6 +72,15 @@ const Navbar = () => {
     scrollToTop();
     setShowOfferOrListingModal(false);
   }, [location.pathname, setShowOfferOrListingModal]);
+
+  useEffect(() => {
+    if (
+      collectionMetadata?.collections?.[0]?.primaryContract ==
+      selectedCollection?.address
+    ) {
+      setShowMobileMenu(false);
+    }
+  }, [collectionMetadata, selectedCollection]);
 
   return (
     <nav className="navbar">
@@ -137,7 +147,12 @@ const Navbar = () => {
             )}
           </div>
 
-          <Link to="/swaps">
+          <Link
+            to="/swaps"
+            onClick={() => {
+              setShowMobileMenu(false);
+            }}
+          >
             <button className="sell_button">Swap</button>
           </Link>
 

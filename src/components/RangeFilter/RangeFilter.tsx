@@ -13,8 +13,8 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
   const [maxValue, setMaxValue] = useState<string>("0");
 
   const getMinandMax = () => {
-    const minData = attData.minRange!.toString();
-    const maxData = attData.maxRange!.toString();
+    const minData = attData.minRange?.toString();
+    const maxData = attData.maxRange?.toString();
     return { minData, maxData };
   };
 
@@ -35,12 +35,15 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
 
   useEffect(() => {
     const { minData, maxData } = getMinandMax();
-    setMinValue(minData);
-    setMaxValue(maxData);
+    setMinValue(minData!);
+    setMaxValue(maxData!);
   }, [attData]);
 
   useEffect(() => {
-    if (parseInt(minValue!) > parseInt(maxValue!)) {
+    if (
+      parseInt(minValue!) > parseInt(maxValue!) ||
+      parseInt(minValue!) == parseInt(maxValue!)
+    ) {
       setIsError(true);
       buttonRef.current?.toggleAttribute("disabled", true);
     } else {
@@ -51,6 +54,14 @@ const RangeFilter = ({ attData, handleClick }: Props) => {
 
   return (
     <>
+      <div className="nft_filter_slider">
+        <input
+          type="range"
+          value={maxValue}
+          max="11"
+          onChange={(e) => handleChange(false, e.target.value)}
+        ></input>
+      </div>
       <div className="nft_filter_range">
         <input
           type="number"

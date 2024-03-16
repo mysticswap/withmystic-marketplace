@@ -17,7 +17,26 @@
   background-color: var(--ms-mp-gray-light);
 }
 
+.auction_filter_button {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  transition: var(--ms-mp-transition);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  color: var(--ms-mp-text-color);
+}
+
 .activity_filter_button > div:first-of-type {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.auction_filter_button > div:first-of-type {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -25,6 +44,11 @@
 
 @media screen and (max-width: 600px) {
   .activity_filter_button {
+    padding: 1.5rem 0;
+    font-size: 1rem;
+  }
+
+  .auction_filter_button {
     padding: 1.5rem 0;
     font-size: 1rem;
   }

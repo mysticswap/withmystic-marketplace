@@ -48,6 +48,7 @@ import {
   getTransactionNftToken,
 } from "../../../../utils/transaction-nft.utils";
 import { ETH_CONTRACT_ADDRESS } from "../../../../components/OfferOrListingModal/OfferOrListingModal";
+import { getAllTokenAuctions } from "../../../../services/api/marketplace-api";
 
 type Props = {
   nftInfo: TokenToken;
@@ -55,6 +56,7 @@ type Props = {
   setShowConfirmationModal: React.Dispatch<React.SetStateAction<boolean>>;
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
   setShowConfirmationBuyNowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowAuctionModal?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const NftHeader = ({
@@ -63,7 +65,8 @@ const NftHeader = ({
   nftInfo,
   nftPriceData,
   setShowConfirmationBuyNowModal,
-}: Props) => {
+}: // setShowAuctionModal,
+Props) => {
   const { user, setProvider, chainId, setUser, setChainId } =
     useConnectionContext()!;
   const { setTransactionNft, setTransactionStage, setTransactionHash } =
@@ -79,6 +82,7 @@ const NftHeader = ({
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [hasRefreshed, setHasRefreshed] = useState(false);
+  const [activeAuctions, setActiveAuctions] = useState<any[]>([]);
 
   const collectionName = nftInfo?.collection?.name;
   const nftName = nftInfo?.name;
@@ -120,6 +124,10 @@ const NftHeader = ({
 
   const txNft = getTransactionNft(nft, isOffer, isSale, txMessage, user!, 0, 0);
 
+  useEffect(() => {
+    getActiveAuction();
+  }, []);
+
   const txNftToken = getTransactionNftToken(
     nft,
     isOffer,
@@ -129,6 +137,21 @@ const NftHeader = ({
     0,
     0
   );
+
+  const getActiveAuction = async () => {
+    let auctions = await getAllTokenAuctions(
+      nftInfo?.contract,
+      collectionChainId
+    );
+
+    auctions = auctions.filter((auction: any) => {
+      return auction.auctionComponent
+        .map((i: any) => i.identifier)
+        .includes(nftInfo?.tokenId);
+    });
+    setActiveAuctions(auctions);
+    return auctions;
+  };
 
   const triggerModal = (
     setter: React.Dispatch<React.SetStateAction<boolean>>
@@ -221,6 +244,11 @@ const NftHeader = ({
     setTransactionNft(txNft);
   };
 
+  // const createAuction = () => {
+  //   triggerModal(setShowAuctionModal || setShowOfferOrListingModal);
+  //   setTransactionNft(txNft);
+  // };
+
   const refreshMetadata = async () => {
     setIsRefreshing(true);
     await Promise.all([
@@ -305,8 +333,20 @@ const NftHeader = ({
         )}
 
         {!userIsOwner && (
-          <OutlineButton text="Make Offer" onClick={makeOffer} />
+          <OutlineButton
+            text={activeAuctions.length > 0 ? "Place Bid" : "Make Offer"}
+            onClick={makeOffer}
+          />
         )}
+
+        {/* {userIsOwner && (
+          <OutlineButton text="Create Auction" onClick={createAuction} />
+        )}
+
+        {!userIsOwner && (
+          <OutlineButton text="Bid on Available Auction" onClick={createAuction} />
+        )} */}
+
         {userIsOwner && (
           <OutlineButton text="Edit Listing" onClick={buyOrList} />
         )}

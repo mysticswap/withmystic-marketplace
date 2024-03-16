@@ -2,6 +2,9 @@
 export interface ListOrBidData {
   steps: Step[];
   errors: any[];
+  signTypedMessage?: any;
+  approvalsNeeded?: any;
+  swapId?: any;
 }
 
 export interface Step {

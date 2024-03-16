@@ -3,18 +3,20 @@ import { Post } from "../../types/rsv-types/listing-data.types";
 import { Post as AuthPost } from "../../types/rsv-types/buy-data.types";
 import { marketplaceInstance } from "../axios";
 import {
-  getAllSwaps,
+  getAllOffers,
+  // getAllSwaps,
   getCollection,
   getCollectionHistory,
   getCollectionNfts,
   getCollectionTraits,
-  getNeededSwaps,
   getNftHistory,
   getSingleNft,
   getUserNFTs,
 } from "./marketplace-api";
 import { otherChains } from "../../wallets/chains";
 import { SwapType } from "../../types/market-schemas.types";
+import { UserNFTToReservoirAPI } from "../apiReconciliation";
+import { Activity } from "../../types/rsv-types/collection-activity.types";
 
 export const getCollectionMetadata = async (
   chainId: number,
@@ -42,10 +44,6 @@ export const getCollectionNftsV2 = async (
   source?: string,
   currencies?: string
 ) => {
-  if (otherChains.includes(chainId)) {
-    const data = await getCollectionNfts(contractAddress as string, chainId, 1);
-    return data;
-  }
   const request = await marketplaceInstance.get("get-nfts-v2", {
     params: {
       chainId,
@@ -61,6 +59,30 @@ export const getCollectionNftsV2 = async (
     },
   });
 
+  if (otherChains.includes(chainId)) {
+    const data = await getCollectionNfts(
+      contractAddress as string,
+      chainId,
+      1,
+      attributes
+    );
+    return data;
+  }
+  // const request = await marketplaceInstance.get("get-nfts-v2", {
+  //   params: {
+  //     chainId,
+  //     sortBy,
+  //     sortDirection,
+  //     contractAddress,
+  //     ...(continuation && { continuation }),
+  //     ...(attributes && { attributes }),
+  //     ...(tokens && { tokens }),
+  //     ...(numericFilters && { numericFilters }),
+  //     ...(source && { source }),
+  //     ...(currencies && { currencies }),
+  //   },
+  // });
+
   return request.data;
 };
 
@@ -69,23 +91,29 @@ export const getCollectionActivity = async (
   contractAddress: string,
   types: string
 ) => {
-  if (otherChains.includes(chainId)) {
-    const swaps = await getNeededSwaps(
-      chainId,
-      SwapType.Listing,
-      contractAddress
-    );
-    const history = await getCollectionHistory(
-      contractAddress as string,
-      chainId
-    );
-    return { activities: [...swaps.activities, ...history.activities] };
-  }
-
   const request = await marketplaceInstance.get("/get-collection-activity", {
     params: { chainId, contractAddress, types },
   });
-  return request.data;
+
+  if (otherChains.includes(chainId)) {
+    // const swaps = await getAllSwaps(chainId, contractAddress);
+
+    const history = await getCollectionHistory(
+      contractAddress as string,
+      chainId,
+      types
+    );
+    return {
+      activities: [
+        // ...swaps.activities,
+        ...history.activities,
+        ...request.data.activities,
+      ].sort((a, b) => b.timestamp - a.timestamp) as Activity[],
+      continuation: "",
+    };
+  } else {
+    return request.data;
+  }
 };
 
 export const getCollectionTraitsV2 = async (
@@ -120,14 +148,15 @@ export const getNftOffers = async (
   token: string,
   continuation?: string
 ) => {
-  if (otherChains.includes(chainId)) {
-    return await getAllSwaps(chainId, SwapType.Offer, token as string);
-  }
+  const offers = [];
+  const offer = await getAllOffers(chainId, SwapType.Offer, token);
+  offers.push(...offer.orders);
 
   const request = await marketplaceInstance("/get-nft-offers", {
     params: { chainId, token, ...(continuation && { continuation }) },
   });
-  return request.data;
+  offers.push(...request.data.orders);
+  return { orders: offers, continuation: request.data.continuation };
 };
 
 export const getNftActivity = async (
@@ -154,15 +183,37 @@ export const getNftActivity = async (
   return request.data;
 };
 
+function mergeUnique(
+  arr1: any[],
+  arr2: any[],
+  identifier: string,
+  identifier2: string
+) {
+  const mergedArray = arr1.concat(arr2);
+  const uniqueArray = mergedArray.filter(
+    (item, index, self) =>
+      index ===
+      self.findIndex(
+        (t) =>
+          t.token[identifier] === item.token[identifier] &&
+          t.token[identifier2] === item.token[identifier2]
+      )
+  );
+  return uniqueArray;
+}
+
 export const getUserNfts = async (
   chainId: number,
   user: string,
   collection: string,
   continuation?: string
 ) => {
-  if (otherChains.includes(chainId)) {
-    return await getUserNFTs(user, chainId, collection as string);
-  }
+  const nfts = [];
+  const nft = UserNFTToReservoirAPI(
+    await getUserNFTs(user, chainId, collection as string),
+    chainId
+  );
+  nfts.push(...nft.tokens);
 
   const request = await marketplaceInstance("get-user-nfts", {
     params: {
@@ -172,7 +223,10 @@ export const getUserNfts = async (
       ...(continuation && { continuation }),
     },
   });
-  return request.data;
+
+  const tokens = mergeUnique(request.data.tokens, nfts, "contract", "tokenId");
+
+  return { tokens, continuation: null };
 };
 
 export const submitListOrBid = async (chainId: number, data: Post) => {

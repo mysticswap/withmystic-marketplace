@@ -1,3 +1,5 @@
+import { Source } from "./collection-nfts.types";
+
 export interface UserNfts {
   tokens: UserTokenElement[];
   continuation: any;
@@ -119,11 +121,10 @@ export interface Ownership {
 }
 
 export interface FloorAsk {
-  id: any;
-  price: any;
-  maker: any;
-  kind: any;
-  validFrom: any;
-  validUntil: any;
-  source: any;
+  id: string;
+  price: Price;
+  maker: string;
+  validFrom: number;
+  validUntil: number;
+  source: Source;
 }

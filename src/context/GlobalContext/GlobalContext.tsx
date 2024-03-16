@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import { getUserBalance } from "../../services/api/marketplace-api";
-import { API_KEY } from "../../config";
+// import { API_KEY } from "../../config";
 import { GlobalContextType } from "./types";
 import {
   getCollectionActivity,
@@ -21,17 +21,20 @@ import { GetNftsRsv } from "../../types/rsv-types/collection-nfts.types";
 import {
   defaultSort,
   defaultSortby,
+  offerTokens,
   rsvActivityTypes,
   tabOptions,
+  wethAddresses,
 } from "../../constants";
 import { CollectionActivity } from "../../types/rsv-types/collection-activity.types";
 import { CollectionTraitsV2 } from "../../types/rsv-types/collection-traits.types";
 import { UserNfts } from "../../types/rsv-types/user-nfts.types";
 import { useConnectionContext } from "../ConnectionContext/ConnectionContext";
 import { getHostName, getPreviousCollectionAddress } from "../../utils";
-import { getCryptoPrice } from "../../services/api/coin-gecko.api";
-import { ClientObject } from "../../types/dynamic-system.types";
+import { coinList, getCryptoPrice } from "../../services/api/coin-gecko.api";
+import { ClientObject, SupportedToken } from "../../types/dynamic-system.types";
 import { useDisableNumberInputScroll } from "../../hooks/useDisableNumberInputScroll";
+import { ETH_CONTRACT_ADDRESS } from "../../components/OfferOrListingModal/OfferOrListingModal";
 
 const GlobalContext = createContext({} as GlobalContextType);
 
@@ -52,15 +55,27 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
     previousCollection || availableCollections?.[0]
   );
 
-  const supportedTokens = selectedCollection?.supportedTokens || [];
+  const collectionChainId = selectedCollection.chainId;
+  const collectionContract = selectedCollection.address;
+
+  const supportedTokens =
+    getDistinctArray([
+      ...(selectedCollection?.supportedTokens || []),
+      ...(offerTokens[collectionChainId || 1] || []),
+    ]) ||
+    selectedCollection?.supportedTokens ||
+    [];
+
+  // console.log({ supportedTokens });
 
   // const [currentToken, setCurrentToken] = useState<number>(() =>
   //   supportedTokens!.findIndex((token) => token.symbol === "WETH")
   // );
 
   const [currentToken, setCurrentToken] = useState<number>(0);
+  const [isAuction, setIsAuction] = useState<boolean>(false);
 
-  const cryptoName = supportedTokens?.[currentToken]?.name
+  const cryptoName = supportedTokens?.[currentToken]?.symbol
     ?.split(" ")
     ?.join("-")
     ?.toLowerCase();
@@ -75,17 +90,22 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
   const [collectionAttributes, setCollectionAttributes] = useState(
     {} as CollectionTraitsV2
   );
-  const [selectedActivities, setSelectedActivities] = useState(["sale", "ask"]);
+  const [selectedActivities, setSelectedActivities] = useState(["sale"]);
   const [userBalance, setUserBalance] = useState({});
   const [userNfts, setUserNfts] = useState({} as UserNfts);
+  // Nft Views
   const [minimalCards, setMinimalCards] = useState(true);
+  const [listView, setListView] = useState(false);
+
   const [cryptoValue, setCryptoValue] = useState(0);
   const [activitiesFetching, setActivitiesFetching] = useState(false);
 
   const selectedActivityTypes = JSON.stringify(selectedActivities);
   const source = getHostName();
-  const collectionChainId = selectedCollection.chainId;
-  const collectionContract = selectedCollection.address;
+
+  const [selectedToken, setSelectedToken] = useState(
+    offerTokens[collectionChainId || 1]?.[0] || null
+  );
 
   useEffect(() => {
     getCollectionMetadata(collectionChainId, collectionContract).then(
@@ -156,7 +176,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
 
   useEffect(() => {
     if (user) {
-      getUserBalance(user!, collectionChainId, API_KEY).then((result) => {
+      getUserBalance(user!, collectionChainId).then((result) => {
         setUserBalance(result);
       });
     }
@@ -172,12 +192,29 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
   useEffect(() => {
     getCryptoPrice(cryptoName).then((result) => {
       if (Object.keys(result).length !== 0) {
-        setCryptoValue(result[cryptoName].usd);
+        setCryptoValue(result[coinList[cryptoName]].usd);
       } else {
         setCryptoValue(0);
       }
     });
   }, [cryptoName]);
+
+  function getDistinctArray(arr: SupportedToken[]) {
+    const symbols: any = {};
+
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].contract == ETH_CONTRACT_ADDRESS) {
+        arr[i].contract = wethAddresses[collectionChainId];
+        arr[i].symbol = "WETH";
+        arr[i].name = "Wrapped ETHEREUM";
+      }
+
+      if (!symbols[arr[i].contract]) {
+        symbols[arr[i].contract] = arr[i];
+      }
+    }
+    return Object.values(symbols) as SupportedToken[];
+  }
 
   useDisableNumberInputScroll();
 
@@ -214,6 +251,12 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
         supportedTokens,
         currentToken,
         setCurrentToken,
+        selectedToken,
+        setSelectedToken,
+        isAuction,
+        setIsAuction,
+        listView,
+        setListView,
       }}
     >
       {children}

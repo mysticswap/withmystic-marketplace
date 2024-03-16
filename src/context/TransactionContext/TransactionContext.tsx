@@ -16,6 +16,7 @@ export const TransactionContextProvider = ({ children }: Props) => {
   const [showOfferOrListingModal, setShowOfferOrListingModal] = useState(false);
   const [transactionNft, setTransactionNft] = useState(defaultOfferOrList);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showAuctionModal, setShowAuctionModal] = useState(false);
   const [showConfirmationBuyNowModal, setShowConfirmationBuyNowModal] =
     useState(false);
   const [transactionStage, setTransactionStage] = useState(0);
@@ -44,6 +45,8 @@ export const TransactionContextProvider = ({ children }: Props) => {
         userCanCompleteTransaction,
         showConfirmationBuyNowModal,
         setShowConfirmationBuyNowModal,
+        showAuctionModal,
+        setShowAuctionModal
       }}
     >
       {children}

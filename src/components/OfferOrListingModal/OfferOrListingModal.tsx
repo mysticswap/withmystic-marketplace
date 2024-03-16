@@ -13,22 +13,37 @@ import {
 } from "../../services/api/buy-offer-list.api";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 import { convertTokenAmountToDecimals, getHostName } from "../../utils";
-import { handleListOrBidData } from "../../services/list-bid-service";
+import {
+  handleAuctionOrBidData,
+  handleListOrBidData,
+} from "../../services/list-bid-service";
 import ProcessComponent from "../TransactionStages/TransactionStages";
 import { useTransactionContext } from "../../context/TransactionContext/TransactionContext";
 import { switchChains } from "../../utils/wallet-connection";
 import { generateListOrBidActivity } from "../../utils/activity-utils";
 import { useOutsideClicks } from "../../hooks/useOutsideClicks";
+// import Checkbox from "../Checkbox/Checkbox";
+import AuctionButton from "../ActivityFilterButton/AuctionChoiceButton";
+import {
+  bidAuction,
+  createAuction,
+  getAllTokenAuctions,
+} from "../../services/api/marketplace-api";
+import { AuctionEnumType } from "../../types/market-schemas.types";
 
 type Props = {
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
+  nftType?: string;
 };
 
-const WETH_CONTRACT_ADDRESS = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+// const WETH_CONTRACT_ADDRESS = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
 export const ETH_CONTRACT_ADDRESS =
   "0x0000000000000000000000000000000000000000";
 
-const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
+const OfferOrListingModal = ({
+  setShowOfferOrListingModal,
+  nftType,
+}: Props) => {
   const { user, chainId } = useConnectionContext()!;
   const {
     userBalance,
@@ -36,9 +51,11 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     collectionChainId,
     collectionContract,
     cryptoValue,
-    supportedTokens,
+    supportedTokens: oldSupportedTokens,
     currentToken,
     setCurrentToken,
+    isAuction,
+    setIsAuction,
   } = useGlobalContext();
   const {
     transactionNft,
@@ -48,17 +65,29 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   } = useTransactionContext()!;
   const dropdownRef = useRef(null);
 
-  const { isOffer, tokenId } = transactionNft;
+  const { isOffer, tokenId, nftType: kind } = transactionNft;
+
+  const supportedTokens = oldSupportedTokens?.map((tk) => {
+    if (
+      tk.contract == wethAddresses[collectionChainId] &&
+      !isAuction &&
+      !isOffer
+    ) {
+      tk.contract = ETH_CONTRACT_ADDRESS;
+      tk.symbol = "ETH";
+      tk.name = "ETHEREUM";
+    }
+
+    return tk;
+  });
+
   const currencyIsListing =
-    supportedTokens[currentToken]?.contract === WETH_CONTRACT_ADDRESS
+    supportedTokens[currentToken]?.contract === wethAddresses[collectionChainId]
       ? ETH_CONTRACT_ADDRESS
       : supportedTokens[currentToken]?.contract;
 
-  // const currencyIsListing = supportedTokens[currentToken].contract;
-
   const currency = isOffer ? wethAddresses[collectionChainId] : "";
 
-  const headerContent = isOffer ? "Make an offer" : "Create a listing";
   const finalHeader = isOffer ? "Offer completed!" : "Listing completed!";
   const inputPlaceholder = isOffer ? "Enter offer" : "Listing price";
 
@@ -73,8 +102,19 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [offerAmount, setOfferAmount] = useState("");
   const [isOverBalance, setIsOverBalance] = useState(false);
+  const [activeAuctions, setActiveAuctions] = useState<any[]>([]);
 
   const [showTokensDropdown, setShowTokensDropdown] = useState(false);
+
+  const headerContent = isOffer
+    ? activeAuctions.length > 0
+      ? "Place Bid"
+      : "Make an offer"
+    : "Create a listing";
+
+  useEffect(() => {
+    setIsAuction(false);
+  }, []);
 
   const closeDropdown = () => {
     setShowTokensDropdown(false);
@@ -91,16 +131,25 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     user!
   );
 
+  const getUserBalance = () =>
+    userBalance[supportedTokens[currentToken].symbol] || 0;
+
   useEffect(() => {
-    const isOverUserBalance = Number(offerAmount) > Number(userBalance.WETH);
+    const isOverUserBalance = Number(offerAmount) > Number(getUserBalance());
     isOffer && setIsOverBalance(isOverUserBalance);
   }, [offerAmount, isOffer, userBalance.WETH]);
+
+  useEffect(() => {
+    getActiveAuction();
+  }, []);
 
   const offerBottom = (
     <>
       <p>
         <span>Your Balance</span>
-        <span>{userBalance?.WETH} wETH</span>
+        <span>
+          {getUserBalance()} {supportedTokens[currentToken].symbol || "WETH"}
+        </span>
       </p>
       <p>
         <span>Floor price</span>
@@ -122,7 +171,82 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
     </>
   );
 
+  const getActiveAuction = async () => {
+    let auctions = await getAllTokenAuctions(
+      collectionContract,
+      collectionChainId
+    );
+
+    auctions = auctions.filter((auction: any) => {
+      return auction.auctionComponent
+        .map((i: any) => i.identifier)
+        .includes(tokenId);
+    });
+    setActiveAuctions(auctions);
+    return auctions;
+  };
+
+  const createAuctionList = async () => {
+    // const source = getHostName();
+    // const token = `${collectionContract}:${tokenId}`;
+
+    const weiPrice = convertTokenAmountToDecimals(
+      Number(offerAmount),
+      supportedTokens[currentToken]?.decimals
+    ).toString();
+
+    const expiration = selectedDuration.time + "";
+    setTransactionStage(1);
+
+    try {
+      await switchChains(chainId, collectionChainId);
+      let result;
+      if (isOffer) {
+        result = await bidAuction(
+          collectionChainId,
+          activeAuctions[0]._id,
+          wethAddresses[collectionChainId],
+          weiPrice,
+          user!
+        );
+      } else {
+        result = await createAuction({
+          endTime: expiration,
+          startAmount: weiPrice,
+          chainId: collectionChainId,
+          offerer: user!,
+          offer: [
+            {
+              itemtype:
+                nftType?.toUpperCase() || kind?.toUpperCase() || "ERC721",
+              token: collectionContract,
+              amount: "1",
+              identifier: tokenId,
+            },
+          ],
+          type: AuctionEnumType.Basic,
+        });
+      }
+
+      console.log({ result });
+      await handleAuctionOrBidData(
+        collectionChainId,
+        result,
+        setTransactionStage,
+        setShowOfferOrListingModal,
+        activity,
+        isOffer
+      );
+    } catch (error) {
+      // Handle errors here
+    }
+  };
+
   const createBidOrList = async () => {
+    if (isAuction || (isOffer && activeAuctions.length > 0)) {
+      return await createAuctionList();
+    }
+
     const source = getHostName();
     const token = `${collectionContract}:${tokenId}`;
 
@@ -186,7 +310,8 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
           weiPrice,
           expiration,
           !isOffer,
-          currencyIsListing
+          currencyIsListing,
+          nftType?.toUpperCase() || kind?.toUpperCase() || "ERC721"
         );
         await handleListOrBidData(
           collectionChainId,
@@ -204,7 +329,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
           weiPrice,
           expiration,
           !isOffer,
-          currency
+          supportedTokens[currentToken].contract || currency
         );
         await handleListOrBidData(
           collectionChainId,
@@ -221,7 +346,13 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
   const transactionButtonIsDisable =
     Number(offerAmount) <= 0 || (isOffer && isOverBalance);
-  const transactionButtonText = isOffer ? "Make Offer" : "Create Listing";
+  const transactionButtonText = isOffer
+    ? activeAuctions.length > 0
+      ? "Place Bid"
+      : "Make Offer"
+    : isAuction
+    ? "Create Auction"
+    : "Create Listing";
 
   return (
     <div className="modal_parent">
@@ -248,6 +379,10 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
               offerAmount={offerAmount}
               isSale={false}
             />
+
+            {!isOffer && !(transactionStage && !isAuction) && (
+              <AuctionButton disabled={!!transactionStage} />
+            )}
           </div>
 
           {!transactionStage ? (
@@ -292,57 +427,47 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
                 />
                 <div
                   // className={isOffer ? "chevron-down-2" : "chevron-down"}
-                  className={
-                    isOffer
-                      ? "chevron-down-2"
-                      : `${
-                          supportedTokens.length === 1
-                            ? "chevron-down"
-                            : "chevron-down no-cursor"
-                        }`
-                  }
+                  className={isAuction ? "chevron-down-2" : "chevron-down"}
                   ref={ref}
                   onClick={() => {
-                    if (isOffer || supportedTokens.length === 1) return;
+                    // if (isOffer || supportedTokens.length === 1) return;
                     setShowTokensDropdown(!showTokensDropdown);
                   }}
                 >
-                  {supportedTokens.length === 1 ||
-                    (!isOffer && <BsChevronDown />)}
+                  {!(isAuction || (isOffer && activeAuctions.length > 0)) && (
+                    <BsChevronDown />
+                  )}
                   <p>
-                    {!isOffer
-                      ? `${
-                          supportedTokens!.length > 0
-                            ? supportedTokens![currentToken].symbol
-                            : "wETH"
-                        }`
-                      : "wETH"}
+                    {supportedTokens!.length > 0
+                      ? supportedTokens[currentToken]?.symbol
+                      : "ETH"}
                   </p>
                 </div>
-                {showTokensDropdown && (
-                  <div className="tokens-dropdown">
-                    {supportedTokens?.map((token, index) => {
-                      return (
-                        <div
-                          className="single-token"
-                          key={token?.contract}
-                          onClick={() => {
-                            setCurrentToken(index);
-                            setShowTokensDropdown(false);
-                          }}
-                        >
-                          <div className="single-inner-token">
-                            <img src={token.image} alt="" />
-                            <p>{token.symbol}</p>
+                {showTokensDropdown &&
+                  !(isAuction || (isOffer && activeAuctions.length > 0)) && (
+                    <div className="tokens-dropdown">
+                      {supportedTokens?.map((token, index) => {
+                        return (
+                          <div
+                            className="single-token"
+                            key={token?.contract + "-" + index}
+                            onClick={() => {
+                              setCurrentToken(index);
+                              setShowTokensDropdown(false);
+                            }}
+                          >
+                            <div className="single-inner-token">
+                              <img src={token.image} alt="" />
+                              <p>{token.symbol}</p>
+                            </div>
+                            {index === currentToken && (
+                              <BsCheck2 className="token-checkmark" />
+                            )}
                           </div>
-                          {index === currentToken && (
-                            <BsCheck2 className="token-checkmark" />
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
+                        );
+                      })}
+                    </div>
+                  )}
               </div>
 
               <div className="duration_area">
@@ -399,3 +524,4 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 };
 
 export default OfferOrListingModal;
+//

@@ -3,6 +3,7 @@ import { marketplaceInstance } from "../axios";
 import { otherChains } from "../../wallets/chains";
 import { acceptSwap, createSwap } from "./marketplace-api";
 import { SwapType } from "../../types/market-schemas.types";
+import { wethAddresses } from "../../constants";
 
 export const createListing = async (
   chainId: number,
@@ -12,7 +13,8 @@ export const createListing = async (
   weiPrice: string,
   expirationTime: string,
   isListing: boolean = true,
-  currency: string
+  currency: string,
+  nftType?: string
 ) => {
   try {
     if (otherChains.includes(chainId)) {
@@ -24,7 +26,7 @@ export const createListing = async (
         offerer: maker,
         offer: [
           {
-            itemtype: "ERC721",
+            itemtype: nftType || "ERC721",
             token: tokenAddress,
             identifier: tokenId,
             amount: "1",
@@ -32,10 +34,12 @@ export const createListing = async (
         ],
         consideration: [
           {
-            itemtype: "ERC721",
-            token: tokenAddress,
-            identifier: tokenId,
-            amount: "1",
+            itemtype: "ERC20",
+            identifier: "0",
+            /// ...(wethAddresses[chainId] && { token: wethAddresses[chainId] }),
+            token: currency,
+            amount: weiPrice,
+            recipient: maker,
           },
         ],
         takerAddress: maker,
@@ -80,10 +84,13 @@ export const createBid = async (
       offerer: maker,
       offer: [
         {
-          itemtype: "ERC721",
-          token: tokenAddress,
-          identifier: tokenId,
-          amount: "1",
+          itemtype: "ERC20",
+          token:
+            currency == "0x0000000000000000000000000000000000000000"
+              ? wethAddresses[chainId]
+              : currency,
+          amount: weiPrice,
+          identifier: "0",
         },
       ],
       consideration: [
@@ -92,6 +99,7 @@ export const createBid = async (
           token: tokenAddress,
           identifier: tokenId,
           amount: "1",
+          recipient: maker,
         },
       ],
       takerAddress: maker,
@@ -161,12 +169,13 @@ export const acceptOffer = async (
   chainId: number,
   token: string,
   taker: string,
-  source: string
+  source: string,
+  swapId?: string
 ) => {
-  // if (otherChains.includes(chainId)) {
-  //   const swapRes = await acceptSwap(orderId, taker);
-  //   return swapRes;
-  // }
+  if (otherChains.includes(chainId) && swapId) {
+    const swapRes = await acceptSwap(swapId as string, taker);
+    return swapRes;
+  }
 
   const request = await marketplaceInstance.post("/accept-offer", {
     chainId,
