@@ -1,0 +1,35 @@
+.list_attributes_container {
+  display: flex;
+  border-bottom: 1px solid var(--ms-mp-card-border-color);
+  padding: 0 1rem;
+  position: sticky;
+  top: -1rem;
+  background-color: var(--ms-mp-body-background);
+  z-index: 10;
+}
+
+.name_atribute {
+  width: 180px;
+  text-align: start;
+}
+.list_attributes_container span {
+  width: 7.5%;
+}
+
+.extra_atributes {
+  display: flex;
+  width: 80%;
+  text-align: start;
+}
+.extra_atributes p {
+  width: calc(100% / 5);
+}
+.extra_atributes p:last-of-type {
+  margin-right: 2rem;
+}
+
+@media screen and (max-width: 1024px) {
+  .list_attributes_container {
+    width: 100vw;
+  }
+}
