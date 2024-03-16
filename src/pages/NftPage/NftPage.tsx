@@ -149,6 +149,7 @@ const NftPage = () => {
 
       {showOfferOrListingModal && (
         <OfferOrListingModal
+          nftType={nftInfo.kind}
           setShowOfferOrListingModal={setShowOfferOrListingModal}
         />
       )}

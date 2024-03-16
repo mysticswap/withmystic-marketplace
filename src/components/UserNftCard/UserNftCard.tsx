@@ -20,6 +20,10 @@ const UserNftCard = ({ nft, setShowUserNftsModal }: Props) => {
   const isOverflowing = useIsOverflow(nameRef);
 
   const nftName = nft?.token?.name;
+
+  console.log(
+    window.location.origin + "/" + nft.token.contract + "/" + nft.token.tokenId
+  );
   // const rarityRank = nft?.token?.rarityRank;
 
   const handleClick = () => {
@@ -54,7 +58,19 @@ const UserNftCard = ({ nft, setShowUserNftsModal }: Props) => {
             <p ref={nameRef}>{nftName}</p>
           )}
         </div>
-        <p className="user_nft_card_rarity">#{nft.token.tokenId}</p>
+        <p
+          onClick={() => {
+            window.location.href =
+              window.location.origin +
+              "/" +
+              nft.token.contract +
+              "/" +
+              nft.token.tokenId;
+          }}
+          className="user_nft_card_rarity"
+        >
+          #{nft.token.tokenId}
+        </p>
       </div>
     </div>
   );

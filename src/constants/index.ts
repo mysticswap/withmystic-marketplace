@@ -62,6 +62,8 @@ export const wethAddresses: { [x: number]: string } = {
   1: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
   5: "0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6",
   137: "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
+  42161: "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+  81457: "0x4300000000000000000000000000000000000004",
 };
 
 export const offerTokens: Record<number, Array<SupportedToken>> = {
@@ -143,6 +145,43 @@ export const offerTokens: Record<number, Array<SupportedToken>> = {
         "https://assets.coingecko.com/coins/images/1/standard/bitcoin.png?1696501400",
     },
   ],
+
+  42161: [
+    {
+      contract: "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+      name: "Tether USD",
+      decimals: 6,
+      symbol: "USDT",
+      image:
+        "https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661",
+    },
+    {
+      contract: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+      name: "USD Coin",
+      decimals: 6,
+      symbol: "USDC",
+      image:
+        "https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694",
+    },
+    {
+      contract: "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+      name: "Wrapped BTC",
+      decimals: 18,
+      symbol: "WBTC",
+      image:
+        "https://assets.coingecko.com/coins/images/1/standard/bitcoin.png?1696501400",
+    },
+  ],
+
+  81457: [
+    {
+      contract: "0x4300000000000000000000000000000000000003",
+      name: "Native Blast USD",
+      decimals: 6,
+      symbol: "USDB",
+      image: "https://blastscan.io/token/images/usdb_32.png",
+    },
+  ],
 };
 
 export const defaultSort = "floorAskPrice";
@@ -161,6 +200,7 @@ export const defaultOfferOrList = {
   nftOwner: "",
   symbol: "",
   isBuyNow: false,
+  nftType: "ERC721",
 };
 
 export const scanWebsites: { [x: number]: string } = {

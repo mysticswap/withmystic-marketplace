@@ -61,7 +61,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
   const supportedTokens =
     getDistinctArray([
       ...(selectedCollection?.supportedTokens || []),
-      ...offerTokens[collectionChainId || 1],
+      ...(offerTokens[collectionChainId || 1] || []),
     ]) ||
     selectedCollection?.supportedTokens ||
     [];
@@ -101,7 +101,7 @@ export const GlobalContextProvider = ({ children, client }: Props) => {
   const source = getHostName();
 
   const [selectedToken, setSelectedToken] = useState(
-    offerTokens[collectionChainId || 1][0]
+    offerTokens[collectionChainId || 1]?.[0] || null
   );
 
   useEffect(() => {

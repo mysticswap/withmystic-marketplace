@@ -29,4 +29,5 @@ export type TransactionNft = {
   nftOwner: string;
   symbol: string;
   isBuyNow: boolean;
+  nftType: string;
 };

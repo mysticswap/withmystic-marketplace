@@ -17,6 +17,7 @@ import {
   SwapApiToReservoirApi,
   TraitApiToReservoirApi,
 } from "../apiReconciliation";
+import { toast } from "react-toastify";
 
 const makeApiRequest = async (
   endpoint: string,
@@ -64,10 +65,13 @@ const makeApiPostRequest = async (
       headers,
       body: requestBody,
     });
+
+    const data = await response.json();
     if (!response.ok) {
+      toast.error(data.message || data.error);
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    return response.json();
+    return data;
   } catch (error) {
     // Handle the error appropriately (e.g., log it, throw a custom error, etc.)
     throw error;

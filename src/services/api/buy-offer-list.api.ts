@@ -13,7 +13,8 @@ export const createListing = async (
   weiPrice: string,
   expirationTime: string,
   isListing: boolean = true,
-  currency: string
+  currency: string,
+  nftType?: string
 ) => {
   try {
     if (otherChains.includes(chainId)) {
@@ -25,7 +26,7 @@ export const createListing = async (
         offerer: maker,
         offer: [
           {
-            itemtype: "ERC721",
+            itemtype: nftType || "ERC721",
             token: tokenAddress,
             identifier: tokenId,
             amount: "1",

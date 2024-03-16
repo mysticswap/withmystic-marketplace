@@ -33,13 +33,17 @@ import { AuctionEnumType } from "../../types/market-schemas.types";
 
 type Props = {
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
+  nftType?: string;
 };
 
 // const WETH_CONTRACT_ADDRESS = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
 export const ETH_CONTRACT_ADDRESS =
   "0x0000000000000000000000000000000000000000";
 
-const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
+const OfferOrListingModal = ({
+  setShowOfferOrListingModal,
+  nftType,
+}: Props) => {
   const { user, chainId } = useConnectionContext()!;
   const {
     userBalance,
@@ -61,7 +65,7 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   } = useTransactionContext()!;
   const dropdownRef = useRef(null);
 
-  const { isOffer, tokenId } = transactionNft;
+  const { isOffer, tokenId, nftType: kind } = transactionNft;
 
   const supportedTokens = oldSupportedTokens?.map((tk) => {
     if (
@@ -84,7 +88,6 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
 
   const currency = isOffer ? wethAddresses[collectionChainId] : "";
 
-  const headerContent = isOffer ? "Make an offer" : "Create a listing";
   const finalHeader = isOffer ? "Offer completed!" : "Listing completed!";
   const inputPlaceholder = isOffer ? "Enter offer" : "Listing price";
 
@@ -102,6 +105,12 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const [activeAuctions, setActiveAuctions] = useState<any[]>([]);
 
   const [showTokensDropdown, setShowTokensDropdown] = useState(false);
+
+  const headerContent = isOffer
+    ? activeAuctions.length > 0
+      ? "Place Bid"
+      : "Make an offer"
+    : "Create a listing";
 
   useEffect(() => {
     setIsAuction(false);
@@ -185,7 +194,6 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
       Number(offerAmount),
       supportedTokens[currentToken]?.decimals
     ).toString();
-    console.log(selectedDuration.time);
 
     const expiration = selectedDuration.time + "";
     setTransactionStage(1);
@@ -209,7 +217,8 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
           offerer: user!,
           offer: [
             {
-              itemtype: "ERC721",
+              itemtype:
+                nftType?.toUpperCase() || kind?.toUpperCase() || "ERC721",
               token: collectionContract,
               amount: "1",
               identifier: tokenId,
@@ -218,6 +227,8 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
           type: AuctionEnumType.Basic,
         });
       }
+
+      console.log({ result });
       await handleAuctionOrBidData(
         collectionChainId,
         result,
@@ -299,7 +310,8 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
           weiPrice,
           expiration,
           !isOffer,
-          currencyIsListing
+          currencyIsListing,
+          nftType?.toUpperCase() || kind?.toUpperCase() || "ERC721"
         );
         await handleListOrBidData(
           collectionChainId,
@@ -335,7 +347,9 @@ const OfferOrListingModal = ({ setShowOfferOrListingModal }: Props) => {
   const transactionButtonIsDisable =
     Number(offerAmount) <= 0 || (isOffer && isOverBalance);
   const transactionButtonText = isOffer
-    ? "Make Offer"
+    ? activeAuctions.length > 0
+      ? "Place Bid"
+      : "Make Offer"
     : isAuction
     ? "Create Auction"
     : "Create Listing";

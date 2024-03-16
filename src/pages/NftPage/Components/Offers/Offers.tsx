@@ -69,6 +69,8 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
       collectionChainId
     );
 
+    console.log(auctions);
+
     auctions = auctions.filter((auction: any) => {
       return auction.auctionComponent
         .map((i: any) => i.identifier)
@@ -79,6 +81,9 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
   };
 
   const isOwner = nftInfo?.owner?.toLowerCase() == user?.toLowerCase();
+
+  const power = collectionChainId == 137 ? 10 ** 6 : 10 ** 18;
+  const bidToken = collectionChainId == 137 ? "USDT" : "WETH";
 
   const acceptBid = (
     amount: number,
@@ -137,9 +142,12 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
     <>
       {activeAuctions.length > 0 ? (
         <div className="offers">
-          <p>Minimum Bid</p>
+          <p>Minimum(Last) Bid</p>
           <p className="offers_title">
-            {activeAuctions?.[0]?.lastBidAmount / 10 ** 18 || 0} WETH
+            {(activeAuctions?.[0]?.lastBidAmount ||
+              activeAuctions?.[0].startAmount ||
+              0) / power}{" "}
+            {bidToken}
           </p>
           <p>Auction ends {activeAuctions?.[0]?.endTime}</p>
         </div>
