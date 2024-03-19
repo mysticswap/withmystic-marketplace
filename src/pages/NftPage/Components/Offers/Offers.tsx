@@ -19,7 +19,10 @@ import { getDiscordEndpointData } from "../../../../utils/discord-utils";
 import { TokenElement } from "../../../../types/rsv-types/collection-nfts.types";
 import { generateSaleActivity } from "../../../../utils/activity-utils";
 import { getTransactionNft } from "../../../../utils/transaction-nft.utils";
-import { getAllTokenAuctions } from "../../../../services/api/marketplace-api";
+import {
+  finalizeBid,
+  getAllTokenAuctions,
+} from "../../../../services/api/marketplace-api";
 
 type Props = {
   nftOffers: NftOffers;
@@ -69,8 +72,6 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
       collectionChainId
     );
 
-    console.log(auctions);
-
     auctions = auctions.filter((auction: any) => {
       return auction.auctionComponent
         .map((i: any) => i.identifier)
@@ -81,6 +82,8 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
   };
 
   const isOwner = nftInfo?.owner?.toLowerCase() == user?.toLowerCase();
+  const isAuctionOwner =
+    activeAuctions?.[0]?.creatorAddress?.toLowerCase() == user?.toLowerCase();
 
   const power = collectionChainId == 137 ? 10 ** 6 : 10 ** 18;
   const bidToken = collectionChainId == 137 ? "USDT" : "WETH";
@@ -142,14 +145,59 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
     <>
       {activeAuctions.length > 0 ? (
         <div className="offers">
-          <p>Minimum(Last) Bid</p>
+          <p>Minimum Bid</p>
           <p className="offers_title">
-            {(activeAuctions?.[0]?.lastBidAmount ||
-              activeAuctions?.[0].startAmount ||
-              0) / power}{" "}
-            {bidToken}
+            {(activeAuctions?.[0].startAmount || 0) / power} {bidToken}
           </p>
           <p>Auction ends {activeAuctions?.[0]?.endTime}</p>
+          <div className="offers_table">
+            <div className="offers_table_head">
+              <p>Price</p>
+              <p>Offer Made</p>
+              <p>By</p>
+            </div>
+            <div>
+              {/* {activeAuctions.length > 0 && } */}
+              {activeAuctions[0].bidders
+                .filter((i: any) => i.active)
+                .sort((a: any, b: any) => b.bidAmount - a.bidAmount)
+                ?.map((bid: any) => {
+                  const timeStamp = dayjs(bid.bidTime).fromNow();
+                  const altTimeStamp =
+                    timeStamp.startsWith("in") && timeStamp.substring(2);
+                  const price = bid.bidAmount || 0;
+
+                  return (
+                    <div key={bid.bidId} className="offers_table_item">
+                      <p>
+                        {price / power} {bidToken}
+                      </p>
+                      <p>{altTimeStamp || timeStamp}</p>
+
+                      <div>
+                        <p onClick={() => redirectToMSWalletPage(bid.bidder)}>
+                          {truncateAddress(bid.bidder, 5, "...")}
+                        </p>
+                        {isAuctionOwner &&
+                          bid.bidAmount == activeAuctions[0].lastBidAmount && (
+                            <button
+                              className="offer_accept_button"
+                              onClick={() =>
+                                finalizeBid(
+                                  collectionChainId,
+                                  activeAuctions[0].id
+                                )
+                              }
+                            >
+                              Accept
+                            </button>
+                          )}
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
         </div>
       ) : (
         <div className="offers">

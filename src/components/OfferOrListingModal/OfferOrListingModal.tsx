@@ -30,6 +30,7 @@ import {
   getAllTokenAuctions,
 } from "../../services/api/marketplace-api";
 import { AuctionEnumType } from "../../types/market-schemas.types";
+import { toast } from "react-toastify";
 
 type Props = {
   setShowOfferOrListingModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -244,6 +245,10 @@ const OfferOrListingModal = ({
 
   const createBidOrList = async () => {
     if (isAuction || (isOffer && activeAuctions.length > 0)) {
+      if (isAuction && activeAuctions.length > 0) {
+        toast.error("Cannot create Auction, as there is an ongoing Auction.");
+        return;
+      }
       return await createAuctionList();
     }
 
@@ -510,7 +515,7 @@ const OfferOrListingModal = ({
                 text={
                   isOverBalance ? "Insufficient Balance" : transactionButtonText
                 }
-                onClick={createBidOrList}
+                onClick={() => createBidOrList()}
                 disabled={transactionButtonIsDisable}
               />
             </div>

@@ -407,12 +407,19 @@ export const validateBid = async (
   auctionId: string,
   bidId: string
 ) => {
-  console.log(chainId);
   const bodyParams = {
     auctionId,
     bidId,
   };
   return makeApiPostRequest("/marketplace-api/validate-bid", bodyParams);
+};
+
+export const finalizeBid = async (chainId: number, auctionId: string) => {
+  const bodyParams = {
+    auctionId,
+    chainId,
+  };
+  return makeApiPostRequest("/marketplace-api/finalize-bid", bodyParams);
 };
 
 export const getAllAuctions = async (chainId: number) => {

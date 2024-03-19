@@ -21,9 +21,6 @@ const UserNftCard = ({ nft, setShowUserNftsModal }: Props) => {
 
   const nftName = nft?.token?.name;
 
-  console.log(
-    window.location.origin + "/" + nft.token.contract + "/" + nft.token.tokenId
-  );
   // const rarityRank = nft?.token?.rarityRank;
 
   const handleClick = () => {
