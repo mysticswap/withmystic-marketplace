@@ -207,24 +207,32 @@ export const scanWebsites: { [x: number]: string } = {
   5: "https://goerli.etherscan.io/",
   1: "https://etherscan.io/",
   137: "https://polygonscan.com/",
+  42161: "https://arbiscan.io/",
+  81457: "https://blastscan.com/",
 };
 
 export const chainIdsMap: { [x: number]: string } = {
   1: "0x1",
   5: "0x5",
   137: "0x89",
+  42161: "0xa4a1",
+  81457: "0x13e31",
 };
 
 export const collectionNetworkIcon: { [x: number]: string } = {
   1: ethereumIcon,
   5: ethereumIcon,
   137: maticIcon,
+  42161: ethereumIcon,
+  81457: ethereumIcon,
 };
 
 export const balanceChain: { [x: number]: string } = {
   1: "ETH",
   5: "ETH",
-  137: "WETH",
+  137: "MATIC",
+  42161: "ETH",
+  81457: "ETH",
 };
 
 export const collectionsWithHiddenNames: { [x: string]: boolean } = {

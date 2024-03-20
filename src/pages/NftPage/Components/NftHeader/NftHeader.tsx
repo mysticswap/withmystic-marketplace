@@ -69,6 +69,7 @@ const NftHeader = ({
 Props) => {
   const { user, setProvider, chainId, setUser, setChainId } =
     useConnectionContext()!;
+
   const { setTransactionNft, setTransactionStage, setTransactionHash } =
     useTransactionContext()!;
   const { source, collectionChainId, userBalance, client } = useGlobalContext();
@@ -275,7 +276,8 @@ Props) => {
     }
   }, [hasRefreshed]);
 
-  const userCanBuy = Number(userBalance.ETH) >= currentEthAmount;
+  const userCanBuy =
+    Number(userBalance.ETH || userBalance.MATIC) >= currentEthAmount;
   const userCanBuyTokenBalance =
     Number(userBalance[currentTokenSymbol]) >= currentTokenAmount;
 

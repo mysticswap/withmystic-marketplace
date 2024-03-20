@@ -224,7 +224,12 @@ export const getUserNfts = async (
     },
   });
 
-  const tokens = mergeUnique(request.data.tokens, nfts, "contract", "tokenId");
+  const tokens = mergeUnique(
+    request.data?.tokens || [],
+    nfts,
+    "contract",
+    "tokenId"
+  );
 
   return { tokens, continuation: null };
 };

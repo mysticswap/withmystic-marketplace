@@ -72,7 +72,7 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
       collectionChainId
     );
 
-    auctions = auctions.filter((auction: any) => {
+    auctions = auctions?.filter((auction: any) => {
       return auction.auctionComponent
         .map((i: any) => i.identifier)
         .includes(tokenId);
@@ -158,9 +158,9 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
             </div>
             <div>
               {/* {activeAuctions.length > 0 && } */}
-              {activeAuctions[0].bidders
-                .filter((i: any) => i.active)
-                .sort((a: any, b: any) => b.bidAmount - a.bidAmount)
+              {activeAuctions?.[0]?.bidders
+                ?.filter((i: any) => i.active)
+                ?.sort((a: any, b: any) => b.bidAmount - a.bidAmount)
                 ?.map((bid: any) => {
                   const timeStamp = dayjs(bid.bidTime).fromNow();
                   const altTimeStamp =
