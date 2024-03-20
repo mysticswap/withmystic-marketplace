@@ -411,6 +411,7 @@ export const validateBid = async (
     auctionId,
     bidId,
   };
+  console.log(chainId);
   return makeApiPostRequest("/marketplace-api/validate-bid", bodyParams);
 };
 
