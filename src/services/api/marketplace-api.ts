@@ -113,27 +113,31 @@ export const getSingleNft = async (
   tokenId: string,
   chainId: number
 ) => {
-  const queryParams = { contractAddress, tokenId, chainId };
-  const owner = (
-    await makeApiRequest("/marketplace-api/get-nft-owners", queryParams)
-  ).owners[0];
-  const swaps = await getNeededSwaps(
-    chainId,
-    SwapType.Listing,
-    contractAddress,
-    1,
-    100
-  );
+  try {
+    const queryParams = { contractAddress, tokenId, chainId };
+    const owner = (
+      await makeApiRequest("/marketplace-api/get-nft-owners", queryParams)
+    ).owners[0];
+    const swaps = await getNeededSwaps(
+      chainId,
+      SwapType.Listing,
+      contractAddress,
+      1,
+      100
+    );
 
-  const lastAsk = swaps.activities
-    .filter((tk: any) => tk.token.tokenId == tokenId)
-    .sort((a: any, b: any) => b.timestamp - a.timestamp)[0];
+    const lastAsk = swaps.activities
+      .filter((tk: any) => tk.token.tokenId == tokenId)
+      .sort((a: any, b: any) => b.timestamp - a.timestamp)[0];
 
-  return SingleNFTApiToReservoirApi(
-    await makeApiRequest("/marketplace-api/get-nft", queryParams),
-    owner,
-    lastAsk
-  );
+    return SingleNFTApiToReservoirApi(
+      await makeApiRequest("/marketplace-api/get-nft", queryParams),
+      owner,
+      lastAsk
+    );
+  } catch {
+    return { tokens: [] };
+  }
 };
 
 export const getCollectionTraits = async (

@@ -104,7 +104,9 @@ const NftPage = () => {
               setShowConfirmationBuyNowModal={setShowConfirmationBuyNowModal}
             />
           )}
-          {isMobile && <CurrentPrice nftPriceData={nftPriceData} />}
+          {isMobile && (
+            <CurrentPrice nftPriceData={nftPriceData} tokenId={id!} />
+          )}
           <TraitsHolder attributes={attributes!} tokenCount={tokenCount} />
           <DescriptionHolder />
         </section>
@@ -119,7 +121,9 @@ const NftPage = () => {
               setShowAuctionModal={setShowAuctionModal}
             />
           )}
-          {!isMobile && <CurrentPrice nftPriceData={nftPriceData} />}
+          {!isMobile && (
+            <CurrentPrice nftPriceData={nftPriceData} tokenId={id!} />
+          )}
           <Offers
             nftOffers={nftOffers}
             tokenId={id!}

@@ -229,7 +229,6 @@ const OfferOrListingModal = ({
         });
       }
 
-      console.log({ result });
       await handleAuctionOrBidData(
         collectionChainId,
         result,

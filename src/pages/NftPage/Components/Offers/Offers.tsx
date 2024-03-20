@@ -85,8 +85,8 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
   const isAuctionOwner =
     activeAuctions?.[0]?.creatorAddress?.toLowerCase() == user?.toLowerCase();
 
-  const power = collectionChainId == 137 ? 10 ** 6 : 10 ** 18;
-  const bidToken = collectionChainId == 137 ? "USDT" : "WETH";
+  const power = 10 ** 18;
+  const bidToken = collectionChainId == 137 ? "WMATIC" : "WETH";
 
   const acceptBid = (
     amount: number,
@@ -143,126 +143,107 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
 
   return (
     <>
-      {activeAuctions.length > 0 ? (
-        <div className="offers">
-          <p>Minimum Bid</p>
-          <p className="offers_title">
-            {(activeAuctions?.[0].startAmount || 0) / power} {bidToken}
-          </p>
-          <p>Auction ends {activeAuctions?.[0]?.endTime}</p>
-          <div className="offers_table">
-            <div className="offers_table_head">
-              <p>Price</p>
-              <p>Offer Made</p>
-              <p>By</p>
-            </div>
-            <div>
-              {/* {activeAuctions.length > 0 && } */}
-              {activeAuctions?.[0]?.bidders
-                ?.filter((i: any) => i.active)
-                ?.sort((a: any, b: any) => b.bidAmount - a.bidAmount)
-                ?.map((bid: any) => {
-                  const timeStamp = dayjs(bid.bidTime).fromNow();
-                  const altTimeStamp =
-                    timeStamp.startsWith("in") && timeStamp.substring(2);
-                  const price = bid.bidAmount || 0;
+      <div className="offers">
+        <p className="offers_title">Offers</p>
+        <div className="offers_table">
+          <div className="offers_table_head">
+            <p>Price</p>
+            <p>Expires in</p>
+            <p>By</p>
+          </div>
+          <div>
+            {activeAuctions.length > 0 && (
+              <div>
+                {/* {activeAuctions.length > 0 && } */}
+                {activeAuctions?.[0]?.bidders
+                  ?.filter((i: any) => i.active)
+                  ?.sort((a: any, b: any) => b.bidAmount - a.bidAmount)
+                  ?.map((bid: any) => {
+                    const timeStamp = dayjs(bid.bidTime).fromNow();
+                    const altTimeStamp =
+                      timeStamp.startsWith("in") && timeStamp.substring(2);
+                    const price = bid.bidAmount || 0;
 
-                  return (
-                    <div key={bid.bidId} className="offers_table_item">
-                      <p>
-                        {price / power} {bidToken}
-                      </p>
-                      <p>{altTimeStamp || timeStamp}</p>
-
-                      <div>
-                        <p onClick={() => redirectToMSWalletPage(bid.bidder)}>
-                          {truncateAddress(bid.bidder, 5, "...")}
+                    return (
+                      <div key={bid.bidId} className="offers_table_item">
+                        <p>
+                          {price / power} {bidToken}
                         </p>
-                        {isAuctionOwner &&
-                          bid.bidAmount == activeAuctions[0].lastBidAmount && (
-                            <button
-                              className="offer_accept_button"
-                              onClick={() =>
-                                finalizeBid(
-                                  collectionChainId,
-                                  activeAuctions[0].id
-                                )
-                              }
-                            >
-                              Accept
-                            </button>
-                          )}
-                      </div>
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div className="offers">
-          <p className="offers_title">Offers</p>
-          <div className="offers_table">
-            <div className="offers_table_head">
-              <p>Price</p>
-              <p>Expires in</p>
-              <p>By</p>
-            </div>
-            <div>
-              {/* {activeAuctions.length > 0 && } */}
-              {nftOffers?.orders?.map((order) => {
-                const timeStamp = dayjs(order?.expiration * 1000).fromNow();
-                const altTimeStamp =
-                  timeStamp.startsWith("in") && timeStamp.substring(2);
-                const price = order.price.amount.decimal;
-                const usd = order.price.amount.usd;
-                const symbol = order.price.currency.symbol;
-                const currentTime = new Date().getTime();
-                const endTime = order?.expiration * 1000;
-                const isExpired = currentTime > endTime;
+                        <p>{altTimeStamp || timeStamp}</p>
 
-                return (
-                  <div key={order.id} className="offers_table_item">
-                    <p>
-                      {price} {symbol}
+                        <div>
+                          <p onClick={() => redirectToMSWalletPage(bid.bidder)}>
+                            {truncateAddress(bid.bidder, 5, "...")}
+                          </p>
+                          {isAuctionOwner &&
+                            bid.bidAmount ==
+                              activeAuctions[0].lastBidAmount && (
+                              <button
+                                className="offer_accept_button"
+                                onClick={() =>
+                                  finalizeBid(
+                                    collectionChainId,
+                                    activeAuctions[0].id
+                                  )
+                                }
+                              >
+                                Accept
+                              </button>
+                            )}
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            )}
+            {nftOffers?.orders?.map((order) => {
+              const timeStamp = dayjs(order?.expiration * 1000).fromNow();
+              const altTimeStamp =
+                timeStamp.startsWith("in") && timeStamp.substring(2);
+              const price = order.price.amount.decimal;
+              const usd = order.price.amount.usd;
+              const symbol = order.price.currency.symbol;
+              const currentTime = new Date().getTime();
+              const endTime = order?.expiration * 1000;
+              const isExpired = currentTime > endTime;
+
+              return (
+                <div key={order.id} className="offers_table_item">
+                  <p>
+                    {price} {symbol}
+                  </p>
+                  {isExpired ? <p>---</p> : <p>{altTimeStamp || timeStamp}</p>}
+                  <div>
+                    <p onClick={() => redirectToMSWalletPage(order.maker)}>
+                      {truncateAddress(order.maker, 5, "...")}
                     </p>
-                    {isExpired ? (
-                      <p>---</p>
-                    ) : (
-                      <p>{altTimeStamp || timeStamp}</p>
+                    {isOwner && (
+                      <button
+                        className="offer_accept_button"
+                        onClick={() =>
+                          acceptBid(
+                            price,
+                            usd,
+                            order.maker,
+                            order?._id || order?.id || order?.swapId
+                          )
+                        }
+                      >
+                        Accept
+                      </button>
                     )}
-                    <div>
-                      <p onClick={() => redirectToMSWalletPage(order.maker)}>
-                        {truncateAddress(order.maker, 5, "...")}
-                      </p>
-                      {isOwner && (
-                        <button
-                          className="offer_accept_button"
-                          onClick={() =>
-                            acceptBid(
-                              price,
-                              usd,
-                              order.maker,
-                              order?._id || order?.id || order?.swapId
-                            )
-                          }
-                        >
-                          Accept
-                        </button>
-                      )}
-                    </div>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+              );
+            })}
           </div>
-          {nftOffers.continuation && !isFetching && (
-            <button className="more_offers_btn" onClick={fetchMoreOffers}>
-              Load More
-            </button>
-          )}
         </div>
-      )}
+        {nftOffers.continuation && !isFetching && (
+          <button className="more_offers_btn" onClick={fetchMoreOffers}>
+            Load More
+          </button>
+        )}
+      </div>
     </>
   );
 };

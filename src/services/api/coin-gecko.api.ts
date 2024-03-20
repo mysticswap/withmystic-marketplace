@@ -5,6 +5,7 @@ export const coinList: any = {
   weth: "weth",
   usdc: "usd",
   usdt: "usd",
+  wmatic: "matic-network",
 };
 
 export const getCryptoPrice = async (name: string) => {

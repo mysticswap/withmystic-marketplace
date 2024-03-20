@@ -149,14 +149,19 @@ export const getNftOffers = async (
   continuation?: string
 ) => {
   const offers = [];
+  let request = null;
   const offer = await getAllOffers(chainId, SwapType.Offer, token);
   offers.push(...offer.orders);
 
-  const request = await marketplaceInstance("/get-nft-offers", {
-    params: { chainId, token, ...(continuation && { continuation }) },
-  });
-  offers.push(...request.data.orders);
-  return { orders: offers, continuation: request.data.continuation };
+  try {
+    request = await marketplaceInstance("/get-nft-offers", {
+      params: { chainId, token, ...(continuation && { continuation }) },
+    });
+    offers.push(...(request.data.orders || []));
+  } catch (e) {
+    console.log(e);
+  }
+  return { orders: offers, continuation: request?.data?.continuation };
 };
 
 export const getNftActivity = async (
@@ -165,9 +170,14 @@ export const getNftActivity = async (
   types: string,
   continuation?: string
 ) => {
-  const request = await marketplaceInstance("get-single-nft-activity", {
-    params: { chainId, token, types, ...(continuation && { continuation }) },
-  });
+  let request = null;
+  try {
+    request = await marketplaceInstance("get-single-nft-activity", {
+      params: { chainId, token, types, ...(continuation && { continuation }) },
+    });
+  } catch (e) {
+    console.log(e);
+  }
 
   if (otherChains.includes(chainId)) {
     const contractAddress = token.split(":")[0];
@@ -175,12 +185,12 @@ export const getNftActivity = async (
     const allActivities = [
       ...(await getNftHistory(contractAddress as string, tokenId, chainId))
         .activities,
-      ...request.data.activities,
+      ...(request?.data?.activities || []),
     ];
 
     return { activities: allActivities };
   }
-  return request.data;
+  return request?.data;
 };
 
 function mergeUnique(
