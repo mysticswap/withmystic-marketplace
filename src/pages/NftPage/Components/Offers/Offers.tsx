@@ -7,7 +7,7 @@ import {
 } from "../../../../utils";
 import "./Offers.css";
 import { getNftOffers } from "../../../../services/api/marketplace-rsv-api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useConnectionContext } from "../../../../context/ConnectionContext/ConnectionContext";
 import { useNftPageContext } from "../../../../context/NftPageContext/NftPageContext";
 import { acceptOffer } from "../../../../services/api/buy-offer-list.api";
@@ -19,6 +19,10 @@ import { getDiscordEndpointData } from "../../../../utils/discord-utils";
 import { TokenElement } from "../../../../types/rsv-types/collection-nfts.types";
 import { generateSaleActivity } from "../../../../utils/activity-utils";
 import { getTransactionNft } from "../../../../utils/transaction-nft.utils";
+import {
+  finalizeBid,
+  getAllTokenAuctions,
+} from "../../../../services/api/marketplace-api";
 
 type Props = {
   nftOffers: NftOffers;
@@ -37,10 +41,16 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
     setTransactionNft,
   } = useTransactionContext()!;
   const [isFetching, setIsFetching] = useState(false);
+  const [activeAuctions, setActiveAuctions] = useState<any[]>([]);
+
   const token = `${collectionContract}:${tokenId}`;
   const nftMarketUrl = window.location.href;
 
   const nft = { token: nftInfo, market: nftPriceData } as TokenElement;
+
+  useEffect(() => {
+    getActiveAuction();
+  }, []);
 
   const fetchMoreOffers = () => {
     setIsFetching(true);
@@ -56,9 +66,34 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
       });
   };
 
-  const isOwner = nftInfo?.owner?.toLowerCase() == user?.toLowerCase();
+  const getActiveAuction = async () => {
+    let auctions = await getAllTokenAuctions(
+      collectionContract,
+      collectionChainId
+    );
 
-  const acceptBid = (amount: number, price: number, offerMaker: string) => {
+    auctions = auctions?.filter((auction: any) => {
+      return auction.auctionComponent
+        .map((i: any) => i.identifier)
+        .includes(tokenId);
+    });
+    setActiveAuctions(auctions);
+    return auctions;
+  };
+
+  const isOwner = nftInfo?.owner?.toLowerCase() == user?.toLowerCase();
+  const isAuctionOwner =
+    activeAuctions?.[0]?.creatorAddress?.toLowerCase() == user?.toLowerCase();
+
+  const power = 10 ** 18;
+  const bidToken = collectionChainId == 137 ? "WMATIC" : "WETH";
+
+  const acceptBid = (
+    amount: number,
+    price: number,
+    offerMaker: string,
+    orderId?: string
+  ) => {
     const isOffer = false;
     const isSale = true;
     const txMessage = `I’ve just sold ${nftInfo?.name}!`;
@@ -75,86 +110,141 @@ const Offers = ({ nftOffers, tokenId, setNftOffers }: Props) => {
     setShowConfirmationModal(true);
     const source = getHostName();
     switchChains(chainId, collectionChainId).then(() => {
-      acceptOffer(collectionChainId, user!, token, source).then((result) => {
-        const postData = getDiscordEndpointData(
-          nft,
-          offerMaker,
-          client,
-          nftMarketUrl,
-          amount.toString(),
-          price.toString()
-        );
-        const activityData = generateSaleActivity(
-          nft,
-          "sale",
-          offerMaker,
-          amount.toString()
-        );
-        setTransactionStage(1);
-        handleBuyOrSellData(
-          result,
-          setTransactionStage,
-          setTransactionHash,
-          setShowConfirmationModal,
-          collectionChainId,
-          postData,
-          activityData
-        );
-      });
+      acceptOffer(collectionChainId, user!, token, source, orderId).then(
+        (result) => {
+          const postData = getDiscordEndpointData(
+            nft,
+            offerMaker,
+            client,
+            nftMarketUrl,
+            amount.toString(),
+            price.toString()
+          );
+          const activityData = generateSaleActivity(
+            nft,
+            "sale",
+            offerMaker,
+            amount.toString()
+          );
+          setTransactionStage(1);
+          handleBuyOrSellData(
+            result,
+            setTransactionStage,
+            setTransactionHash,
+            setShowConfirmationModal,
+            collectionChainId,
+            postData,
+            activityData
+          );
+        }
+      );
     });
   };
 
   return (
-    <div className="offers">
-      <p className="offers_title">Offers</p>
-      <div className="offers_table">
-        <div className="offers_table_head">
-          <p>Price</p>
-          <p>Expires in</p>
-          <p>By</p>
-        </div>
-        <div>
-          {nftOffers?.orders?.map((order) => {
-            const timeStamp = dayjs(order?.expiration * 1000).fromNow();
-            const altTimeStamp =
-              timeStamp.startsWith("in") && timeStamp.substring(2);
-            const price = order.price.amount.decimal;
-            const usd = order.price.amount.usd;
-            const symbol = order.price.currency.symbol;
-            const currentTime = new Date().getTime();
-            const endTime = order?.expiration * 1000;
-            const isExpired = currentTime > endTime;
+    <>
+      <div className="offers">
+        <p className="offers_title">Offers</p>
+        <div className="offers_table">
+          <div className="offers_table_head">
+            <p>Price</p>
+            <p>Expires in</p>
+            <p>By</p>
+          </div>
+          <div>
+            {activeAuctions.length > 0 && (
+              <div>
+                {/* {activeAuctions.length > 0 && } */}
+                {activeAuctions?.[0]?.bidders
+                  ?.filter((i: any) => i.active)
+                  ?.sort((a: any, b: any) => b.bidAmount - a.bidAmount)
+                  ?.map((bid: any) => {
+                    const timeStamp = dayjs(bid.bidTime).fromNow();
+                    const altTimeStamp =
+                      timeStamp.startsWith("in") && timeStamp.substring(2);
+                    const price = bid.bidAmount || 0;
 
-            return (
-              <div key={order.id} className="offers_table_item">
-                <p>
-                  {price} {symbol}
-                </p>
-                {isExpired ? <p>---</p> : <p>{altTimeStamp || timeStamp}</p>}
-                <div>
-                  <p onClick={() => redirectToMSWalletPage(order.maker)}>
-                    {truncateAddress(order.maker, 5, "...")}
-                  </p>
-                  {isOwner && (
-                    <button
-                      className="offer_accept_button"
-                      onClick={() => acceptBid(price, usd, order.maker)}
-                    >
-                      Accept
-                    </button>
-                  )}
-                </div>
+                    return (
+                      <div key={bid.bidId} className="offers_table_item">
+                        <p>
+                          {price / power} {bidToken}
+                        </p>
+                        <p>{altTimeStamp || timeStamp}</p>
+
+                        <div>
+                          <p onClick={() => redirectToMSWalletPage(bid.bidder)}>
+                            {truncateAddress(bid.bidder, 5, "...")}
+                          </p>
+                          {isAuctionOwner &&
+                            bid.bidAmount ==
+                              activeAuctions[0].lastBidAmount && (
+                              <button
+                                className="offer_accept_button"
+                                onClick={() =>
+                                  finalizeBid(
+                                    collectionChainId,
+                                    activeAuctions[0].id
+                                  )
+                                }
+                              >
+                                Accept
+                              </button>
+                            )}
+                        </div>
+                      </div>
+                    );
+                  })}
               </div>
-            );
-          })}
+            )}
+            {nftOffers?.orders?.map((order) => {
+              const timeStamp = dayjs(order?.expiration * 1000).fromNow();
+              const altTimeStamp =
+                timeStamp.startsWith("in") && timeStamp.substring(2);
+              const price = order.price.amount.decimal;
+              const usd = order.price.amount.usd;
+              const symbol = order.price.currency.symbol;
+              const currentTime = new Date().getTime();
+              const endTime = order?.expiration * 1000;
+              const isExpired = currentTime > endTime;
+
+              return (
+                <div key={order.id} className="offers_table_item">
+                  <p>
+                    {price} {symbol}
+                  </p>
+                  {isExpired ? <p>---</p> : <p>{altTimeStamp || timeStamp}</p>}
+                  <div>
+                    <p onClick={() => redirectToMSWalletPage(order.maker)}>
+                      {truncateAddress(order.maker, 5, "...")}
+                    </p>
+                    {isOwner && (
+                      <button
+                        className="offer_accept_button"
+                        onClick={() =>
+                          acceptBid(
+                            price,
+                            usd,
+                            order.maker,
+                            order?._id || order?.id || order?.swapId
+                          )
+                        }
+                      >
+                        Accept
+                      </button>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
+        {nftOffers.continuation && !isFetching && (
+          <button className="more_offers_btn" onClick={fetchMoreOffers}>
+            Load More
+          </button>
+        )}
       </div>
-      {nftOffers.continuation && !isFetching && (
-        <button className="more_offers_btn" onClick={fetchMoreOffers}>
-          Load More
-        </button>
-      )}
-    </div>
+    </>
   );
 };
 

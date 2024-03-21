@@ -37,6 +37,7 @@ export const getTransactionNft = (
     message,
     symbol: tokenSymbol,
     isBuyNow,
+    nftType: nft?.token?.kind,
   };
 
   return transactionNft;
@@ -75,6 +76,7 @@ export const getTransactionNftToken = (
     message,
     symbol: tokenSymbol,
     isBuyNow: true,
+    nftType: nft?.token?.kind,
   };
 
   return transactionNft;

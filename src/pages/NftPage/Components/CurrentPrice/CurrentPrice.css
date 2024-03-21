@@ -34,3 +34,13 @@
   object-fit: cover;
   display: block;
 }
+
+.bid-title {
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  .tooltip {
+    margin-left: 0.25rem;
+  }
+}

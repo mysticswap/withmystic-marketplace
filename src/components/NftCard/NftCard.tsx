@@ -45,6 +45,7 @@ const NftCard = ({ nft }: Props) => {
     collectionChainId,
     collectionContract,
     userBalance,
+    collectionActivity,
     client,
     source,
     listView,
@@ -63,8 +64,21 @@ const NftCard = ({ nft }: Props) => {
   const nameRef = useRef(null);
   const isOverflowing = useIsOverflow(nameRef, minimalCards);
 
-  const priceSale = nft?.token?.lastSale?.price;
-  const priceList = nft?.market?.floorAsk?.price;
+  const listActivity = collectionActivity?.activities?.filter(
+    ({ type, token }) => {
+      return type == "ask" && token?.tokenId == nft?.token?.tokenId;
+    }
+  );
+
+  const saleActivity = collectionActivity?.activities?.filter(
+    ({ type, token }) => {
+      return type == "sale" && token?.tokenId == nft?.token?.tokenId;
+    }
+  );
+  const priceSale = nft?.token?.lastSale?.price || saleActivity?.[0]?.price;
+  const priceList = nft?.market?.floorAsk?.price || listActivity?.[0]?.price;
+
+  // console.log({ listActivity });
 
   const timeSale = nft?.token?.lastSale?.timestamp || 0;
   const timeList = nft?.market?.floorAsk?.validUntil || 0;

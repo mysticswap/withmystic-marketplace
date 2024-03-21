@@ -12,6 +12,8 @@ export type TransactionContextType = {
   transactionHash: string;
   setTransactionHash: React.Dispatch<React.SetStateAction<string>>;
   userCanCompleteTransaction: boolean;
+  showAuctionModal: boolean;
+  setShowAuctionModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type TransactionNft = {
@@ -27,4 +29,5 @@ export type TransactionNft = {
   nftOwner: string;
   symbol: string;
   isBuyNow: boolean;
+  nftType: string;
 };

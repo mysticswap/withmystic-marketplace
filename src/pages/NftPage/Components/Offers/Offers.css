@@ -65,6 +65,7 @@
   display: block;
   margin: auto;
   cursor: pointer;
+  margin-left: 2rem;
   background-color: transparent;
   border: var(--ms-mp-gray-border);
   border-radius: 8px;
