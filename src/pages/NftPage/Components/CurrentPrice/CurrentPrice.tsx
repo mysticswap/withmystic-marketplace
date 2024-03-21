@@ -6,6 +6,7 @@ import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContex
 import { useEffect, useState } from "react";
 import { getAllTokenAuctions } from "../../../../services/api/marketplace-api";
 import Icon from "../../../../components/ActivityFilterButton/Icon";
+import dayjs from "dayjs";
 
 type Props = { nftPriceData: Market; tokenId: string };
 
@@ -66,7 +67,12 @@ const CurrentPrice = ({ nftPriceData, tokenId }: Props) => {
           <p>
             {(activeAuctions?.[0].startAmount || 0) / power} {bidToken}
           </p>
-          <p>Auction ends {activeAuctions?.[0]?.endTime}</p>
+          <p>
+            Auction ends{" "}
+            {dayjs(activeAuctions?.[0]?.endTime)
+              .locale("en")
+              .format("MMMM DD, YYYY [at] h.mm A [UTC]")}
+          </p>
         </div>
       ) : (
         <div className={`current_price ${!currentPriceDecimal ? "hide" : ""}`}>
