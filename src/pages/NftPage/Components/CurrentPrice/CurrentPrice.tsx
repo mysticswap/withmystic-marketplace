@@ -5,6 +5,7 @@ import x2y2 from "../../../../assets/x2y2.png";
 import { useGlobalContext } from "../../../../context/GlobalContext/GlobalContext";
 import { useEffect, useState } from "react";
 import { getAllTokenAuctions } from "../../../../services/api/marketplace-api";
+import Icon from "../../../../components/ActivityFilterButton/Icon";
 
 type Props = { nftPriceData: Market; tokenId: string };
 
@@ -53,7 +54,15 @@ const CurrentPrice = ({ nftPriceData, tokenId }: Props) => {
             activeAuctions.length <= 0 ? "hide" : ""
           }`}
         >
-          <p>Minimum Bid</p>
+          <p className="bid-title">
+            Minimum Bid{" "}
+            <Icon
+              text={
+                "This item is on auction. The highest bid made above the minimum bid and before the expiry date wins the asset."
+              }
+            />
+          </p>
+
           <p>
             {(activeAuctions?.[0].startAmount || 0) / power} {bidToken}
           </p>

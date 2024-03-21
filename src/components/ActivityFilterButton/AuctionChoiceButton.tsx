@@ -3,6 +3,9 @@ import "./ActivityFilterButton.css";
 import Checkbox from "../Checkbox/Checkbox";
 import { useState } from "react";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
+import { BiInfoCircle } from "react-icons/bi";
+import InfoCircle from "../../assets/info.svg";
+import Icon from "./Icon";
 
 const AuctionButton = ({ disabled }: { disabled: boolean }) => {
   const { setIsAuction, setCurrentToken } = useGlobalContext();
@@ -22,7 +25,11 @@ const AuctionButton = ({ disabled }: { disabled: boolean }) => {
       <div>
         <Checkbox isClicked={isClicked} />
         <p>Auction to the highest bidder</p>
-        {/* <activity.icon display="block" size={20} /> */}
+        <Icon
+          text={
+            "The highest bid made before expiration date wins the auction and automatically triggers a sale. However, no sale happens unless the winning bid is equal to or higher than the listing price."
+          }
+        />
       </div>
     </div>
   );
