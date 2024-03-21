@@ -1,9 +1,6 @@
 // import { IconType } from "react-icons";
 import "./ActivityFilterButton.css";
-import Checkbox from "../Checkbox/Checkbox";
-import { useState } from "react";
-import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
-import { BiInfoCircle } from "react-icons/bi";
+
 import InfoCircle from "../../assets/info.svg";
 
 const Icon = ({ text }: { text: string }) => {
