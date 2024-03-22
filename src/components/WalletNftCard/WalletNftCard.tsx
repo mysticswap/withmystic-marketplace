@@ -19,7 +19,7 @@ const WalletNftCard = ({ nft }: props) => {
       ) : (
         <img src={nft?.token?.image} alt="nft" title={nft?.token?.name} />
       )}
-      <p>{nft.token.name}</p>
+      <p>{nft?.token?.name}</p>
     </div>
   );
 };

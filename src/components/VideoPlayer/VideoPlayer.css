@@ -2,7 +2,6 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: end;
 }
 .nft_video_player a {
   height: 100%;
@@ -24,7 +23,7 @@
   cursor: pointer;
   border: none;
   margin-top: -24%;
-  margin-right: 0.4rem;
+  margin-left: 0.4rem;
 }
 .play_buttom:hover {
   background-color: var(--ms-mp-gray-light-alt);
