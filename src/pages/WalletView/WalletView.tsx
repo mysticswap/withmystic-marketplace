@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import WalletNftCard, {
   NftCard,
 } from "../../components/WalletNftCard/WalletNftCard";
@@ -7,6 +7,9 @@ import { getWalletNfts } from "../../services/api/marketplace-rsv-api";
 import { useEffect, useState } from "react";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 import SolidButton from "../../components/SolidButton/SolidButton";
+import { copyToClipboard, truncateAddress } from "../../utils";
+import { IoIosArrowBack } from "react-icons/io";
+import { IoCopyOutline } from "react-icons/io5";
 
 const WalletView = () => {
   const { chainId } = useConnectionContext()!;
@@ -41,6 +44,15 @@ const WalletView = () => {
   };
   return (
     <div className="wallet_view_container">
+      <div className="wallet_view_header">
+        <Link to="/">
+          <IoIosArrowBack size={25} />
+        </Link>
+        <p onClick={() => copyToClipboard(walletAddress!)}>
+          {truncateAddress(walletAddress!, 6, "...")}
+          <IoCopyOutline />
+        </p>
+      </div>
       {nftsData.length > 0 ? (
         <div className="wallet_view_card_holder">
           {nftsData?.map((nft, index) => (

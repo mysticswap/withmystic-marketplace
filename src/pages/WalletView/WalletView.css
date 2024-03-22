@@ -4,6 +4,21 @@
   align-items: center;
   margin: 2rem;
 }
+.wallet_view_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ms-mp-gray);
+  width: 100%;
+}
+.wallet_view_header p {
+  display: flex;
+  gap: 0.5rem;
+  cursor: pointer;
+  width: 100%;
+  justify-content: center;
+  /* text-align: center; */
+}
 .wallet_view_card_holder {
   width: 100%;
   min-height: 90vh;
