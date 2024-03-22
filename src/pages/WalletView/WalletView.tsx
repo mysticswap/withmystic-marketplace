@@ -10,12 +10,14 @@ import SolidButton from "../../components/SolidButton/SolidButton";
 import { copyToClipboard, truncateAddress } from "../../utils";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoCopyOutline } from "react-icons/io5";
+import CustomTooltip from "../../components/CustomTooltip/CustomTooltip";
 
 const WalletView = () => {
   const { chainId } = useConnectionContext()!;
   const { walletAddress } = useParams();
   const [nftsData, setNftsData] = useState([] as NftCard[]);
   const [continuation, setContinuation] = useState("");
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const getNftsData = async () => {
@@ -48,10 +50,17 @@ const WalletView = () => {
         <Link to="/">
           <IoIosArrowBack size={25} />
         </Link>
-        <p onClick={() => copyToClipboard(walletAddress!)}>
-          {truncateAddress(walletAddress!, 6, "...")}
-          <IoCopyOutline />
-        </p>
+        <CustomTooltip text={!copied ? "Tap to copy." : "Copied"}>
+          <p
+            onClick={() => {
+              copyToClipboard(walletAddress!);
+              setCopied(true);
+            }}
+          >
+            {truncateAddress(walletAddress!, 6, "...")}
+            <IoCopyOutline />
+          </p>
+        </CustomTooltip>
       </div>
       {nftsData.length > 0 ? (
         <div className="wallet_view_card_holder">
@@ -62,12 +71,13 @@ const WalletView = () => {
       ) : (
         <h1>No items found for this search</h1>
       )}
-      <SolidButton
-        text="Show more"
-        className="show_more_Button"
-        onClick={showMore}
-        disabled={continuation == null}
-      />
+      {nftsData.length > 0 && continuation != null && (
+        <SolidButton
+          text="Show more"
+          className="show_more_Button"
+          onClick={showMore}
+        />
+      )}
     </div>
   );
 };

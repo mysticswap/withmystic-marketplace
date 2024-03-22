@@ -17,7 +17,7 @@
   cursor: pointer;
   width: 100%;
   justify-content: center;
-  /* text-align: center; */
+  align-items: center;
 }
 .wallet_view_card_holder {
   width: 100%;
