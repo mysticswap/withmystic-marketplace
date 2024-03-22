@@ -74,8 +74,14 @@ export const redirectToMSWalletPage = (address: string) => {
 export const redirectToNftPage = (
   contract: string,
   tokenId: string,
-  isLocal?: boolean
+  isLocal: boolean,
+  chainId?: number
 ) => {
+  const baseTokenNames: { [key: string]: string } = {
+    1: "ethereum",
+    137: "matic",
+    169: "ethereum",
+  };
   if (isLocal) {
     if (window.location.hostname == "localhost") {
       contract &&
@@ -85,7 +91,11 @@ export const redirectToNftPage = (
         window.open(`https://${window.location.host}/${contract}/${tokenId}`);
     }
   } else {
-    window.open(`https://opensea.io/${contract}/${tokenId}`);
+    window.open(
+      `https://opensea.io/assets/${
+        baseTokenNames[chainId!]
+      }/${contract}/${tokenId}`
+    );
   }
 };
 

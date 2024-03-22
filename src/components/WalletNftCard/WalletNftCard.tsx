@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 import { TokenToken } from "../../types/rsv-types/collection-nfts.types";
 import { redirectToNftPage } from "../../utils";
 import { VideoPlayer } from "../VideoPlayer/VideoPlayer";
@@ -13,6 +16,8 @@ export type NftCard = {
   ownerShip: object;
 };
 const WalletNftCard = ({ nft }: props) => {
+  const { chainId } = useConnectionContext()!;
+  const { availableCollections } = useGlobalContext()!;
   // console.log(nft);
   const nativeAmount = nft?.token?.floorAsk?.price?.amount?.native;
   const currentValue = nft?.token?.floorAsk?.price?.amount?.usd?.toFixed();
@@ -22,9 +27,22 @@ const WalletNftCard = ({ nft }: props) => {
   const contract = nft?.token?.contract;
   const nftId = nft?.token?.tokenId;
 
+  const [isLocal, setIsLocal] = useState(true);
+
+  useEffect(() => {
+    const isVerified = availableCollections.every(({ address }) => {
+      address == contract;
+    });
+    if (isVerified) {
+      setIsLocal(true);
+    } else {
+      setIsLocal(false);
+    }
+  }, []);
+
   return (
     <div
-      onClick={() => redirectToNftPage(contract, nftId, true)}
+      onClick={() => redirectToNftPage(contract, nftId, isLocal, chainId)}
       className="wallet_nftCard_container"
     >
       {nft?.token?.media != null && nft?.token?.image === null ? (
