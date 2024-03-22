@@ -41,11 +41,15 @@ const WalletView = () => {
   };
   return (
     <div className="wallet_view_container">
-      <div className="wallet_view_card_holder">
-        {nftsData?.map((nft, index) => (
-          <WalletNftCard key={index} nft={nft} />
-        ))}
-      </div>
+      {nftsData.length > 0 ? (
+        <div className="wallet_view_card_holder">
+          {nftsData?.map((nft, index) => (
+            <WalletNftCard key={index} nft={nft} />
+          ))}
+        </div>
+      ) : (
+        <h1>No items found for this search</h1>
+      )}
       <SolidButton
         text="Show more"
         className="show_more_Button"
