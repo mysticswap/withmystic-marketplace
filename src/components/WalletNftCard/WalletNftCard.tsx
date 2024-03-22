@@ -5,12 +5,11 @@ import "./WalletNftCard.css";
 type props = {
   nft: NftCard;
 };
-type NftCard = {
+export type NftCard = {
   token: TokenToken;
   ownerShip: object;
 };
 const WalletNftCard = ({ nft }: props) => {
-  console.log("card", nft);
   return (
     <div className="wallet_nftCard_container">
       {nft?.token?.media != null && nft?.token?.image === null ? (
@@ -18,7 +17,7 @@ const WalletNftCard = ({ nft }: props) => {
           <VideoPlayer videoUrl={nft?.token?.media} />
         </div>
       ) : (
-        <img src={nft?.token?.image} alt="nft" title="nft_img" />
+        <img src={nft?.token?.image} alt="nft" title={nft?.token?.name} />
       )}
       <p>{nft.token.name}</p>
     </div>

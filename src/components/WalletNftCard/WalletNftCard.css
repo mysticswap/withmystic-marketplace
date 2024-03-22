@@ -5,12 +5,23 @@
   height: 400px;
   overflow: hidden;
   border-radius: 1rem;
+  border: 1px solid var(--ms-mp-card-border-color);
+  color: var(--ms-mp-text-color);
 }
 .wallet_nftCard_container img {
   width: 100%;
   height: 80%;
   object-fit: fill;
 }
+.wallet_nftCard_container p {
+  margin: 1rem;
+}
 .video_container {
   height: 80%;
+}
+
+@media screen and (max-width: 1000px) {
+  .wallet_nftCard_container {
+    height: 350px;
+  }
 }

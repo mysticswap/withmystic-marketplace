@@ -27,7 +27,7 @@ export const ConnectionContextProvider = ({ children }: Props) => {
   const [user, setUser] = useState<string | null>(null);
   const [provider, setProvider] =
     useState<ethers.providers.Web3Provider | null>(null);
-  const [chainId, setChainId] = useState(5);
+  const [chainId, setChainId] = useState(1);
 
   const attachListeners = useCallback(() => {
     // window.ethereum.on("accountsChanged", function (accounts: string[]) {
