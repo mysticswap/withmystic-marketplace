@@ -7,6 +7,7 @@
   border-radius: 1rem;
   border: 1px solid var(--ms-mp-card-border-color);
   color: var(--ms-mp-text-color);
+  cursor: pointer;
 }
 .wallet_nftCard_container img {
   width: 100%;

@@ -16,31 +16,33 @@ import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 
 const WalletView = () => {
   const { chainId } = useConnectionContext()!;
+
   const { walletAddress } = useParams();
   const [nftsData, setNftsData] = useState([] as NftCard[]);
   const [continuation, setContinuation] = useState("");
   const [copied, setCopied] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
 
+  const getNftsData = () => {
+    setIsFetching(true);
+    getWalletNfts(chainId, walletAddress!)
+      .then((result) => {
+        setNftsData(result?.tokens);
+        if (continuation != null) {
+          setContinuation(result?.continuation);
+          setIsFetching(false);
+        }
+      })
+      .catch(() => {
+        // console.log(e);
+        setIsFetching(false);
+      })
+      .finally(() => {
+        setIsFetching(false);
+      });
+  };
+
   useEffect(() => {
-    const getNftsData = () => {
-      setIsFetching(true);
-      getWalletNfts(chainId, walletAddress!)
-        .then((result) => {
-          setNftsData(result?.tokens);
-          if (continuation != null) {
-            setContinuation(result?.continuation);
-            setIsFetching(false);
-          }
-        })
-        .catch(() => {
-          // console.log(e);
-          setIsFetching(false);
-        })
-        .finally(() => {
-          setIsFetching(false);
-        });
-    };
     getNftsData();
   }, [chainId]);
 
@@ -91,11 +93,16 @@ const WalletView = () => {
       {nftsData.length > 0 ? (
         <div className="wallet_view_card_holder">
           {nftsData?.map((nft, index) => (
-            <WalletNftCard key={index} nft={nft} />
+            <WalletNftCard
+              key={index}
+              nft={nft}
+
+              // isVerified={true}
+            />
           ))}
         </div>
       ) : (
-        <h1>No items found for this search</h1>
+        !isFetching && <h1>No items found for this search</h1>
       )}
       {isFetching && (
         <div className="wallet_view_card_holder">

@@ -71,6 +71,24 @@ export const redirectToMSWalletPage = (address: string) => {
   }
 };
 
+export const redirectToNftPage = (
+  contract: string,
+  tokenId: string,
+  isLocal?: boolean
+) => {
+  if (isLocal) {
+    if (window.location.hostname == "localhost") {
+      contract &&
+        window.open(`http://${window.location.host}/${contract}/${tokenId}`);
+    } else {
+      contract &&
+        window.open(`https://${window.location.host}/${contract}/${tokenId}`);
+    }
+  } else {
+    window.open(`https://opensea.io/${contract}/${tokenId}`);
+  }
+};
+
 export const generateAttributeString = (selectedTraits: SelectedTrait[]) => {
   let string = "&includeAttributes=true";
   selectedTraits.forEach((item) => {

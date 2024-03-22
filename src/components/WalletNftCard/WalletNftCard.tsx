@@ -1,9 +1,12 @@
 import { TokenToken } from "../../types/rsv-types/collection-nfts.types";
+import { redirectToNftPage } from "../../utils";
 import { VideoPlayer } from "../VideoPlayer/VideoPlayer";
 import "./WalletNftCard.css";
+// import { MdVerified } from "react-icons/md";
 
 type props = {
   nft: NftCard;
+  // isVerified: boolean;
 };
 export type NftCard = {
   token: TokenToken;
@@ -16,8 +19,14 @@ const WalletNftCard = ({ nft }: props) => {
 
   const lastSale = nft?.token?.lastSale?.price?.amount?.native;
 
+  const contract = nft?.token?.contract;
+  const nftId = nft?.token?.tokenId;
+
   return (
-    <div className="wallet_nftCard_container">
+    <div
+      onClick={() => redirectToNftPage(contract, nftId, true)}
+      className="wallet_nftCard_container"
+    >
       {nft?.token?.media != null && nft?.token?.image === null ? (
         <div className="video_container">
           <VideoPlayer videoUrl={nft?.token?.media} />
@@ -26,7 +35,11 @@ const WalletNftCard = ({ nft }: props) => {
         <img src={nft?.token?.image} alt="nft" title={nft?.token?.name} />
       )}
       <div className="wallet_nftCard_details">
-        <p>{nft?.token?.name}</p>
+        <p>
+          {nft?.token?.name}
+          {"  "}
+          {/* {isVerified && <MdVerified color="#1E93FF" />} */}
+        </p>
         {nativeAmount && (
           <p className="nft_card_amount">
             {nativeAmount} <span>(${currentValue})</span>
