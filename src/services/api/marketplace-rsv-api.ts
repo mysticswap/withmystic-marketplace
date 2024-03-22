@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NumericFiltersType } from "../../context/HomeContext/types";
 import { Post } from "../../types/rsv-types/listing-data.types";
 import { Post as AuthPost } from "../../types/rsv-types/buy-data.types";
@@ -18,6 +19,16 @@ import { SwapType } from "../../types/market-schemas.types";
 import { UserNFTToReservoirAPI } from "../apiReconciliation";
 import { Activity } from "../../types/rsv-types/collection-activity.types";
 
+export const getWalletNfts = async (
+  chainId: number,
+  user: string,
+  continuation?: string
+) => {
+  const request = await marketplaceInstance.get("/get-all-user-nfts", {
+    params: { chainId, user, continuation },
+  });
+  return request.data;
+};
 export const getCollectionMetadata = async (
   chainId: number,
   contractAddress: string
@@ -215,7 +226,7 @@ function mergeUnique(
 export const getUserNfts = async (
   chainId: number,
   user: string,
-  collection: string,
+  collection?: string,
   continuation?: string
 ) => {
   const nfts = [];

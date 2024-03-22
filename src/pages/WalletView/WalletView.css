@@ -1,0 +1,49 @@
+.wallet_view_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem;
+}
+.wallet_view_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ms-mp-gray);
+  width: 100%;
+}
+.wallet_view_header p {
+  display: flex;
+  gap: 0.5rem;
+  cursor: pointer;
+  width: 100%;
+  justify-content: center;
+  /* text-align: center; */
+}
+.wallet_view_card_holder {
+  width: 100%;
+  min-height: 90vh;
+  margin: 1rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1.5rem;
+  grid-auto-rows: minmax(100px, auto);
+}
+.show_more_Button {
+  width: 20%;
+}
+
+@media screen and (max-width: 1000px) {
+  .wallet_view_card_holder {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+@media screen and (max-width: 740px) {
+  .wallet_view_card_holder {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media screen and (max-width: 480px) {
+  .wallet_view_card_holder {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

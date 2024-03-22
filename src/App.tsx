@@ -18,6 +18,7 @@ import Home from "./pages/Home";
 import NftPage from "./pages/NftPage/NftPage";
 import SwapsPage from "./pages/SwapsPage/SwapsPage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
+import WalletView from "./pages/WalletView/WalletView";
 
 function App() {
   const [isFetchingClient, setIsFetchingClient] = useState(true);
@@ -65,6 +66,7 @@ function App() {
                   element={<NftPageContextProvider children={<NftPage />} />}
                 />
                 <Route path="/swaps" element={<SwapsPage />} />
+                <Route path="wallet/:walletAddress" element={<WalletView />} />
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
               <Footer />

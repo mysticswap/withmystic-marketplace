@@ -64,8 +64,11 @@ export const formatOnlyDecimals = (x: number) => {
 };
 
 export const redirectToMSWalletPage = (address: string) => {
-  // address && window.open(`https://mysticswap.io/wallet-view/${address}`);
-  address && window.open(`https://opensea.io/${address}`);
+  if (window.location.hostname == "localhost") {
+    address && window.open(`http://${window.location.host}/wallet/${address}`);
+  } else {
+    address && window.open(`https://${window.location.host}/wallet/${address}`);
+  }
 };
 
 export const generateAttributeString = (selectedTraits: SelectedTrait[]) => {
@@ -85,17 +88,18 @@ export const getHostName = () => {
   switch (hostName) {
     case "localhost":
       return "marketplace.mysticswaplocalhost.io";
+      // BlackVI_NFT host
+      return "deploy-preview-25--heroic-duckanoo-b32f52.netlify.app";
       //DiamondNXT-NFT host
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
       return "talentprotocol.withmystic.xyz";
       return "deploy-preview-14--heroic-duckanoo-b32f52.netlify.app";
       // SteadyStack host
       return "deploy-preview-15--heroic-duckanoo-b32f52.netlify.app";
-      return "deploy-preview-25--heroic-duckanoo-b32f52.netlify.app";
-    case "deploy-preview-97--heroic-duckanoo-b32f52.netlify.app":
-      return "marketplace.mysticswaplocalhost.io";
+    case "deploy-preview-107--heroic-duckanoo-b32f52.netlify.app":
       //DiamondNXT-NFT host
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
+      return "marketplace.mysticswaplocalhost.io";
       return "talentprotocol.withmystic.xyz";
     case "deploy-preview-81--heroic-duckanoo-b32f52.netlify.app":
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";

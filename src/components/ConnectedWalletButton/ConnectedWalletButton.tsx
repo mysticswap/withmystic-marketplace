@@ -6,6 +6,7 @@ import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 import { disconnectWallets } from "../../services/web3Onboard";
+import { Link } from "react-router-dom";
 
 const ConnectedWalletButton = () => {
   const { user, setUser, setProvider, setChainId } = useConnectionContext()!;
@@ -28,9 +29,10 @@ const ConnectedWalletButton = () => {
       </button>
 
       {logout && (
-        <button className="logout_btn" onClick={logoutUser} ref={logoutRef}>
-          Logout
-        </button>
+        <div className="logout_btn" ref={logoutRef}>
+          <Link to={`wallet/${user}`}>Profile</Link>
+          <button onClick={logoutUser}>Logout</button>
+        </div>
       )}
     </div>
   );

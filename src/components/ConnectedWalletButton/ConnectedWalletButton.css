@@ -21,9 +21,9 @@
   background-color: var(--ms-mp-controlbar-hover);
 }
 
-.logout_btn:hover {
+/* .logout_btn:hover {
   background-color: var(--ms-mp-controlbar-hover);
-}
+} */
 
 .logout_btn {
   position: absolute;
@@ -41,4 +41,26 @@
   font-size: 14px;
   border: var(--ms-mp-gray-border);
   border-color: var(--ms-mp-gray-light);
+  display: flex;
+  flex-direction: column;
+}
+.logout_btn a {
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  padding: 0.5em;
+  border-radius: 6px;
+}
+.logout_btn a:hover {
+  background-color: var(--ms-mp-controlbar-hover);
+}
+.logout_btn button {
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  padding: 0.5em;
+  border-radius: 6px;
+}
+.logout_btn button:hover {
+  background-color: var(--ms-mp-controlbar-hover);
 }
