@@ -96,10 +96,10 @@ export const getHostName = () => {
       return "deploy-preview-14--heroic-duckanoo-b32f52.netlify.app";
       // SteadyStack host
       return "deploy-preview-15--heroic-duckanoo-b32f52.netlify.app";
-    case "deploy-preview-97--heroic-duckanoo-b32f52.netlify.app":
-      return "marketplace.mysticswaplocalhost.io";
+    case "deploy-preview-107--heroic-duckanoo-b32f52.netlify.app":
       //DiamondNXT-NFT host
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
+      return "marketplace.mysticswaplocalhost.io";
       return "talentprotocol.withmystic.xyz";
     case "deploy-preview-81--heroic-duckanoo-b32f52.netlify.app":
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
