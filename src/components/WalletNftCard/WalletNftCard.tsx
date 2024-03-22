@@ -10,6 +10,12 @@ export type NftCard = {
   ownerShip: object;
 };
 const WalletNftCard = ({ nft }: props) => {
+  // console.log(nft);
+  const nativeAmount = nft?.token?.floorAsk?.price?.amount?.native;
+  const currentValue = nft?.token?.floorAsk?.price?.amount?.usd?.toFixed();
+
+  const lastSale = nft?.token?.lastSale?.price?.amount?.native;
+
   return (
     <div className="wallet_nftCard_container">
       {nft?.token?.media != null && nft?.token?.image === null ? (
@@ -19,7 +25,17 @@ const WalletNftCard = ({ nft }: props) => {
       ) : (
         <img src={nft?.token?.image} alt="nft" title={nft?.token?.name} />
       )}
-      <p>{nft?.token?.name}</p>
+      <div className="wallet_nftCard_details">
+        <p>{nft?.token?.name}</p>
+        {nativeAmount && (
+          <p className="nft_card_amount">
+            {nativeAmount} <span>(${currentValue})</span>
+          </p>
+        )}
+        {lastSale && (
+          <p className="nft_card_last_sale">Last sale: {lastSale}</p>
+        )}
+      </div>
     </div>
   );
 };
