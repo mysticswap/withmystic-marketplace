@@ -50,6 +50,7 @@ const WalletView = () => {
       .catch(() => {
         // console.log(e);
         setIsFetching(false);
+        setContinuation("");
       })
       .finally(() => {
         setIsFetching(false);
@@ -69,19 +70,17 @@ const WalletView = () => {
       .then((result) => {
         setNftsData(result?.tokens);
 
-        if (result?.continuation == null) {
-          setContinuation("");
-        } else {
+        if (result?.continuation != null) {
           setContinuation(result?.continuation);
-          setIsFetching(false);
+        } else {
+          setContinuation("");
         }
+
+        setIsFetching(false);
       })
       .catch(() => {
-        // console.log(e);
         setIsFetching(false);
-      })
-      .finally(() => {
-        setIsFetching(false);
+        setContinuation("");
       });
   };
 
@@ -93,15 +92,15 @@ const WalletView = () => {
 
   const showMore = () => {
     setIsFetching(true);
-    getWalletNfts(chainId, walletAddress!, continuation)
+    getWalletNfts(chainId, walletAddress!, continuation!)
       .then((result) => {
         nftsData.push(...result.tokens);
         setIsFetching(false);
-        if (result?.continuation != null) {
-          setContinuation(result?.continuation);
-        } else {
-          setContinuation("");
-        }
+        // if (result?.continuation != null) {
+        //   setContinuation(result?.continuation);
+        // } else {
+        //   setContinuation("");
+        // }
       })
       .catch(() => {
         setIsFetching(false);
@@ -154,7 +153,7 @@ const WalletView = () => {
           <CardSkeleton cards={9} />
         </div>
       )}
-      {nftsData.length > 0 && continuation != null && (
+      {nftsData.length > 0 && continuation != null && continuation != "" && (
         <SolidButton
           text="Show more"
           className="show_more_Button"

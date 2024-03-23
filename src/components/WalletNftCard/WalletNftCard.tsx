@@ -40,7 +40,7 @@ const WalletNftCard = ({ nft }: props) => {
     } else {
       setIsLocal(false);
     }
-  }, []);
+  }, [availableCollections, contract]);
 
   return (
     <div
