@@ -45,7 +45,7 @@
 
 .nft_card_details {
   padding: 1rem;
-  position: relative;
+  /* position: relative; */
 }
 
 .nft_card_details p {
@@ -103,7 +103,7 @@
   cursor: pointer;
   transition: var(--ms-mp-transition);
   bottom: -100%;
-  height: 35%;
+  height: 7%;
 }
 
 .nft_card:hover > .nft_card_details button {
