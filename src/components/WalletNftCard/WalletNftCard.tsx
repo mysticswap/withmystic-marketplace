@@ -5,7 +5,7 @@ import { TokenToken } from "../../types/rsv-types/collection-nfts.types";
 import { redirectToNftPage } from "../../utils";
 import { VideoPlayer } from "../VideoPlayer/VideoPlayer";
 import "./WalletNftCard.css";
-// import { MdVerified } from "react-icons/md";
+import { MdVerified } from "react-icons/md";
 
 type props = {
   nft: NftCard;
@@ -58,7 +58,7 @@ const WalletNftCard = ({ nft }: props) => {
         <p>
           {nft?.token?.name}
           {"  "}
-          {/* {isVerified && <MdVerified color="#1E93FF" />} */}
+          {isLocal && <MdVerified color="#1E93FF" />}
         </p>
         {nativeAmount && (
           <p className="nft_card_amount">
