@@ -6,7 +6,7 @@ type props = {
   setView: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const WalletViewDropDown = ({ setView }: props) => {
-  const dropdownOptions = [{ title: "All" }, { title: "Local" }];
+  const dropdownOptions = [{ title: "All items" }, { title: "Local items" }];
   const [showDropdownOptions, setShowDropdownOptions] = useState(false);
   const [selectedDropdownOption, setSelectedDropdownOption] = useState(
     dropdownOptions[0]
@@ -22,7 +22,7 @@ const WalletViewDropDown = ({ setView }: props) => {
 
   useEffect(() => {
     const handleView = () => {
-      if (selectedDropdownOption.title == "All") {
+      if (selectedDropdownOption.title == "All items") {
         setView(true);
       } else {
         setView(false);
