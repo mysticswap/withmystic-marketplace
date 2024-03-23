@@ -15,7 +15,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: space-between;
   border-bottom: 1px solid var(--ms-mp-gray);
 }
 .wallet_view_slider p {
@@ -65,5 +65,8 @@
 @media screen and (max-width: 480px) {
   .wallet_view_card_holder {
     grid-template-columns: repeat(1, 1fr);
+  }
+  .wallet_view_slider p {
+    width: 30%;
   }
 }

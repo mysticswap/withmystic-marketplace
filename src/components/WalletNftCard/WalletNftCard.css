@@ -29,3 +29,8 @@
     height: 300px;
   }
 }
+@media screen and (max-width: 480px) {
+  .wallet_nftCard_container {
+    height: 400px;
+  }
+}

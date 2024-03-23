@@ -21,6 +21,7 @@ import { RiNftLine } from "react-icons/ri";
 import CustomTooltip from "../../components/CustomTooltip/CustomTooltip";
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
+import WalletViewDropDown from "../../components/WalletViewDropDown/WalletViewDropDown";
 
 const WalletView = () => {
   const { chainId } = useConnectionContext()!;
@@ -31,15 +32,19 @@ const WalletView = () => {
   const [continuation, setContinuation] = useState("");
   const [copied, setCopied] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
+  const [showAll, SetshowAll] = useState(true);
 
-  const getNftsData = () => {
+  const getAllNftsData = () => {
     setIsFetching(true);
     getWalletNfts(chainId, walletAddress!)
       .then((result) => {
         setNftsData(result?.tokens);
-        if (continuation != null) {
+
+        if (result?.continuation != null) {
           setContinuation(result?.continuation);
           setIsFetching(false);
+        } else {
+          setContinuation("");
         }
       })
       .catch(() => {
@@ -63,7 +68,10 @@ const WalletView = () => {
     getUserNftsByCollection(walletAddress!, chainId, collectionsQuery)
       .then((result) => {
         setNftsData(result?.tokens);
-        if (continuation != null) {
+
+        if (result?.continuation == null) {
+          setContinuation("");
+        } else {
           setContinuation(result?.continuation);
           setIsFetching(false);
         }
@@ -77,10 +85,11 @@ const WalletView = () => {
       });
   };
 
+  const getNftsData = showAll ? getAllNftsData : getLocalNftsData;
+
   useEffect(() => {
-    // getNftsData();
-    getLocalNftsData();
-  }, [chainId]);
+    getNftsData();
+  }, [chainId, showAll]);
 
   const showMore = () => {
     setIsFetching(true);
@@ -88,7 +97,7 @@ const WalletView = () => {
       .then((result) => {
         nftsData.push(...result.tokens);
         setIsFetching(false);
-        if (continuation != null) {
+        if (result?.continuation != null) {
           setContinuation(result?.continuation);
         } else {
           setContinuation("");
@@ -122,8 +131,9 @@ const WalletView = () => {
       <div className="wallet_view_slider">
         <p>
           <RiNftLine size={25} />
-          My Items
+          Items
         </p>
+        <WalletViewDropDown setView={SetshowAll} />
       </div>
 
       {nftsData.length > 0 ? (
@@ -132,7 +142,6 @@ const WalletView = () => {
             <WalletNftCard
               key={index}
               nft={nft}
-
               // isVerified={true}
             />
           ))}
