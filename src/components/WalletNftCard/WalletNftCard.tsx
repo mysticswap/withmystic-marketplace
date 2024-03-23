@@ -30,11 +30,11 @@ const WalletNftCard = ({ nft }: props) => {
   const [isLocal, setIsLocal] = useState(true);
 
   useEffect(() => {
-    const collectionsArray: string[] = [];
+    const localCollections: string[] = [];
     availableCollections?.forEach(({ address }) => {
-      collectionsArray.push(address);
+      localCollections.push(address);
     });
-    const isVerified = collectionsArray?.includes(contract);
+    const isVerified = localCollections?.includes(contract);
     if (isVerified) {
       setIsLocal(true);
     } else {

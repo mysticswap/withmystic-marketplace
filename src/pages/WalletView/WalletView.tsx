@@ -3,19 +3,28 @@ import WalletNftCard, {
   NftCard,
 } from "../../components/WalletNftCard/WalletNftCard";
 import "./WalletView.css";
-import { getWalletNfts } from "../../services/api/marketplace-rsv-api";
+import {
+  getUserNftsByCollection,
+  getWalletNfts,
+} from "../../services/api/marketplace-rsv-api";
 import { useEffect, useState } from "react";
 import { useConnectionContext } from "../../context/ConnectionContext/ConnectionContext";
 import SolidButton from "../../components/SolidButton/SolidButton";
-import { copyToClipboard, truncateAddress } from "../../utils";
+import {
+  copyToClipboard,
+  generateCollectionQueryString,
+  truncateAddress,
+} from "../../utils";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoCopyOutline } from "react-icons/io5";
 import { RiNftLine } from "react-icons/ri";
 import CustomTooltip from "../../components/CustomTooltip/CustomTooltip";
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
+import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
 
 const WalletView = () => {
   const { chainId } = useConnectionContext()!;
+  const { availableCollections } = useGlobalContext()!;
 
   const { walletAddress } = useParams();
   const [nftsData, setNftsData] = useState([] as NftCard[]);
@@ -42,8 +51,35 @@ const WalletView = () => {
       });
   };
 
+  const getLocalNftsData = () => {
+    setIsFetching(true);
+    const localCollections: string[] = [];
+    availableCollections?.forEach(({ address }) => {
+      localCollections.push(address);
+    });
+
+    const collectionsQuery = generateCollectionQueryString(localCollections);
+
+    getUserNftsByCollection(walletAddress!, chainId, collectionsQuery)
+      .then((result) => {
+        setNftsData(result?.tokens);
+        if (continuation != null) {
+          setContinuation(result?.continuation);
+          setIsFetching(false);
+        }
+      })
+      .catch(() => {
+        // console.log(e);
+        setIsFetching(false);
+      })
+      .finally(() => {
+        setIsFetching(false);
+      });
+  };
+
   useEffect(() => {
-    getNftsData();
+    // getNftsData();
+    getLocalNftsData();
   }, [chainId]);
 
   const showMore = () => {

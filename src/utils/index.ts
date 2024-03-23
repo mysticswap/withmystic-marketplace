@@ -99,6 +99,17 @@ export const redirectToNftPage = (
   }
 };
 
+export const generateCollectionQueryString = (localCollections: string[]) => {
+  let query = "";
+  localCollections.forEach((item, index) => {
+    if (index == 0) {
+      query += `?collection=${item}`;
+    } else {
+      query += `&collection=${item}`;
+    }
+  });
+  return query;
+};
 export const generateAttributeString = (selectedTraits: SelectedTrait[]) => {
   let string = "&includeAttributes=true";
   selectedTraits.forEach((item) => {
