@@ -96,7 +96,7 @@ export const getHostName = () => {
       return "deploy-preview-14--heroic-duckanoo-b32f52.netlify.app";
       // SteadyStack host
       return "deploy-preview-15--heroic-duckanoo-b32f52.netlify.app";
-    case "deploy-preview-107--heroic-duckanoo-b32f52.netlify.app":
+    case "deploy-preview-109--heroic-duckanoo-b32f52.netlify.app":
       //DiamondNXT-NFT host
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
       return "marketplace.mysticswaplocalhost.io";

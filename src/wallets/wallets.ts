@@ -26,7 +26,7 @@ const phantom = phantomModule();
 const taho = tahoWalletModule();
 const wcV2InitOptions = {
   projectId: INFURA_ID,
-  requiredChains: [1, 5, 137],
+  requiredChains: [1, 5, 137, 81457, 42170, 42161, 11155111],
   dappUrl: "https://mysticswap.io/",
 };
 const walletConnect = walletConnectModule(wcV2InitOptions);
@@ -35,7 +35,7 @@ const zealWalletSdk = zealWalletModule();
 const ledger = ledgerModule({
   walletConnectVersion: 2,
   projectId: WALLET_CONNECT_PROJECT_ID,
-  requiredChains: [1, 5, 137],
+  requiredChains: [1, 5, 137, 81457, 42170, 42161, 11155111],
 });
 
 export const installedWallets = [
