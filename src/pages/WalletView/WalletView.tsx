@@ -96,11 +96,11 @@ const WalletView = () => {
       .then((result) => {
         nftsData.push(...result.tokens);
         setIsFetching(false);
-        // if (result?.continuation != null) {
-        //   setContinuation(result?.continuation);
-        // } else {
-        //   setContinuation("");
-        // }
+        if (result?.continuation != null) {
+          setContinuation(result?.continuation);
+        } else {
+          setContinuation("");
+        }
       })
       .catch(() => {
         setIsFetching(false);
