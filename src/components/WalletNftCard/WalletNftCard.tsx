@@ -21,8 +21,10 @@ const WalletNftCard = ({ nft }: props) => {
   // console.log(nft);
   const nativeAmount = nft?.token?.floorAsk?.price?.amount?.native;
   const currentValue = nft?.token?.floorAsk?.price?.amount?.usd?.toFixed();
+  const currentValueSymbol = nft?.token?.floorAsk?.price?.currency?.symbol;
 
   const lastSale = nft?.token?.lastSale?.price?.amount?.native;
+  const lastSaleSymbol = nft?.token?.lastSale?.price?.currency?.symbol;
 
   const contract = nft?.token?.contract;
   const nftId = nft?.token?.tokenId;
@@ -62,11 +64,14 @@ const WalletNftCard = ({ nft }: props) => {
         </p>
         {nativeAmount && (
           <p className="nft_card_amount">
-            {nativeAmount} <span>(${currentValue})</span>
+            {nativeAmount} {currentValueSymbol}
+            <span>(${currentValue})</span>
           </p>
         )}
         {lastSale && (
-          <p className="nft_card_last_sale">Last sale: {lastSale}</p>
+          <p className="nft_card_last_sale">
+            Last sale: {lastSale} {lastSaleSymbol}
+          </p>
         )}
       </div>
     </div>
