@@ -120,6 +120,9 @@ const WalletView = () => {
             onClick={() => {
               copyToClipboard(walletAddress!);
               setCopied(true);
+              setTimeout(() => {
+                setCopied(false);
+              }, 1000);
             }}
           >
             {truncateAddress(walletAddress!, 6, "...")}
