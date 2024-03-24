@@ -115,7 +115,7 @@ const WalletView = () => {
         <Link to="/">
           <IoIosArrowBack size={25} />
         </Link>
-        <CustomTooltip text={!copied ? "Tap to copy." : "Copied"}>
+        <CustomTooltip text={!copied ? "Tap to copy" : "Copied"}>
           <h3
             onClick={() => {
               copyToClipboard(walletAddress!);
