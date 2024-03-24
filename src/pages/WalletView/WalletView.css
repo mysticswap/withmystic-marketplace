@@ -46,7 +46,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 1.5rem;
-  grid-auto-rows: minmax(100px, 420px);
+  grid-auto-rows: max-content;
 }
 .show_more_Button {
   width: 20%;
