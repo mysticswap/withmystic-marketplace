@@ -11,13 +11,33 @@
   border-bottom: 1px solid var(--ms-mp-gray);
   width: 100%;
 }
-.wallet_view_header p {
+.wallet_view_slider {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ms-mp-gray);
+}
+.wallet_view_slider p {
+  width: 20%;
+  border-bottom: 2px solid var(--ms-mp-primary-color);
+  margin-bottom: 0;
+  display: flex;
+  gap: 0.5rem;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  font-size: 20px;
+}
+
+.wallet_view_header h3 {
   display: flex;
   gap: 0.5rem;
   cursor: pointer;
   width: 100%;
   justify-content: center;
-  /* text-align: center; */
+  align-items: center;
 }
 .wallet_view_card_holder {
   width: 100%;
@@ -26,7 +46,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 1.5rem;
-  grid-auto-rows: minmax(100px, auto);
+  grid-auto-rows: max-content;
 }
 .show_more_Button {
   width: 20%;
@@ -45,5 +65,8 @@
 @media screen and (max-width: 480px) {
   .wallet_view_card_holder {
     grid-template-columns: repeat(1, 1fr);
+  }
+  .wallet_view_slider p {
+    width: 30%;
   }
 }

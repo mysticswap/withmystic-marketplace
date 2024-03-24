@@ -19,6 +19,20 @@ import { SwapType } from "../../types/market-schemas.types";
 import { UserNFTToReservoirAPI } from "../apiReconciliation";
 import { Activity } from "../../types/rsv-types/collection-activity.types";
 
+export const getUserNftsByCollection = async (
+  user: string,
+  chainId: number,
+  collection: string,
+  continuation?: string
+) => {
+  const request = await marketplaceInstance.get(
+    "/get-user-nfts-by-collection",
+    {
+      params: { user, chainId, collection, continuation },
+    }
+  );
+  return request.data;
+};
 export const getWalletNfts = async (
   chainId: number,
   user: string,

@@ -2,19 +2,22 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 400px;
   overflow: hidden;
   border-radius: 1rem;
   border: 1px solid var(--ms-mp-card-border-color);
   color: var(--ms-mp-text-color);
+  cursor: pointer;
 }
 .wallet_nftCard_container img {
   width: 100%;
-  height: 80%;
+  aspect-ratio: 4 / 4;
   object-fit: fill;
 }
-.wallet_nftCard_container p {
+.wallet_nftCard_details {
   margin: 1rem;
+}
+.wallet_nftCard_details p {
+  margin: 0rem;
 }
 .video_container {
   height: 80%;
@@ -22,6 +25,11 @@
 
 @media screen and (max-width: 1000px) {
   .wallet_nftCard_container {
-    height: 350px;
+    height: 300px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .wallet_nftCard_container {
+    height: 400px;
   }
 }
