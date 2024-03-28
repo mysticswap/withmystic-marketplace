@@ -1,4 +1,6 @@
 import { RiArrowDownSLine } from "react-icons/ri";
+import { FaRegUserCircle } from "react-icons/fa";
+import { RiLogoutCircleLine } from "react-icons/ri";
 import "./ConnectedWalletButton.css";
 import { truncateAddress } from "../../utils";
 import { useRef, useState } from "react";
@@ -30,8 +32,14 @@ const ConnectedWalletButton = () => {
 
       {logout && (
         <div className="logout_btn" ref={logoutRef}>
-          <Link to={`wallet/${user}`}>Profile</Link>
-          <button onClick={logoutUser}>Logout</button>
+          <Link to={`wallet/${user}`}>
+            <FaRegUserCircle size={16} /> Profile
+          </Link>
+
+          <button onClick={logoutUser}>
+            {" "}
+            <RiLogoutCircleLine size={16} /> Logout
+          </button>
         </div>
       )}
     </div>

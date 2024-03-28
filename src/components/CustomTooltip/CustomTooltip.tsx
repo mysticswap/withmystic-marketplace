@@ -7,27 +7,27 @@ type Props = {
 };
 
 const CustomTooltip = ({ text, children }: Props) => {
-  const { client } = useGlobalContext();
+  const { client } = useGlobalContext()!;
   const theme = createTheme({
     components: {
       MuiTooltip: {
         styleOverrides: {
           tooltip: {
-            backgroundColor: client.styles.bodyBackground,
-            color: client.styles.primaryColor,
+            backgroundColor: client?.styles?.bodyBackground,
+            color: client?.styles?.primaryColor,
             fontSize: "18px",
             padding: "10px 20px",
             fontStyle: "normal",
             fontWeight: 400,
             lineHeight: "22px",
-            fontFamily: client.fonts.fontFamily,
-            border: `1px solid ${client.styles.primaryColor}`,
+            fontFamily: client?.fonts?.fontFamily,
+            border: `1px solid ${client?.styles?.primaryColor}`,
           },
           arrow: {
-            color: client.styles.bodyBackground,
+            color: client?.styles?.bodyBackground,
             [`&::before`]: {
-              color: client.styles.bodyBackground,
-              border: `1px solid ${client.styles.primaryColor}`,
+              color: client?.styles?.bodyBackground,
+              border: `1px solid ${client?.styles?.primaryColor}`,
             },
           },
         },

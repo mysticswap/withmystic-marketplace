@@ -83,6 +83,7 @@ export interface TokenToken {
   rarityRank: number;
   collection: Collection;
   lastSale: LastSale;
+  floorAsk?: FloorAsk;
   owner: string;
   attributes?: NftAttributes[];
 }

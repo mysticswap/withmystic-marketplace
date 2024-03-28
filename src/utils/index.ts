@@ -71,6 +71,45 @@ export const redirectToMSWalletPage = (address: string) => {
   }
 };
 
+export const redirectToNftPage = (
+  contract: string,
+  tokenId: string,
+  isLocal: boolean,
+  chainId?: number
+) => {
+  const baseTokenNames: { [key: string]: string } = {
+    1: "ethereum",
+    137: "matic",
+    169: "ethereum",
+  };
+  if (isLocal) {
+    if (window.location.hostname == "localhost") {
+      contract &&
+        window.open(`http://${window.location.host}/${contract}/${tokenId}`);
+    } else {
+      contract &&
+        window.open(`https://${window.location.host}/${contract}/${tokenId}`);
+    }
+  } else {
+    window.open(
+      `https://opensea.io/assets/${
+        baseTokenNames[chainId!]
+      }/${contract}/${tokenId}`
+    );
+  }
+};
+
+export const generateCollectionQueryString = (localCollections: string[]) => {
+  let query = "";
+  localCollections.forEach((item, index) => {
+    if (index == 0) {
+      query += `?collection=${item}`;
+    } else {
+      query += `&collection=${item}`;
+    }
+  });
+  return query;
+};
 export const generateAttributeString = (selectedTraits: SelectedTrait[]) => {
   let string = "&includeAttributes=true";
   selectedTraits.forEach((item) => {
@@ -100,7 +139,6 @@ export const getHostName = () => {
       return "marketplace.mysticswaplocalhost.io";
       //DiamondNXT-NFT host
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
-      return "marketplace.mysticswaplocalhost.io";
       return "talentprotocol.withmystic.xyz";
     case "deploy-preview-81--heroic-duckanoo-b32f52.netlify.app":
       return "deploy-preview-48--heroic-duckanoo-b32f52.netlify.app";
