@@ -35,6 +35,30 @@ export const supportedChains = [
     rpcUrl: "https://zetachain-evm.blockpi.network/v1/rpc/public",
   },
   {
+    id: "0xa4b1",
+    token: "ETH",
+    label: "Arbitrum One",
+    rpcUrl: "https://arbitrum.drpc.org",
+  },
+  {
+    id: "0xa4ba",
+    token: "ETH",
+    label: "Arbitrum Nova",
+    rpcUrl: "https://arbitrum-nova.drpc.org",
+  },
+  {
+    id: "0x13e31",
+    token: "ETH",
+    label: "Blast",
+    rpcUrl: "https://blast.blockpi.network/v1/rpc/public",
+  },
+  {
+    id: "0xaa36a7",
+    token: "ETH",
+    label: "Sepolia",
+    rpcUrl: "'https://ethereum-sepolia-rpc.publicnode.com",
+  },
+  {
     id: "0x109b4597",
     token: "SFUEL",
     label: "Razor Skale Chain",

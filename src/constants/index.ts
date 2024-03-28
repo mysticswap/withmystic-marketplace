@@ -63,7 +63,9 @@ export const wethAddresses: { [x: number]: string } = {
   5: "0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6",
   137: "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
   42161: "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+  42170: "0x722E8BdD2ce80A4422E880164f2079488e115365",
   81457: "0x4300000000000000000000000000000000000004",
+  11155111: "0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9",
 };
 
 export const offerTokens: Record<number, Array<SupportedToken>> = {
@@ -173,6 +175,60 @@ export const offerTokens: Record<number, Array<SupportedToken>> = {
     },
   ],
 
+  42170: [
+    {
+      contract: "0x52484E1ab2e2B22420a25c20FA49E173a26202Cd",
+      name: "Tether USD",
+      decimals: 6,
+      symbol: "USDT",
+      image:
+        "https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661",
+    },
+    {
+      contract: "0x750ba8b76187092B0D1E87E28daaf484d1b5273b",
+      name: "USD Coin",
+      decimals: 6,
+      symbol: "USDC",
+      image:
+        "https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694",
+    },
+    {
+      contract: "0x1d05e4e72cD994cdF976181CfB0707345763564d",
+      name: "Wrapped BTC",
+      decimals: 18,
+      symbol: "WBTC",
+      image:
+        "https://assets.coingecko.com/coins/images/1/standard/bitcoin.png?1696501400",
+    },
+  ],
+
+  11155111: [
+    {
+      contract: "0xaA8E23Fb1079EA71e0a56F48a2aA51851D8433D0",
+      name: "Tether USD",
+      decimals: 6,
+      symbol: "USDT",
+      image:
+        "https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661",
+    },
+    {
+      contract: "0xf08A50178dfcDe18524640EA6618a1f965821715",
+      name: "USD Coin",
+      decimals: 6,
+      symbol: "USDC",
+      image:
+        "https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694",
+    },
+    {
+      contract: "0x92f3B59a79bFf5dc60c0d59eA13a44D082B2bdFC",
+      name: "Wrapped BTC",
+      decimals: 18,
+      symbol: "WBTC",
+      image:
+        "https://assets.coingecko.com/coins/images/1/standard/bitcoin.png?1696501400",
+    },
+  ],
+
   81457: [
     {
       contract: "0x4300000000000000000000000000000000000003",
@@ -208,7 +264,9 @@ export const scanWebsites: { [x: number]: string } = {
   1: "https://etherscan.io/",
   137: "https://polygonscan.com/",
   42161: "https://arbiscan.io/",
+  42170: "https://nova.arbiscan.io/",
   81457: "https://blastscan.com/",
+  11155111: "https://sepolia.etherscan.io/",
 };
 
 export const chainIdsMap: { [x: number]: string } = {
@@ -216,7 +274,9 @@ export const chainIdsMap: { [x: number]: string } = {
   5: "0x5",
   137: "0x89",
   42161: "0xa4a1",
+  42170: "0xa4ba",
   81457: "0x13e31",
+  11155111: "0xaa36a7",
 };
 
 export const collectionNetworkIcon: { [x: number]: string } = {
@@ -224,7 +284,9 @@ export const collectionNetworkIcon: { [x: number]: string } = {
   5: ethereumIcon,
   137: maticIcon,
   42161: ethereumIcon,
+  42170: ethereumIcon,
   81457: ethereumIcon,
+  11155111: ethereumIcon,
 };
 
 export const balanceChain: { [x: number]: string } = {
@@ -232,7 +294,9 @@ export const balanceChain: { [x: number]: string } = {
   5: "ETH",
   137: "MATIC",
   42161: "ETH",
+  42170: "ETH",
   81457: "ETH",
+  11155111: "ETH",
 };
 
 export const collectionsWithHiddenNames: { [x: string]: boolean } = {
